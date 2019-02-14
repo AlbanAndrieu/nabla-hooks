@@ -1,0 +1,37 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+__author__ = ['alban.andrieu@finastra.com']
+
+import sys
+# import traceback
+
+# import get_jira.get_jira
+from get_msg import match_msg
+from colorama import init
+from termcolor import colored
+
+# use Colorama to make Termcolor work on Windows too
+init()
+
+# Collect the parameters
+commit_msg_filepath = sys.argv[1]
+
+try:
+    with open(commit_msg_filepath, 'r') as f:
+
+        required_message = match_msg(commit_msg_filepath)
+
+        content = f.read()
+        if not content.startswith(required_message):
+            print(colored(
+                'commit-msg: ERROR! The commit message must start with {}'.format(
+                    required_message,
+                ), 'red',
+            ))
+            sys.exit(1)
+
+except:  # noqa: ignore=E722
+    # traceback.print_exc()
+    print(colored('Oops! COMMIT is failing. Switch to manual...', 'red'))
+    sys.exit(2)
