@@ -19,7 +19,9 @@ Install python 3.6 and virtualenv
 ### pre-commit
 
 See [pre-commit](http://pre-commit.com/)
+
 Run `pre-commit install`
+`pre-commit install -f --install-hooks`
 
 Run `pre-commit run --all-files`
 
@@ -34,11 +36,11 @@ Run `git commit -am 'Add key' --no-verify`
 
 ### The Templates Directories
 
-# See [git-hooks-using-python](http://omerkatz.com/blog/2013/5/23/git-hooks-part-2-implementing-git-hooks-using-python)
+See [git-hooks-using-python](http://omerkatz.com/blog/2013/5/23/git-hooks-part-2-implementing-git-hooks-using-python)
 
 ## Local
 
-First time run `cp hooks/* .git/hooks/` or `rm -Rf ./.git/hooks/ && ln -s ../hooks ./.git/hooks && git checkout hooks/`
+First time run `cp hooks/* .git/hooks/` or `rm -Rf ./.git/hooks/ && ln -s ../hooks ./.git/hooks && git checkout thisrepo hooks/`
 
 ## Global
 

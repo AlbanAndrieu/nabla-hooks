@@ -30,12 +30,13 @@ init()
 
 
 @click.command()
+@click.argument('current_message', type=str)
 @click.argument('branch', type=str)
 @click.option('-u', '--user', required=False, envvar='JIRA_USER', help='JIRA user')  # noqa: ignore=E501
 @click.option('-p', '--password', required=False, envvar='JIRA_PASSWORD', help='JIRA password')  # noqa: ignore=E501
-@click.option('-v', '--verbose', is_flag=True, default=False, help='Switch between INFO and DEBUG logging modes')  # noqa: ignore=E501
-def cli(branch: str, user=None, password=None, verbose=False) -> str:
-    """Simple program that match jira. From hooks directory : Try python -m get_jira.get_jira feature/BMT-13403 -v"""
+@click.option('-v', '--verbose', is_flag=True, default=True, help='Switch between INFO and DEBUG logging modes')  # noqa: ignore=E501
+def cli(current_message: str, branch: str, user=None, password=None, verbose=False) -> str:
+    """Simple program that match jira. From hooks directory : Try python -m get_jira.get_jira BMT-13403 feature/BMT-13403 -v"""
 
     logger.info('Collecting JIRA')
 
@@ -47,22 +48,51 @@ def cli(branch: str, user=None, password=None, verbose=False) -> str:
 
     basic_auth = match_auth(user, password)
 
-    return match_jira(branch=branch, basic_auth=basic_auth, verbose=verbose)
+    return get_msg(current_message=current_message, branch=branch, basic_auth=basic_auth, verbose=verbose)
 
 
-def match_jira(branch: str, basic_auth: Tuple[str, str] = ('', ''), verbose=False) -> str:
+def get_msg(current_message: str, branch: str, basic_auth: Tuple[str, str] = ('', ''), verbose=True) -> str:
+
+    issue = match_issue(
+        branch=branch, verbose=verbose,
+    )
+
+    required_message = ''
+
+    # Test that message has not already been populated
+    if issue not in current_message:
+        required_message = match_jira(
+            issue=issue, basic_auth=basic_auth, verbose=verbose,
+        )
+
+        # Appending current message
+        required_message = '{} : {}'.format(required_message, current_message)
+    else:
+        if verbose:
+            print(colored('Issue number already detected in message: {}'.format(required_message).format(), 'yellow'))
+
+    return required_message
+
+
+def match_issue(branch: str, verbose=False) -> str:
+
+    issue = 'UNKNOWN'
+
+    # Matches any unique issue code
+    pattern = re.compile(r'(^feature|^bugfix)\/([A-Z]{3,5}-[0-9]+)')
+    issue = re.search(pattern, branch).group(2)  # Extract issue code
+    if verbose:
+        print(colored('Issue number detected : {}.'.format(issue), 'green'))
+
+    return issue
+
+
+def match_jira(issue: str, basic_auth: Tuple[str, str] = ('', ''), verbose=False) -> str:
 
     # WORKAROUND below in case certificate is not install on workstation
     urllib3.disable_warnings()
 
-    issue = 'UNKNOWN'
-
     try:
-        # Matches any unique issue code
-        pattern = re.compile(r'(^feature|^bugfix)\/([A-Z]{3,5}-[0-9]+)')
-        issue = re.search(pattern, branch).group(2)  # Extract issue code
-        if verbose:
-            print(colored('Issue number detected : {}.'.format(issue), 'green'))
 
         server = 'almtools.misys.global.ad/jira'
         options = {
@@ -73,9 +103,27 @@ def match_jira(branch: str, basic_auth: Tuple[str, str] = ('', ''), verbose=Fals
         jira = JIRA(options, basic_auth=basic_auth)
 
         issue_to_check = jira.issue(issue)
-        print(issue_to_check.fields.project.key)             # 'JRA'
-        print(issue_to_check.fields.issuetype.name)          # 'New Feature'
-        print(issue_to_check.fields.reporter.displayName)
+        print(
+            colored(
+                'Project key {}'.format(
+                    issue_to_check.fields.project.key,
+                ), 'magenta',
+            ),
+        )
+        print(
+            colored(
+                'Issue Type {}'.format(
+                    issue_to_check.fields.issuetype.name,
+                ), 'magenta',
+            ),
+        )               # 'Story'
+        print(
+            colored(
+                'Reporter {}'.format(
+                    issue_to_check.fields.reporter.displayName,
+                ), 'magenta',
+            ),
+        )
 
         required_message = '{} : {} by {}'.format(
             issue_to_check, issue_to_check.fields.issuetype.name, issue_to_check.fields.reporter.displayName,
@@ -83,9 +131,6 @@ def match_jira(branch: str, basic_auth: Tuple[str, str] = ('', ''), verbose=Fals
     except JIRAError as e:
         if verbose:
             traceback.print_exc()
-        # sys.stderr.write(
-        #    "Failed to create Jira object.  Message: \"%s\".\n" % (e.text),
-        # )
         if e.status_code == 401:
             print(
                 colored(

@@ -17,9 +17,10 @@ if len(sys.argv) > 3:
 else:
     commit_hash = ''
 
-# print('prepare-commit-msg: File: %s\nType: %s\nHash: %s' % (
-#    commit_msg_filepath,
-#    commit_type, commit_hash,
+# print('prepare-commit-msg: File: {}\nType: {}\nHash: {}'.format(
+#     commit_msg_filepath,
+#     commit_type,
+#     commit_hash,
 # ))
 
-match_msg(commit_msg_filepath)
+match_msg(commit_msg_filepath, commit_type)
