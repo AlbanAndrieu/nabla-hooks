@@ -77,7 +77,7 @@ def match_jira(branch: str, basic_auth: Tuple[str, str] = ('', ''), verbose=Fals
         print(issue_to_check.fields.issuetype.name)          # 'New Feature'
         print(issue_to_check.fields.reporter.displayName)
 
-        required_message = '%s : %s by %s' % (
+        required_message = '{} : {} by {}'.format(
             issue_to_check, issue_to_check.fields.issuetype.name, issue_to_check.fields.reporter.displayName,
         )
     except JIRAError as e:

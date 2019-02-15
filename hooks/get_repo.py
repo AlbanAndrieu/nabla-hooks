@@ -69,11 +69,11 @@ def _get_org_and_name_from_remote(url, verbose=False):
     :rtype: unicode, unicode
     """
     if not url.endswith('.git'):
-        url = '{0}.git'.format(url)
+        url = '{}.git'.format(url)
     git_info = parse(url)
     if verbose:
-        print('Repo owner: "{0}"'.format(git_info.owner))
-        print('Repo name: "{0}"'.format(git_info.name))
+        print('Repo owner: "{}"'.format(git_info.owner))
+        print('Repo name: "{}"'.format(git_info.name))
     return git_info.owner, git_info.name
 
 

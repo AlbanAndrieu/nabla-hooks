@@ -73,7 +73,7 @@ def match_msg(commit_msg_filepath, user=None, password=None, verbose=False) -> s
         with open(commit_msg_filepath, 'r+') as f:
             content = f.read()
             f.seek(0, 0)
-            f.write('%s : %s' % (required_message, content))
+            f.write('{} : {}'.format(required_message, content))
 
     return required_message
 

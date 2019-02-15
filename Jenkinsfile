@@ -42,7 +42,7 @@ pipeline {
   options {
     disableConcurrentBuilds()
     skipStagesAfterUnstable()
-    parallelsAlwaysFailFast()       
+    parallelsAlwaysFailFast()
     ansiColor('xterm')
     timeout(time: 360, unit: 'MINUTES')
     timestamps()
