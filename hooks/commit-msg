@@ -8,7 +8,6 @@ import traceback
 from colorama import init
 from get_msg import match_msg
 from termcolor import colored
-# import get_jira.get_jira
 
 # use Colorama to make Termcolor work on Windows too
 init()
@@ -30,6 +29,21 @@ else:
 #    commit_hash,
 # ))
 
+
+def podmena(commit_msg_filepath, enable=False):
+
+    if enable:
+        curdir = os.path.dirname(os.path.realpath(__file__))
+        with open(os.path.join(curdir, 'database.txt')) as f:
+            emoji = f.readlines()
+
+        with open(commit_msg_filepath) as f:
+            text = f.read()
+
+        with open(commit_msg_filepath, 'w') as f:
+            f.write('{} :{}:'.format(text.strip(), random.choice(emoji).strip()))
+
+
 try:
     with open(commit_msg_filepath, 'r') as f:
 
@@ -44,15 +58,7 @@ try:
             ))
             sys.exit(1)
 
-    curdir = os.path.dirname(os.path.realpath(__file__))
-    with open(os.path.join(curdir, 'database.txt')) as f:
-        emoji = f.readlines()
-
-    with open(commit_msg_filepath) as f:
-        text = f.read()
-
-    with open(sys.argv[1], 'w') as f:
-        f.write('{} :{}:'.format(text.strip(), random.choice(emoji).strip()))
+    podmena(commit_msg_filepath=commit_msg_filepath, enable=True)
 
 except:  # noqa: ignore=E722
     traceback.print_exc()
