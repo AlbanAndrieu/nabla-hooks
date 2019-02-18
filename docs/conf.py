@@ -12,13 +12,13 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../library'))
+sys.path.insert(0, os.path.abspath('../hooks'))
 
 
 # -- Project information -----------------------------------------------------
 
 project = 'Hooks'
-copyright = '2018, Alban Andrieu'
+copyright = '2019, Alban Andrieu'
 author = 'Alban Andrieu'
 
 # The short X.Y version

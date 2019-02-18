@@ -1,4 +1,4 @@
-.. Hooks documentation master file
+.. Hooks documentation file
 
 Hooks documentation
 =================================
@@ -29,7 +29,6 @@ Table of Contents
 
    setup
    roles
-   docker
    quality
    library
 

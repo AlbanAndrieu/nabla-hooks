@@ -1,7 +1,7 @@
 Library
 =======
 
-Library consists of custom Hooks modules, that can be used with any role or playbook in this repository.
+Library consists of custom Hooks modules, that can be used with pre-commit.
 
 Using modules more systematic way of doing certain tasks.
 For example, we provide ``get_jira`` module, which allows to acces to JIRA.
@@ -10,7 +10,7 @@ This task could be done using Hooks's built-in ``python`` module and ``pre-commi
 In this case, module is advantageous, because it provides more control over catching exceptions or determining the "failed" and "changed" results.
 
 I am using open source librairies such as Jira_ or Git-url-parse_ and _GitPython
-Library files are placed in is in ``./hooks/get_jira/``. See below for the module documentation.
+Library files are placed in is in ``./hooks``. See below for the module documentation.
 
 .. automodule:: hooks/get_jira
    :members: main

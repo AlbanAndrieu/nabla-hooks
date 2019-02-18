@@ -21,7 +21,7 @@ init()
 
 @click.command()
 @click.option('-u', '--user', required=False, envvar='JIRA_USER', help='JIRA user')  # noqa: ignore=E501
-@click.option('-p', '--password', required=False, envvar='JIRA_PASSWORD', help='JIRA password')  # noqa: ignore=E501
+@click.option('-p', '--password', required=False, prompt=True, hide_input=True, confirmation_prompt=True, envvar='JIRA_PASSWORD', help='JIRA password')  # noqa: ignore=E501
 @click.option('-v', '--verbose', is_flag=True, default=False, help='Switch between INFO and DEBUG logging modes')  # noqa: ignore=E501
 def cli(user=None, password=None, verbose=False):
     """Simple program that check a commit message. Try ./get_repo.py -v """
@@ -30,7 +30,7 @@ def cli(user=None, password=None, verbose=False):
 
     if verbose:
         click.echo(user)
-        click.echo(password)
+        # click.echo(password)
         click.echo(verbose)
 
     match_repo(user, password, verbose)

@@ -26,10 +26,10 @@ init()
 
 @click.command()
 @click.option('-u', '--user', required=False, envvar='JIRA_USER', help='JIRA user')  # noqa: ignore=E501
-@click.option('-p', '--password', required=False, envvar='JIRA_PASSWORD', help='JIRA password')  # noqa: ignore=E501
+@click.option('-p', '--password', required=False, prompt=True, hide_input=True, confirmation_prompt=True, envvar='JIRA_PASSWORD', help='JIRA password')  # noqa: ignore=E501
 @click.option('-v', '--verbose', is_flag=True, default=False, help='Switch between INFO and DEBUG logging modes')  # noqa: ignore=E501
 def cli(user=None, password=None, verbose=False) -> Tuple[str, str]:
-    """Simple program that match jira. From hooks directory : Try python -m get_jira.get_auth -u aandrieu -p XXXX -v"""
+    """Simple program that match jira. From hooks directory : Try python -m get_jira.get_auth -u aandrieu -p XXXX --verbose"""
 
     logger.info('Collecting authentifcation')
 
@@ -41,7 +41,7 @@ def match_auth(user=None, password=None, verbose=False) -> Tuple[str, str]:
     if verbose:
         logger.setLevel(logging.DEBUG)
         click.echo(user)
-        click.echo(password)
+        # click.echo(password)
         click.echo(verbose)
 
     try:
@@ -60,20 +60,27 @@ def match_auth(user=None, password=None, verbose=False) -> Tuple[str, str]:
                     'User is empty, using JIRA_USER environement variable.', 'yellow',
                 ),
             )
-        user = os.environ.get('JIRA_USER', 'TODO')
+        user = os.environ.get('JIRA_USER')
+        if not user:
+            user = os.environ.get('GIT_USERNAME')
 
     if not user:
         print(colored('User cannot be empty : {}.'.format(user), 'red'))
         sys.exit(3)
+
     if not password:
         if verbose:
             print(colored(
                 'Password is empty, using JIRA_PASSWORD environement variable', 'yellow',
             ))
-        password = os.environ.get('JIRA_PASSWORD', 'TODO')
+        password = os.environ.get('JIRA_PASSWORD')
+        if not password:
+            password = os.environ.get('GIT_ASSWORD')
+
     if not password:
         print(colored('Password cannot be empty : {}.'.format(password), 'red'))
         sys.exit(3)
+
     basic_auth = (user, password)
 
     if not basic_auth:

@@ -2,7 +2,7 @@
 default_language_version:
     python: python3.6
 
-fail_fast: true
+fail_fast: false
 
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks.git
@@ -42,8 +42,8 @@ repos:
                   (?x)^(
                       .*/molecule/default/tests/test_default.py
                   )$
-    -   id: no-commit-to-branch
-        args: [--branch, develop, --branch, master, --branch, release/*]
+#    -   id: no-commit-to-branch
+#        args: [--branch, develop, --branch, master, --branch, release/*]
     -   id: end-of-file-fixer
     -   id: fix-encoding-pragma
     -   id: requirements-txt-fixer
