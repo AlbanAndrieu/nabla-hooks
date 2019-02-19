@@ -106,7 +106,18 @@ repos:
 #    rev: master
 #    hooks:
 #    - id: bandit
--   repo: https://github.com/AlbanAndrieu/nabla-hooks.git
-    rev: v1.0.0
+#-   repo: https://github.com/AlbanAndrieu/nabla-hooks.git
+#    rev: v1.0.0
+#    hooks:
+#    - id: git-branches-check
+-   repo: local
     hooks:
-    - id: git-branches-check
+    -   id: git-branches-check
+        name: GIT branches check
+        description: Check for old stale and already merged branches from the current repo with user friendly messages and colors
+        entry: pre_commit_hooks/git-branches-check.sh
+        language: script
+        types: [shell]
+        always_run: true
+        verbose: true
+        args: [--max=1, --verbose, --debug]

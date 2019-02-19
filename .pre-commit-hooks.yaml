@@ -3,6 +3,7 @@
   description: Check for old stale and already merged branches from the current repo with user friendly messages and colors
   entry: pre_commit_hooks/git-branches-check.sh
   language: script
+  always_run: true
   types: [shell]
 #- id: jira-check
 #  name: JIRA check
