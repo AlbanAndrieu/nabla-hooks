@@ -89,10 +89,10 @@ repos:
                       mvnw|
                       hooks
                   )$
--   repo: git://github.com/pre-commit/pre-commit-docker-flake8
-    rev: v0.0.3
-    hooks:
-    -   id: flake8-docker-not-for-production
+#-   repo: git://github.com/pre-commit/pre-commit-docker-flake8
+#    rev: v0.0.3
+#    hooks:
+#    -   id: flake8-docker-not-for-production
 -   repo: https://github.com/asottile/pyupgrade
     rev: v1.11.2
     hooks:
