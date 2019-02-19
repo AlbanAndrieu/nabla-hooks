@@ -4,7 +4,38 @@ Nabla custom git hooks
 
 This project intend to be uses by all Nabla products
 
-## Quality tools
+Table of Contents
+-----------------
+
+  * [Requirements](#requirements)
+  * [Install](#install)
+  * [Quality tools](#Quality tools)
+
+Requirements
+------------
+  This pre-commit hooks requires the following to run:
+
+  * [pre-commit](http://pre-commit.com)
+
+
+Install
+---------
+
+1. create .pre-commit-config.yaml in you git project
+2. pre-commit install
+3. enjoy it
+
+example .pre-commit-config.yaml as following:
+
+```yaml
+-   repo: https://github.com/AlbanAndrieu/nabla-hooks.git
+    rev: v1.0.0
+    hooks:
+    - id: git-branches-check
+```
+
+Quality tools
+---------
 
 ### python 3.6
 

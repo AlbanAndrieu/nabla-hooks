@@ -1,16 +1,10 @@
 #!/usr/bin/env groovy
 @Library('jenkins-pipeline-scripts') _
 
-/*
- * Fusion Risk Ansible
- *
- * Test Ansible Playbooks by: ansible-lint, ansible-playbook on docker images
- */
-
 def DOCKER_REGISTRY="docker.hub"
 def DOCKER_ORGANISATION="nabla"
 def DOCKER_TAG="latest"
-def DOCKERNAME="ansible-jenkins-slave"
+def DOCKER_NAME="ansible-jenkins-slave"
 
 def DOCKER_REGISTRY_URL="https://${DOCKER_REGISTRY}"
 def DOCKER_REGISTRY_CREDENTIAL='jenkins'
@@ -22,10 +16,19 @@ def DOCKER_OPTS = [
   '-v /etc/group:/etc/group:ro '
 ].join(" ")
 
+def DOCKER_OPTS_BASIC = [
+    '-v /usr/local/sonar-build-wrapper:/usr/local/sonar-build-wrapper',
+    '-v /jenkins:/home/jenkins',
+    DOCKER_OPTS_ROOT,
+].join(" ")
+
+def DOCKER_OPTS_COMPOSE = [
+    DOCKER_OPTS_BASIC,
+    '-v /var/run/docker.sock:/var/run/docker.sock',
+].join(" ")
+
 pipeline {
-  agent {
-    label 'ansible-check'
-  }
+  agent none
   parameters {
     string(name: 'DRY_RUN', defaultValue: '--check', description: 'Default mode used to test playbook')
     booleanParam(name: 'CLEAN_RUN', defaultValue: false, description: 'Clean before run')
@@ -44,11 +47,22 @@ pipeline {
     skipStagesAfterUnstable()
     parallelsAlwaysFailFast()
     ansiColor('xterm')
-    timeout(time: 360, unit: 'MINUTES')
+    timeout(time: 30, unit: 'MINUTES')
     timestamps()
   }
   stages {
     stage('Setup') {
+      agent {
+        docker {
+          image DOCKER_IMAGE
+          alwaysPull true
+          reuseNode true
+          registryUrl DOCKER_REGISTRY_URL
+          registryCredentialsId DOCKER_REGISTRY_CREDENTIAL
+          args DOCKER_OPTS_COMPOSE
+          label 'docker-compose'
+        }
+      }
       steps {
         script {
           properties(createPropertyList())
@@ -58,18 +72,29 @@ pipeline {
       }
     }
     stage('Documentation') {
+      agent {
+        docker {
+          image DOCKER_IMAGE
+          alwaysPull true
+          reuseNode true
+          registryUrl DOCKER_REGISTRY_URL
+          registryCredentialsId DOCKER_REGISTRY_CREDENTIAL
+          args DOCKER_OPTS_COMPOSE
+          label 'docker-compose'
+        }
+      }
       // Creates documentation using Sphinx and publishes it on Jenkins
-      // Copy of the documentation is rsynced with kgrdb01
+      // Copy of the documentation is rsynced
       steps {
         script {
           dir("docs") {
-            sh "source /opt/ansible/env36/bin/activate && make html"
-          }
+            sh "./build.sh"
+
           publishHTML([
             allowMissing: false,
             alwaysLinkToLastBuild: false,
             keepAll: true,
-            reportDir: "./docs/_build/html/",
+            reportDir: "./_build/",
             reportFiles: 'index.html',
             includes: '**/*',
             reportName: 'Sphinx Docs',
@@ -78,7 +103,7 @@ pipeline {
           if (isReleaseBranch()) {
             // Initially, we will want to publish only one version,
             // i.e. the latest one from develop branch.
-            dir("docs/_build/html") {
+            dir("./_build/") {
               rsync([
                 source: "*",
                 destination: "jenkins@albandri:/nabla/release/docs/nabla-hooks/",
@@ -86,33 +111,42 @@ pipeline {
               ])
             }
           }
+          } // dir docs
         }
       }
     }
     stage("Bandit Report") {
       agent {
-        label 'ansible-check&&ubuntu&&!albandri&&!trottt'
+        docker {
+          image DOCKER_IMAGE
+          alwaysPull true
+          reuseNode true
+          registryUrl DOCKER_REGISTRY_URL
+          registryCredentialsId DOCKER_REGISTRY_CREDENTIAL
+          args DOCKER_OPTS_COMPOSE
+          label 'docker-compose&&FR1CSLFRBM0086'
+        }
       }
       when {
         expression { BRANCH_NAME ==~ /(release|master|develop)/ }
       }
       steps {
         script {
-          sh "mkdir out || true"
-          sh "bandit -r -f html -o out/bandit.html -f xml -o out/junit.xml ."
+          sh "mkdir output || true"
+          sh "bandit -r -f html -o output/bandit.html -f xml -o output/junit.xml ."
 
           publishHTML([
             allowMissing: false,
             alwaysLinkToLastBuild: false,
             keepAll: true,
-            reportDir: "./out/",
+            reportDir: "./output/",
             reportFiles: 'bandit.html',
             includes: '**/*',
-            reportName: 'Ansible CMDB Report',
-            reportTitles: "Ansible CMDB Report Index"
+            reportName: 'Bandit Report',
+            reportTitles: "Bandit Report Index"
           ])
 
-          junit "out/junit.xml"
+          junit "output/junit.xml"
 
         }
       }
@@ -132,13 +166,12 @@ pipeline {
   }
   post {
     always {
-      archiveArtifacts artifacts: "**/*.log", onlyIfSuccessful: false, allowEmptyArchive: true
-      runHtmlPublishers(["LogParserPublisher", "AnalysisPublisher"])
-    }
-    success {
-      script {
-        if (! isReleaseBranch()) { cleanWs() }
-      }
+      node('docker-compose') {
+        runHtmlPublishers(["LogParserPublisher", "AnalysisPublisher"])
+        archiveArtifacts artifacts: "**/*.log", onlyIfSuccessful: false, allowEmptyArchive: true
+      } // node
+
+      wrapCleanWs()
     }
   } // post
 }

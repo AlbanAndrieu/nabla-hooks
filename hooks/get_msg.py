@@ -18,15 +18,30 @@ init()
 
 
 @click.command()
-@click.argument('commit_msg_filepath', type=click.Path(exists=True))
+@click.argument('commit_msg_filepath', type=click.Path(exists=False))
 @click.argument('commit_type', type=str, default='')  # message for prepare-commit-msg
 @click.option('-u', '--user', required=False, envvar='JIRA_USER', help='JIRA user')  # noqa: ignore=E501
 @click.option('-p', '--password', required=False, prompt=True, hide_input=True, confirmation_prompt=True, envvar='JIRA_PASSWORD', help='JIRA password')  # noqa: ignore=E501
 @click.option('-v', '--verbose', is_flag=True, default=False, help='Switch between INFO and DEBUG logging modes')  # noqa: ignore=E501
 def cli(commit_msg_filepath, commit_type: str = '', user=None, password=None, verbose=False):
-    """Simple program that check a commit message. Try
-    echo "TEST" > ../.git/COMMIT_EDITMSG
-    ./get_msg.py '../.git/COMMIT_EDITMSG' 'message'
+    """
+    Configures git hook commit message using CLI.
+
+    :param str commit_msg_filepath: **required** *"./.git/COMMIT_EDITMSG"*, -
+        path of the file where the message is stored by git. If not provided, defaults to hostname
+
+    :param str commit_msg_filepath: **default** *""*, -
+        Type of the message given by git. If not provided, defaults to empty
+
+    :returns: Msg
+
+    :example:
+
+    .. code-block:: bash
+
+       echo "TEST" > ../.git/COMMIT_EDITMSG
+       ./get_msg.py '../.git/COMMIT_EDITMSG' 'message'
+
     """
 
     logger.info('Collecting branch')
@@ -37,13 +52,24 @@ def cli(commit_msg_filepath, commit_type: str = '', user=None, password=None, ve
         # click.echo(password)
         click.echo(verbose)
 
-    match_msg(
+    return match_msg(
         commit_msg_filepath=commit_msg_filepath, commit_type=commit_type,
         user=user, password=password, verbose=verbose,
     )
 
 
-def match_msg(commit_msg_filepath, commit_type: str = '', user=None, password=None, verbose=False) -> str:
+def match_msg(commit_msg_filepath: str, commit_type: str = '', user=None, password=None, verbose=False) -> str:
+    """
+    Configures git hook commit message.
+
+    :param str commit_msg_filepath: **required** *"./.git/COMMIT_EDITMSG"*, -
+        path of the file where the message is stored by git. If not provided, defaults to hostname
+
+    :param str commit_msg_filepath: **default** *""*, -
+        Type of the message given by git. If not provided, defaults to empty
+
+    :returns: Msg
+    """
 
     if verbose:
         logger.setLevel(logging.DEBUG)
@@ -62,57 +88,59 @@ def match_msg(commit_msg_filepath, commit_type: str = '', user=None, password=No
         logger.debug(r"msg: On branch '{}'".format(branch))
         regex = re.compile('^feature|^bugfix')
 
-        with open(commit_msg_filepath, 'r+') as f:
-            current_message = f.read()
-            f.seek(0, 0)
-
-        if not current_message:
-            print(colored(
-                'Current message is empty.', 'red',
-            ))
-        else:
-            if verbose:
-                print(colored(
-                    'Message before is : {}'.format(
-                        current_message,
-                    ), 'yellow',
-                ))
-
+        filename = os.path.expanduser(commit_msg_filepath)
         required_message = ''
 
-        # Populate the commit message with the issue #, if there is one
-        if re.match(regex, branch):
-            if 'message' in commit_type:
-                print(colored(
-                    "Oh hey, it's an issue branch : {}.".format(
-                        branch,
-                    ), 'green',
-                ))
-
-            required_message = get_jira.get_jira.get_msg(
-                current_message=current_message, branch=branch, basic_auth=basic_auth, verbose=verbose,
-            )
-
-            if not required_message:
-                # Required message is empty
-                required_message = current_message
-
-            if verbose:
-                print(colored(
-                    'Message after is : {}'.format(
-                        required_message,
-                    ), 'yellow',
-                ))
+        if os.path.exists(filename):
             with open(commit_msg_filepath, 'r+') as f:
+                current_message = f.read()
                 f.seek(0, 0)
-                f.write('{}'.format(required_message))
+
+            if not current_message:
+                print(colored(
+                    'Current message is empty.', 'red',
+                ))
+            else:
+                if verbose:
+                    print(colored(
+                        'Message before is : {}'.format(
+                            current_message,
+                        ), 'yellow',
+                    ))
+
+            # Populate the commit message with the issue #, if there is one
+            if re.match(regex, branch):
+                if 'message' in commit_type:
+                    print(colored(
+                        "Oh hey, it's an issue branch : {}.".format(
+                            branch,
+                        ), 'green',
+                    ))
+
+                msg = get_jira.get_jira.get_msg(
+                    current_message=current_message, branch=branch, basic_auth=basic_auth, verbose=verbose,
+                )
+
+                required_message = msg[0]
+
+                if not required_message:
+                    # Required message is empty
+                    required_message = current_message
+
+                if verbose:
+                    print(colored(
+                        'Message after is : {}'.format(
+                            required_message,
+                        ), 'yellow',
+                    ))
+                with open(commit_msg_filepath, 'r+') as f:
+                    f.seek(0, 0)
+                    f.write('{}'.format(required_message))
 
         return required_message
 
     except:  # noqa: ignore=E722
         traceback.print_exc()
-        os.remove(commit_msg_filepath)
-        print(colored('File {} removed!'.format(commit_msg_filepath), 'yellow'))
         sys.exit(2)
 
 

@@ -7,6 +7,7 @@ import os
 import sys
 import logging
 import click
+import getpass
 
 from colorama import init
 from termcolor import colored
@@ -36,6 +37,66 @@ def cli(user=None, password=None, verbose=False) -> Tuple[str, str]:
     return match_auth(user, password, verbose)
 
 
+def get_user(user=None, verbose=False) -> str:
+
+    try:
+
+        if not user:
+            if verbose:
+                print(
+                    colored(
+                        'User is empty, using JIRA_USER environement variable.', 'yellow',
+                    ),
+                )
+            user = os.environ.get('JIRA_USER')
+            if not user:
+                user = os.environ.get('GIT_USERNAME')
+
+        if not user:
+            print(colored('User cannot be empty : {}.'.format(user), 'red'))
+            sys.exit(3)
+
+    except KeyError:
+        print(colored(
+            'Please set the environment variable JIRA_USER or GIT_USERNAME', 'red',
+        ))
+        sys.exit(3)
+
+    return user
+
+
+def get_password(password=None, verbose=False) -> str:
+
+    try:
+
+        if not password:
+            if verbose:
+                print(
+                    colored(
+                        'Password is empty, using JIRA_PASSWORD environement variable', 'yellow',
+                    ),
+                )
+            password = os.environ.get('JIRA_PASSWORD')
+            if not password:
+                password = os.environ.get('GIT_ASSWORD')
+            if not password:
+                password = getpass.getpass()
+
+            # TODO password should be crypted
+
+        if not password:
+            print(colored('Password cannot be empty : {}.'.format(password), 'red'))
+            sys.exit(3)
+
+    except KeyError:
+        print(colored(
+            'Please set the environment variable JIRA_PASSWORD or GIT_PASSWORD', 'red',
+        ))
+        sys.exit(3)
+
+    return password
+
+
 def match_auth(user=None, password=None, verbose=False) -> Tuple[str, str]:
 
     if verbose:
@@ -44,42 +105,9 @@ def match_auth(user=None, password=None, verbose=False) -> Tuple[str, str]:
         # click.echo(password)
         click.echo(verbose)
 
-    try:
-        os.environ['JIRA_USER']
-        os.environ['JIRA_PASSWORD']
-    except KeyError:
-        print(colored(
-            'Please set the environment variable JIRA_USER and JIRA_PASSWORD', 'red',
-        ))
-        sys.exit(3)
+    user = get_user(user=user, verbose=verbose)
 
-    if not user:
-        if verbose:
-            print(
-                colored(
-                    'User is empty, using JIRA_USER environement variable.', 'yellow',
-                ),
-            )
-        user = os.environ.get('JIRA_USER')
-        if not user:
-            user = os.environ.get('GIT_USERNAME')
-
-    if not user:
-        print(colored('User cannot be empty : {}.'.format(user), 'red'))
-        sys.exit(3)
-
-    if not password:
-        if verbose:
-            print(colored(
-                'Password is empty, using JIRA_PASSWORD environement variable', 'yellow',
-            ))
-        password = os.environ.get('JIRA_PASSWORD')
-        if not password:
-            password = os.environ.get('GIT_ASSWORD')
-
-    if not password:
-        print(colored('Password cannot be empty : {}.'.format(password), 'red'))
-        sys.exit(3)
+    password = get_password(password=password, verbose=verbose)
 
     basic_auth = (user, password)
 

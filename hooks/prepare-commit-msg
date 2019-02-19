@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
-__author__ = ['alban.andrieu@finastra.com']
-
 import sys
+
 from get_msg import match_msg
 
 # Collect the parameters

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+import atexit
 import os
 import random
 import sys
@@ -28,6 +29,20 @@ else:
 #    commit_type,
 #    commit_hash,
 # ))
+
+
+def clean_all(commit_msg_filepath: str = './.git/COMMIT_EDITMSG'):
+
+    # print('Registered cleanAll with {}'.format(commit_msg_filepath))
+
+    filename = os.path.expanduser(commit_msg_filepath)
+
+    if os.path.exists(filename):
+        os.remove(commit_msg_filepath)
+        print(colored('File {} removed!'.format(commit_msg_filepath), 'yellow'))
+
+
+atexit.register(clean_all, commit_msg_filepath)
 
 
 def podmena(commit_msg_filepath, enable=False):
@@ -60,7 +75,10 @@ try:
 
     podmena(commit_msg_filepath=commit_msg_filepath, enable=True)
 
+    os._exit(0)
+
 except:  # noqa: ignore=E722
     traceback.print_exc()
     print(colored('Oops! COMMIT is failing. Switch to manual...', 'red'))
+    clean_all(commit_msg_filepath)
     sys.exit(2)

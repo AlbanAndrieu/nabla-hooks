@@ -37,13 +37,13 @@ This will be helpful in case there is problem with any software version.
    source /opt/ansible/env36/bin/activate
    pip install -r requirements-current-3.6.txt
 
-*Hooks require other libraries in order to work properly.
+*Hooks* require other libraries in order to work properly.
 Notably, we are using flake8 and other python librairies for other pre-commit hooks to works.
 See PreCommit_ and PreCommitHooks_ for more details.
 More on this in the following sections.
 
 Initialization
-------------
+--------------
 
 .. code-block:: bash
 

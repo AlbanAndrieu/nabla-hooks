@@ -20,7 +20,7 @@ repos:
                       clean.bat|
                       build.bat|
                       mvnw.cmd|
-                      .mvn/*|
+                      .mvn/
                   )$
     -   id: check-json
     -   id: check-xml
@@ -80,10 +80,11 @@ repos:
     sha: master
     hooks:
     -   id: hindent
--   repo: git://github.com/detailyang/pre-commit-shell
+-   repo: https://github.com/detailyang/pre-commit-shell
     rev: 1.0.4
     hooks:
     -   id: shell-lint
+        entry: pre_commit_hooks/shell-lint.sh -x
         exclude: >
                   (?x)^(
                       mvnw|
@@ -105,3 +106,7 @@ repos:
 #    rev: master
 #    hooks:
 #    - id: bandit
+-   repo: https://github.com/AlbanAndrieu/nabla-hooks.git
+    rev: v1.0.0
+    hooks:
+    - id: git-branches-check
