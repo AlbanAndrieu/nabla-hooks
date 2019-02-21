@@ -34,6 +34,24 @@ example .pre-commit-config.yaml as following:
     - id: git-branches-check
 ```
 
+Testing locally
+
+```yaml
+-   repo: local
+    hooks:
+    -   id: git-branches-check
+        name: GIT branches check
+        description: Check for old stale and already merged branches from the current repo with user friendly messages and colors
+        entry: pre_commit_hooks/git-branches-check.sh
+        language: script
+        types: [shell]
+        always_run: true
+        verbose: true
+        args: [--max=1, --verbose]
+```
+
+$ `pre-commit try-repo . git-branches-check --verbose`
+
 Quality tools
 ---------
 
