@@ -83,6 +83,12 @@ Run `git commit -am 'Add key' --no-verify`
 
 `export JIRA_PASSWORD=XXX`
 
+`export JIRA_URL=https://localhost/jira`
+
+`export JIRA_CERT_PATH=/etc/ssl/certs/NABLA-CA-1.crt`
+
+`export JENKINS_URL=https://localhost/jenkins/`
+
 ### The Templates Directories
 
 See [git-hooks-using-python](http://omerkatz.com/blog/2013/5/23/git-hooks-part-2-implementing-git-hooks-using-python)

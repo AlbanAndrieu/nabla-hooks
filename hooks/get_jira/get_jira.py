@@ -37,8 +37,9 @@ init()
 @click.option('-v', '--verbose', is_flag=True, default=False, help='Switch between INFO and DEBUG logging modes')  # noqa: ignore=E501
 def cli(current_message: str, branch: str, user=None, password=None, verbose=False) -> str:
     """Simple program that match jira. From hooks directory : Try
-    python -m get_jira.get_jira BMT-13403 feature/BMT-13403 --verbose
-    python -m get_jira.get_jira TEST feature/BMT-13403 --verbose
+    python -m get_jira.get_jira BMT-13403 feature/TEST-13403 --verbose
+    python -m get_jira.get_jira TEST feature/TEST-13403 --verbose
+    python -m get_jira.get_jira 'Test message' feature/TEST-99999 --verbose
     """
 
     logger.info('Collecting JIRA')
@@ -94,6 +95,43 @@ def match_issue(branch: str, verbose=False) -> str:
     return issue
 
 
+def get_jira_url() -> str:
+
+    try:
+
+        url = os.environ.get('JIRA_URL')
+
+        if not url:
+            server = 'localhost/jira'
+            url = 'https://%s' % server
+
+    except KeyError:
+        print(colored(
+            'Please set the environment variable JIRA_URL', 'red',
+        ))
+        sys.exit(3)
+
+    return url
+
+
+def get_certificat_path() -> str:
+
+    try:
+
+        certificat_path = os.environ.get('JIRA_CERT_PATH')
+
+        if not url:
+            certificat_path = '/etc/ssl/certs/NABLA-CA-1.crt'
+
+    except KeyError:
+        print(colored(
+            'Please set the environment variable JIRA_CERT_PATH', 'red',
+        ))
+        sys.exit(3)
+
+    return certificat_path
+
+
 def match_jira(issue: str, basic_auth: Tuple[str, str] = ('', ''), verbose=False) -> str:
 
     # WORKAROUND below in case certificate is not install on workstation
@@ -103,16 +141,25 @@ def match_jira(issue: str, basic_auth: Tuple[str, str] = ('', ''), verbose=False
 
     try:
 
-        server = 'almtools.misys.global.ad/jira'
         options = {
-            'server': 'https://%s' % server,
-            'verify': '/etc/ssl/certs/UK1VSWCERT01-CA-5.crt',
+            'server': get_jira_url(),
+            'verify': get_certificat_path(),
         }
 
         jira = JIRA(options, basic_auth=basic_auth)
 
         issue_to_check = jira.issue(issue)
         status = '{}'.format(issue_to_check.fields.status).strip().lower()
+
+        # versions = jira.project_versions('TEST')
+        # print(
+        #     colored(
+        #         'Versions : {}'.format(
+        #             versions,
+        #         ), 'magenta',
+        #     ),
+        # )
+        # [v.name for v in reversed(versions)]
 
         if verbose:
             print(

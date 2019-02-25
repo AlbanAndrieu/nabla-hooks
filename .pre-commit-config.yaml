@@ -84,11 +84,14 @@ repos:
     rev: 1.0.4
     hooks:
     -   id: shell-lint
-        entry: pre_commit_hooks/shell-lint.sh -x
+        #entry: pre_commit_hooks/shell-lint.sh -x
+        args: [-x]
         exclude: >
                   (?x)^(
                       mvnw|
-                      hooks
+                      hooks|
+                      test/init.sh|
+                      test/test.sh
                   )$
 #-   repo: git://github.com/pre-commit/pre-commit-docker-flake8
 #    rev: v0.0.3
@@ -120,4 +123,26 @@ repos:
         types: [shell]
         always_run: true
         verbose: true
+        additional_dependencies: [jira>=2.0.0]
         #args: [--max=1, --verbose, --debug]
+#-   repo: local
+#    hooks:
+#    -   id: jenkinsfile-check
+#        name: Jenkinsfile check
+#        description: Check if Jenkinsfile is valid
+#        entry: pre_commit_hooks/jenkinsfile-check.sh Jenkinsfile
+#        files: 'Jenkinsfile'
+#        language: script
+#        types: [shell]
+#        always_run: true
+#        verbose: true
+-   repo: local
+    hooks:
+    -   id: publicversion-check
+        name: PublicVersion check
+        description: Check if version is valid
+        entry: ./test/version.sh
+        language: script
+        types: [shell]
+        always_run: true
+        verbose: true

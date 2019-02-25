@@ -90,31 +90,54 @@ pipeline {
           dir("docs") {
             sh "./build.sh"
 
-          publishHTML([
-            allowMissing: false,
-            alwaysLinkToLastBuild: false,
-            keepAll: true,
-            reportDir: "./_build/",
-            reportFiles: 'index.html',
-            includes: '**/*',
-            reportName: 'Sphinx Docs',
-            reportTitles: "Sphinx Docs Index"
-          ])
-          if (isReleaseBranch()) {
-            // Initially, we will want to publish only one version,
-            // i.e. the latest one from develop branch.
-            dir("./_build/") {
-              rsync([
-                source: "*",
-                destination: "jenkins@albandri:/nabla/release/docs/nabla-hooks/",
-                credentialsId: "jenkins_unix_slaves"
-              ])
+            publishHTML([
+              allowMissing: false,
+              alwaysLinkToLastBuild: false,
+              keepAll: true,
+              reportDir: "./_build/",
+              reportFiles: 'index.html',
+              includes: '**/*',
+              reportName: 'Sphinx Docs',
+              reportTitles: "Sphinx Docs Index"
+            ])
+            if (isReleaseBranch()) {
+              // Initially, we will want to publish only one version,
+              // i.e. the latest one from develop branch.
+              dir("./_build/") {
+                rsync([
+                  source: "*",
+                  destination: "jenkins@albandri:/nabla/release/docs/nabla-hooks/",
+                  credentialsId: "jenkins_unix_slaves"
+                ])
+              }
             }
-          }
           } // dir docs
         }
       }
     }
+    stage('SonarQube analysis') {
+      agent {
+        docker {
+          image DOCKER_IMAGE
+          alwaysPull true
+          reuseNode true
+          registryUrl DOCKER_REGISTRY_URL
+          registryCredentialsId DOCKER_REGISTRY_CREDENTIAL
+          args DOCKER_OPTS_COMPOSE
+          label 'docker-compose&&FR1CSLFRBM0086'
+        }
+      }
+      environment {
+        SONAR_USER_HOME = "$WORKSPACE"
+      }
+      steps {
+        script {
+          withSonarQubeWrapper(verbose: true, skipMaven: true, project: "NABLA", repository: "nabla-hooks") {
+
+          }
+        }
+      } // steps
+    } // stage SonarQube analysis
     stage("Bandit Report") {
       agent {
         docker {
@@ -133,7 +156,7 @@ pipeline {
       steps {
         script {
           sh "mkdir output || true"
-          sh "bandit -r -f html -o output/bandit.html -f xml -o output/junit.xml ."
+          sh "source /opt/ansible/env36/bin/activate && bandit -r -f html -o output/bandit.html -f xml -o output/junit.xml ."
 
           publishHTML([
             allowMissing: false,
@@ -151,18 +174,6 @@ pipeline {
         }
       }
     }
-    stage('SonarQube analysis') {
-      environment {
-        SONAR_USER_HOME = "$WORKSPACE"
-      }
-      steps {
-        script {
-          withSonarQubeWrapper(verbose: true, skipMaven: true, project: "NABLA", repository: "nabla-hooks") {
-
-          }
-        }
-      } // steps
-    } // stage SonarQube analysis
   }
   post {
     always {

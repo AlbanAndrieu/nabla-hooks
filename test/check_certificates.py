@@ -1,18 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
-__author__ = ['alban.andrieu@finastra.com']
-
 import sys
 import traceback
 
 import certifi
 import urllib3
-# WORKAROUND below in case certificate is not install on workstation
-# urllib3.disable_warnings()
-
 from colorama import init
 from termcolor import colored
+# WORKAROUND below in case certificate is not install on workstation
+# urllib3.disable_warnings()
 
 # use Colorama to make Termcolor work on Windows too
 init()

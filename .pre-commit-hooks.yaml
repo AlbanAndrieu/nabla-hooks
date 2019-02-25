@@ -4,6 +4,14 @@
   entry: pre_commit_hooks/git-branches-check.sh
   language: script
   always_run: true
+  additional_dependencies: [jira>=2.0.0]
+  types: [shell]
+- id: jenkinsfile-check
+  name: Jenkinsfile check
+  description: Check if Jenkinsfile is valide
+  entry: pre_commit_hooks/jenkinsfile-check.sh Jenkinsfile
+  files: 'Jenkinsfile'
+  language: script
   types: [shell]
 #- id: jira-check
 #  name: JIRA check

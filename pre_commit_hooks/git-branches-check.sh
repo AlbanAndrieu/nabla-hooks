@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -xv
+#set -xv
 
 set -o errexit
 set -o pipefail
@@ -16,6 +16,7 @@ source "${WORKING_DIR}/step-0-color.sh"
 # You can test it with
 # pre_commit_hooks/git-branches-check.sh -m 10
 # pre_commit_hooks/git-branches-check.sh --max 10 --verbose
+# pre_commit_hooks/git-branches-check.sh --max=1 --verbose DEBUG=1
 
 usage() { echo "Usage: $0 [-m|--max <10>] []" 1>&2; exit 1; }
 
@@ -45,8 +46,14 @@ while true; do
   esac
 done
 
+if ${DEBUG}; then
+  set -xv
+fi
+
+GIT_USERNAME=${GIT_USERNAME:=$(git config user.name)}
+
 if ${VERBOSE}; then
-  echo -e "${green} Begin git check for ${MAX_NUMBER} branches ${BRANCH}. ${NC}"
+  echo -e "${green} Begin git check for ${MAX_NUMBER} branches ${BRANCH} for user \"${GIT_USERNAME}\". ${NC}"
 fi
 
 if ! which git &>/dev/null; then
@@ -55,7 +62,7 @@ if ! which git &>/dev/null; then
 fi
 
 
-git remote prune origin || true
+git remote prune origin > /dev/null 2>&1
 
 count=$(git branch -r --merged | grep -c -v ${BRANCH} || true)
 
@@ -68,7 +75,7 @@ if [ $count -gt ${MAX_NUMBER} ]; then
    echo -e "${cyan} Find them ${happy_smiley}  doing : ${NC}"
    echo -e "${cyan} git branch -r --merged | grep -v ${BRANCH} ${NC}"
    # shellcheck disable=SC2006,SC2046
-   for branch in $(git branch -r --merged | grep -v ${BRANCH}); do echo -e `git show --format="%ci %cr %an" $branch | head -n 1` \\t$branch; done | sort -r
+   for branch in $(git branch -r --merged | grep -v ${BRANCH}); do echo -e `git show --format="%ci %cr %an" $branch | grep "${GIT_USERNAME}" | head -n 1` \\t$branch; done | sort -r
    echo -e "${magenta} And delete them doing : ${NC}"
    echo -e "${magenta} git branch -d the_local_branch ${NC}"
    echo -e "${magenta} git push origin --delete the_remote_branch ${NC}"

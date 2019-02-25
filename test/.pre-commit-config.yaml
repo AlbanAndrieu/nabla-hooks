@@ -1,0 +1,4 @@
+-   repo: /workspace/users/albandri30/fusionrisk-hooks/test
+    sha: 8d1005a3d4249aca4b9d61c1189eff77a1d018c2
+    hooks:
+    -   id: git-branches-check
