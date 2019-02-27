@@ -1,21 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
-__author__ = ['alban.andrieu@finastra.com']
-
+import logging
+import os
 import re
 import sys
-import logging
-import click
 import traceback
+
+import click
 import urllib3
+from colorama import init
 from get_jira.get_auth import match_auth
 from jira import JIRA
 from jira.exceptions import JIRAError
-
-from colorama import init
 from termcolor import colored
-
 from typing import (  # for annotation purposes only
     #    Any,
     #    Dict,

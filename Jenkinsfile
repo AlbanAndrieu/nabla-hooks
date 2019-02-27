@@ -100,6 +100,7 @@ pipeline {
               reportName: 'Sphinx Docs',
               reportTitles: "Sphinx Docs Index"
             ])
+
             if (isReleaseBranch()) {
               // Initially, we will want to publish only one version,
               // i.e. the latest one from develop branch.
@@ -111,6 +112,7 @@ pipeline {
                 ])
               }
             }
+
           } // dir docs
         }
       }
