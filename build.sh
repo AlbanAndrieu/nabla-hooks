@@ -12,6 +12,9 @@ WORKING_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
 #setup-py-upgrade ./
 setup-cfg-fmt setup.cfg
 
+#pip install pyinstaller
+#pyinstaller hooks/get_msg.py
+
 python3 setup.py sdist bdist_wheel
 
 ./test/init.sh

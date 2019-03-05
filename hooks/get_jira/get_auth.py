@@ -1,17 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
-__author__ = ['alban.andrieu@finastra.com']
-
+import getpass
+import logging
 import os
 import sys
-import logging
-import click
-import getpass
 
+import click
 from colorama import init
 from termcolor import colored
-
 from typing import (  # for annotation purposes only
     #    Any,
     #    Dict,

@@ -19,7 +19,7 @@ Use cases
  - The JIRA status to be a valid JIRA should not be `Closed` or `Done`
 
 Improvments && TODO
----------
+-------------------
 
 So far JIRA status is checked among `Closed` or `Done`. But for issue type Story, for BugFix or Backport status might be different
 

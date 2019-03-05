@@ -1,19 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
-__author__ = ['alban.andrieu@finastra.com']
-
-# import re
+import logging
 import os
 import sys
-import logging
+
 import click
 import git
-from giturlparse import parse
-# from subprocess import check_output
-
 from colorama import init
-# from termcolor import colored
+from giturlparse import parse
 
 # use Colorama to make Termcolor work on Windows too
 init()

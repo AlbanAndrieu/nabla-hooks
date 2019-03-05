@@ -117,7 +117,7 @@ def get_certificat_path() -> str:
 
         certificat_path = os.environ.get('JIRA_CERT_PATH')
 
-        if not url:
+        if not certificat_path:
             certificat_path = '/etc/ssl/certs/NABLA-CA-1.crt'
 
     except KeyError:
@@ -148,6 +148,8 @@ def match_jira(issue: str, basic_auth: Tuple[str, str] = ('', ''), verbose=False
         issue_to_check = jira.issue(issue)
         status = '{}'.format(issue_to_check.fields.status).strip().lower()
 
+        issuetype = '{}'.format(issue_to_check.fields.issuetype.name).strip().lower()
+
         # versions = jira.project_versions('TEST')
         # print(
         #     colored(
@@ -169,7 +171,7 @@ def match_jira(issue: str, basic_auth: Tuple[str, str] = ('', ''), verbose=False
             print(
                 colored(
                     'Issue Type : {}'.format(
-                        issue_to_check.fields.issuetype.name,
+                        issuetype,
                     ), 'magenta',
                 ),
             )               # 'Story'

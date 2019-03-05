@@ -49,7 +49,9 @@ Initialization
 
    export JIRA_USER=aandrieu
    export JIRA_PASSWORD=XXX
-
+   export JIRA_URL=https://albandri/jira
+   export JIRA_CERT_PATH=/etc/ssl/certs/NABLA-CA-1.crt
+   export JENKINS_URL=https://localhost/jenkins/
 
 Verification
 ------------

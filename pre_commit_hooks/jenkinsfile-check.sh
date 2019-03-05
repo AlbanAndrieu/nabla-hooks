@@ -18,6 +18,18 @@ else
   echo -e "${magenta} JENKINS_URL : ${JENKINS_URL} ${NC}"
 fi
 
+if [ -f ${HOME}/jenkins-cli.jar ]; then
+  echo "jenkins-cli.jar file found"
+  # Get randomly assigned SSH port
+  echo -e "${green} curl -Lv $JENKINS_URL/login 2>&1 | grep -i 'x-ssh-endpoint' ${NC}"
+  # Configure user
+  echo -e "${JENKINS_URL}/me/configure ${NC}"
+  echo -e "${green} java -jar ${HOME}/jenkins-cli.jar -s ${JENKINS_URL} -auth ${JENKINS_USER}:${JENKINS_USER_TOKEN} who-am-i ${NC}"
+  #echo -e "${green} java -jar ${HOME}/jenkins-cli.jar -s ${JENKINS_URL} -auth username:password list-jobs ${NC}"
+else
+  wget --no-check-certificate ${JENKINS_URL}/jnlpJars/jenkins-cli.jar --directory-prefix=${HOME}
+fi
+
 JENKINS_FILE=$1
 
 if [ -n "${JENKINS_FILE}" ]; then
@@ -28,6 +40,9 @@ else
   export JENKINS_FILE
   echo -e "${magenta} JENKINS_FILE : ${JENKINS_FILE} ${NC}"
 fi
+
+# In atom
+# ssh -p 22 -i ~/.ssh/id_rsa root@jenkins sudo java -jar ${HOME}/jenkins-cli.jar -s ${JENKINS_URL} declarative-linter < ${JENKINS_FILE}
 
 echo -e "${green} Running the jenkins validation. ${NC}"
 

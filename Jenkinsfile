@@ -10,16 +10,18 @@ def DOCKER_REGISTRY_URL="https://${DOCKER_REGISTRY}"
 def DOCKER_REGISTRY_CREDENTIAL='jenkins'
 def DOCKER_IMAGE="${DOCKER_REGISTRY}/${DOCKER_ORGANISATION}/${DOCKER_NAME}:${DOCKER_TAG}"
 
-def DOCKER_OPTS = [
-  '--dns-search=nabla.mobi',
-  '-v /etc/passwd:/etc/passwd:ro ',
-  '-v /etc/group:/etc/group:ro '
+def DOCKER_OPTS_ROOT = [
+    '-v /etc/passwd:/etc/passwd:ro',
+    '-v /etc/group:/etc/group:ro',
 ].join(" ")
 
 def DOCKER_OPTS_BASIC = [
+    '--dns-search=nabla.mobi',
     '-v /usr/local/sonar-build-wrapper:/usr/local/sonar-build-wrapper',
+    '-v /workspace/slave/tools/:/workspace/slave/tools/',
     '-v /jenkins:/home/jenkins',
     DOCKER_OPTS_ROOT,
+    '--entrypoint=\'\'',
 ].join(" ")
 
 def DOCKER_OPTS_COMPOSE = [
@@ -47,7 +49,7 @@ pipeline {
     skipStagesAfterUnstable()
     parallelsAlwaysFailFast()
     ansiColor('xterm')
-    timeout(time: 30, unit: 'MINUTES')
+    timeout(time: 60, unit: 'MINUTES')
     timestamps()
   }
   stages {
@@ -126,7 +128,7 @@ pipeline {
           registryUrl DOCKER_REGISTRY_URL
           registryCredentialsId DOCKER_REGISTRY_CREDENTIAL
           args DOCKER_OPTS_COMPOSE
-          label 'docker-compose&&FR1CSLFRBM0086'
+          label 'docker-compose'
         }
       }
       environment {
@@ -149,7 +151,7 @@ pipeline {
           registryUrl DOCKER_REGISTRY_URL
           registryCredentialsId DOCKER_REGISTRY_CREDENTIAL
           args DOCKER_OPTS_COMPOSE
-          label 'docker-compose&&FR1CSLFRBM0086'
+          label 'docker-compose'
         }
       }
       when {
@@ -157,8 +159,7 @@ pipeline {
       }
       steps {
         script {
-          sh "mkdir output || true"
-          sh "source /opt/ansible/env36/bin/activate && bandit -r -f html -o output/bandit.html -f xml -o output/junit.xml ."
+          sh "./test/bandit.sh"
 
           publishHTML([
             allowMissing: false,
@@ -180,7 +181,7 @@ pipeline {
   post {
     always {
       node('docker-compose') {
-        runHtmlPublishers(["LogParserPublisher", "AnalysisPublisher"])
+        runHtmlPublishers(["LogParserPublisher"])
         archiveArtifacts artifacts: "**/*.log", onlyIfSuccessful: false, allowEmptyArchive: true
       } // node
 

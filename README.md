@@ -9,7 +9,7 @@ Table of Contents
 
   * [Requirements](#requirements)
   * [Install](#install)
-  * [Quality tools](#Quality tools)
+  * [Quality tools](#quality tools)
 
 Requirements
 ------------
@@ -19,7 +19,7 @@ Requirements
 
 
 Install
----------
+-------
 
 1. create .pre-commit-config.yaml in you git project
 2. pre-commit install
@@ -53,7 +53,7 @@ Testing locally
 $ `pre-commit try-repo . git-branches-check --verbose`
 
 Quality tools
----------
+-------------
 
 ### python 3.6
 
@@ -88,6 +88,10 @@ Run `git commit -am 'Add key' --no-verify`
 `export JIRA_CERT_PATH=/etc/ssl/certs/NABLA-CA-1.crt`
 
 `export JENKINS_URL=https://localhost/jenkins/`
+
+`export JENKINS_USER=aandrieu`
+
+`export JENKINS_USER_TOKEN=117e17192512cebff9e0009d752f9e2b29`
 
 ### The Templates Directories
 
