@@ -9,7 +9,7 @@ Table of Contents
 
   * [Requirements](#requirements)
   * [Install](#install)
-  * [Quality tools](#quality tools)
+  * [Quality tools](#qualitytools)
 
 Requirements
 ------------
@@ -18,8 +18,8 @@ Requirements
   * [pre-commit](http://pre-commit.com)
 
 
-Install
--------
+Install pre-commit
+------------------
 
 1. create .pre-commit-config.yaml in you git project
 2. pre-commit install
@@ -51,6 +51,17 @@ Testing locally
 ```
 
 $ `pre-commit try-repo . git-branches-check --verbose`
+
+Install custom hooks
+------------------
+
+### Using Pip
+
+`pip install hook`
+
+### From Source
+
+`pip install git+https://github.com/AlbanAndrieu/nabla-hooks.git`
 
 Quality tools
 -------------

@@ -1,6 +1,8 @@
 #!/bin/bash
 #set -xv
 
+NO_COLOR=${NO_COLOR:-false}
+
 # below give the number of supported colors
 # tput colors
 

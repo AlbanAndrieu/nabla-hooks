@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-name = 'hooks'
+name = 'nabla_hooks'

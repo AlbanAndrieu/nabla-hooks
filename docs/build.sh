@@ -1,5 +1,5 @@
 #!/bin/bash
-set -xv
+#set -xv
 
 source /opt/ansible/env36/bin/activate
 

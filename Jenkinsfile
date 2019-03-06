@@ -119,6 +119,24 @@ pipeline {
         }
       }
     }
+    stage('Build') {
+      agent {
+        docker {
+          image DOCKER_IMAGE
+          alwaysPull true
+          reuseNode true
+          registryUrl DOCKER_REGISTRY_URL
+          registryCredentialsId DOCKER_REGISTRY_CREDENTIAL
+          args DOCKER_OPTS_COMPOSE
+          label 'docker-compose'
+        }
+      }
+      steps {
+        script {
+          sh "./build.sh"
+        }
+      }
+    }
     stage('SonarQube analysis') {
       agent {
         docker {
