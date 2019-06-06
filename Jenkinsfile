@@ -112,10 +112,14 @@ pipeline {
         script {
           tee("tox.log") {
               sh "./build.sh"
-          }
+          } // tee
+
+          archiveArtifacts artifacts: "tox.log", onlyIfSuccessful: false, allowEmptyArchive: true
+
           withSonarQubeWrapper(verbose: true, skipMaven: true, project: "NABLA", repository: "nabla-hooks") {
 
           }
+
         }
       } // steps
     } // stage SonarQube analysis
@@ -152,6 +156,8 @@ pipeline {
 
             junit "output/junit.xml"
           } // tee
+
+          archiveArtifacts artifacts: "bandit.log", onlyIfSuccessful: false, allowEmptyArchive: true
 
         }
       }

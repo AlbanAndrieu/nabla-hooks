@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
-import subprocess
+import subprocess  # nosec
 import unittest
 
 # echo "TEST" > ../.git/COMMIT_EDITMSG
@@ -20,7 +20,7 @@ class TestPackage(unittest.TestCase):
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            shell=True,
+            shell=True,  # nosec
             env=env,
         ).communicate()
 
