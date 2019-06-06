@@ -46,7 +46,7 @@ pipeline {
   }
   options {
     disableConcurrentBuilds()
-    skipStagesAfterUnstable()
+    //skipStagesAfterUnstable()
     parallelsAlwaysFailFast()
     ansiColor('xterm')
     timeout(time: 60, unit: 'MINUTES')
@@ -89,55 +89,11 @@ pipeline {
       // Copy of the documentation is rsynced
       steps {
         script {
-          dir("docs") {
-            sh "./build.sh"
-
-            publishHTML([
-              allowMissing: false,
-              alwaysLinkToLastBuild: false,
-              keepAll: true,
-              reportDir: "./_build/",
-              reportFiles: 'index.html',
-              includes: '**/*',
-              reportName: 'Sphinx Docs',
-              reportTitles: "Sphinx Docs Index"
-            ])
-
-            if (isReleaseBranch()) {
-              // Initially, we will want to publish only one version,
-              // i.e. the latest one from develop branch.
-              dir("./_build/") {
-                rsync([
-                  source: "*",
-                  destination: "jenkins@albandri:/nabla/release/docs/nabla-hooks/",
-                  credentialsId: "jenkins_unix_slaves"
-                ])
-              }
-            }
-
-          } // dir docs
+          runSphinx(shell: "./build.sh", targetDirectory: "nabla-hooks/")
         }
       }
     }
     stage('Build') {
-      agent {
-        docker {
-          image DOCKER_IMAGE
-          alwaysPull true
-          reuseNode true
-          registryUrl DOCKER_REGISTRY_URL
-          registryCredentialsId DOCKER_REGISTRY_CREDENTIAL
-          args DOCKER_OPTS_COMPOSE
-          label 'docker-compose'
-        }
-      }
-      steps {
-        script {
-          sh "./build.sh"
-        }
-      }
-    }
-    stage('SonarQube analysis') {
       agent {
         docker {
           image DOCKER_IMAGE
@@ -154,6 +110,9 @@ pipeline {
       }
       steps {
         script {
+          tee("tox.log") {
+              sh "./build.sh"
+          }
           withSonarQubeWrapper(verbose: true, skipMaven: true, project: "NABLA", repository: "nabla-hooks") {
 
           }
@@ -177,20 +136,22 @@ pipeline {
       }
       steps {
         script {
-          sh "./test/bandit.sh"
+          tee("bandit.log") {
+            sh "./test/bandit.sh"
 
-          publishHTML([
-            allowMissing: false,
-            alwaysLinkToLastBuild: false,
-            keepAll: true,
-            reportDir: "./output/",
-            reportFiles: 'bandit.html',
-            includes: '**/*',
-            reportName: 'Bandit Report',
-            reportTitles: "Bandit Report Index"
-          ])
+            publishHTML([
+              allowMissing: false,
+              alwaysLinkToLastBuild: false,
+              keepAll: true,
+              reportDir: "./output/",
+              reportFiles: 'bandit.html',
+              includes: '**/*',
+              reportName: 'Bandit Report',
+              reportTitles: "Bandit Report Index"
+            ])
 
-          junit "output/junit.xml"
+            junit "output/junit.xml"
+          } // tee
 
         }
       }
@@ -199,7 +160,8 @@ pipeline {
   post {
     always {
       node('docker-compose') {
-        runHtmlPublishers(["LogParserPublisher"])
+        step([$class: 'LogParserPublisher', failBuildOnError: true, unstableOnWarning: false, parsingRulesPath: '/jenkins/deploy-log_parsing_rules', useProjectRule: false])
+
         archiveArtifacts artifacts: "**/*.log", onlyIfSuccessful: false, allowEmptyArchive: true
       } // node
 

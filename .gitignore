@@ -1,4 +1,6 @@
 
+test/.pre-commit-config.yaml
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -16,7 +18,7 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+#lib/
 lib64/
 parts/
 sdist/
@@ -110,7 +112,7 @@ venv.bak/
 .ssh/
 
 *.log
-hooks/
+#hooks/
 
 roles/alban.andrieu.virtualbox
 roles/alban.andrieu.webmin

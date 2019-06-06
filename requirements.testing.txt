@@ -9,9 +9,10 @@ molecule==2.19.0
 pep8==1.7.1
 pep8-naming==0.7.0
 pip-upgrader==1.4.6
-pytest==4.0.0
+pytest==4.5.0
+pytest-cov==2.7.1
 selenium==3.141.0
 sphinx==1.8.3
 testinfra==1.17.0
-tox==3.7.0
+tox==3.9.0
 virtualenv==16.1.0

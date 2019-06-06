@@ -1,4 +1,16 @@
--   repo: /workspace/users/albandri30/fusionrisk-hooks/test
-    sha: 8d1005a3d4249aca4b9d61c1189eff77a1d018c2
+-   repo: https://github.com/detailyang/pre-commit-shell
+    sha: master
+    hooks:
+    -   id: shell-lint
+-   repo: /workspace/users/albandri30/fusionrisk-hooks
+    sha: master
     hooks:
     -   id: git-branches-check
+        name: Git branches check
+        description: Check for old stale and already merged branches from the current repo with user friendly messages and colors
+        entry: pre_commit_hooks/git-branches-check.sh
+        language: script
+        types: [shell]
+        always_run: true
+        verbose: true
+        additional_dependencies: [jira>=2.0.0]

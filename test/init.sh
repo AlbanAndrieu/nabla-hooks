@@ -1,6 +1,8 @@
-#! /bin/bash
+#!/bin/bash
 
 WORKING_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
+
+unset SHELLCHECK_OPTS
 
 which shellcheck &> /dev/null
 if [[ $? != 0 ]]; then
@@ -17,6 +19,14 @@ cat << EOS > ${WORKING_DIR}/.pre-commit-config.yaml
     sha: $(git rev-parse HEAD)
     hooks:
     -   id: git-branches-check
+        name: Git branches check
+        description: Check for old stale and already merged branches from the current repo with user friendly messages and colors
+        entry: pre_commit_hooks/git-branches-check.sh
+        language: script
+        types: [shell]
+        always_run: true
+        verbose: true
+        additional_dependencies: [jira>=2.0.0]
 EOS
 
 tmpdir=$(mktemp -t pre-commit-shell.XXXXXX  -d)
@@ -32,11 +42,12 @@ git add .pre-commit-config.yaml; git commit -a -m "init test case"
 git add . --all
 tmpfile=$(mktemp -t pre-commit-shell.XXX)
 git commit -a -m "let begin test" &> "$tmpfile"
+#echo "less $tmpfile"
 popd
-rm -rf "$tmpdir"
 
 function passed() {
     echo "$@"
+    rm -rf "$tmpdir"
 
     return 0
 }

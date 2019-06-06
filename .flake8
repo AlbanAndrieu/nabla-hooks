@@ -1,3 +1,13 @@
 [flake8]
 max-line-length = 120
-ignore = F821 E501
+ignore = F821 E501 E999
+exclude =
+    .git,
+    __pycache__,
+    docs/source/conf.py,
+    old,
+    build,
+    dist,
+    .eggs,
+    .tox,
+    setup.py

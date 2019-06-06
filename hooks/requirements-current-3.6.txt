@@ -3,15 +3,15 @@
 #source /opt/ansible/env36/bin/activate
 #pip install -r ./requirements-current-3.6.txt
 ansible==2.7.5
-ansible-cmdb==1.29
-ansible-lint==3.5.1
+#ansible-cmdb==1.29
+#ansible-lint==3.5.1
 ansicolors==1.1.8
 chardet==3.0.4
 Click==7.0
 click-completion==0.5.0
 colorama==0.4.1
-docker==3.6.0
-docker-compose==1.23.1
+#docker==3.7.2
+#docker-compose==1.23.1
 git-pre-commit-hook-utils==0.0.5
 git-url-parse==1.1.0
 GitPython==2.1.11

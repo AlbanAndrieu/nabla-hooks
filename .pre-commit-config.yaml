@@ -2,8 +2,6 @@
 default_language_version:
     python: python3.6
 
-fail_fast: false
-
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks.git
     rev: v2.1.0
@@ -58,16 +56,16 @@ repos:
 #    -   id: remove-tabs
 #        args: [ --whitespaces-count, 2 ]
 -   repo: https://github.com/pre-commit/pre-commit.git
-    rev: v1.14.3
+    rev: v1.16.1
     hooks:
     -   id: validate_manifest
 -   repo: https://github.com/asottile/reorder_python_imports.git
-    rev: v1.3.5
+    rev: v1.4.0
     hooks:
     -   id: reorder-python-imports
 #        language_version: python2.7
 -   repo: https://github.com/asottile/add-trailing-comma
-    rev: v0.7.2
+    rev: v1.0.0
     hooks:
     -   id: add-trailing-comma
 -   repo: https://github.com/willthames/ansible-lint.git
@@ -77,11 +75,11 @@ repos:
         files: \.(yaml|yml)$
         exclude: '.travis.yml'
 -   repo: git://github.com/doublify/pre-commit-hindent
-    sha: master
+    rev: master
     hooks:
     -   id: hindent
 -   repo: https://github.com/detailyang/pre-commit-shell
-    rev: 1.0.4
+    rev: 1.0.5
     hooks:
     -   id: shell-lint
         #entry: pre_commit_hooks/shell-lint.sh -x
@@ -98,11 +96,11 @@ repos:
 #    hooks:
 #    -   id: flake8-docker-not-for-production
 -   repo: https://github.com/asottile/pyupgrade
-    rev: v1.11.2
+    rev: v1.17.1
     hooks:
     -   id: pyupgrade
 -   repo: https://github.com/pre-commit/mirrors-autopep8
-    rev: v1.4.3
+    rev: v1.4.4
     hooks:
     -   id: autopep8
 #-   repo: https://github.com/PyCQA/bandit

@@ -1,0 +1,9 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import sys
+
+import hooks.__main__
+# import hooks.get_msg.main
+
+sys.exit(hooks.__main__.main())
+# sys.exit(hooks.get_msg.main())

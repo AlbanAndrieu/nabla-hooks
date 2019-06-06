@@ -62,9 +62,13 @@ if ! which git &>/dev/null; then
 fi
 
 
-git remote prune origin > /dev/null 2>&1
+git remote prune origin > /dev/null 2>&1 || true
+git fetch --prune > /dev/null 2>&1 || true
 
-count=$(git branch -r --merged | grep -c -v ${BRANCH} || true)
+if ${VERBOSE}; then
+  echo -e "${magenta} git branch -r --merged | grep -c -v ${BRANCH}. ${NC}"
+fi
+count=$(git branch -r --merged 2> /dev/null | grep -c -v ${BRANCH} || true)
 
 if [[ -f ${DEBUGFILE} ]]; then
    git branch -r --merged | grep -c -v ${BRANCH} > ${DEBUGFILE} 2>&1
@@ -80,5 +84,7 @@ if [ $count -gt ${MAX_NUMBER} ]; then
    echo -e "${magenta} git branch -d the_local_branch ${NC}"
    echo -e "${magenta} git push origin --delete the_remote_branch ${NC}"
 fi
+
+# git for-each-ref --format='%(authorname) %09 %(refname)' | grep origin | sort -r
 
 exit 0
