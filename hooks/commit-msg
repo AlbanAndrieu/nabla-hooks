@@ -66,14 +66,16 @@ try:
 
         content = f.read()
         if not content.startswith(required_message):
-            print(colored(
-                'commit-msg: ERROR! The commit message must start with {}'.format(
-                    required_message,
-                ), 'red',
-            ))
+            print(
+                colored(
+                    'commit-msg: ERROR! The commit message must start with {}'.format(
+                        required_message,
+                    ), 'red',
+                ),
+            )
             sys.exit(1)
 
-    podmena(commit_msg_filepath=commit_msg_filepath, enable=True)
+    # podmena(commit_msg_filepath=commit_msg_filepath, enable=True)
 
     os._exit(0)
 
