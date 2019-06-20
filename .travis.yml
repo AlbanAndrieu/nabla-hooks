@@ -146,7 +146,7 @@ before_install:
 - export TOXENV=$(echo $TOXENV_TMPL | envsubst)
 install:
 - pip install -U tox
-- tox --notest  # Pre-populate virtualenv
+#- tox --notest  # Pre-populate virtualenv
 
 script:
 - tox -v
