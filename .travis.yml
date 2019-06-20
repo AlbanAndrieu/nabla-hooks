@@ -55,39 +55,21 @@ jobs:
 
   - python: "3.7"
     env:
-      ANSIBLE_VERSION: "26"
+      ANSIBLE_VERSION: "28"
 
   - python: "3.6"
     <<: *if-cron-or-manual-run-or-tagged
     env:
-      ANSIBLE_VERSION: "26"
+      ANSIBLE_VERSION: "28"
 
   - python: "3.5"
     <<: *if-cron-or-manual-run-or-tagged
     env:
-      ANSIBLE_VERSION: "26"
+      ANSIBLE_VERSION: "28"
 
   - python: "2.7"
     env:
-      ANSIBLE_VERSION: "26"
-
-  - python: "3.7"
-    env:
-      ANSIBLE_VERSION: "25"
-
-  - python: "3.6"
-    <<: *if-cron-or-manual-run-or-tagged
-    env:
-      ANSIBLE_VERSION: "25"
-
-  - python: "3.5"
-    <<: *if-cron-or-manual-run-or-tagged
-    env:
-      ANSIBLE_VERSION: "25"
-
-  - python: "2.7"
-    env:
-      ANSIBLE_VERSION: "25"
+      ANSIBLE_VERSION: "28"
 
   - python: "3.7"
     <<: *if-cron-or-manual-run-or-tagged
@@ -143,10 +125,11 @@ env:
     TOXENV_TMPL: "'ansible${ANSIBLE_VERSION}'"
 
 before_install:
-- export TOXENV=$(echo $TOXENV_TMPL | envsubst)
+#- export TOXENV=$(echo $TOXENV_TMPL | envsubst)
+- export TOXENV=py36
 install:
 - pip install -U tox
-#- tox --notest  # Pre-populate virtualenv
+- tox --notest  # Pre-populate virtualenv
 
 script:
 - tox -v
