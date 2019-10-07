@@ -5,14 +5,6 @@ import os
 import re
 import sys
 import traceback
-
-import click
-import urllib3
-from colorama import init
-from get_jira.get_auth import match_auth
-from jira import JIRA
-from jira.exceptions import JIRAError
-from termcolor import colored
 from typing import (  # for annotation purposes only
     #    Any,
     #    Dict,
@@ -21,6 +13,14 @@ from typing import (  # for annotation purposes only
     #    Iterator,
     #    Pattern,
 )
+
+import click
+import urllib3
+from colorama import init
+from get_jira.get_auth import match_auth
+from jira import JIRA
+from jira.exceptions import JIRAError
+from termcolor import colored
 
 # use Colorama to make Termcolor work on Windows too
 init()
@@ -103,9 +103,11 @@ def get_jira_url() -> str:
             url = 'https://%s' % server
 
     except KeyError:
-        print(colored(
-            'Please set the environment variable JIRA_URL', 'red',
-        ))
+        print(
+            colored(
+                'Please set the environment variable JIRA_URL', 'red',
+            ),
+        )
         sys.exit(3)
 
     return url
@@ -121,9 +123,11 @@ def get_certificat_path() -> str:
             certificat_path = '/etc/ssl/certs/NABLA-CA-1.crt'
 
     except KeyError:
-        print(colored(
-            'Please set the environment variable JIRA_CERT_PATH', 'red',
-        ))
+        print(
+            colored(
+                'Please set the environment variable JIRA_CERT_PATH', 'red',
+            ),
+        )
         sys.exit(3)
 
     return certificat_path
@@ -137,6 +141,8 @@ def match_jira(issue: str, basic_auth: Tuple[str, str] = ('', ''), verbose=False
     required_message = ''
 
     try:
+
+        # print(colored('URL : {}.'.format(get_jira_url()), 'red'))
 
         options = {
             'server': get_jira_url(),

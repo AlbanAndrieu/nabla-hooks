@@ -89,7 +89,14 @@ pipeline {
       // Copy of the documentation is rsynced
       steps {
         script {
-          runSphinx(shell: "./build.sh", targetDirectory: "nabla-hooks/")
+
+          def shell = "#!/bin/bash \n" +
+                  "../scripts/run-python.sh \n" +
+                  "./build.sh"
+
+          runSphinx(shell: shell, targetDirectory: "nabla-hooks/")
+
+          recordIssues enabledForFailure: true, tool: sphinxBuild()
         }
       }
     }
@@ -110,14 +117,46 @@ pipeline {
       }
       steps {
         script {
-          tee("tox.log") {
-              sh "./build.sh"
-          } // tee
+          try {
 
-          archiveArtifacts artifacts: "tox.log", onlyIfSuccessful: false, allowEmptyArchive: true
+            tee("python.log") {
+                sh "#!/bin/bash \n" +
+                  "whoami \n" +
+                  "./scripts/run-python.sh"
+            } // tee
 
-          withSonarQubeWrapper(verbose: true, skipMaven: true, project: "NABLA", repository: "nabla-hooks") {
+            tee("tox.log") {
+                sh "#!/bin/bash \n" +
+                  "./build.sh"
+            } // tee
 
+            publishHTML([
+              allowMissing: true,
+              alwaysLinkToLastBuild: false,
+              keepAll: true,
+              reportDir: "./output/htmlcov/",
+              reportFiles: 'index.html',
+              includes: '**/*',
+              reportName: 'Coverage Report',
+              reportTitles: "Coverage Report Index"
+            ])
+
+            withSonarQubeWrapper(verbose: true, skipMaven: true, project: "NABLA", repository: "nabla-hooks") {
+
+            }
+
+          } catch (e) {
+            currentBuild.result = 'FAILURE'
+            build = "FAIL" // make sure other exceptions are recorded as failure too
+            throw e
+          } finally {
+            archiveArtifacts artifacts: "*.log", onlyIfSuccessful: false, allowEmptyArchive: true
+
+            runHtmlPublishers(["LogParserPublisher", "AnalysisPublisher"])
+
+            //recordIssues enabledForFailure: true, tool: [flake8(), pyLint()]
+            //pep8()
+            //yamlLint()
           }
 
         }
@@ -140,38 +179,42 @@ pipeline {
       }
       steps {
         script {
-          tee("bandit.log") {
-            sh "./test/bandit.sh"
+          try {
+            tee("bandit.log") {
+              sh "./test/bandit.sh"
 
-            publishHTML([
-              allowMissing: false,
-              alwaysLinkToLastBuild: false,
-              keepAll: true,
-              reportDir: "./output/",
-              reportFiles: 'bandit.html',
-              includes: '**/*',
-              reportName: 'Bandit Report',
-              reportTitles: "Bandit Report Index"
-            ])
+              publishHTML([
+                allowMissing: false,
+                alwaysLinkToLastBuild: false,
+                keepAll: true,
+                reportDir: "./output/",
+                reportFiles: 'bandit.html',
+                includes: '**/*',
+                reportName: 'Bandit Report',
+                reportTitles: "Bandit Report Index"
+              ])
 
-            junit "output/junit.xml"
-          } // tee
+              junit testResults: 'output/junit.xml', healthScaleFactor: 2.0, allowEmptyResults: true, keepLongStdio: true
+            } // tee
 
-          archiveArtifacts artifacts: "bandit.log", onlyIfSuccessful: false, allowEmptyArchive: true
+          } catch (e) {
+            currentBuild.result = 'FAILURE'
+            build = "FAIL" // make sure other exceptions are recorded as failure too
+            throw e
+          } finally {
+            archiveArtifacts artifacts: "bandit.log", onlyIfSuccessful: false, allowEmptyArchive: true
 
+            //recordIssues enabledForFailure: true, tool: [flake8(), pyLint()]
+            //pep8()
+            //yamlLint()
+          }
         }
       }
     }
   }
   post {
-    always {
-      node('docker-compose') {
-        step([$class: 'LogParserPublisher', failBuildOnError: true, unstableOnWarning: false, parsingRulesPath: '/jenkins/deploy-log_parsing_rules', useProjectRule: false])
-
-        archiveArtifacts artifacts: "**/*.log", onlyIfSuccessful: false, allowEmptyArchive: true
-      } // node
-
-      wrapCleanWs()
-    }
+    cleanup {
+      wrapCleanWs(isEmailEnabled: false)
+    } // cleanup
   } // post
 }

@@ -1,18 +1,23 @@
-ara==0.16.2
+#source /opt/ansible/env36/bin/activate
+#pip install -r ./requirements.testing.txt
+ara==0.16.3
 autopep8==1.4.3
 bandit==1.5.1
-conan==1.11.2
+conan==1.12.3
 coverage >= 4.4.1, < 5
 flake8==3.6.0
 flake8-polyfill==1.0.2
-molecule==2.19.0
+identify[license]==1.4.7
+molecule==2.22
 pep8==1.7.1
 pep8-naming==0.7.0
 pip-upgrader==1.4.6
 pytest==4.5.0
 pytest-cov==2.7.1
 selenium==3.141.0
-sphinx==1.8.3
-testinfra==1.17.0
-tox==3.9.0
-virtualenv==16.1.0
+setup-cfg-fmt==1.1.0
+Sphinx==1.8.4
+testinfra==3.2.0
+tox==3.14.0
+virtualenv==16.4.1
+yamllint==1.17.0

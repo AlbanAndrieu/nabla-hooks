@@ -61,7 +61,6 @@ if ! which git &>/dev/null; then
   exit 1
 fi
 
-
 git remote prune origin > /dev/null 2>&1 || true
 git fetch --prune > /dev/null 2>&1 || true
 

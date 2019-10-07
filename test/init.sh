@@ -11,8 +11,18 @@ if [[ $? != 0 ]]; then
 fi
 
 cat << EOS > ${WORKING_DIR}/.pre-commit-config.yaml
+---
+default_language_version:
+    python: python3.6
+
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks.git
+    rev: v2.1.0
+    hooks:
+    -   id: trailing-whitespace
+
 -   repo: https://github.com/detailyang/pre-commit-shell
-    sha: master
+    rev: 1.0.5
     hooks:
     -   id: shell-lint
 -   repo: $(pwd)
@@ -34,6 +44,7 @@ cp test/test.sh "$tmpdir"
 cp test/.pre-commit-config.yaml "$tmpdir"
 pushd "$tmpdir"
 pwd
+pre-commit -V || true
 git init
 git config user.email "alban.andrieu@free.fr"
 git config user.name "aandrieu"

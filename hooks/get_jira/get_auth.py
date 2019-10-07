@@ -4,10 +4,6 @@ import getpass
 import logging
 import os
 import sys
-
-import click
-from colorama import init
-from termcolor import colored
 from typing import (  # for annotation purposes only
     #    Any,
     #    Dict,
@@ -16,6 +12,10 @@ from typing import (  # for annotation purposes only
     #    Iterator,
     #    Pattern,
 )
+
+import click
+from colorama import init
+from termcolor import colored
 
 # use Colorama to make Termcolor work on Windows too
 init()
@@ -53,10 +53,14 @@ def get_user(user=None, verbose=False) -> str:
             sys.exit(3)
 
     except KeyError:
-        print(colored(
-            'Please set the environment variable JIRA_USER or GIT_USERNAME', 'red',
-        ))
+        print(
+            colored(
+                'Please set the environment variable JIRA_USER or GIT_USERNAME', 'red',
+            ),
+        )
         sys.exit(3)
+
+    # print(colored('User : {}.'.format(user), 'red'))
 
     return user
 
@@ -85,10 +89,14 @@ def get_password(password=None, verbose=False) -> str:
             sys.exit(3)
 
     except KeyError:
-        print(colored(
-            'Please set the environment variable JIRA_PASSWORD or GIT_PASSWORD', 'red',
-        ))
+        print(
+            colored(
+                'Please set the environment variable JIRA_PASSWORD or GIT_PASSWORD', 'red',
+            ),
+        )
         sys.exit(3)
+
+    # print(colored('Password : {}.'.format(password), 'red'))
 
     return password
 

@@ -5,7 +5,7 @@ import os
 import re
 import sys
 import traceback
-from subprocess import check_output
+from subprocess import check_output  # nosec
 
 import click
 import get_jira.get_auth
@@ -81,7 +81,7 @@ def match_msg(commit_msg_filepath: str, commit_type: str = '', user=None, passwo
 
         # Figure out which branch we're on
         branch = check_output([
-            'git', 'symbolic-ref', '--short',
+            '/usr/bin/git', 'symbolic-ref', '--short',
             'HEAD',
         ]).strip().decode('utf-8')
 
@@ -97,25 +97,31 @@ def match_msg(commit_msg_filepath: str, commit_type: str = '', user=None, passwo
                 f.seek(0, 0)
 
             if not current_message:
-                print(colored(
-                    'Current message is empty.', 'red',
-                ))
+                print(
+                    colored(
+                        'Current message is empty.', 'red',
+                    ),
+                )
             else:
                 if verbose:
-                    print(colored(
-                        'Message before is : {}'.format(
-                            current_message,
-                        ), 'yellow',
-                    ))
+                    print(
+                        colored(
+                            'Message before is : {}'.format(
+                                current_message,
+                            ), 'yellow',
+                        ),
+                    )
 
             # Populate the commit message with the issue #, if there is one
             if re.match(regex, branch):
                 if 'message' in commit_type:
-                    print(colored(
-                        "Oh hey, it's an issue branch : {}.".format(
-                            branch,
-                        ), 'green',
-                    ))
+                    print(
+                        colored(
+                            "Oh hey, it's an issue branch : {}.".format(
+                                branch,
+                            ), 'green',
+                        ),
+                    )
 
                 msg = get_jira.get_jira.get_msg(
                     current_message=current_message, branch=branch, basic_auth=basic_auth, verbose=verbose,
@@ -128,11 +134,13 @@ def match_msg(commit_msg_filepath: str, commit_type: str = '', user=None, passwo
                     required_message = current_message
 
                 if verbose:
-                    print(colored(
-                        'Message after is : {}'.format(
-                            required_message,
-                        ), 'yellow',
-                    ))
+                    print(
+                        colored(
+                            'Message after is : {}'.format(
+                                required_message,
+                            ), 'yellow',
+                        ),
+                    )
                 with open(commit_msg_filepath, 'r+') as f:
                     f.seek(0, 0)
                     f.write('{}'.format(required_message))
