@@ -140,7 +140,7 @@ pipeline {
             tee("bandit.log") {
                 sh "#!/bin/bash \n" +
                    "source ./scripts/run-python.sh\n" +
-                   "./test/bandit.sh"
+                   "./test/run-bandit.sh"
 
               publishHTML([
                 allowMissing: false,
@@ -161,7 +161,7 @@ pipeline {
             build = "FAIL" // make sure other exceptions are recorded as failure too
             throw e
           } finally {
-            archiveArtifacts artifacts: "bandit.log", onlyIfSuccessful: false, allowEmptyArchive: true
+            archiveArtifacts artifacts: "bandit.log, output/junit.xml", onlyIfSuccessful: false, allowEmptyArchive: true
 
             //recordIssues enabledForFailure: true, tool: [flake8(), pyLint()]
             //pep8()
