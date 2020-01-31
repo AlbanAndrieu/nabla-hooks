@@ -18,9 +18,6 @@ git-url-parse==1.1.0
 GitPython==2.1.11
 jira==2.0.0
 podmena==0.4.0
-#pre-commit==1.16.1
-pre-commit==1.14.3
-pre-commit-hooks==2.1.0
 PyYAML>=5.1
 six==1.11.0
 termcolor==1.1.0

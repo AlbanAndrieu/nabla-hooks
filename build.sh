@@ -14,9 +14,9 @@
 
 export TOX_TARGET=${TOX_TARGET:-""} # tox --notest  # Pre-populate virtualenv use TOX_TARGET
 
-export PATH="${VIRTUALENV_PATH}/bin:${PATH}"
+#export PATH="${VIRTUALENV_PATH}/bin:${PATH}"
 echo -e "${cyan} PATH : ${PATH} ${NC}"
-export PYTHONPATH="${VIRTUALENV_PATH}/lib/python${PYTHON_MAJOR_VERSION}/site-packages/"
+#export PYTHONPATH="${VIRTUALENV_PATH}/lib/python${PYTHON_MAJOR_VERSION}/site-packages/"
 echo -e "${cyan} PYTHONPATH : ${PYTHONPATH} ${NC}"
 
 python -V || true
@@ -34,7 +34,7 @@ setup-cfg-fmt setup.cfg
 
 export TOXENV=py36
 #pip install -U tox
-#pip install tox==3.14.0
+#pip install tox==3.14.3
 
 tox ${TOX_TARGET}
 RC=$?

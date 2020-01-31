@@ -3,10 +3,12 @@
 
 WORKING_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
 
-# shellcheck source=./scripts/step-0-color.sh
-source ${WORKING_DIR}/step-0-color.sh
+# source only if terminal supports color, otherwise use unset color vars
+# shellcheck source=/dev/null
+#tput colors && source "${WORKING_DIR}/step-0-color.sh"
+source "${WORKING_DIR}/step-0-color.sh"
 
-# shellcheck source=./scripts/step-1-os.sh
+# shellcheck source=/dev/null
 source ${WORKING_DIR}/step-1-os.sh
 
 if [ -n "${USE_SUDO}" ]; then
@@ -58,7 +60,7 @@ else
   echo -e "${magenta} PYTHON_CMD : ${PYTHON_CMD} ${NC}"
 fi
 
-echo -e "${cyan} Use virtual env ${VIRTUALENV_PATH}/activate ${NC}"
+echo -e "${cyan} Use virtual env ${VIRTUALENV_PATH}/bin/activate ${NC}"
 #echo "Switch to python 2.7 and ansible 2.1.1"
 #scl enable python27 bash
 #Enable python 2.7 and switch to ansible 2.1.1
@@ -67,14 +69,18 @@ echo -e "${cyan} Use virtual env ${VIRTUALENV_PATH}/activate ${NC}"
 #sudo virtualenv -p /usr/bin/python3.5 /opt/ansible/env35
 echo -e "${green} virtualenv --no-site-packages ${VIRTUALENV_PATH} -p python${PYTHON_MAJOR_VERSION} ${NC}"
 echo -e "${green} source ${VIRTUALENV_PATH}/bin/activate ${NC}"
-# shellcheck disable=SC1090
-source "${VIRTUALENV_PATH}/bin/activate" || exit 2
+if [ -f ${VIRTUALENV_PATH}/bin/activate ]; then
+  # shellcheck disable=SC1090
+  source "${VIRTUALENV_PATH}/bin/activate" || exit 2
 
-#export PYTHONPATH="/usr/local/lib/python${PYTHON_MAJOR_VERSION}/dist-packages/"
-export PATH="${VIRTUALENV_PATH}/bin:${PATH}"
-echo -e "${cyan} PATH : ${PATH} ${NC}"
-export PYTHONPATH="${VIRTUALENV_PATH}/lib/python${PYTHON_MAJOR_VERSION}/site-packages/"
-echo -e "${cyan} PYTHONPATH : ${PYTHONPATH} ${NC}"
+  #export PYTHONPATH="/usr/local/lib/python${PYTHON_MAJOR_VERSION}/dist-packages/"
+  export PATH="${VIRTUALENV_PATH}/bin:${PATH}"
+  echo -e "${cyan} PATH : ${PATH} ${NC}"
+  export PYTHONPATH="${VIRTUALENV_PATH}/lib/python${PYTHON_MAJOR_VERSION}/site-packages/"
+  echo -e "${cyan} PYTHONPATH : ${PYTHONPATH} ${NC}"
+else
+  echo -e "${red} Please install virtualenv first ${NC}"
+fi
 
 echo -e "${cyan} =========== ${NC}"
 echo -e "${green} Display virtual env ${NC}"
@@ -94,18 +100,23 @@ echo -e "${green} Fix permission rights ${NC}"
 # shellcheck disable=SC2001
 echo -e "${green} chown -R jenkins:docker /opt/ansible/env$(echo $PYTHON_MAJOR_VERSION | sed 's/\.//g') ${NC}"
 
-echo -e "${cyan} =========== ${NC}"
-echo -e "${green} Install virtual env requirements : pip install -r ${WORKING_DIR}/../requirements-current-${PYTHON_MAJOR_VERSION}.txt -r ${WORKING_DIR}/../requirements.testing.txt ${NC}"
-pip install -r "${WORKING_DIR}/../requirements-current-${PYTHON_MAJOR_VERSION}.txt" -r "${WORKING_DIR}/../requirements.testing.txt"
-RC=$?
-if [ ${RC} -ne 0 ]; then
-  echo ""
-  echo -e "${red} ${head_skull} Sorry,  python requirements installation failed ${NC}"
-  echo -e "${yellow} ${head_skull} WARNING : As we are using jenkins user. It might fail on purpose ${NC}"
-  echo -e "${yellow} ${head_skull} because I did not want jenkins user to allow such changes ${NC}"
-  exit 1
+if [ -f ${WORKING_DIR}/../playbooks/files/python/requirements-current-${PYTHON_MAJOR_VERSION}.txt ]; then
+  echo -e "${cyan} =========== ${NC}"
+  echo -e "${green} Install virtual env requirements : pip install -r ${WORKING_DIR}/../playbooks/files/python/requirements-current-${PYTHON_MAJOR_VERSION}.txt ${NC}"
+  #"${VIRTUALENV_PATH}/bin/pip${PYTHON_MAJOR_VERSION}" install -r "${WORKING_DIR}/../playbooks/files/python/requirements-current-${PYTHON_MAJOR_VERSION}.txt"
+  pip install -r "${WORKING_DIR}/../playbooks/files/python/requirements-current-${PYTHON_MAJOR_VERSION}.txt"
+  RC=$?
+  if [ ${RC} -ne 0 ]; then
+    echo ""
+    echo -e "${red} ${head_skull} Sorry,  python requirements installation failed ${NC}"
+    echo -e "${yellow} ${head_skull} WARNING : As we are using jenkins user. It might fail on purpose ${NC}"
+    echo -e "${yellow} ${head_skull} because I did not want jenkins user to allow such changes ${NC}"
+    exit 1
+  else
+    echo -e "${green} The python requirements installation completed successfully. ${NC}"
+  fi
 else
-  echo -e "${green} The python requirements installation completed successfully. ${NC}"
+  echo -e "${red} Please get requirements-current-${PYTHON_MAJOR_VERSION}.txt first ${NC}"
 fi
 
 echo -e "${cyan} =========== ${NC}"
@@ -133,8 +144,6 @@ fi
 echo -e "${cyan} =========== ${NC}"
 echo -e "${green} Checking python version ${NC}"
 
-#source ${VIRTUALENV_PATH}/bin/activate || exit 2
-
 python --version || true
 pip --version || true
 virtualenv --version || true
@@ -157,19 +166,23 @@ echo -e "${green} Checking python ${PYTHON_MAJOR_VERSION} version ${NC}"
 
 python3 --version || true
 pip3 --version || true
-echo -e "${magenta} ${PYTHON_CMD} --version ${NC}"
-${PYTHON_CMD} --version || true
-echo -e "${magenta} ${VIRTUALENV_PATH}/bin/pip${PYTHON_MAJOR_VERSION} --version ${NC}"
-"${VIRTUALENV_PATH}/bin/pip${PYTHON_MAJOR_VERSION}" --version || true
+if [ -n "${PYTHON_CMD}" ]; then
+  echo -e "${magenta} ${PYTHON_CMD} --version ${NC}"
+  ${PYTHON_CMD} --version || true
+  if [ -f ${VIRTUALENV_PATH}/bin/pip${PYTHON_MAJOR_VERSION} ]; then
+    echo -e "${magenta} ${VIRTUALENV_PATH}/bin/pip${PYTHON_MAJOR_VERSION} --version ${NC}"
+    "${VIRTUALENV_PATH}/bin/pip${PYTHON_MAJOR_VERSION}" --version || true
 
-"${VIRTUALENV_PATH}/bin/pip${PYTHON_MAJOR_VERSION}" list --format=freeze | grep docker || true
+    "${VIRTUALENV_PATH}/bin/pip${PYTHON_MAJOR_VERSION}" list --format=freeze | grep docker || true
 
-echo -e "${magenta} ${VIRTUALENV_PATH}/bin/pip${PYTHON_MAJOR_VERSION} freeze > requirements-${PYTHON_MAJOR_VERSION}.txt ${NC}"
-"${VIRTUALENV_PATH}/bin/pip${PYTHON_MAJOR_VERSION}" freeze > requirements-${PYTHON_MAJOR_VERSION}.txt
+    echo -e "${magenta} ${VIRTUALENV_PATH}/bin/pip${PYTHON_MAJOR_VERSION} freeze > requirements-${PYTHON_MAJOR_VERSION}.txt ${NC}"
+    #"${VIRTUALENV_PATH}/bin/pip${PYTHON_MAJOR_VERSION}" freeze > requirements-${PYTHON_MAJOR_VERSION}.txt
+  else
+    echo -e "${red} Please install VIRTUALENV_PATH}/bin/pip${PYTHON_MAJOR_VERSION} first ${NC}"
+  fi
 
-echo -e "${magenta} ${PYTHON_CMD} -m ara.setup.path ${NC}"
-${PYTHON_CMD} -m ara.setup.path || true
-${PYTHON_CMD} -m ara.setup.action_plugins || true
-${PYTHON_CMD} -m ara.setup.callback_plugins || true
-
-exit 0
+  echo -e "${magenta} ${PYTHON_CMD} -m ara.setup.path ${NC}"
+  ${PYTHON_CMD} -m ara.setup.path || true
+  ${PYTHON_CMD} -m ara.setup.action_plugins || true
+  ${PYTHON_CMD} -m ara.setup.callback_plugins || true
+fi

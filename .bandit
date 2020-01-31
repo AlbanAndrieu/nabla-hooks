@@ -1,0 +1,4 @@
+[bandit]
+exclude: \static,\templates,test,.eggs,.tox
+#skips: B413,B601,B501,B602,B605
+#skips: B404,B607

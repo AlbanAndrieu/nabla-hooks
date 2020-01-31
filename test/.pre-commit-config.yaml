@@ -9,10 +9,10 @@ repos:
     -   id: trailing-whitespace
 
 -   repo: https://github.com/detailyang/pre-commit-shell
-    sha: master
+    rev: 1.0.5
     hooks:
     -   id: shell-lint
--   repo: /workspace/users/albandri30/fusionrisk-hooks
+-   repo: /workspace/users/albandri30/nabla-hooks
     sha: master
     hooks:
     -   id: git-branches-check
