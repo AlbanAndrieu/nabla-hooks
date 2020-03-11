@@ -1,1 +1,1 @@
-requirements-current-3.6.txt
+hooks/requirements-current-3.7.txt

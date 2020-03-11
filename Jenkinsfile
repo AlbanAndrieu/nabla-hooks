@@ -118,7 +118,7 @@ pipeline {
             build = "FAIL" // make sure other exceptions are recorded as failure too
             throw e
           } finally {
-            archiveArtifacts artifacts: "*.log, .tox/py36/log/*.log", onlyIfSuccessful: false, allowEmptyArchive: true
+            archiveArtifacts artifacts: "*.log, .tox/py*/log/*.log", onlyIfSuccessful: false, allowEmptyArchive: true
 
             runHtmlPublishers(["LogParserPublisher", "AnalysisPublisher"])
 

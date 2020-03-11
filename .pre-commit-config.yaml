@@ -10,7 +10,8 @@ repos:
 # pre-commit-hooks.git from v2.1.0 to v2.4.0
 #    rev: v2.1.0 # ok python3.6  # 18.04.3
 #    rev: v2.2.3 # ok python3.6  # 19.04 but failing on 18.04.3
-    rev: v2.4.0 # ok python3.6 on Ubuntu 18.04 AND python3.7 on Ubuntu 19.04
+#    rev: v2.4.0 # ok python3.6 on Ubuntu 18.04 AND python3.7 on Ubuntu 19.04
+    rev: v2.5.0
     hooks:
     -   id: trailing-whitespace
     -   id: end-of-file-fixer
@@ -52,9 +53,18 @@ repos:
     -   id: fix-encoding-pragma
     -   id: requirements-txt-fixer
     -   id: sort-simple-yaml
+#    -   id: flake8
+#        args: [--max-line-length=120]
+    -   id: file-contents-sorter
+-   repo: https://github.com/pre-commit/mirrors-autopep8
+    rev: v1.5
+    hooks:
+    -   id: autopep8
+-   repo: https://gitlab.com/pycqa/flake8
+    rev: 3.7.9  # Use the sha / tag you want to point at
+    hooks:
     -   id: flake8
         args: [--max-line-length=120]
-    -   id: file-contents-sorter
 #-   repo: https://github.com/Lucas-C/pre-commit-hooks
 #    rev: v1.1.6
 #    hooks:
@@ -62,17 +72,17 @@ repos:
 #    -   id: remove-tabs
 #        args: [ --whitespaces-count, 2 ]
 -   repo: https://github.com/pre-commit/pre-commit.git
-    rev: v1.20.0
+    rev: v2.1.1
     hooks:
     -   id: validate_manifest
 -   repo: https://github.com/asottile/reorder_python_imports.git
-    rev: v1.8.0
+    rev: v2.0.0
     hooks:
     -   id: reorder-python-imports
 #       language_version: python3
 #       language_version: python2.7
 -   repo: https://github.com/asottile/add-trailing-comma
-    rev: v1.5.0
+    rev: v2.0.1
     hooks:
     -   id: add-trailing-comma
 -   repo: https://github.com/willthames/ansible-lint.git
@@ -82,7 +92,7 @@ repos:
         files: \.(yaml|yml)$
         exclude: '.travis.yml'
 -   repo: https://github.com/doublify/pre-commit-hindent.git
-    sha: master
+    rev: b3680b6ebf9f7cf29b19307f246adef66756feef
     hooks:
     -   id: hindent
 -   repo: https://github.com/detailyang/pre-commit-shell
@@ -99,15 +109,11 @@ repos:
                       test/test.sh
                   )$
 -   repo: https://github.com/asottile/pyupgrade
-    rev: v1.25.1
+    rev: v2.1.0
     hooks:
     -   id: pyupgrade
--   repo: https://github.com/pre-commit/mirrors-autopep8
-    rev: v1.4.4
-    hooks:
-    -   id: autopep8
 -   repo: https://github.com/PyCQA/bandit
-    rev: master
+    rev: 1.6.2
     hooks:
     - id: bandit
 -   repo: https://github.com/IamTheFij/ansible-pre-commit
@@ -115,7 +121,7 @@ repos:
     hooks:
     -   id: encryption-check
 -   repo: https://github.com/Lucas-C/pre-commit-hooks-nodejs
-    rev: v1.1.0
+    rev: v1.1.1
     hooks:
 #    -   id: htmlhint
 #        # optional custom config:

@@ -11,7 +11,7 @@ source "${WORKING_DIR}/step-0-color.sh"
 echo -e "${green} Run bandit ${NC}"
 
 mkdir "${WORKING_DIR}/../output" || true
-source /opt/ansible/env36/bin/activate
+#source /opt/ansible/env37/bin/activate
 echo -e "${magenta} bandit -r ${WORKING_DIR}/../hooks/* -f xml -o ${WORKING_DIR}/../output/junit.xml --exclude static,templates,test,.eggs,.tox ${NC}"
 bandit -r ${WORKING_DIR}/../hooks/* -f xml -o "${WORKING_DIR}/../output/junit.xml" --exclude static,templates,test,.eggs,.tox --skip B404,B607,B603
 bandit -r ${WORKING_DIR}/../hooks/* -f html -o "${WORKING_DIR}/../output/bandit.html" --exclude static,templates,test,.eggs,.tox --skip B404,B607,B603

@@ -66,15 +66,15 @@ Install custom hooks
 Quality tools
 -------------
 
-### python 3.6
+### python 3.7
 
-Install python 3.6 and virtualenv
+Install python 3.7 and virtualenv
 
-`virtualenv --no-site-packages /opt/ansible/env36 -p python3.6`
+`virtualenv --no-site-packages /opt/ansible/env37 -p python3.7`
 
-`source /opt/ansible/env36/bin/activate`
+`source /opt/ansible/env37/bin/activate`
 
-`pip install -r requirements-current-3.6.txt`
+`pip install -r requirements-current-3.7.txt`
 
 ### pre-commit
 
@@ -122,4 +122,4 @@ The hooked are being copied from the '[...]/share/git-core/templates/'  director
 
 Note:  If you change the templates directory the hooks directory  must be a subdirectory of the templates directory. Do not set the templates directory to the desired hooks directory instead.
 
-Run `git config --global init.templatedir /workspace/users/albandri30/nabla-hooks/`
+Run `git config --global init.templatedir /workspace/users/albandrieu30/nabla-hooks/`

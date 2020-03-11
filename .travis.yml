@@ -1,5 +1,13 @@
+---
+# Copyright Alban Andrieu 2013-2020
+# Distributed under the GPL-3.0
+# (See accompanying file LICENSE.md)
+
+sudo: required
+dist: travis_lts
+#dist: bionic
+
 conditions: v1
-dist: xenial
 
 git:
   depth: 100
@@ -15,10 +23,10 @@ cache:
 language: python
 
 .mixtures:  # is not used by Travis CI, but helps avoid duplication
-- &if-cron-or-manual-run-or-tagged
-  if: type IN (cron, api) OR tag IS present
-- &reset-prerequisites
-  before_install: []
+  - &if-cron-or-manual-run-or-tagged
+    if: type IN (cron, api) OR tag IS present
+  - &reset-prerequisites
+    before_install: []
 
 jobs:
   fast_finish: true
@@ -126,10 +134,11 @@ env:
 
 before_install:
 #- export TOXENV=$(echo $TOXENV_TMPL | envsubst)
-- export TOXENV=py36
+  - export TOXENV=py37
+
 install:
-- pip install -U tox
-- tox --notest  # Pre-populate virtualenv
+  - pip install -U tox
+  - tox --notest  # Pre-populate virtualenv
 
 script:
-- tox -v
+  - tox -v

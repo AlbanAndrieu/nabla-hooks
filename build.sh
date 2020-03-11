@@ -32,7 +32,7 @@ coverage --version || true
 #setup-py-upgrade ./
 setup-cfg-fmt setup.cfg
 
-export TOXENV=py36
+export TOXENV=py37
 #pip install -U tox
 #pip install tox==3.14.3
 
