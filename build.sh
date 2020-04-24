@@ -21,10 +21,16 @@ echo -e "${cyan} PYTHONPATH : ${PYTHONPATH} ${NC}"
 
 python -V || true
 
+echo -e "${magenta} pip-upgrade hooks/requirements-current-3.8.txt ${NC}"
+echo -e "${magenta} pip-upgrade requirements.testing.txt ${NC}"
+
 #pip install --upgrade pip
 
 #pip install setup-py-upgrade
 #pip install setup-cfg-fmt
+
+#pip install --upgrade setuptools
+#pip install setuptools wheel twine
 
 #pip install coverage==4.5.3
 coverage --version || true
@@ -32,10 +38,13 @@ coverage --version || true
 #setup-py-upgrade ./
 setup-cfg-fmt setup.cfg
 
-export TOXENV=py37
+export TOXENV=py38
 #pip install -U tox
 #pip install tox==3.14.3
 
+#tox -e py  # Run tox using the version of Python in `PATH`
+
+rm -Rf .tox/
 tox ${TOX_TARGET}
 RC=$?
 if [ ${RC} -ne 0 ]; then
@@ -68,7 +77,7 @@ fi
 
 #git tag --delete v1.0.0
 #git push --delete origin v1.0.0
-echo -e "git tag v1.0.0"
-echo -e "git push origin --tags"
+echo -e "${magenta} git tag v1.0.0 ${NC}"
+echo -e "${magenta} git push origin --tags ${NC}"
 
 exit 0

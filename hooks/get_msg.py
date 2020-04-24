@@ -16,6 +16,7 @@ from termcolor import colored
 # use Colorama to make Termcolor work on Windows too
 init()
 
+__all__ = ['match_msg']
 
 @click.command()
 @click.argument('commit_msg_filepath', type=click.Path(exists=False))

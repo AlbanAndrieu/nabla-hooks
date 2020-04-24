@@ -1,28 +1,28 @@
-#source /opt/ansible/env36/bin/activate
+#source /opt/ansible/env38/bin/activate
 #pip install -r ./requirements.testing.txt
-ara==0.16.3
-autopep8==1.4.3
-bandit==1.5.1
-conan==1.12.3
+ara==1.4.0
+autopep8==1.5.2
+bandit==1.6.2
+conan==1.24.1
 coverage >= 4.4.1, < 5
-flake8==3.6.0
+flake8==3.7.9
 flake8-polyfill==1.0.2
 git-pre-commit-hook-utils==0.0.5
-identify[license]==1.4.7
-molecule==2.22
+identify[license]==1.4.14
+molecule==3.0.3
 pep8==1.7.1
-pep8-naming==0.7.0
-pip-upgrader==1.4.6
+pep8-naming==0.10.0
+pip-upgrader==1.4.15
 #pre-commit==1.16.1
-pre-commit==1.18.3
-pre-commit-hooks==2.1.0
-pytest==4.5.0
-pytest-cov==2.7.1
+pre-commit==2.3.0
+pre-commit-hooks==2.5.0
+pytest==5.4.1
+pytest-cov==2.8.1
 selenium==3.141.0
-setup-cfg-fmt==1.1.0
+setup-cfg-fmt==1.9.0
 setuptools==41.0.0 # See https://github.com/ansible/molecule/issues/2350
-Sphinx==1.8.4
-testinfra==3.2.0
-tox==3.14.3
-virtualenv==16.4.1
-yamllint==1.17.0
+Sphinx==3.0.2
+testinfra==5.0.0
+tox==3.14.6
+virtualenv==20.0.18
+yamllint==1.23.0

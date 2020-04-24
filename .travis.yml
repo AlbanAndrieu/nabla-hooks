@@ -37,7 +37,7 @@ jobs:
     name: Running flake8 linting checks
     env:
       TOXENV: flake8
-  - python: "3.6"
+  - python: "3.8"
     <<: *reset-prerequisites
     name: Running docs building checks
     env:
@@ -45,32 +45,22 @@ jobs:
 
   - python: "3.7"
     env:
-      ANSIBLE_VERSION: "27"
+      ANSIBLE_VERSION: "29"
 
-  - python: "3.6"
+  - python: "3.8"
     <<: *if-cron-or-manual-run-or-tagged
     env:
-      ANSIBLE_VERSION: "27"
-
-  - python: "3.5"
-    <<: *if-cron-or-manual-run-or-tagged
-    env:
-      ANSIBLE_VERSION: "27"
+      ANSIBLE_VERSION: "29"
 
   - python: "2.7"
     env:
-      ANSIBLE_VERSION: "27"
+      ANSIBLE_VERSION: "29"
 
   - python: "3.7"
     env:
       ANSIBLE_VERSION: "28"
 
-  - python: "3.6"
-    <<: *if-cron-or-manual-run-or-tagged
-    env:
-      ANSIBLE_VERSION: "28"
-
-  - python: "3.5"
+  - python: "3.8"
     <<: *if-cron-or-manual-run-or-tagged
     env:
       ANSIBLE_VERSION: "28"
@@ -84,12 +74,7 @@ jobs:
     env:
       ANSIBLE_VERSION: devel
 
-  - python: "3.6"
-    <<: *if-cron-or-manual-run-or-tagged
-    env:
-      ANSIBLE_VERSION: devel
-
-  - python: "3.5"
+  - python: "3.8"
     <<: *if-cron-or-manual-run-or-tagged
     env:
       ANSIBLE_VERSION: devel
@@ -134,7 +119,7 @@ env:
 
 before_install:
 #- export TOXENV=$(echo $TOXENV_TMPL | envsubst)
-  - export TOXENV=py37
+  - export TOXENV=py38
 
 install:
   - pip install -U tox

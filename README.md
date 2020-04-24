@@ -1,5 +1,13 @@
 # nabla-hooks
 
+[![License](http://img.shields.io/:license-apache-blue.svg?style=flat-square)](http://www.apache.org/licenses/LICENSE-2.0.html)
+[![Gitter](https://badges.gitter.im/nabla-hooks/Lobby.svg)](https://gitter.im/nabla-hooks/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Minimal java version](https://img.shields.io/badge/java-1.8-yellow.svg)](https://img.shields.io/badge/java-1.8-yellow.svg)
+
+[![Jenkins build Status](http://albandrieu.com:8686/job/nabla-hooks/badge/icon)](http://albandrieu.com:8686/job/nabla-hooks/)
+[![Travis Build Status](https://travis-ci.org/AlbanAndrieu/nabla-hooks.svg?branch=master)](https://travis-ci.org/AlbanAndrieu/nabla-hooks)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=MICROSOFT%3Amaster&metric=alert_status)](https://sonarcloud.io/dashboard/index/MICROSOFT%3Amaster)
+
 Nabla custom git hooks
 
 This project intend to be uses by all Nabla products
@@ -123,3 +131,39 @@ The hooked are being copied from the '[...]/share/git-core/templates/'  director
 Note:  If you change the templates directory the hooks directory  must be a subdirectory of the templates directory. Do not set the templates directory to the desired hooks directory instead.
 
 Run `git config --global init.templatedir /workspace/users/albandrieu30/nabla-hooks/`
+
+### packaging
+
+See [setup-cfg](http://sametmax.com/vive-setup-cfg-et-mort-a-pyproject-toml/)
+
+# Builds a source distribution (a tar archive of all the files needed to build and install the package):
+`python setup.py sdist`
+Builds wheels:
+`python setup.py bdist_wheel`
+Build from source:
+`python setup.py build`
+And install:
+`python setup.py install`
+
+`sudo python setup.py develop`
+`pip install .`
+`pip install -e ./`
+
+# [api-tokens](https://test.pypi.org/manage/account/#api-tokens)
+
+`
+python3 setup.py sdist bdist_wheel
+nano $HOME/.pypirc
+python3 -m twine upload --repository testpypi dist/*
+`
+
+Uploaded [nabla-hooks](https://test.pypi.org/project/nabla-hooks/0.0.1/)
+
+### shell usage
+
+python
+
+`
+from hooks import get_msg
+match_msg
+`

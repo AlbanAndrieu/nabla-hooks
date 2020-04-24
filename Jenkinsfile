@@ -1,14 +1,14 @@
 #!/usr/bin/env groovy
-@Library('jenkins-pipeline-scripts') _
+@Library(value='jenkins-pipeline-scripts@master', changelog=false) _
 
-String DOCKER_REGISTRY="docker.hub".trim()
+String DOCKER_REGISTRY="index.docker.io/v1".trim()
 String DOCKER_ORGANISATION="nabla".trim()
 String DOCKER_TAG="latest".trim()
-String DOCKER_NAME="ansible-jenkins-slave".trim()
+String DOCKER_NAME="ansible-jenkins-slave-docker".trim()
 
 String DOCKER_REGISTRY_URL="https://${DOCKER_REGISTRY}".trim()
-String DOCKER_REGISTRY_CREDENTIAL=env.DOCKER_REGISTRY_CREDENTIAL ?: "jenkins".trim()
-String DOCKER_IMAGE="${DOCKER_REGISTRY}/${DOCKER_ORGANISATION}/${DOCKER_NAME}:${DOCKER_TAG}".trim()
+String DOCKER_REGISTRY_CREDENTIAL=env.DOCKER_REGISTRY_CREDENTIAL ?: "hub-docker-nabla".trim()
+String DOCKER_IMAGE="${DOCKER_ORGANISATION}/${DOCKER_NAME}:${DOCKER_TAG}".trim()
 
 String DOCKER_OPTS_BASIC = getDockerOpts()
 String DOCKER_OPTS_COMPOSE = getDockerOpts(isDockerCompose: true, isLocalJenkinsUser: false)
@@ -23,7 +23,7 @@ pipeline {
       registryUrl DOCKER_REGISTRY_URL
       registryCredentialsId DOCKER_REGISTRY_CREDENTIAL
       args DOCKER_OPTS_COMPOSE
-      label 'docker-compose'
+      label 'molecule'
     }
   }
   parameters {

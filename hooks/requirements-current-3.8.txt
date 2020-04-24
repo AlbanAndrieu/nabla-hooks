@@ -1,0 +1,23 @@
+# This script is used to run pre-commit with python3.8
+#virtualenv --no-site-packages /opt/ansible/env38 -p python3.8
+#source /opt/ansible/env38/bin/activate
+#pip install -r ./requirements.txt
+ansible==2.9.7
+#ansible-cmdb==1.30
+ansible-lint==4.2.0
+ansicolors==1.1.8
+cfgv==3.1.0
+chardet==3.0.4
+Click==7.1.1
+click-completion==0.5.2
+colorama==0.4.3
+#docker==3.7.2
+#docker-compose==1.23.1
+#git-pre-commit-hook-utils==0.0.5
+git-url-parse==1.2.2
+GitPython==3.1.1
+jira==2.0.0
+podmena==0.4.2
+PyYAML>=5.1
+six==1.14.0
+termcolor==1.1.0

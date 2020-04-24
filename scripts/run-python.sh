@@ -30,7 +30,7 @@ if [ -n "${PYTHON_MAJOR_VERSION}" ]; then
   unset PYTHON_CMD
 else
   echo -e "${red} ${double_arrow} Undefined build parameter ${head_skull} : PYTHON_MAJOR_VERSION, use the default one ${NC}"
-  export PYTHON_MAJOR_VERSION=3.6
+  export PYTHON_MAJOR_VERSION=3.8
   echo -e "${magenta} PYTHON_MAJOR_VERSION : ${PYTHON_MAJOR_VERSION} ${NC}"
 fi
 
@@ -180,9 +180,4 @@ if [ -n "${PYTHON_CMD}" ]; then
   else
     echo -e "${red} Please install VIRTUALENV_PATH}/bin/pip${PYTHON_MAJOR_VERSION} first ${NC}"
   fi
-
-  echo -e "${magenta} ${PYTHON_CMD} -m ara.setup.path ${NC}"
-  ${PYTHON_CMD} -m ara.setup.path || true
-  ${PYTHON_CMD} -m ara.setup.action_plugins || true
-  ${PYTHON_CMD} -m ara.setup.callback_plugins || true
 fi
