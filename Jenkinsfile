@@ -68,7 +68,7 @@ pipeline {
 
           runSphinx(shell: shell, targetDirectory: "nabla-hooks/")
 
-          recordIssues enabledForFailure: true, tool: sphinxBuild()
+          //recordIssues enabledForFailure: true, tool: sphinxBuild()
         }
       }
     }

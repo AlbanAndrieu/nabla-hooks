@@ -65,7 +65,7 @@ Install custom hooks
 
 ### Using Pip
 
-`pip install hook`
+`pip install nabla-hooks`
 
 ### From Source
 
@@ -74,15 +74,15 @@ Install custom hooks
 Quality tools
 -------------
 
-### python 3.7
+### python 3.8
 
-Install python 3.7 and virtualenv
+Install python 3.8 and virtualenv
 
-`virtualenv --no-site-packages /opt/ansible/env37 -p python3.7`
+`virtualenv --no-site-packages /opt/ansible/env38 -p python3.8`
 
 `source /opt/ansible/env37/bin/activate`
 
-`pip install -r requirements-current-3.7.txt`
+`pip install -r hooks/requirements-current-3.8.txt -r requirements.testing.txt`
 
 ### pre-commit
 
