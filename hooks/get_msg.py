@@ -18,6 +18,7 @@ init()
 
 __all__ = ['match_msg']
 
+
 @click.command()
 @click.argument('commit_msg_filepath', type=click.Path(exists=False))
 @click.argument('commit_type', type=str, default='')  # message for prepare-commit-msg

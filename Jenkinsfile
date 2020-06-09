@@ -171,9 +171,9 @@ pipeline {
       }
     }
   }
-  post {
-    cleanup {
-      wrapCleanWsOnNode(isEmailEnabled: false)
-    } // cleanup
-  } // post
+  //post {
+  //  cleanup {
+  //    wrapCleanWsOnNode(isEmailEnabled: false)
+  //  } // cleanup
+  //} // post
 }
