@@ -56,7 +56,7 @@ if ${VERBOSE}; then
   echo -e "${green} Begin git check for ${MAX_NUMBER} branches ${BRANCH} for user \"${GIT_USERNAME}\". ${NC}"
 fi
 
-if ! which git &>/dev/null; then
+if ! command -v git&>/dev/null; then
   >&2 echo -e "${red} ${double_arrow} git command not found. ${head_skull} ${NC}"
   exit 1
 fi

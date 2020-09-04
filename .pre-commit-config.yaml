@@ -61,7 +61,7 @@ repos:
     hooks:
     -   id: autopep8
 -   repo: https://gitlab.com/pycqa/flake8
-    rev: 3.7.9  # Use the sha / tag you want to point at
+    rev: 3.7.9
     hooks:
     -   id: flake8
         args: [--max-line-length=120]

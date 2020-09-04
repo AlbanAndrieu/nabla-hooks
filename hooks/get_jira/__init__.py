@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 # name = 'get_jira'
-
 """
     This module allow to customize jira.
 """
