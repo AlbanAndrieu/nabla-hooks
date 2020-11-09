@@ -64,6 +64,7 @@ pipeline {
         script {
 
           def shell = "#!/bin/bash \n" +
+                      "pip uninstall ansible \n" +
                       "source ../scripts/run-python.sh \n" +
                       "./build.sh"
 
@@ -94,16 +95,16 @@ pipeline {
                    "./build.sh"
             } // tee
 
-            publishHTML([
-              allowMissing: true,
-              alwaysLinkToLastBuild: false,
-              keepAll: true,
-              reportDir: "./output/htmlcov/",
-              reportFiles: 'index.html',
-              includes: '**/*',
-              reportName: 'Coverage Report',
-              reportTitles: "Coverage Report Index"
-            ])
+            //publishHTML([
+            //  allowMissing: true,
+            //  alwaysLinkToLastBuild: false,
+            //  keepAll: true,
+            //  reportDir: "./output/htmlcov/",
+            //  reportFiles: 'index.html',
+            //  includes: '**/*',
+            //  reportName: 'Coverage Report',
+            //  reportTitles: "Coverage Report Index"
+            //])
 
             //withSonarQubeWrapper(verbose: true,
             //  skipMaven: true,
@@ -119,7 +120,7 @@ pipeline {
             build = "FAIL" // make sure other exceptions are recorded as failure too
             throw e
           } finally {
-            archiveArtifacts artifacts: "*.log, .tox/py*/log/*.log", onlyIfSuccessful: false, allowEmptyArchive: true
+            archiveArtifacts artifacts: "*.log, .tox/py*/log/*.log, output/coverage.xml", onlyIfSuccessful: false, allowEmptyArchive: true
 
             runHtmlPublishers(["LogParserPublisher", "AnalysisPublisher"])
 

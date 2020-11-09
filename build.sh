@@ -12,7 +12,7 @@
 # shellcheck source=./clean.sh
 #${WORKING_DIR}/clean.sh"
 
-export TOX_TARGET=${TOX_TARGET:-""} # tox --notest  # Pre-populate virtualenv use TOX_TARGET
+export TOX_TARGET=${TOX_TARGET:-"py38"} # tox --notest  # Pre-populate virtualenv use TOX_TARGET
 
 #export PATH="${VIRTUALENV_PATH}/bin:${PATH}"
 echo -e "${cyan} PATH : ${PATH} ${NC}"
