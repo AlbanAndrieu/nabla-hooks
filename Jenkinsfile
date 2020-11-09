@@ -66,7 +66,7 @@ pipeline {
           def shell = "#!/bin/bash \n" +
                       "pip uninstall ansible \n" +
                       "source ../scripts/run-python.sh \n" +
-                      "./build.sh"
+                      "./build.sh \n"
 
           runSphinx(shell: shell, targetDirectory: "nabla-hooks/")
 
@@ -93,14 +93,14 @@ pipeline {
             tee("build.log") {
                 sh "#!/bin/bash \n" +
                    "source ./scripts/run-python.sh\n" +
-                   "export TOX_TARGET="--notest"\n" +
-                   "bash ./build.sh"
+                   "export TOX_TARGET=\"--notest\"\n" +
+                   "./build.sh\n"
             } // tee
 
             tee("tox.log") {
                 sh "#!/bin/bash \n" +
                    "source ./scripts/run-python.sh\n" +
-                   "tox"
+                   "tox\n"
             } // tee
 
             //publishHTML([
@@ -135,7 +135,7 @@ pipeline {
             //recordIssues enabledForFailure: true, tool: [flake8(), pyLint()]
             //pep8()
             //yamlLint()
-          }
+          } // finally
 
         }
       } // steps
@@ -180,7 +180,7 @@ pipeline {
         }
       }
     }
-  }
+  } // stages
   post {
     always {
       //recordIssues enabledForFailure: true,
