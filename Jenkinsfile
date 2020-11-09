@@ -93,8 +93,8 @@ pipeline {
             tee("build.log") {
                 sh "#!/bin/bash \n" +
                    "source ./scripts/run-python.sh\n" +
-                   "export TOX_TARGET=${TOX_TARGET:-"--notest"}\n" +
-                   "./build.sh"
+                   "export TOX_TARGET="--notest"\n" +
+                   "bash ./build.sh"
             } // tee
 
             tee("tox.log") {
@@ -183,10 +183,10 @@ pipeline {
   }
   post {
     always {
-      recordIssues enabledForFailure: true,
-        tools: [taskScanner(),
-                tagList()
-        ]
+      //recordIssues enabledForFailure: true,
+      //  tools: [taskScanner(),
+      //          tagList()
+      //  ]
 
       archiveArtifacts allowEmptyArchive: true, artifacts: '*.log. *.json', excludes: null, fingerprint: false, onlyIfSuccessful: false
 
