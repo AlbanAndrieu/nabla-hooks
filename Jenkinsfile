@@ -103,16 +103,16 @@ pipeline {
                    "tox"
             } // tee
 
-            publishHTML([
-              allowMissing: true,
-              alwaysLinkToLastBuild: false,
-              keepAll: true,
-              reportDir: "./output/htmlcov/",
-              reportFiles: 'index.html',
-              includes: '**/*',
-              reportName: 'Coverage Report',
-              reportTitles: "Coverage Report Index"
-            ])
+            //publishHTML([
+            //  allowMissing: true,
+            //  alwaysLinkToLastBuild: false,
+            //  keepAll: true,
+            //  reportDir: "./output/htmlcov/",
+            //  reportFiles: 'index.html',
+            //  includes: '**/*',
+            //  reportName: 'Coverage Report',
+            //  reportTitles: "Coverage Report Index"
+            //])
 
             //withSonarQubeWrapper(verbose: true,
             //  skipMaven: true,
