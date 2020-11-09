@@ -105,14 +105,14 @@ pipeline {
               reportTitles: "Coverage Report Index"
             ])
 
-            withSonarQubeWrapper(verbose: true,
-              skipMaven: true,
-              skipSonarCheck: false,
-              reportTaskFile: ".scannerwork/report-task.txt",
-              isScannerHome: false,
-              sonarExecutable: "/usr/local/sonar-runner/bin/sonar-scanner",
-              project: "NABLA",
-              repository: "nabla-hooks")
+            //withSonarQubeWrapper(verbose: true,
+            //  skipMaven: true,
+            //  skipSonarCheck: false,
+            //  reportTaskFile: ".scannerwork/report-task.txt",
+            //  isScannerHome: false,
+            //  sonarExecutable: "/usr/local/sonar-runner/bin/sonar-scanner",
+            //  project: "NABLA",
+            //  repository: "nabla-hooks")
 
           } catch (e) {
             currentBuild.result = 'FAILURE'

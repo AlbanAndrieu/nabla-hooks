@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import atexit
 import os
-import random
+//import random
 import sys
 import traceback
 
@@ -56,7 +56,8 @@ def podmena(commit_msg_filepath, enable=False):
             text = f.read()
 
         with open(commit_msg_filepath, 'w') as f:
-            f.write('{} :{}:'.format(text.strip(), random.choice(emoji).strip()))
+            # f.write('{} :{}:'.format(text.strip(), random.choice(emoji).strip()))
+            f.write('{} :{}:'.format(text.strip(), os.urandom(emoji).strip()))
 
 
 try:

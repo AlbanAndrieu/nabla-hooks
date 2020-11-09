@@ -21,7 +21,7 @@ echo -e "${cyan} PYTHONPATH : ${PYTHONPATH} ${NC}"
 
 python -V || true
 
-echo -e "${magenta} pip-upgrade hooks/requirements-current-3.8.txt ${NC}"
+echo -e "${magenta} pip-upgrade --user hooks/requirements-current-3.8.txt ${NC}"
 echo -e "${magenta} pip-upgrade requirements.testing.txt ${NC}"
 
 #pip install --upgrade pip
@@ -38,7 +38,7 @@ coverage --version || true
 #setup-py-upgrade ./
 setup-cfg-fmt setup.cfg
 
-export TOXENV=py38
+export TOXENV=${TOXENV:-"py38"}
 #pip install -U tox
 #pip install tox==3.14.3
 
