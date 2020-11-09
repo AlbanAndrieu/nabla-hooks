@@ -86,6 +86,7 @@ pipeline {
               sh "#!/bin/bash \n" +
                  "whoami \n" +
                  "source ./scripts/run-python.sh\n" +
+                 "pip uninstall ansible \n" +
                  "pre-commit run -a || true"
             } // tee
 
@@ -189,7 +190,9 @@ pipeline {
 
       archiveArtifacts allowEmptyArchive: true, artifacts: '*.log. *.json', excludes: null, fingerprint: false, onlyIfSuccessful: false
 
-      runHtmlPublishers(["LogParserPublisher", "AnalysisPublisher"])
+      //node('any') {
+      //  runHtmlPublishers(["LogParserPublisher", "AnalysisPublisher"])
+      //}
 
     } // always
     //cleanup {
