@@ -45,6 +45,7 @@ export TOXENV=${TOXENV:-"py38"}
 #tox -e py  # Run tox using the version of Python in `PATH`
 
 rm -Rf .tox/
+echo -e "${magenta} tox ${TOX_TARGET} ${NC}"
 tox ${TOX_TARGET}
 RC=$?
 if [ ${RC} -ne 0 ]; then

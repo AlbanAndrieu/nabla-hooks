@@ -89,22 +89,29 @@ pipeline {
                  "pre-commit run -a || true"
             } // tee
 
-            tee("tox.log") {
+            tee("build.log") {
                 sh "#!/bin/bash \n" +
                    "source ./scripts/run-python.sh\n" +
+                   "export TOX_TARGET=${TOX_TARGET:-"--notest"}\n" +
                    "./build.sh"
             } // tee
 
-            //publishHTML([
-            //  allowMissing: true,
-            //  alwaysLinkToLastBuild: false,
-            //  keepAll: true,
-            //  reportDir: "./output/htmlcov/",
-            //  reportFiles: 'index.html',
-            //  includes: '**/*',
-            //  reportName: 'Coverage Report',
-            //  reportTitles: "Coverage Report Index"
-            //])
+            tee("tox.log") {
+                sh "#!/bin/bash \n" +
+                   "source ./scripts/run-python.sh\n" +
+                   "tox"
+            } // tee
+
+            publishHTML([
+              allowMissing: true,
+              alwaysLinkToLastBuild: false,
+              keepAll: true,
+              reportDir: "./output/htmlcov/",
+              reportFiles: 'index.html',
+              includes: '**/*',
+              reportName: 'Coverage Report',
+              reportTitles: "Coverage Report Index"
+            ])
 
             //withSonarQubeWrapper(verbose: true,
             //  skipMaven: true,
@@ -173,9 +180,20 @@ pipeline {
       }
     }
   }
-  //post {
-  //  cleanup {
-  //    wrapCleanWsOnNode(isEmailEnabled: false)
-  //  } // cleanup
-  //} // post
+  post {
+    always {
+      recordIssues enabledForFailure: true,
+        tools: [taskScanner(),
+                tagList()
+        ]
+
+      archiveArtifacts allowEmptyArchive: true, artifacts: '*.log. *.json', excludes: null, fingerprint: false, onlyIfSuccessful: false
+
+      runHtmlPublishers(["LogParserPublisher", "AnalysisPublisher"])
+
+    } // always
+    //cleanup {
+    //  wrapCleanWsOnNode(isEmailEnabled: false)
+    //} // cleanup
+  } // post
 }
