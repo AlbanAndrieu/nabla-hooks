@@ -87,7 +87,9 @@ pipeline {
                  "whoami \n" +
                  "source ./scripts/run-python.sh\n" +
                  "pip uninstall ansible \n" +
-                 "pre-commit run -a || true"
+                 "pre-commit run -a || true" \n" +
+                 "./scripts/run-pylint.sh" \n" +
+                 "./scripts/run-flake8.sh" \n"
             } // tee
 
             tee("build.log") {
@@ -103,16 +105,16 @@ pipeline {
                    "tox\n"
             } // tee
 
-            //publishHTML([
-            //  allowMissing: true,
-            //  alwaysLinkToLastBuild: false,
-            //  keepAll: true,
-            //  reportDir: "./output/htmlcov/",
-            //  reportFiles: 'index.html',
-            //  includes: '**/*',
-            //  reportName: 'Coverage Report',
-            //  reportTitles: "Coverage Report Index"
-            //])
+            publishHTML([
+              allowMissing: true,
+              alwaysLinkToLastBuild: false,
+              keepAll: true,
+              reportDir: "./output/htmlcov/",
+              reportFiles: 'index.html',
+              includes: '**/*',
+              reportName: 'Coverage Report',
+              reportTitles: "Coverage Report Index"
+            ])
 
             //withSonarQubeWrapper(verbose: true,
             //  skipMaven: true,
@@ -150,7 +152,7 @@ pipeline {
             tee("bandit.log") {
                 sh "#!/bin/bash \n" +
                    "source ./scripts/run-python.sh\n" +
-                   "./test/run-bandit.sh"
+                   "./scripts/run-bandit.sh"
 
               publishHTML([
                 allowMissing: false,
@@ -163,7 +165,7 @@ pipeline {
                 reportTitles: "Bandit Report Index"
               ])
 
-              junit testResults: 'output/junit.xml', healthScaleFactor: 2.0, allowEmptyResults: true, keepLongStdio: true
+              junit testResults: 'output/junit-bandit.xml', healthScaleFactor: 2.0, allowEmptyResults: true, keepLongStdio: true
             } // tee
 
           } catch (e) {

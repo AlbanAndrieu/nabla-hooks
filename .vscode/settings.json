@@ -1,0 +1,7 @@
+{
+    "python.linting.pylintEnabled": true,
+    "python.pythonPath": "/opt/ansible/env38/bin/python",
+    "python.testing.unittestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.pytestEnabled": true
+}

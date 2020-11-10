@@ -21,6 +21,7 @@ echo -e "${cyan} PYTHONPATH : ${PYTHONPATH} ${NC}"
 
 python -V || true
 
+echo -e "${magenta} /opt/ansible/env38/bin/pip3.8 install pip-upgrader ${NC}"
 echo -e "${magenta} pip-upgrade --user hooks/requirements-current-3.8.txt ${NC}"
 echo -e "${magenta} pip-upgrade requirements.testing.txt ${NC}"
 
@@ -75,6 +76,8 @@ fi
 #else
 #  echo -e "${green} The package completed successfully. ${NC}"
 #fi
+
+echo -e "${magenta} /usr/local/sonar-runner/bin/sonar-scanner -Dproject.settings=./sonar-project.properties -Dsonar.scanner.force-deprecated-java-version=true ${NC}"
 
 #git tag --delete v1.0.0
 #git push --delete origin v1.0.0
