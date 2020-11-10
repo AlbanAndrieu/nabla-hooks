@@ -6,6 +6,7 @@ import unittest
 # echo "TEST" > ../.git/COMMIT_EDITMSG
 # ./get_msg.py '../.git/COMMIT_EDITMSG' 'message'
 
+# First install me : /opt/ansible/env38/bin/python3 setup.py install
 
 class TestPackage(unittest.TestCase):
     def setUp(self):
@@ -38,3 +39,6 @@ class TestPackage(unittest.TestCase):
             'Use shell only when shell functionality is required',
             str(result),
         )
+
+if __name__ == '__main__':
+    unittest.main()

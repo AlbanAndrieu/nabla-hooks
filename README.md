@@ -80,7 +80,7 @@ Install python 3.8 and virtualenv
 
 `virtualenv --no-site-packages /opt/ansible/env38 -p python3.8`
 
-`source /opt/ansible/env37/bin/activate`
+`source /opt/ansible/env38/bin/activate`
 
 `pip install -r hooks/requirements-current-3.8.txt -r requirements.testing.txt`
 
@@ -105,6 +105,7 @@ Run `git commit -am 'Add key' --no-verify`
 `export JIRA_URL=https://localhost/jira`
 
 `export JIRA_CERT_PATH=/etc/ssl/certs/NABLA-CA-1.crt`
+`export JIRA_CERT_PATH=/etc/ssl/certs/ca-certificates.crt`
 
 `export JENKINS_URL=https://localhost/jenkins/`
 
@@ -137,13 +138,13 @@ Run `git config --global init.templatedir /workspace/users/albandrieu30/nabla-ho
 See [setup-cfg](http://sametmax.com/vive-setup-cfg-et-mort-a-pyproject-toml/)
 
 # Builds a source distribution (a tar archive of all the files needed to build and install the package):
-`python setup.py sdist`
+`python3 setup.py sdist`
 Builds wheels:
-`python setup.py bdist_wheel`
+`python3 setup.py bdist_wheel`
 Build from source:
-`python setup.py build`
+`python3 setup.py build`
 And install:
-`python setup.py install`
+`/opt/ansible/env38/bin/python3 setup.py install`
 
 `sudo python setup.py develop`
 `pip install .`
@@ -166,4 +167,29 @@ python
 `
 from hooks import get_msg
 match_msg
+`
+
+### Test
+
+`
+tox --notest
+tox -e py  # Run tox using the version of Python in PATH
+tox py38
+`
+
+From root directory
+
+`
+export PYTHONPATH=hooks
+pytest --cache-clear --setup-show test/test_pytest.py
+`
+
+### Visual Code
+
+Add PYTHONPATH=hooks for pytest when inside visual studio
+
+`
+export PYTHONPATH=hooks
+echo $PYTHONPATH
+code .
 `
