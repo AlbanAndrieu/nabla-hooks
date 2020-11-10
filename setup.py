@@ -28,7 +28,7 @@ setup(
     # metadata to display on PyPI
     author='Alban Andrieu',
     author_email='alban.andrieu@free.fr',
-    description='This is nabla_custome hooks package',
+    description='This is nabla_custom hooks package',
     long_description=open('README.md').read(),
     keywords='nabla hooks',
     url='https://github.com/AlbanAndrieu/nabla-hooks',

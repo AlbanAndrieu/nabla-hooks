@@ -13,8 +13,10 @@ molecule==3.0.3
 pep8==1.7.1
 pep8-naming==0.10.0
 pip-upgrader==1.4.15
-pre-commit==2.7.1
-pre-commit-hooks==2.5.0
+pre-commit==2.8.2
+pre-commit-hooks==3.3.0
+pylint==2.4.4
+pylint-junit==0.2.0
 pytest==5.4.1
 pytest-cov==2.8.1
 selenium==3.141.0

@@ -14,24 +14,14 @@
 
 export TOX_TARGET=${TOX_TARGET:-"py38"} # tox --notest  # Pre-populate virtualenv use TOX_TARGET
 
+#./run-install.sh
+
 #export PATH="${VIRTUALENV_PATH}/bin:${PATH}"
 echo -e "${cyan} PATH : ${PATH} ${NC}"
 #export PYTHONPATH="${VIRTUALENV_PATH}/lib/python${PYTHON_MAJOR_VERSION}/site-packages/"
 echo -e "${cyan} PYTHONPATH : ${PYTHONPATH} ${NC}"
 
 python -V || true
-
-echo -e "${magenta} /opt/ansible/env38/bin/pip3.8 install pip-upgrader ${NC}"
-echo -e "${magenta} pip-upgrade --user hooks/requirements-current-3.8.txt ${NC}"
-echo -e "${magenta} pip-upgrade requirements.testing.txt ${NC}"
-
-#pip install --upgrade pip
-
-#pip install setup-py-upgrade
-#pip install setup-cfg-fmt
-
-#pip install --upgrade setuptools
-#pip install setuptools wheel twine
 
 #pip install coverage==4.5.3
 coverage --version || true

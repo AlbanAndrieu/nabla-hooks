@@ -87,7 +87,7 @@ pipeline {
                  "whoami \n" +
                  "source ./scripts/run-python.sh\n" +
                  "pip uninstall ansible \n" +
-                 "pre-commit run -a || true" \n" +
+                 "pre-commit run -a || true \n" +
                  "./scripts/run-pylint.sh" \n" +
                  "./scripts/run-flake8.sh" \n"
             } // tee

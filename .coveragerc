@@ -1,3 +1,14 @@
 [report]
 include = hooks/*
 omit = hooks/tests/functional/*
+    # omit everything in /usr
+    /test/*
+
+[html]
+directory = output/htmlcov
+
+[xml]
+output = output/coverage.xml
+
+[json]
+output = output/coverage.json
