@@ -6,7 +6,7 @@
     //],
     "terminal.integrated.env.linux": {
         "PYTHONPATH": "${workspaceFolder}/hooks:/opt/ansible/env38/bin/:/opt/ansible/env38/lib/python3.8/site-packages/"
-    },    
+    },
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
     "python.testing.pytestPath": "/opt/ansible/env38/bin/pytest",
@@ -24,6 +24,6 @@
         //"--ignore=src/ptvsd/_vendored/",
         "--disable-warnings",
         "."
-    ],    
+    ],
     "python.autoComplete.extraPaths": ["${workspaceFolder}/hooks", "./**"],
 }

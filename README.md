@@ -21,17 +21,40 @@ Table of Contents
 
 Requirements
 ------------
-  This pre-commit hooks requires the following to run:
+  This pre-commit hooks is using :
 
   * [pre-commit](http://pre-commit.com)
 
+`pip install pre-commit==2.8.2`
 
-Install pre-commit
-------------------
+Install nabla-hooks as a developer
+----------------------------------
+
+### Python 3.8
+
+Install python 3.8 and virtualenv
+
+`virtualenv --no-site-packages /opt/ansible/env38 -p python3.8`
+
+`source /opt/ansible/env38/bin/activate`
+
+`pip install -r hooks/requirements-current-3.8.txt -r requirements.testing.txt`
+
+Install nabla-hooks to use it
+-----------------------------
+
+### Using Pip
+
+`pip install nabla-hooks`
+
+### From Source
+
+`pip install git+https://github.com/AlbanAndrieu/nabla-hooks.git`
+
+Add .pre-commit-config.yaml in you git project
+----------------------------------------------
 
 1. create .pre-commit-config.yaml in you git project
-2. pre-commit install
-3. enjoy it
 
 example .pre-commit-config.yaml as following:
 
@@ -60,43 +83,20 @@ Testing locally
 
 $ `pre-commit try-repo . git-branches-check --verbose`
 
-Install custom hooks
-------------------
-
-### Using Pip
-
-`pip install nabla-hooks`
-
-### From Source
-
-`pip install git+https://github.com/AlbanAndrieu/nabla-hooks.git`
-
-Quality tools
--------------
-
-### python 3.8
-
-Install python 3.8 and virtualenv
-
-`virtualenv --no-site-packages /opt/ansible/env38 -p python3.8`
-
-`source /opt/ansible/env38/bin/activate`
-
-`pip install -r hooks/requirements-current-3.8.txt -r requirements.testing.txt`
-
-### pre-commit
-
-See [pre-commit](http://pre-commit.com/)
+2. Install in your repo
 
 Run `pre-commit install`
 `pre-commit install -f --install-hooks`
+
+3. enjoy it
 
 Run `pre-commit run --all-files`
 
 Run `SKIP=flake8 git commit -am 'Add key'`
 Run `git commit -am 'Add key' --no-verify`
 
-### pre-commit specific hook
+Override global environement variable
+----------------------------------------------
 
 `export JIRA_USER=aandrieu`
 
@@ -126,14 +126,17 @@ First time run `cp hooks/* .git/hooks/` or `rm -Rf ./.git/hooks/ && ln -s ../hoo
 We have two directories that interest us:
 
 The '/usr/share/git-core/templates/' directory on Linux and 'C:/Program Files (x86)/Git/share/git-core/templates/' directory on Windows (Note that on 32bit machines msysGit is installed by default on 'C:/Program Files/…') in which the default hooks are being copied from. If you installed Git using another configuration the installation might reside in a different folder. Adjust the path accordingly.
+
 The '.git/hooks/' directory is the directory in which the hooks templates are being copied to.
+
 The hooked are being copied from the '[...]/share/git-core/templates/'  directory.  There are other types of templates but they are out of scope for this post.
 
 Note:  If you change the templates directory the hooks directory  must be a subdirectory of the templates directory. Do not set the templates directory to the desired hooks directory instead.
 
 Run `git config --global init.templatedir /workspace/users/albandrieu30/nabla-hooks/`
 
-### packaging
+Package nabla-hooks as a developer
+----------------------------------------------
 
 See [setup-cfg](http://sametmax.com/vive-setup-cfg-et-mort-a-pyproject-toml/)
 
@@ -150,7 +153,7 @@ And install:
 `pip install .`
 `pip install -e ./`
 
-# [api-tokens](https://test.pypi.org/manage/account/#api-tokens)
+See [api-tokens](https://test.pypi.org/manage/account/#api-tokens)
 
 `
 python3 setup.py sdist bdist_wheel
@@ -159,6 +162,9 @@ python3 -m twine upload --repository testpypi dist/*
 `
 
 Uploaded [nabla-hooks](https://test.pypi.org/project/nabla-hooks/0.0.1/)
+
+Test nabla-hooks as a developer
+----------------------------------------------
 
 ### shell usage
 
@@ -184,7 +190,8 @@ export PYTHONPATH=hooks
 pytest --cache-clear --setup-show test/test_pytest.py
 `
 
-### Visual Code
+Visual Code for nabla-hooks
+----------------------------------------------
 
 Add PYTHONPATH=hooks for pytest when inside visual studio
 

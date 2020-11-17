@@ -8,6 +8,7 @@ import unittest
 
 # First install me : /opt/ansible/env38/bin/python3 setup.py install
 
+
 class TestPackage(unittest.TestCase):
     def setUp(self):
         self.local_test_dir = os.path.dirname(os.path.realpath(__file__))
@@ -39,6 +40,7 @@ class TestPackage(unittest.TestCase):
             'Use shell only when shell functionality is required',
             str(result),
         )
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -28,6 +28,7 @@ repos:
                       .mvn/
                   )$
     -   id: check-json
+        exclude: ^.vscode/
     -   id: check-xml
     -   id: check-yaml
     -   id: check-symlinks

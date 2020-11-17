@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+from termcolor import colored
+from get_msg import match_msg
+from colorama import init
+import traceback
+import sys
 import atexit
 import os
 //import random
-import sys
-import traceback
 
-from colorama import init
-from get_msg import match_msg
-from termcolor import colored
 
 # use Colorama to make Termcolor work on Windows too
 init()

@@ -145,6 +145,7 @@ pipeline {
               sonarExecutable: "/usr/local/sonar-runner/bin/sonar-scanner",
               project: "nabla",
               repository: "nabla-hooks")
+            //sh "/usr/local/sonar-runner/bin/sonar-scanner -D sonar-project.properties"
 
           } catch (e) {
             currentBuild.result = 'FAILURE'
