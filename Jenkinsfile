@@ -30,11 +30,12 @@ pipeline {
   parameters {
     string(name: 'DRY_RUN', defaultValue: '--check', description: 'Default mode used to test playbook')
     booleanParam(name: 'CLEAN_RUN', defaultValue: false, description: 'Clean before run')
+    booleanParam(name: 'RUN_TOX', defaultValue: true, description: 'Run tox tests')
   }
   environment {
-    DRY_RUN = "${params.DRY_RUN}"
-    CLEAN_RUN = "${params.CLEAN_RUN}"
-    DEBUG_RUN = "${params.DEBUG_RUN}"
+    //DRY_RUN = "${params.DRY_RUN}"
+    //CLEAN_RUN = "${params.CLEAN_RUN}"
+    //DEBUG_RUN = "${params.DEBUG_RUN}"
     BRANCH_NAME = "${env.BRANCH_NAME}".replaceAll("feature/","")
     PROJECT_BRANCH = "${env.GIT_BRANCH}".replaceFirst("origin/","")
     BUILD_ID = "${env.BUILD_ID}"
@@ -64,7 +65,7 @@ pipeline {
         script {
 
           def shell = "#!/bin/bash \n" +
-                      "pip uninstall ansible \n" +
+                      "pip uninstall --yes ansible \n" +
                       "source ../scripts/run-python.sh \n" +
                       "./build.sh \n"
 
@@ -86,7 +87,7 @@ pipeline {
               sh "#!/bin/bash \n" +
                  "whoami \n" +
                  "source ./scripts/run-python.sh\n" +
-                 "pip uninstall ansible\n" +
+                 "pip uninstall --yes ansible\n" +
                  "pre-commit run -a || true\n" +
                  "./scripts/run-pylint.sh\n" +
                  "./scripts/run-flake8.sh\n"
@@ -99,22 +100,42 @@ pipeline {
                    "./build.sh\n"
             } // tee
 
-            tee("tox.log") {
-                sh "#!/bin/bash \n" +
-                   "source ./scripts/run-python.sh\n" +
-                   "tox\n"
-            } // tee
+            if ( params.RUN_TOX.toBoolean() == true ) {
+                tee("tox.log") {
+                    //toxResult = sh "#!/bin/bash \n" +
+                    //   "source ./scripts/run-python.sh\n" +
+                    //   "tox\n"
+                    toxResult = sh (script: "#!/bin/bash \n" +
+                       "source ./scripts/run-python.sh\n" +
+                       "tox\n", returnStatus: true)
+                    echo "TOX RETURN CODE : ${toxResult}"
+                    if (toxResult == 0) {
+                      echo "TOX PACKAGE SUCCESS"
+                    } else {
+                      echo "WARNING : Tox failed, check output at \'tox.log\' "
+                      if (toxResult == 1) {
+                        echo "TOX TESTS FAILURE"
+                        currentBuild.result = 'UNSTABLE'
+                        error 'There are errors in tox tests'
+                      } else {
+                        echo "TOX TESTS FAILURE"
+                        currentBuild.result = 'FAILURE'
+                        error 'There are errors in tox'
+                      }
+                    }
+                } // tee
 
-            publishHTML([
-              allowMissing: true,
-              alwaysLinkToLastBuild: false,
-              keepAll: true,
-              reportDir: "./output/htmlcov/",
-              reportFiles: 'index.html',
-              includes: '**/*',
-              reportName: 'Coverage Report',
-              reportTitles: "Coverage Report Index"
-            ])
+                publishHTML([
+                  allowMissing: true,
+                  alwaysLinkToLastBuild: false,
+                  keepAll: true,
+                  reportDir: "./output/htmlcov/",
+                  reportFiles: 'index.html',
+                  includes: '**/*',
+                  reportName: 'Coverage Report',
+                  reportTitles: "Coverage Report Index"
+                ])
+            } // RUN_TOX
 
             withSonarQubeWrapper(verbose: true,
               skipMaven: true,
