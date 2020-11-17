@@ -34,6 +34,7 @@ repos:
     -   id: check-symlinks
     -   id: check-merge-conflict
     -   id: debug-statements
+        exclude: ^.cache/
     -   id: detect-private-key
         exclude: >
                   (?x)^(
@@ -78,6 +79,7 @@ repos:
     rev: v2.0.0
     hooks:
     -   id: reorder-python-imports
+        exclude: ^.cache/
 #       language_version: python3
 #       language_version: python2.7
 -   repo: https://github.com/asottile/add-trailing-comma
