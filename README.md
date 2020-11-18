@@ -12,12 +12,33 @@ Nabla custom git hooks
 
 This project intend to be uses by all Nabla products
 
-Table of Contents
------------------
+<!-- toc -->
+<!-- tocstop -->
 
-  * [Requirements](#requirements)
-  * [Install](#install)
-  * [Quality tools](#qualitytools)
+<!--ts-->
+   * [nabla-hooks](#nabla-hooks)
+      * [Requirements](#requirements)
+      * [Install nabla-hooks as a developer](#install-nabla-hooks-as-a-developer)
+         * [Python 3.8](#python-38)
+      * [Install nabla-hooks to use it](#install-nabla-hooks-to-use-it)
+         * [Using Pip](#using-pip)
+         * [From Source](#from-source)
+      * [Add .pre-commit-config.yaml in you git project](#add-pre-commit-configyaml-in-you-git-project)
+      * [Override global environement variable](#override-global-environement-variable)
+         * [The Templates Directories](#the-templates-directories)
+      * [Local](#local)
+      * [Global](#global)
+      * [Package nabla-hooks as a developer](#package-nabla-hooks-as-a-developer)
+         * [Build a source distribution (a tar archive of all the files needed to build and install the package):](#build-a-source-distribution-a-tar-archive-of-all-the-files-needed-to-build-and-install-the-package)
+         * [Upload a source distribution](#upload-a-source-distribution)
+      * [Test nabla-hooks as a developer](#test-nabla-hooks-as-a-developer)
+         * [shell usage](#shell-usage)
+         * [Test](#test)
+      * [Visual Code for nabla-hooks](#visual-code-for-nabla-hooks)
+
+<!-- Added by: albandrieu, at: Wed 18 Nov 2020 11:58:21 PM CET -->
+
+<!--te-->
 
 Requirements
 ------------
@@ -140,7 +161,7 @@ Package nabla-hooks as a developer
 
 See [setup-cfg](http://sametmax.com/vive-setup-cfg-et-mort-a-pyproject-toml/)
 
-# Builds a source distribution (a tar archive of all the files needed to build and install the package):
+### Build a source distribution (a tar archive of all the files needed to build and install the package):
 `python3 setup.py sdist`
 Builds wheels:
 `python3 setup.py bdist_wheel`
@@ -152,6 +173,8 @@ And install:
 `sudo python setup.py develop`
 `pip install .`
 `pip install -e ./`
+
+### Upload a source distribution
 
 See [api-tokens](https://test.pypi.org/manage/account/#api-tokens)
 
@@ -199,4 +222,14 @@ Add PYTHONPATH=hooks for pytest when inside visual studio
 export PYTHONPATH=hooks
 echo $PYTHONPATH
 code .
+`
+
+Update README.md Table of Contents
+----------------------------------------------
+
+  * [github-markdown-toc](https://github.com/ekalinin/github-markdown-toc)
+
+`
+brew install github-markdown-toc
+gh-md-toc --insert README.md
 `

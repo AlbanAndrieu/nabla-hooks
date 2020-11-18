@@ -134,7 +134,7 @@ repos:
     -   id: htmllint
     -   id: markdown-toc
         # optional custom config:
-        args: [--indent, "  "]
+        #args: [--indent, "  "]
     -   id: dockerfile_lint
         # optional custom config:
         args: [--json, --verbose, --dockerfile]
