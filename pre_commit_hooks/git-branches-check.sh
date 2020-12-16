@@ -33,7 +33,7 @@ VERBOSE=false
 DEBUG=false
 MAX_NUMBER=2
 DEBUGFILE=
-BRANCH='\*\|master\|develop\|release'
+BRANCH="'TODO|master|develop|release|HEAD'"
 while true; do
   case "$1" in
     -v | --verbose ) VERBOSE=true; shift ;;
@@ -65,20 +65,20 @@ git remote prune origin > /dev/null 2>&1 || true
 git fetch --prune > /dev/null 2>&1 || true
 
 if ${VERBOSE}; then
-  echo -e "${magenta} git branch -r --merged | grep -c -v ${BRANCH}. ${NC}"
+  echo -e "${magenta} git branch -r --merged | grep -c -Ev ${BRANCH}. ${NC}"
 fi
-count=$(git branch -r --merged 2> /dev/null | grep -c -v ${BRANCH} || true)
+count=$(git branch -r --merged 2> /dev/null | grep -c -Ev ${BRANCH} || true)
 
 if [[ -f ${DEBUGFILE} ]]; then
-   git branch -r --merged | grep -c -v ${BRANCH} > ${DEBUGFILE} 2>&1
+   git branch -r --merged | grep -c -Ev ${BRANCH} > ${DEBUGFILE} 2>&1
 fi
 
 if [ $count -gt ${MAX_NUMBER} ]; then
    echo -e "${red} ${double_arrow} You have more than ${MAX_NUMBER} branches ${reverse_exclamation} Please remove old stale branches from git ${head_skull} ${NC}"
    echo -e "${cyan} Find them ${happy_smiley}  doing : ${NC}"
-   echo -e "${cyan} git branch -r --merged | grep -v ${BRANCH} ${NC}"
+   echo -e "${cyan} git branch -r --merged | grep -Ev ${BRANCH} ${NC}"
    # shellcheck disable=SC2006,SC2046
-   for branch in $(git branch -r --merged | grep -v ${BRANCH}); do echo -e `git show --format="%ci %cr %an" $branch | grep "${GIT_USERNAME}" | head -n 1` \\t$branch; done | sort -r
+   for branch in $(git branch -r --merged | grep -Ev ${BRANCH}); do git show --format="%ci %cr %an" $branch | head -n 1 | grep "${GIT_USERNAME}" && echo -e \\t$branch; done | sort -r
    echo -e "${magenta} And delete them doing : ${NC}"
    echo -e "${magenta} git branch -d the_local_branch ${NC}"
    echo -e "${magenta} git push origin --delete the_remote_branch ${NC}"

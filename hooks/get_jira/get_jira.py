@@ -83,11 +83,23 @@ def match_issue(branch: str, verbose=False) -> str:
 
     issue = 'UNKNOWN'
 
-    # Matches any unique issue code
-    pattern = re.compile(r'(^feature|^bugfix)\/([A-Z]{3,5}-[0-9]+)')
-    issue = re.search(pattern, branch).group(2)  # Extract issue code
-    if verbose:
-        print(colored('Issue number detected : {}.'.format(issue), 'green'))
+    try:
+
+        # Matches any unique issue code
+        pattern = re.compile(r'(^feature|^bugfix)\/([A-Z]{3,5}-[0-9]+)')
+        issue = re.search(pattern, branch).group(2)  # Extract issue code
+        if verbose:
+            print(colored('Issue number detected : {}.'.format(issue), 'green'))
+
+    except Exception as e:  # noqa: ignore=E722
+        if verbose:
+            traceback.print_exc()
+        print(
+            colored(
+                'Please set a valid JIRA', 'red',
+            ),
+        )
+        sys.exit(2)
 
     return issue
 
@@ -146,7 +158,9 @@ def match_jira(issue: str, basic_auth: Tuple[str, str] = ('', ''), verbose=False
 
         options = {
             'server': get_jira_url(),
-            'verify': get_certificat_path(),
+            'verify': False,
+            # 'verify': True,
+            # 'client_cert': get_certificat_path(),
         }
 
         jira = JIRA(options, basic_auth=basic_auth)

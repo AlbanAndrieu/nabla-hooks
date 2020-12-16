@@ -12,33 +12,31 @@ Nabla custom git hooks
 
 This project intend to be uses by all Nabla products
 
+# Table of contents
+
 <!-- toc -->
+
+- [Requirements](#requirements)
+- [Install nabla-hooks as a developer](#install-nabla-hooks-as-a-developer)
+  * [Python 3.8](#python-38)
+- [Install nabla-hooks to use it](#install-nabla-hooks-to-use-it)
+  * [Using Pip](#using-pip)
+  * [From Source](#from-source)
+- [Add .pre-commit-config.yaml in you git project](#add-pre-commit-configyaml-in-you-git-project)
+- [Override global environement variable](#override-global-environement-variable)
+  * [The Templates Directories](#the-templates-directories)
+- [Local](#local)
+- [Global](#global)
+- [Package nabla-hooks as a developer](#package-nabla-hooks-as-a-developer)
+  * [Build a source distribution (a tar archive of all the files needed to build and install the package):](#build-a-source-distribution-a-tar-archive-of-all-the-files-needed-to-build-and-install-the-package)
+  * [Upload a source distribution](#upload-a-source-distribution)
+- [Test nabla-hooks as a developer](#test-nabla-hooks-as-a-developer)
+  * [shell usage](#shell-usage)
+  * [Test](#test)
+- [Visual Code for nabla-hooks](#visual-code-for-nabla-hooks)
+- [Update README.md Table of Contents](#update-readmemd-table-of-contents)
+
 <!-- tocstop -->
-
-<!--ts-->
-   * [nabla-hooks](#nabla-hooks)
-      * [Requirements](#requirements)
-      * [Install nabla-hooks as a developer](#install-nabla-hooks-as-a-developer)
-         * [Python 3.8](#python-38)
-      * [Install nabla-hooks to use it](#install-nabla-hooks-to-use-it)
-         * [Using Pip](#using-pip)
-         * [From Source](#from-source)
-      * [Add .pre-commit-config.yaml in you git project](#add-pre-commit-configyaml-in-you-git-project)
-      * [Override global environement variable](#override-global-environement-variable)
-         * [The Templates Directories](#the-templates-directories)
-      * [Local](#local)
-      * [Global](#global)
-      * [Package nabla-hooks as a developer](#package-nabla-hooks-as-a-developer)
-         * [Build a source distribution (a tar archive of all the files needed to build and install the package):](#build-a-source-distribution-a-tar-archive-of-all-the-files-needed-to-build-and-install-the-package)
-         * [Upload a source distribution](#upload-a-source-distribution)
-      * [Test nabla-hooks as a developer](#test-nabla-hooks-as-a-developer)
-         * [shell usage](#shell-usage)
-         * [Test](#test)
-      * [Visual Code for nabla-hooks](#visual-code-for-nabla-hooks)
-
-<!-- Added by: albandrieu, at: Wed 18 Nov 2020 11:58:21 PM CET -->
-
-<!--te-->
 
 Requirements
 ------------
@@ -226,6 +224,14 @@ code .
 
 Update README.md Table of Contents
 ----------------------------------------------
+
+
+  * [github-markdown-toc](https://github.com/jonschlinkert/markdown-toc)
+  * With [github-markdown-toc](https://github.com/Lucas-C/pre-commit-hooks-nodejs)
+
+`
+npm install --save markdown-toc
+`
 
   * [github-markdown-toc](https://github.com/ekalinin/github-markdown-toc)
 
