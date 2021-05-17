@@ -93,7 +93,7 @@ repos:
         files: \.(yaml|yml)$
         exclude: '.travis.yml'
 -   repo: https://github.com/doublify/pre-commit-hindent.git
-    rev: b3680b6ebf9f7cf29b19307f246adef66756feef
+    rev: master
     hooks:
     -   id: hindent
 -   repo: https://github.com/detailyang/pre-commit-shell
