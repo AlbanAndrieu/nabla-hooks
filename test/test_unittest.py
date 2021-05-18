@@ -3,7 +3,7 @@ import os
 import sys
 import unittest
 
-import get_jira.get_auth as script1  # The code to test
+# import get_jira.get_auth as script1  # The code to test
 
 # sys.path.append("../hooks")
 sys.path.append('./hooks')

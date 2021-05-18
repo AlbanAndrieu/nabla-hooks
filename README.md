@@ -18,12 +18,13 @@ This project intend to be uses by all Nabla products
 
 - [Requirements](#requirements)
 - [Install nabla-hooks as a developer](#install-nabla-hooks-as-a-developer)
-  * [Python 3.8](#python-38)
+  * [Using virtualenv](#using-virtualenv)
 - [Install nabla-hooks to use it](#install-nabla-hooks-to-use-it)
   * [Using Pip](#using-pip)
   * [From Source](#from-source)
 - [Add .pre-commit-config.yaml in you git project](#add-pre-commit-configyaml-in-you-git-project)
 - [Override global environement variable](#override-global-environement-variable)
+  * [Login](#login)
   * [The Templates Directories](#the-templates-directories)
 - [Local](#local)
 - [Global](#global)
@@ -33,31 +34,37 @@ This project intend to be uses by all Nabla products
 - [Test nabla-hooks as a developer](#test-nabla-hooks-as-a-developer)
   * [shell usage](#shell-usage)
   * [Test](#test)
-- [Visual Code for nabla-hooks](#visual-code-for-nabla-hooks)
+  * [Visual Code](#visual-code)
 - [Update README.md Table of Contents](#update-readmemd-table-of-contents)
 
 <!-- tocstop -->
 
 Requirements
 ------------
-  This pre-commit hooks is using :
+  This hooks requires the following to run:
+
+  * [jira](https://pypi.org/project/jira/)
+
+See requirements.txt for mandatory packages.
+
+  This pre-commit hooks requires the following to run:
 
   * [pre-commit](http://pre-commit.com)
-
-`pip install pre-commit==2.8.2`
 
 Install nabla-hooks as a developer
 ----------------------------------
 
-### Python 3.8
+### Using virtualenv
 
 Install python 3.8 and virtualenv
 
-`virtualenv --no-site-packages /opt/ansible/env38 -p python3.8`
+```bash
+virtualenv --no-site-packages /opt/ansible/env38 -p python3.8
+source /opt/ansible/env38/bin/activate
 
-`source /opt/ansible/env38/bin/activate`
-
-`pip install -r hooks/requirements-current-3.8.txt -r requirements.testing.txt`
+```bash
+pip3.8 install -r hooks/requirements.txt -r requirements.testing.txt
+```
 
 Install nabla-hooks to use it
 -----------------------------
@@ -117,20 +124,34 @@ Run `git commit -am 'Add key' --no-verify`
 Override global environement variable
 ----------------------------------------------
 
-`export JIRA_USER=aandrieu`
 
-`export JIRA_PASSWORD=XXX`
+### Login
 
-`export JIRA_URL=https://localhost/jira`
+See [jira](https://jira.readthedocs.io/en/master/examples.html#authentication)
 
-`export JIRA_CERT_PATH=/etc/ssl/certs/NABLA-CA-1.crt`
-`export JIRA_CERT_PATH=/etc/ssl/certs/ca-certificates.crt`
+#### With user/pass
 
-`export JENKINS_URL=https://localhost/jenkins/`
 
-`export JENKINS_USER=aandrieu`
+```bash
+export JIRA_USER=aandrieu
+export JIRA_PASSWORD=XXX
+export JIRA_URL=https://localhost/jira
+export JIRA_CERT_PATH=/etc/ssl/certs/NABLA-CA-1.crt
+export JIRA_CERT_PATH=/etc/ssl/certs/ca-certificates.crt
 
-`export JENKINS_USER_TOKEN=117e17192512cebff9e0009d752f9e2b29`
+#### With email/token
+
+```bash
+export JIRA_USER=alban.andrieu@free.fr
+export JIRA_PASSWORD=XXX # the token you generated
+export JIRA_URL==https://localhost/jira
+```
+
+```bash
+export JENKINS_URL=https://localhost/jenkins/
+export JENKINS_USER=aandrieu
+export JENKINS_USER_TOKEN=XXX
+```
 
 ### The Templates Directories
 
@@ -138,21 +159,28 @@ See [git-hooks-using-python](http://omerkatz.com/blog/2013/5/23/git-hooks-part-2
 
 ## Local
 
-First time run `cp hooks/* .git/hooks/` or `rm -Rf ./.git/hooks/ && ln -s ../hooks ./.git/hooks && git checkout thisrepo hooks/`
+First time run
+```bash
+cp -r hooks/* .git/hooks/` or `rm -Rf ./.git/hooks/ && ln -s ../hooks ./.git/hooks && git checkout thisrepo hooks/
+
+```
 
 ## Global
 
 We have two directories that interest us:
 
-The '/usr/share/git-core/templates/' directory on Linux and 'C:/Program Files (x86)/Git/share/git-core/templates/' directory on Windows (Note that on 32bit machines msysGit is installed by default on 'C:/Program Files/…') in which the default hooks are being copied from. If you installed Git using another configuration the installation might reside in a different folder. Adjust the path accordingly.
+The `/usr/share/git-core/templates/` directory on Linux and `C:/Program Files (x86)/Git/share/git-core/templates/` directory on Windows (Note that on 32bit machines msysGit is installed by default on 'C:/Program Files/…') in which the default hooks are being copied from. If you installed Git using another configuration the installation might reside in a different folder. Adjust the path accordingly.
 
-The '.git/hooks/' directory is the directory in which the hooks templates are being copied to.
+The `.git/hooks/` directory is the directory in which the hooks templates are being copied to.
 
-The hooked are being copied from the '[...]/share/git-core/templates/'  directory.  There are other types of templates but they are out of scope for this post.
+The hooked are being copied from the `[...]/share/git-core/templates/` directory.  There are other types of templates but they are out of scope for this post.
 
 Note:  If you change the templates directory the hooks directory  must be a subdirectory of the templates directory. Do not set the templates directory to the desired hooks directory instead.
 
-Run `git config --global init.templatedir /workspace/users/albandrieu30/nabla-hooks/`
+Run
+```bash
+git config --global init.templatedir /workspace/users/albandrieu30/nabla-hooks/
+```
 
 Package nabla-hooks as a developer
 ----------------------------------------------
@@ -198,29 +226,28 @@ match_msg
 
 ### Test
 
-`
+```bash
 tox --notest
 tox -e py  # Run tox using the version of Python in PATH
 tox py38
-`
+```
 
 From root directory
 
-`
+```bash
 export PYTHONPATH=hooks
 pytest --cache-clear --setup-show test/test_pytest.py
-`
+```
 
-Visual Code for nabla-hooks
-----------------------------------------------
+### Visual Code
 
 Add PYTHONPATH=hooks for pytest when inside visual studio
 
-`
+```bash
 export PYTHONPATH=hooks
 echo $PYTHONPATH
 code .
-`
+```
 
 Update README.md Table of Contents
 ----------------------------------------------
