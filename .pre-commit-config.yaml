@@ -11,7 +11,7 @@ repos:
 #    rev: v2.1.0 # ok python3.6  # 18.04.3
 #    rev: v2.2.3 # ok python3.6  # 19.04 but failing on 18.04.3
 #    rev: v2.4.0 # ok python3.6 on Ubuntu 18.04 AND python3.7 on Ubuntu 19.04
-    rev: v3.3.0
+    rev: v3.4.0  # ok python3.6 on Ubuntu 18.04 AND python3.7 on Ubuntu 19.04 AND python3.8 on Ubuntu 20.04
     hooks:
     -   id: trailing-whitespace
     -   id: end-of-file-fixer
@@ -151,7 +151,7 @@ repos:
         types: [shell]
         always_run: true
         verbose: true
-        additional_dependencies: [jira>=2.0.0]
+        #additional_dependencies: [jira>=2.0.0]
         #args: [--max=1, --verbose, --debug]
 #-   repo: local
 #    hooks:
