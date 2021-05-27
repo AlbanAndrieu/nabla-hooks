@@ -25,6 +25,7 @@ This project intend to be uses by all Nabla products
 - [Add .pre-commit-config.yaml in you git project](#add-pre-commit-configyaml-in-you-git-project)
 - [Override global environement variable](#override-global-environement-variable)
   * [Login](#login)
+    + [With user/pass](#with-userpass)
   * [The Templates Directories](#the-templates-directories)
 - [Local](#local)
 - [Global](#global)
