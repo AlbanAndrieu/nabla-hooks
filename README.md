@@ -4,7 +4,7 @@
 [![Gitter](https://badges.gitter.im/nabla-hooks/Lobby.svg)](https://gitter.im/nabla-hooks/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![Minimal java version](https://img.shields.io/badge/java-1.8-yellow.svg)](https://img.shields.io/badge/java-1.8-yellow.svg)
 
-[![Jenkins build Status](http://albandrieu.com:8686/job/nabla-hooks/badge/icon)](http://albandrieu.com:8686/jenkins/job/nabla-hooks/)
+[![Jenkins build Status](http://albandrieu.com/jenkins/buildStatus/icon?job=nabla-hooks)](http://albandrieu.com:8686/jenkins/job/nabla-hooks/)
 [![Travis Build Status](https://travis-ci.org/AlbanAndrieu/nabla-hooks.svg?branch=master)](https://travis-ci.org/AlbanAndrieu/nabla-hooks)
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=MICROSOFT%3Amaster&metric=alert_status)](https://sonarcloud.io/dashboard/index/MICROSOFT%3Amaster)
 
@@ -86,7 +86,7 @@ example .pre-commit-config.yaml as following:
 
 ```yaml
 -   repo: https://github.com/AlbanAndrieu/nabla-hooks.git
-    rev: v1.0.0
+    rev: v1.0.2
     hooks:
     - id: git-branches-check
 ```
@@ -210,7 +210,7 @@ nano $HOME/.pypirc
 python3 -m twine upload --repository testpypi dist/*
 `
 
-Uploaded [nabla-hooks](https://test.pypi.org/project/nabla-hooks/0.0.1/)
+Uploaded [nabla-hooks](https://test.pypi.org/project/nabla-hooks/1.0.2/)
 
 Test nabla-hooks as a developer
 ----------------------------------------------
