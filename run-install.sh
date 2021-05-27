@@ -26,6 +26,6 @@ echo -e "${magenta} pip install -r ./requirements.txt -r requirements.testing.tx
 #pip install setup-cfg-fmt
 
 #pip install --upgrade setuptools
-#pip install setuptools wheel twine
+pip install setuptools wheel twine
 
 exit 0

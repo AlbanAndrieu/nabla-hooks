@@ -7,4 +7,4 @@
 
 name = 'nabla_hooks'
 
-__version__ = '0.0.1'
+__version__ = 'v1.0.2'

@@ -4,7 +4,7 @@
 [![Gitter](https://badges.gitter.im/nabla-hooks/Lobby.svg)](https://gitter.im/nabla-hooks/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![Minimal java version](https://img.shields.io/badge/java-1.8-yellow.svg)](https://img.shields.io/badge/java-1.8-yellow.svg)
 
-[![Jenkins build Status](http://albandrieu.com:8686/job/nabla-hooks/badge/icon)](http://albandrieu.com:8686/job/nabla-hooks/)
+[![Jenkins build Status](http://albandrieu.com:8686/job/nabla-hooks/badge/icon)](http://albandrieu.com:8686/jenkins/job/nabla-hooks/)
 [![Travis Build Status](https://travis-ci.org/AlbanAndrieu/nabla-hooks.svg?branch=master)](https://travis-ci.org/AlbanAndrieu/nabla-hooks)
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=MICROSOFT%3Amaster&metric=alert_status)](https://sonarcloud.io/dashboard/index/MICROSOFT%3Amaster)
 

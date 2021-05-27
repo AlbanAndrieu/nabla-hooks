@@ -30,10 +30,21 @@ setup-cfg-fmt setup.cfg
 ${WORKING_DIR}/run-test.sh
 
 echo -e "${magenta} /usr/local/sonar-runner/bin/sonar-scanner -Dproject.settings=./sonar-project.properties -Dsonar.scanner.force-deprecated-java-version=true ${NC}"
+echo -e "${cyan} https://sonarcloud.io/dashboard?id=nabla%3Anabla-hooks ${NC}"
+
+echo -e "${magenta} Change hooks/__init__.py version ${NC}"
 
 #git tag --delete v1.0.0
 #git push --delete origin v1.0.0
-echo -e "${magenta} git tag v1.0.0 ${NC}"
+echo -e "${magenta} git tag v1.0.2 ${NC}"
 echo -e "${magenta} git push origin --tags ${NC}"
+
+echo -e "${cyan} PACKAGE ${NC}"
+
+echo -e "${cyan} python setup.py sdist bdist_wheel ${NC}"
+python setup.py sdist bdist_wheel
+echo -e "${magenta} twine upload dist/* ${NC}"
+
+echo -e "${cyan} https://pypi.org/project/nabla-hooks/1.0.2/ ${NC}"
 
 exit 0
