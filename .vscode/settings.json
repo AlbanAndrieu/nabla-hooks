@@ -1,5 +1,25 @@
 {
-    "python.linting.pylintEnabled": true,
+    "files.exclude": {
+        "out": true, // set this to true to hide the "out" folder with the compiled JS files
+        "**/*.pyc": true,
+        ".nyc_output": true,
+        "obj": true,
+        "bin": true,
+        "**/__pycache__": true,
+        "**/node_modules": true,
+        ".vscode-test": false,
+        ".vscode test": false,
+        "**/.mypy_cache/**": true,
+        "**/.ropeproject/**": true
+    },
+    "search.exclude": {
+        "out": true, // set this to false to include "out" folder in search results
+        "**/node_modules": true,
+        "coverage": true,
+        "languageServer*/**": true,
+        ".vscode-test": true,
+        ".vscode test": true
+    },
     "python.pythonPath": "/opt/ansible/env38/bin/python",
     //"terminal.integrated.shellArgs.linux": [
     //    "-l"
@@ -7,17 +27,19 @@
     "terminal.integrated.env.linux": {
         "PYTHONPATH": "${workspaceFolder}/hooks:/opt/ansible/env38/bin/:/opt/ansible/env38/lib/python3.8/site-packages/"
     },
-    "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true,
+    "python.testing.unittestEnabled": true,
+    "python.testing.pytestEnabled": false,
     "python.testing.pytestPath": "/opt/ansible/env38/bin/pytest",
     "python.testing.unittestArgs": [
         "-v",
         "-s",
         "./test",
         "-p",
-        "test_*.py"
+        "*test*.py"
     ],
     "python.linting.enabled": false,
+    "python.workspaceSymbols.enabled": false,
+    "python.formatting.provider": "black",
     "python.testing.nosetestsEnabled": false,
     "python.testing.cwd": "${workspaceFolder}",
     "python.testing.pytestArgs": [
@@ -26,4 +48,12 @@
         "."
     ],
     "python.autoComplete.extraPaths": ["${workspaceFolder}/hooks", "./**"],
+    "python.languageServer": "Microsoft",
+    "python.analysis.logLevel": "Trace",
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Args": [
+        // Match what black does.
+        "--max-line-length=88"
+    ],
 }

@@ -1,10 +1,10 @@
-# nabla-hooks
+## [![Nabla](http://albandrieu.com/nabla/index/assets/nabla/nabla-4.png)](https://github.com/AlbanAndrieu)  nabla-hooks
 
 [![License](http://img.shields.io/:license-apache-blue.svg?style=flat-square)](http://www.apache.org/licenses/LICENSE-2.0.html)
 [![Gitter](https://badges.gitter.im/nabla-hooks/Lobby.svg)](https://gitter.im/nabla-hooks/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![Minimal java version](https://img.shields.io/badge/java-1.8-yellow.svg)](https://img.shields.io/badge/java-1.8-yellow.svg)
 
-[![Jenkins build Status](http://albandrieu.com/jenkins/buildStatus/icon?job=nabla-hooks)](http://albandrieu.com:8686/jenkins/job/nabla-hooks/)
+[![Jenkins build Status](http://albandrieu.com/jenkins/buildStatus/icon?job=nabla-hooks)](http://albandrieu.com/jenkins/job/nabla-hooks/)
 [![Travis Build Status](https://travis-ci.org/AlbanAndrieu/nabla-hooks.svg?branch=master)](https://travis-ci.org/AlbanAndrieu/nabla-hooks)
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=MICROSOFT%3Amaster&metric=alert_status)](https://sonarcloud.io/dashboard/index/MICROSOFT%3Amaster)
 
@@ -22,13 +22,11 @@ This project intend to be uses by all Nabla products
 - [Install nabla-hooks to use it](#install-nabla-hooks-to-use-it)
   * [Using Pip](#using-pip)
   * [From Source](#from-source)
-- [Add .pre-commit-config.yaml in you git project](#add-pre-commit-configyaml-in-you-git-project)
-- [Override global environement variable](#override-global-environement-variable)
-  * [Login](#login)
-    + [With user/pass](#with-userpass)
-  * [The Templates Directories](#the-templates-directories)
-- [Local](#local)
-- [Global](#global)
+  * [Add .pre-commit-config.yaml in you git project](#add-pre-commit-configyaml-in-you-git-project)
+  * [npm-groovy-lint groovy formating for Jenkinsfile](#npm-groovy-lint-groovy-formating-for-jenkinsfile)
+  * [Override global environement variable](#override-global-environement-variable)
+  * [Local](#local)
+  * [Global](#global)
 - [Package nabla-hooks as a developer](#package-nabla-hooks-as-a-developer)
   * [Build a source distribution (a tar archive of all the files needed to build and install the package):](#build-a-source-distribution-a-tar-archive-of-all-the-files-needed-to-build-and-install-the-package)
   * [Upload a source distribution](#upload-a-source-distribution)
@@ -36,12 +34,12 @@ This project intend to be uses by all Nabla products
   * [shell usage](#shell-usage)
   * [Test](#test)
   * [Visual Code](#visual-code)
-- [Update README.md Table of Contents](#update-readmemd-table-of-contents)
+- [Update README.md](#update-readmemd)
 
 <!-- tocstop -->
 
-Requirements
-------------
+## Requirements
+
   This hooks requires the following to run:
 
   * [jira](https://pypi.org/project/jira/)
@@ -52,8 +50,7 @@ See requirements.txt for mandatory packages.
 
   * [pre-commit](http://pre-commit.com)
 
-Install nabla-hooks as a developer
-----------------------------------
+## Install nabla-hooks as a developer
 
 ### Using virtualenv
 
@@ -62,13 +59,13 @@ Install python 3.8 and virtualenv
 ```bash
 virtualenv --no-site-packages /opt/ansible/env38 -p python3.8
 source /opt/ansible/env38/bin/activate
+```
 
 ```bash
 pip3.8 install -r hooks/requirements.txt -r requirements.testing.txt
 ```
 
-Install nabla-hooks to use it
------------------------------
+## Install nabla-hooks to use it
 
 ### Using Pip
 
@@ -78,8 +75,7 @@ Install nabla-hooks to use it
 
 `pip install git+https://github.com/AlbanAndrieu/nabla-hooks.git`
 
-Add .pre-commit-config.yaml in you git project
-----------------------------------------------
+### Add .pre-commit-config.yaml in you git project
 
 1. create .pre-commit-config.yaml in you git project
 
@@ -122,15 +118,25 @@ Run `pre-commit run --all-files`
 Run `SKIP=flake8 git commit -am 'Add key'`
 Run `git commit -am 'Add key' --no-verify`
 
-Override global environement variable
-----------------------------------------------
+
+### npm-groovy-lint groovy formating for Jenkinsfile
+
+Tested with nodejs 12 and 16 on ubuntu 20 and 21 (not working with nodejs 11 and 16)
+
+```
+npm install -g npm-groovy-lint@8.2.0
+npm-groovy-lint --format
+ls -lrta .groovylintrc.json
+```
+
+### Override global environement variable
 
 
-### Login
+#### Login
 
 See [jira](https://jira.readthedocs.io/en/master/examples.html#authentication)
 
-#### With user/pass
+##### With user/pass
 
 
 ```bash
@@ -139,8 +145,9 @@ export JIRA_PASSWORD=XXX
 export JIRA_URL=https://localhost/jira
 export JIRA_CERT_PATH=/etc/ssl/certs/NABLA-CA-1.crt
 export JIRA_CERT_PATH=/etc/ssl/certs/ca-certificates.crt
+```
 
-#### With email/token
+##### With email/token
 
 ```bash
 export JIRA_USER=alban.andrieu@free.fr
@@ -154,11 +161,11 @@ export JENKINS_USER=aandrieu
 export JENKINS_USER_TOKEN=XXX
 ```
 
-### The Templates Directories
+#### The Templates Directories
 
 See [git-hooks-using-python](http://omerkatz.com/blog/2013/5/23/git-hooks-part-2-implementing-git-hooks-using-python)
 
-## Local
+### Local
 
 First time run
 ```bash
@@ -166,7 +173,7 @@ cp -r hooks/* .git/hooks/` or `rm -Rf ./.git/hooks/ && ln -s ../hooks ./.git/hoo
 
 ```
 
-## Global
+### Global
 
 We have two directories that interest us:
 
@@ -183,8 +190,7 @@ Run
 git config --global init.templatedir /workspace/users/albandrieu30/nabla-hooks/
 ```
 
-Package nabla-hooks as a developer
-----------------------------------------------
+## Package nabla-hooks as a developer
 
 See [setup-cfg](http://sametmax.com/vive-setup-cfg-et-mort-a-pyproject-toml/)
 
@@ -213,8 +219,7 @@ python3 -m twine upload --repository testpypi dist/*
 
 Uploaded [nabla-hooks](https://test.pypi.org/project/nabla-hooks/1.0.2/)
 
-Test nabla-hooks as a developer
-----------------------------------------------
+## Test nabla-hooks as a developer
 
 ### shell usage
 
@@ -250,20 +255,20 @@ echo $PYTHONPATH
 code .
 ```
 
-Update README.md Table of Contents
-----------------------------------------------
+## Update README.md
 
 
   * [github-markdown-toc](https://github.com/jonschlinkert/markdown-toc)
   * With [github-markdown-toc](https://github.com/Lucas-C/pre-commit-hooks-nodejs)
 
-`
+```
 npm install --save markdown-toc
-`
+markdown-toc README.md
+markdown-toc CHANGELOG.md  -i
+```
 
-  * [github-markdown-toc](https://github.com/ekalinin/github-markdown-toc)
-
-`
-brew install github-markdown-toc
-gh-md-toc --insert README.md
-`
+```
+pre-commit install
+git add README.md
+pre-commit run markdown-toc
+```

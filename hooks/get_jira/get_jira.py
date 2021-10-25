@@ -14,6 +14,7 @@ from typing import (  # for annotation purposes only
     #    Pattern,
 )
 
+import certifi
 import click
 import urllib3
 from colorama import init
@@ -21,6 +22,10 @@ from get_jira.get_auth import match_auth
 from jira import JIRA
 from jira.exceptions import JIRAError
 from termcolor import colored
+http = urllib3.PoolManager(
+    cert_reqs='CERT_REQUIRED',
+    ca_certs=certifi.where(),
+)
 
 # use Colorama to make Termcolor work on Windows too
 init()
@@ -86,7 +91,9 @@ def match_issue(branch: str, verbose=False) -> str:
     try:
 
         # Matches any unique issue code
-        pattern = re.compile(r'(^feature|^bugfix)\/([A-Z]{3,5}-[0-9]+)')
+        pattern = re.compile(
+            r'(^feature|^feat|^bugfix|^fix|^docs|^style|^refactor|^perf|^test|^chore)\/([A-Z]{3,5}-[0-9]+)',
+        )
         issue = re.search(pattern, branch).group(2)  # Extract issue code
         if verbose:
             print(colored('Issue number detected : {}.'.format(issue), 'green'))

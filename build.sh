@@ -14,6 +14,8 @@ WORKING_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
 
 #./run-install.sh
 
+export TOX_TARGET=${TOX_TARGET:-"py38"} # tox --notest  # Pre-populate virtualenv use TOX_TARGET
+
 #export PATH="${VIRTUALENV_PATH}/bin:${PATH}"
 echo -e "${cyan} PATH : ${PATH} ${NC}"
 #export PYTHONPATH="${VIRTUALENV_PATH}/lib/python${PYTHON_MAJOR_VERSION}/site-packages/"
@@ -27,7 +29,7 @@ coverage --version || true
 #setup-py-upgrade ./
 setup-cfg-fmt setup.cfg
 
-${WORKING_DIR}/run-test.sh
+${WORKING_DIR}/scripts/run-test.sh
 
 echo -e "${magenta} /usr/local/sonar-runner/bin/sonar-scanner -Dproject.settings=./sonar-project.properties -Dsonar.scanner.force-deprecated-java-version=true ${NC}"
 echo -e "${cyan} https://sonarcloud.io/dashboard?id=nabla%3Anabla-hooks ${NC}"

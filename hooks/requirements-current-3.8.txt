@@ -4,16 +4,17 @@
 #pip install -r ./requirements.txt
 ansible>=2.10.3
 #ansible-cmdb>=1.30
-ansible-lint>=4.2.0
-ansicolors>=1.1.8
-cfgv>=3.1.0
+ansible-lint==5.0.8
+ansicolors==1.1.8
+cfgv==3.3.0
 chardet>=3.0.4
 Click>=7.1.1
 click-completion>=0.5.2
 colorama>=0.4.3
+filemagic==1.6 # https://github.com/Linaro/jipdate/issues/30
 git-url-parse>=1.2.2
 GitPython>=3.1.1
-jira>=3.0.1
+jira==3.0.1
 podmena>=0.4.2
 PyYAML>=5.1
 six>=1.14.0
