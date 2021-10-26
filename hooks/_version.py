@@ -48,7 +48,7 @@ def get_config():
     return cfg
 
 
-class NotThisMethod(Exception):
+class NotThisMethodError(Exception):
     """Exception raised if a method is not valid for the current scenario."""
 
 
@@ -126,7 +126,7 @@ def versions_from_parentdir(parentdir_prefix, root, verbose):
     if verbose:
         print("Tried directories %s but none started with prefix %s" %
               (str(rootdirs), parentdir_prefix))
-    raise NotThisMethod("rootdir doesn't start with parentdir_prefix")
+    raise NotThisMethodError("rootdir doesn't start with parentdir_prefix")
 
 
 @register_vcs_handler("git", "get_keywords")
@@ -162,7 +162,7 @@ def git_get_keywords(versionfile_abs):
 def git_versions_from_keywords(keywords, tag_prefix, verbose):
     """Get version information from git keywords."""
     if not keywords:
-        raise NotThisMethod("no keywords at all, weird")
+        raise NotThisMethodError("no keywords at all, weird")
     date = keywords.get("date")
     if date is not None:
         # git-2.2.0 added "%cI", which expands to an ISO-8601 -compliant
@@ -176,12 +176,12 @@ def git_versions_from_keywords(keywords, tag_prefix, verbose):
     if refnames.startswith("$Format"):
         if verbose:
             print("keywords are unexpanded, not using")
-        raise NotThisMethod("unexpanded keywords, not a git-archive tarball")
+        raise NotThisMethodError("unexpanded keywords, not a git-archive tarball")
     refs = set([r.strip() for r in refnames.strip("()").split(",")])
     # starting in git-1.8.3, tags are listed as "tag: foo-1.0" instead of
     # just "foo-1.0". If we see a "tag: " prefix, prefer those.
-    TAG = "tag: "
-    tags = set([r[len(TAG):] for r in refs if r.startswith(TAG)])
+    tag = "tag: "
+    tags = set([r[len(tag):] for r in refs if r.startswith(tag)])
     if not tags:
         # Either we're using git < 1.8.3, or there really are no tags. We use
         # a heuristic: assume all version tags have a digit. The old git %d
@@ -221,30 +221,30 @@ def git_pieces_from_vcs(tag_prefix, root, verbose, run_command=run_command):
     expanded, and _version.py hasn't already been rewritten with a short
     version string, meaning we're inside a checked out source tree.
     """
-    GITS = ["git"]
+    gits = ["git"]
     if sys.platform == "win32":
-        GITS = ["git.cmd", "git.exe"]
+        gits = ["git.cmd", "git.exe"]
 
-    out, rc = run_command(GITS, ["rev-parse", "--git-dir"], cwd=root,
+    out, rc = run_command(gits, ["rev-parse", "--git-dir"], cwd=root,
                           hide_stderr=True)
     if rc != 0:
         if verbose:
             print("Directory %s not under git control" % root)
-        raise NotThisMethod("'git rev-parse --git-dir' returned error")
+        raise NotThisMethodError("'git rev-parse --git-dir' returned error")
 
     # if there is a tag matching tag_prefix, this yields TAG-NUM-gHEX[-dirty]
     # if there isn't one, this yields HEX[-dirty] (no NUM)
-    describe_out, rc = run_command(GITS, ["describe", "--tags", "--dirty",
+    describe_out, rc = run_command(gits, ["describe", "--tags", "--dirty",
                                           "--always", "--long",
                                           "--match", "%s*" % tag_prefix],
                                    cwd=root)
     # --long was added in git-1.5.5
     if describe_out is None:
-        raise NotThisMethod("'git describe' failed")
+        raise NotThisMethodError("'git describe' failed")
     describe_out = describe_out.strip()
-    full_out, rc = run_command(GITS, ["rev-parse", "HEAD"], cwd=root)
+    full_out, rc = run_command(gits, ["rev-parse", "HEAD"], cwd=root)
     if full_out is None:
-        raise NotThisMethod("'git rev-parse' failed")
+        raise NotThisMethodError("'git rev-parse' failed")
     full_out = full_out.strip()
 
     pieces = {}
@@ -293,12 +293,12 @@ def git_pieces_from_vcs(tag_prefix, root, verbose, run_command=run_command):
     else:
         # HEX: no tags
         pieces["closest-tag"] = None
-        count_out, rc = run_command(GITS, ["rev-list", "HEAD", "--count"],
+        count_out, rc = run_command(gits, ["rev-list", "HEAD", "--count"],
                                     cwd=root)
         pieces["distance"] = int(count_out)  # total number of commits
 
     # commit date: see ISO-8601 comment in git_versions_from_keywords()
-    date = run_command(GITS, ["show", "-s", "--format=%ci", "HEAD"],
+    date = run_command(gits, ["show", "-s", "--format=%ci", "HEAD"],
                        cwd=root)[0].strip()
     pieces["date"] = date.strip().replace(" ", "T", 1).replace(" ", "", 1)
 
@@ -487,7 +487,7 @@ def get_versions():
     try:
         return git_versions_from_keywords(get_keywords(), cfg.tag_prefix,
                                           verbose)
-    except NotThisMethod:
+    except NotThisMethodError:
         pass
 
     try:
@@ -506,13 +506,13 @@ def get_versions():
     try:
         pieces = git_pieces_from_vcs(cfg.tag_prefix, root, verbose)
         return render(pieces, cfg.style)
-    except NotThisMethod:
+    except NotThisMethodError:
         pass
 
     try:
         if cfg.parentdir_prefix:
             return versions_from_parentdir(cfg.parentdir_prefix, root, verbose)
-    except NotThisMethod:
+    except NotThisMethodError:
         pass
 
     return {"version": "0+unknown", "full-revisionid": None,
