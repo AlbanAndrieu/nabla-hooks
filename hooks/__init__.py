@@ -5,6 +5,17 @@
 """
 # import hooks.get_jira  # noqa: F401
 
-name = 'nabla_hooks'
+name = 'hooks'
 
-__version__ = 'v1.0.2'
+import uuid
+
+from hooks._version import get_versions
+
+
+signing_uuid = uuid.UUID('dd34b62f-9ed5-597e-85a2-c15d48ed6832')
+__version__ = get_versions()['version']
+del get_versions
+
+
+__all__ = ('__version__', 'signing_uuid')
+#__version__ = 'v1.0.2'

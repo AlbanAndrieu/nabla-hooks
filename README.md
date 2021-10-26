@@ -1,5 +1,7 @@
 ## [![Nabla](http://albandrieu.com/nabla/index/assets/nabla/nabla-4.png)](https://github.com/AlbanAndrieu)  nabla-hooks
 
+Nabla custom git hooks
+
 [![License](http://img.shields.io/:license-apache-blue.svg?style=flat-square)](http://www.apache.org/licenses/LICENSE-2.0.html)
 [![Gitter](https://badges.gitter.im/nabla-hooks/Lobby.svg)](https://gitter.im/nabla-hooks/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![Minimal java version](https://img.shields.io/badge/java-1.8-yellow.svg)](https://img.shields.io/badge/java-1.8-yellow.svg)
@@ -7,8 +9,7 @@
 [![Jenkins build Status](http://albandrieu.com/jenkins/buildStatus/icon?job=nabla-hooks)](http://albandrieu.com/jenkins/job/nabla-hooks/)
 [![Travis Build Status](https://travis-ci.org/AlbanAndrieu/nabla-hooks.svg?branch=master)](https://travis-ci.org/AlbanAndrieu/nabla-hooks)
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=MICROSOFT%3Amaster&metric=alert_status)](https://sonarcloud.io/dashboard/index/MICROSOFT%3Amaster)
-
-Nabla custom git hooks
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/AlbanAndrieu/nabla-hooks.svg)](https://github.com/AlbanAndrieu/nabla-hooks/pulls)
 
 This project intend to be uses by all Nabla products
 
@@ -123,7 +124,7 @@ Run `git commit -am 'Add key' --no-verify`
 
 Tested with nodejs 12 and 16 on ubuntu 20 and 21 (not working with nodejs 11 and 16)
 
-```
+```bash
 npm install -g npm-groovy-lint@8.2.0
 npm-groovy-lint --format
 ls -lrta .groovylintrc.json
@@ -168,6 +169,7 @@ See [git-hooks-using-python](http://omerkatz.com/blog/2013/5/23/git-hooks-part-2
 ### Local
 
 First time run
+
 ```bash
 cp -r hooks/* .git/hooks/` or `rm -Rf ./.git/hooks/ && ln -s ../hooks ./.git/hooks && git checkout thisrepo hooks/
 
@@ -186,6 +188,7 @@ The hooked are being copied from the `[...]/share/git-core/templates/` directory
 Note:  If you change the templates directory the hooks directory  must be a subdirectory of the templates directory. Do not set the templates directory to the desired hooks directory instead.
 
 Run
+
 ```bash
 git config --global init.templatedir /workspace/users/albandrieu30/nabla-hooks/
 ```
@@ -225,10 +228,10 @@ Uploaded [nabla-hooks](https://test.pypi.org/project/nabla-hooks/1.0.2/)
 
 python
 
-`
+```python
 from hooks import get_msg
 match_msg
-`
+```
 
 ### Test
 
@@ -261,13 +264,13 @@ code .
   * [github-markdown-toc](https://github.com/jonschlinkert/markdown-toc)
   * With [github-markdown-toc](https://github.com/Lucas-C/pre-commit-hooks-nodejs)
 
-```
+```bash
 npm install --save markdown-toc
 markdown-toc README.md
 markdown-toc CHANGELOG.md  -i
 ```
 
-```
+```bash
 pre-commit install
 git add README.md
 pre-commit run markdown-toc

@@ -18,7 +18,7 @@ import certifi
 import click
 import urllib3
 from colorama import init
-from get_jira.get_auth import match_auth
+#from get_jira.get_auth import match_auth
 from jira import JIRA
 from jira.exceptions import JIRAError
 from termcolor import colored
