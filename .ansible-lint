@@ -1,3 +1,4 @@
+---
 exclude_paths:
   - ./roles/alban.andrieu.virtualbox/
   - ./roles/alban.andrieu.webmin/
@@ -55,18 +56,18 @@ exclude_paths:
   - ./roles/zabbix/
   - ./roles/jermon.ansible-role-cpan/
   - ./roles/anxs.perl/
-#parseable: true
-#quiet: true
-#rulesdir:
-#  - ./rule/directory/
+# parseable: true
+# quiet: true
+# rulesdir:
+#   - ./rule/directory/
 skip_list:
-  - '602' # See https://github.com/ansible/ansible-lint/issues/457
+  - '602'    # See https://github.com/ansible/ansible-lint/issues/457
   - '204'
   - '503'
-#  - skip_this_tag
-#  - and_this_one_too
-#  - skip_this_id
-#tags:
-#  - run_this_tag
+#   - skip_this_tag
+#   - and_this_one_too
+#   - skip_this_id
+# tags:
+#   - run_this_tag
 use_default_rules: true
-#verbosity: 1
+# verbosity: 1

@@ -1,21 +1,21 @@
 ---
 default_language_version:
-    python: python3.6
+  python: python3.8
 
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks.git
+  - repo: https://github.com/pre-commit/pre-commit-hooks.git
     rev: v2.1.0
     hooks:
-    -   id: trailing-whitespace
+      - id: trailing-whitespace
 
--   repo: https://github.com/detailyang/pre-commit-shell
+  - repo: https://github.com/detailyang/pre-commit-shell
     rev: 1.0.5
     hooks:
-    -   id: shell-lint
--   repo: /workspace/users/albandri30/nabla-hooks
+      - id: shell-lint
+  - repo: /workspace/users/albandri30/nabla-hooks
     sha: master
     hooks:
-    -   id: git-branches-check
+      - id: git-branches-check
         name: Git branches check
         description: Check for old stale and already merged branches from the current repo with user friendly messages and colors
         entry: pre_commit_hooks/git-branches-check.sh
