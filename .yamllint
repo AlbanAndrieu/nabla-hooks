@@ -18,3 +18,4 @@ rules:
   comments-indentation: disable
 ignore: |
   .tox
+  node_modules

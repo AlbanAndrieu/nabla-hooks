@@ -63,11 +63,11 @@ repos:
     - id: sort-simple-yaml
     - id: file-contents-sorter
  - repo: https://github.com/pre-commit/mirrors-autopep8
-   rev: v1.5.4
+   rev: v1.5.7
    hooks:
     - id: autopep8
  - repo: https://gitlab.com/pycqa/flake8
-   rev: 3.8.4
+   rev: 3.9.2
    hooks:
     - id: flake8
       args: [--max-line-length=120]
@@ -78,28 +78,28 @@ repos:
   #    - id: remove-tabs
   #      args: [ --whitespaces-count, 2 ]
  - repo: https://github.com/pre-commit/pre-commit.git
-   rev: v2.12.1
+   rev: v2.15.0
    hooks:
     - id: validate_manifest
  - repo: https://github.com/asottile/reorder_python_imports.git
-   rev: v2.5.0
+   rev: v2.6.0
    hooks:
     - id: reorder-python-imports
       exclude: ^.cache/
   #    language_version: python3
   #    language_version: python2.7
  - repo: https://github.com/asottile/add-trailing-comma
-   rev: v2.1.0
+   rev: v2.2.0
    hooks:
     - id: add-trailing-comma
  - repo: https://github.com/willthames/ansible-lint.git
-   rev: v5.0.8
+   rev: v5.2.1
    hooks:
     - id: ansible-lint
       files: \.(yaml|yml)$
       exclude: '.travis.yml'
  - repo: https://github.com/doublify/pre-commit-hindent.git
-   rev: master
+   rev: b3680b6ebf9f7cf29b19307f246adef66756feef
    hooks:
     - id: hindent
  - repo: https://github.com/detailyang/pre-commit-shell
@@ -116,7 +116,7 @@ repos:
                     test/test.sh
                 )$
  - repo: https://github.com/asottile/pyupgrade
-   rev: v2.17.0
+   rev: v2.29.0
    hooks:
     - id: pyupgrade
  - repo: https://github.com/pre-commit/mirrors-autopep8
