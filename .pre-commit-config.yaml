@@ -18,6 +18,11 @@ repos:
     - id: end-of-file-fixer
     - id: check-added-large-files
       args: ['--maxkb=123']
+      exclude: >
+                (?x)^(
+                    .pnp.cjs|
+                    package-lock.json|
+                )$
     - id: check-case-conflict
     - id: check-docstring-first
     - id: check-executables-have-shebangs

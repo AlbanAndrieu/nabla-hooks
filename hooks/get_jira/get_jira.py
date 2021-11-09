@@ -18,10 +18,10 @@ import certifi
 import click
 import urllib3
 from colorama import init
-# from get_jira.get_auth import match_auth
 from jira import JIRA
 from jira.exceptions import JIRAError
 from termcolor import colored
+# from get_jira.get_auth import match_auth
 http = urllib3.PoolManager(
     cert_reqs='CERT_REQUIRED',
     ca_certs=certifi.where(),
@@ -139,7 +139,7 @@ def get_certificat_path() -> str:
         certificat_path = os.environ.get('JIRA_CERT_PATH')
 
         if not certificat_path:
-            certificat_path = '/etc/ssl/certs/NABLA-CA-1.crt'
+            certificat_path = '/etc/ssl/certs/ca-certificates.crt'
 
     except KeyError:
         print(
