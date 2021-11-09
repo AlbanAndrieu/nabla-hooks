@@ -4,7 +4,6 @@ Nabla custom git hooks
 
 [![License](http://img.shields.io/:license-apache-blue.svg?style=flat-square)](http://www.apache.org/licenses/LICENSE-2.0.html)
 [![Gitter](https://badges.gitter.im/nabla-hooks/Lobby.svg)](https://gitter.im/nabla-hooks/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-[![Minimal java version](https://img.shields.io/badge/java-1.8-yellow.svg)](https://img.shields.io/badge/java-1.8-yellow.svg)
 
 [![Jenkins build Status](http://albandrieu.com/jenkins/buildStatus/icon?job=nabla-hooks)](http://albandrieu.com/jenkins/job/nabla-hooks/)
 [![Travis Build Status](https://travis-ci.org/AlbanAndrieu/nabla-hooks.svg?branch=master)](https://travis-ci.org/AlbanAndrieu/nabla-hooks)
@@ -33,6 +32,7 @@ This project intend to be uses by all Nabla products
   * [Upload a source distribution](#upload-a-source-distribution)
 - [Test nabla-hooks as a developer](#test-nabla-hooks-as-a-developer)
   * [shell usage](#shell-usage)
+  * [versioneer](#versioneer)
   * [Test](#test)
   * [Visual Code](#visual-code)
 - [Update README.md](#update-readmemd)
@@ -220,7 +220,7 @@ nano $HOME/.pypirc
 python3 -m twine upload --repository testpypi dist/*
 `
 
-Uploaded [nabla-hooks](https://test.pypi.org/project/nabla-hooks/1.0.2/)
+Uploaded [nabla-hooks](https://test.pypi.org/project/nabla-hooks/)
 
 ## Test nabla-hooks as a developer
 
@@ -231,6 +231,15 @@ python
 ```python
 from hooks import get_msg
 match_msg
+```
+
+### versioneer
+
+[versioneer](https://github.com/python-versioneer/python-versioneer)
+
+```bash
+versioneer install
+python setup.py install
 ```
 
 ### Test

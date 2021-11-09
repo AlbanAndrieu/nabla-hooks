@@ -122,6 +122,11 @@ repos:
    rev: 1.7.0
    hooks:
     - id: bandit
+      exclude: >
+                (?x)^(
+                    versioneer.py|
+                    hooks/_version.py|
+                )$
  - repo: https://github.com/IamTheFij/ansible-pre-commit
    rev: v0.1.2
    hooks:
