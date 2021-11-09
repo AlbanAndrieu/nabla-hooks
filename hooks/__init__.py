@@ -19,5 +19,4 @@ del get_versions
 
 __all__ = ('__version__', 'signing_uuid')
 # __version__ = 'v1.0.2'
-
 __version__ = _version.get_versions()['version']

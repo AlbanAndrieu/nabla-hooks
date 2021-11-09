@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import os
+import os  # nosec
 import subprocess  # nosec
 import unittest
 
@@ -32,10 +32,10 @@ class TestPackage(unittest.TestCase):
 
     def test_message(self):
         cwd = self.local_test_dir
-        bin = '../bin/get_msg'
+        binary = '../bin/get_msg'
         message = 'data'
 
-        result = self.run_get_msg(cwd=cwd, bin=bin, message=message)
+        result = self.run_get_msg(cwd=cwd, bin=binary, message=message)
         self.assertIn(
             'Use shell only when shell functionality is required',
             str(result),

@@ -35,6 +35,7 @@ This project intend to be uses by all Nabla products
   * [versioneer](#versioneer)
   * [Test](#test)
   * [Visual Code](#visual-code)
+  * [Poetry](#poetry)
 - [Update README.md](#update-readmemd)
 
 <!-- tocstop -->
@@ -214,11 +215,19 @@ And install:
 
 See [api-tokens](https://test.pypi.org/manage/account/#api-tokens)
 
-`
+```bash
+rm -Rf dist/
 python3 setup.py sdist bdist_wheel
 nano $HOME/.pypirc
-python3 -m twine upload --repository testpypi dist/*
-`
+export TWINE_PASSWORD=pypi-
+python3 -m twine upload --repository nabla-hooks dist/* --verbose
+```
+
+All in one
+
+```bash
+python setup.py register sdist upload
+```
 
 Uploaded [nabla-hooks](https://test.pypi.org/project/nabla-hooks/)
 
@@ -239,6 +248,8 @@ match_msg
 
 ```bash
 versioneer install
+#check with
+python setup.py version
 python setup.py install
 ```
 
@@ -265,6 +276,17 @@ Add PYTHONPATH=hooks for pytest when inside visual studio
 export PYTHONPATH=hooks
 echo $PYTHONPATH
 code .
+```
+
+### Poetry
+
+```bash
+poetry install
+poetry env info
+poetry shell
+poetry run pytest
+poetry build
+#poetry publish --build
 ```
 
 ## Update README.md

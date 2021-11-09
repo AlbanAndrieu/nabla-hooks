@@ -3,13 +3,16 @@ from setuptools import find_packages
 from setuptools import setup
 
 import hooks
+import versioneer
 
 with open('requirements.txt') as f:
     requirements = f.read().splitlines()
 
 setup(
     name='nabla_hooks',
-    version=hooks.__version__,
+    # version=hooks.__version__,
+    version=versioneer.get_version(),
+    cmdclass=versioneer.get_cmdclass(),
     packages=find_packages(),
     # scripts=["hooks/get_msg.py"],
 

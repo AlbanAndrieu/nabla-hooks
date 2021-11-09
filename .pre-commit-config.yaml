@@ -126,6 +126,7 @@ repos:
                 (?x)^(
                     versioneer.py|
                     hooks/_version.py|
+                    hooks/test/|
                 )$
  - repo: https://github.com/IamTheFij/ansible-pre-commit
    rev: v0.1.2
