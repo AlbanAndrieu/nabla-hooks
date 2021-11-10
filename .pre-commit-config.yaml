@@ -146,6 +146,7 @@ repos:
     - id: htmllint
     - id: markdown-toc
       args: [--maxdepth, "3", -i]
+      #args: [--maxdepth, "3", --append]
     - id: dockerfile_lint
       # optional custom config:
       args: [--json, --verbose, --dockerfile]

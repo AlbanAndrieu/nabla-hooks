@@ -40,7 +40,7 @@ def get_config():
     cfg = VersioneerConfig()
     cfg.VCS = 'git'
     cfg.style = 'pep440'
-    cfg.tag_prefix = ''
+    cfg.tag_prefix = 'v'
     cfg.parentdir_prefix = 'nabla-hooks-'
     cfg.versionfile_source = 'hooks/_version.py'
     cfg.verbose = False

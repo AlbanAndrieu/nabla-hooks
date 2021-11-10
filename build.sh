@@ -3,6 +3,11 @@
 
 WORKING_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
 
+# shellcheck source=/dev/null
+source "${WORKING_DIR}/scripts/step-1-os.sh"
+
+export REPO_TAG=${REPO_TAG:-"1.0.3"}
+
 # shellcheck source=./docs/build.sh
 #echo "${WORKING_DIR}/docs/build.sh"
 
@@ -38,15 +43,17 @@ echo -e "${magenta} Change hooks/__init__.py version ${NC}"
 
 #git tag --delete v1.0.0
 #git push --delete origin v1.0.0
-echo -e "${magenta} git tag v1.0.2 ${NC}"
+echo -e "${magenta} git tag v${REPO_TAG} ${NC}"
 echo -e "${magenta} git push origin --tags ${NC}"
 
 echo -e "${cyan} PACKAGE ${NC}"
+
+echo -e "${cyan} pandoc --from=markdown --to=rst --output=README.rst README.md ${NC}"
 
 echo -e "${cyan} python setup.py sdist bdist_wheel ${NC}"
 python setup.py sdist bdist_wheel
 echo -e "${magenta} twine upload dist/* ${NC}"
 
-echo -e "${cyan} https://pypi.org/project/nabla-hooks/1.0.2/ ${NC}"
+echo -e "${cyan} https://pypi.org/project/nabla-hooks/${REPO_TAG}/ ${NC}"
 
 exit 0

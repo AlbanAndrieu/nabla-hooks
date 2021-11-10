@@ -23,8 +23,11 @@ This project intend to be uses by all Nabla products
   * [Using Pip](#using-pip)
   * [From Source](#from-source)
   * [Add .pre-commit-config.yaml in you git project](#add-pre-commit-configyaml-in-you-git-project)
-  * [npm-groovy-lint groovy formating for Jenkinsfile](#npm-groovy-lint-groovy-formating-for-jenkinsfile)
   * [Override global environement variable](#override-global-environement-variable)
+    + [Login](#login)
+      - [With user/pass](#with-userpass)
+      - [With email/token](#with-emailtoken)
+    + [The Templates Directories](#the-templates-directories)
   * [Local](#local)
   * [Global](#global)
 - [Package nabla-hooks as a developer](#package-nabla-hooks-as-a-developer)
@@ -34,9 +37,9 @@ This project intend to be uses by all Nabla products
   * [shell usage](#shell-usage)
   * [versioneer](#versioneer)
   * [Test](#test)
-  * [Visual Code](#visual-code)
   * [Poetry](#poetry)
 - [Update README.md](#update-readmemd)
+- [npm-groovy-lint groovy formating for Jenkinsfile](#npm-groovy-lint-groovy-formating-for-jenkinsfile)
 
 <!-- tocstop -->
 
@@ -85,7 +88,7 @@ example .pre-commit-config.yaml as following:
 
 ```yaml
 -   repo: https://github.com/AlbanAndrieu/nabla-hooks.git
-    rev: v1.0.2
+    rev: v1.0.3
     hooks:
     - id: git-branches-check
 ```
@@ -120,16 +123,6 @@ Run `pre-commit run --all-files`
 Run `SKIP=flake8 git commit -am 'Add key'`
 Run `git commit -am 'Add key' --no-verify`
 
-
-### npm-groovy-lint groovy formating for Jenkinsfile
-
-Tested with nodejs 12 and 16 on ubuntu 20 and 21 (not working with nodejs 11 and 16)
-
-```bash
-npm install -g npm-groovy-lint@8.2.0
-npm-groovy-lint --format
-ls -lrta .groovylintrc.json
-```
 
 ### Override global environement variable
 
@@ -218,6 +211,8 @@ See [api-tokens](https://test.pypi.org/manage/account/#api-tokens)
 ```bash
 rm -Rf dist/
 python3 setup.py sdist bdist_wheel
+# Check package
+twine check dist/*
 nano $HOME/.pypirc
 export TWINE_PASSWORD=pypi-
 python3 -m twine upload --repository nabla-hooks dist/* --verbose
@@ -264,18 +259,8 @@ tox py38
 From root directory
 
 ```bash
-export PYTHONPATH=hooks
-pytest --cache-clear --setup-show test/test_pytest.py
-```
-
-### Visual Code
-
-Add PYTHONPATH=hooks for pytest when inside visual studio
-
-```bash
-export PYTHONPATH=hooks
-echo $PYTHONPATH
-code .
+pytest --cache-clear --setup-show hooks/test/test_pytest.py
+pytest --cache-clear --setup-show test/package.py
 ```
 
 ### Poetry
@@ -305,4 +290,22 @@ markdown-toc CHANGELOG.md  -i
 pre-commit install
 git add README.md
 pre-commit run markdown-toc
+```
+
+Check syntax
+[remark-lint](https://github.com/remarkjs/remark-lint#cli)
+
+
+```bash
+npm run lint-md
+```
+
+## npm-groovy-lint groovy formating for Jenkinsfile
+
+Tested with nodejs 12 and 16 on ubuntu 20 and 21 (not working with nodejs 11 and 16)
+
+```bash
+npm install -g npm-groovy-lint@8.2.0
+npm-groovy-lint --format
+ls -lrta .groovylintrc.json
 ```

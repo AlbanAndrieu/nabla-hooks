@@ -11,3 +11,5 @@ exclude =
     .eggs,
     .tox,
     setup.py
+    versioneer.py
+    hooks/_version.py

@@ -1,6 +1,6 @@
 [report]
 include = hooks/*
-omit = hooks/tests/functional/*
+omit = hooks/test/*
     # omit everything in /usr
     /test/*
 

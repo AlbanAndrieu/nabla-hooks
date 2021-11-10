@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nabla-hooks"
-version = "1.0.2"
+version = "1.0.3"
 description = "Custom hooks to improve code quality before pushing to git"
 authors = ["Andrieu, Alban <alban.andrieu@free.fr>"]
 license = "MIT"
@@ -13,6 +13,7 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.8"
 jira = "3.0.1"
+colorama = "^0.4.3"
 
 [tool.poetry.dev-dependencies]
 tox = "3.14.6"
@@ -21,5 +22,16 @@ pre-commit-hooks = "^3.3.0"
 pytest = "^6.1.2"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = [
+  "poetry-core >= 1.0.0",
+  "setuptools >= 41.0.0",
+  "setuptools_scm >= 1.15.0",
+  "setuptools_scm_git_archive >= 1.0",
+  "twine >= 3.4.1",
+  "wheel",
+#  "versioneer >= 0.21",
+  "readme-renderer >= 30.0"
+]
+requires-python = ">3.5"
+#build-backend = "poetry.core.masonry.api"
+build-backend = "setuptools.build_meta"
