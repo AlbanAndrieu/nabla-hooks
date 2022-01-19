@@ -12,7 +12,7 @@ repos:
 #     rev: v2.2.3 # ok python3.6  # 19.04 but failing on 18.04.3
 #     rev: v2.4.0 # ok python3.6 on Ubuntu 18.04 AND python3.7 on Ubuntu 19.04
 #     rev: v3.4.0 # ok python3.6 on Ubuntu 18.04 AND python3.7 on Ubuntu 19.04 AND python3.8 on Ubuntu 20.04
-   rev: v4.0.1   # ok python3.6 on Ubuntu 18.04 AND python3.7 on Ubuntu 19.04 AND python3.8 on Ubuntu 20.04
+   rev: v4.1.0   # ok python3.6 on Ubuntu 18.04 AND python3.7 on Ubuntu 19.04 AND python3.8 on Ubuntu 20.04
    hooks:
     - id: trailing-whitespace
     - id: end-of-file-fixer
@@ -63,7 +63,7 @@ repos:
     - id: sort-simple-yaml
     - id: file-contents-sorter
  - repo: https://github.com/pre-commit/mirrors-autopep8
-   rev: v1.5.7
+   rev: v1.6.0
    hooks:
     - id: autopep8
  - repo: https://gitlab.com/pycqa/flake8
@@ -78,7 +78,7 @@ repos:
   #    - id: remove-tabs
   #      args: [ --whitespaces-count, 2 ]
  - repo: https://github.com/pre-commit/pre-commit.git
-   rev: v2.15.0
+   rev: v2.17.0
    hooks:
     - id: validate_manifest
  - repo: https://github.com/asottile/reorder_python_imports.git
@@ -89,11 +89,11 @@ repos:
   #    language_version: python3
   #    language_version: python2.7
  - repo: https://github.com/asottile/add-trailing-comma
-   rev: v2.2.0
+   rev: v2.2.1
    hooks:
     - id: add-trailing-comma
  - repo: https://github.com/willthames/ansible-lint.git
-   rev: v5.2.1
+   rev: v5.3.2
    hooks:
     - id: ansible-lint
       files: \.(yaml|yml)$
@@ -116,15 +116,15 @@ repos:
                     test/test.sh
                 )$
  - repo: https://github.com/asottile/pyupgrade
-   rev: v2.29.0
+   rev: v2.31.0
    hooks:
     - id: pyupgrade
  - repo: https://github.com/pre-commit/mirrors-autopep8
-   rev: v1.5.7
+   rev: v1.6.0
    hooks:
     - id: autopep8
  - repo: https://github.com/PyCQA/bandit
-   rev: 1.7.0
+   rev: 1.7.1
    hooks:
     - id: bandit
       exclude: >
@@ -137,6 +137,12 @@ repos:
    rev: v0.1.2
    hooks:
     - id: encryption-check
+# - repo: https://github.com/gitguardian/ggshield
+#   rev: main
+#   hooks:
+#    - id: ggshield
+#      language_version: python3
+#      stages: [commit]
  - repo: https://github.com/Lucas-C/pre-commit-hooks-nodejs
    rev: v1.1.1
    hooks:

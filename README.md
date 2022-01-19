@@ -7,7 +7,7 @@ Nabla custom git hooks
 
 [![Jenkins build Status](http://albandrieu.com/jenkins/buildStatus/icon?job=nabla-hooks)](http://albandrieu.com/jenkins/job/nabla-hooks/)
 [![Travis Build Status](https://travis-ci.org/AlbanAndrieu/nabla-hooks.svg?branch=master)](https://travis-ci.org/AlbanAndrieu/nabla-hooks)
-[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=MICROSOFT%3Amaster&metric=alert_status)](https://sonarcloud.io/dashboard/index/MICROSOFT%3Amaster)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=nabla%3Anabla-hooks&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=nabla%3Anabla-hooks)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/AlbanAndrieu/nabla-hooks.svg)](https://github.com/AlbanAndrieu/nabla-hooks/pulls)
 
 This project intend to be uses by all Nabla products
@@ -24,10 +24,6 @@ This project intend to be uses by all Nabla products
   * [From Source](#from-source)
   * [Add .pre-commit-config.yaml in you git project](#add-pre-commit-configyaml-in-you-git-project)
   * [Override global environement variable](#override-global-environement-variable)
-    + [Login](#login)
-      - [With user/pass](#with-userpass)
-      - [With email/token](#with-emailtoken)
-    + [The Templates Directories](#the-templates-directories)
   * [Local](#local)
   * [Global](#global)
 - [Package nabla-hooks as a developer](#package-nabla-hooks-as-a-developer)

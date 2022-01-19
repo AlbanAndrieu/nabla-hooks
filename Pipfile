@@ -1,0 +1,28 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+ansible-cmdb = "==1.31"
+ansible-core = ">=2.11.6"
+ansible-lint = "==5.0.8"
+ansicolors = "==1.1.8"
+cfgv = "==3.3.0"
+chardet = ">=3.0.4"
+click = ">=7.1.1"
+click-completion = ">=0.5.2"
+colorama = ">=0.4.3"
+filemagic = "==1.6"
+git-url-parse = ">=1.2.2"
+GitPython = ">=3.1.1"
+jira = "==3.0.1"
+podmena = ">=0.4.2"
+PyYAML = ">=5.1"
+six = ">=1.14.0"
+termcolor = ">=1.1.0"
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"

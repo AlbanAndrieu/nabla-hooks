@@ -1,18 +1,27 @@
 # -*- coding: utf-8 -*-
+# pylint: skip-file
 from setuptools import find_packages
 from setuptools import setup
 
-import hooks
-import versioneer
+# import hooks
+# from hooks._version import get_versions
+# import versioneer
 
 with open('requirements.txt') as f:
     requirements = f.read().splitlines()
 
+# read the contents of your README file
+from pathlib import Path
+this_directory = Path(__file__).parent
+long_description = (this_directory / 'README.md').read_text()
+
 setup(
-    name='nabla_hooks',
+    name='nabla-hooks',
     # version=hooks.__version__,
-    version=versioneer.get_version(),
-    cmdclass=versioneer.get_cmdclass(),
+    # version=get_versions()['version'],
+    version='1.0.3',
+    # version=versioneer.get_version(),
+    # cmdclass=versioneer.get_cmdclass(),
     packages=find_packages(),
     # scripts=["hooks/get_msg.py"],
 
@@ -32,7 +41,8 @@ setup(
     author='Alban Andrieu',
     author_email='alban.andrieu@free.fr',
     description='This is nabla_custom hooks package',
-    long_description=open('README.md').read(),
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     keywords='nabla hooks',
     url='https://github.com/AlbanAndrieu/nabla-hooks',
     project_urls={

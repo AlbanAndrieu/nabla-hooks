@@ -17,4 +17,6 @@ mkdir "${WORKING_DIR}/../output" || true
 echo -e "${magenta} pylint ${WORKING_DIR}/../hooks/ --output-format=parseable > ${WORKING_DIR}/../output/pylint.txt ${NC}"
 pylint ${WORKING_DIR}/../hooks/* --output-format=parseable > ${WORKING_DIR}/../output/pylint.txt
 
+echo -e "${magenta} pylint $(find ./hooks -name "*.py" -type f -print0 | xargs) ${NC}"
+
 exit 0
