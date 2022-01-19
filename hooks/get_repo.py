@@ -27,7 +27,7 @@ def cli(user=None, password=None, verbose=False):
         # click.echo(password)
         click.echo(verbose)
 
-    match_repo(user, password, verbose)
+    match_repo(verbose)
 
 
 def _get_sha(git_repo, verbose=False):
@@ -71,7 +71,7 @@ def _get_org_and_name_from_remote(url, verbose=False):
     return git_info.owner, git_info.name
 
 
-def match_repo(self, user=None, password=None, verbose=False) -> str:
+def match_repo(self, verbose=False) -> str:
 
     if verbose:
         logger.setLevel(logging.DEBUG)

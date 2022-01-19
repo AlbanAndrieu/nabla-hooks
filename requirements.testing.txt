@@ -14,7 +14,7 @@ pep8-naming>=0.11.1
 pip-upgrader>=1.4.15
 pre-commit==2.15.0
 pre-commit-hooks>=3.3.0
-pylint>=2.4.4
+pylint>=2.12.2
 pylint-junit>=0.2.0
 pytest>=6.1.2
 pytest-cov>=2.10.1
