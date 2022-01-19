@@ -19,6 +19,8 @@ export REPO_TAG=${REPO_TAG:-"1.0.3"}
 
 #./run-install.sh
 
+#pipenv install
+
 export TOX_TARGET=${TOX_TARGET:-"py38"} # tox --notest  # Pre-populate virtualenv use TOX_TARGET
 
 #export PATH="${VIRTUALENV_PATH}/bin:${PATH}"
@@ -36,6 +38,7 @@ setup-cfg-fmt setup.cfg
 
 ${WORKING_DIR}/scripts/run-test.sh
 
+echo -e "${magenta} unset JAVA_HOME ${NC}"
 echo -e "${magenta} /usr/local/sonar-runner/bin/sonar-scanner -Dproject.settings=./sonar-project.properties -Dsonar.scanner.force-deprecated-java-version=true ${NC}"
 echo -e "${cyan} https://sonarcloud.io/dashboard?id=nabla%3Anabla-hooks ${NC}"
 
