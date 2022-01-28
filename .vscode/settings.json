@@ -58,4 +58,37 @@
         // Match what black does.
         "--max-line-length=88"
     ],
+    "latex-workshop.latex.tools": [
+        {
+          "name": "pdflatex",
+          "command": "pdflatex",
+          "args": [
+            "-shell-escape",
+            "-synctex=1",
+            "-interaction=nonstopmode",
+            "-file-line-error",
+            "%DOC%"
+          ],
+          "env": {}
+        }
+      ],
+      "latex-workshop.latex.recipe.default": "first",
+      "latex-workshop.latex.recipes": [
+
+        {
+          "name": "pdflatex",
+          "tools": [
+            "pdflatex"
+          ]
+        },
+        {
+          "name": "pdflatex ➞ bibtex ➞ pdflatex × 2",
+          "tools": [
+            "pdflatex",
+            "bibtex",
+            "pdflatex",
+            "pdflatex"
+          ]
+        }
+    ],
 }

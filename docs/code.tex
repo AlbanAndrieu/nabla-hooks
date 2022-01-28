@@ -1,0 +1,45 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+%\usepackage[scale=0.8]{cascadia-code}
+\usepackage{minted}
+\setminted{
+  linenos, numbersep=2mm, stepnumber=2, stepnumberfromfirst,
+  frame=lines, framerule=2pt, rulecolor=lightgray, bgcolor=myGray
+}
+\usepackage{xcolor}
+\usepackage{fontawesome5}
+
+\definecolor{myGray}{RGB}{237,235,235}
+
+\begin{document}
+
+\begin{itemize}
+  \item Dossier : \faIcon[regular]{folder-open} ou \faIcon[solid]{folder-open}
+  \item GitHub : \faIcon[regular]{github} ou \faGithub
+  \item YouTub : \faYoutube~et en couleur {\color{red} \faYoutube}
+\end{itemize}
+
+\bigskip
+
+Voici un example de code~:
+\begin{listing}[H]
+\begin{minted}[
+  linenos, numbersep=2mm, stepnumber=2, stepnumberfromfirst,
+  frame=lines, framerule=2pt, rulecolor=lightgray, bgcolor=myGray
+]
+{python}
+def hello() -> None:
+  print('Hello World!')
+
+if __name__ == '__main_':
+  hello()
+\end{minted}
+\end{listing}
+
+\bigskip
+
+\inputminted[]{python}{conf.py}
+\end{document}
