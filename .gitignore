@@ -3,7 +3,16 @@
 *.fdb_latexmk
 *.fls
 *.synctex.gz
-_minted-code/
+_minted-*/
+*.4ct
+*.tmp
+*.xref
+*.lg
+*.idv
+*.dvi
+#code.css
+*.4tc
+*.4ct
 
 # Dependency directories
 node_modules/
