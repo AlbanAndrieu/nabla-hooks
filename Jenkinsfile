@@ -65,7 +65,7 @@ pipeline {
         script {
 
           def shell = "#!/bin/bash \n" +
-                      "pip uninstall --yes ansible \n" +
+                      //"pip uninstall --yes ansible \n" +
                       "source ../scripts/run-python.sh \n" +
                       "./build.sh \n"
 
@@ -87,7 +87,7 @@ pipeline {
               sh "#!/bin/bash \n" +
                  "whoami \n" +
                  "source ./scripts/run-python.sh\n" +
-                 "pip uninstall --yes ansible\n" +
+                 //"pip uninstall --yes ansible\n" +
                  "pre-commit run -a || true\n" +
                  "./scripts/run-pylint.sh\n" +
                  "./scripts/run-flake8.sh\n"
@@ -102,9 +102,6 @@ pipeline {
 
             if ( params.RUN_TOX.toBoolean() == true ) {
                 tee("tox.log") {
-                    //toxResult = sh "#!/bin/bash \n" +
-                    //   "source ./scripts/run-python.sh\n" +
-                    //   "tox\n"
                     toxResult = sh (script: "#!/bin/bash \n" +
                        "source ./scripts/run-python.sh\n" +
                        "tox\n", returnStatus: true)
