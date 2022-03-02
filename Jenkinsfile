@@ -39,6 +39,8 @@ pipeline {
     BRANCH_NAME = "${env.BRANCH_NAME}".replaceAll("feature/","")
     PROJECT_BRANCH = "${env.GIT_BRANCH}".replaceFirst("origin/","")
     BUILD_ID = "${env.BUILD_ID}"
+    JIRA_USER = "aandrieu"
+    JIRA_URL = "https://localhost/jira"
   }
   options {
     disableConcurrentBuilds()
