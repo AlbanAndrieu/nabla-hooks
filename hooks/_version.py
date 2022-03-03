@@ -71,7 +71,7 @@ def run_command(
     env=None,
 ):
     """Call the given command(s)."""
-    assert isinstance(commands, list)
+    assert isinstance(commands, list)  # nosec - ✅ skip B101 : Use of assert detected
     process = None
     for command in commands:
         try:
