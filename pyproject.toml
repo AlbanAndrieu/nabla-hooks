@@ -21,17 +21,24 @@ pre-commit = "2.15.0"
 pre-commit-hooks = "^3.3.0"
 pytest = "^6.1.2"
 
+
+[tool.pdm]
+[[tool.pdm.source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
 [build-system]
-requires = [
-  "poetry-core >= 1.0.0",
-  "setuptools >= 41.0.0",
-  "setuptools_scm >= 1.15.0",
-  "setuptools_scm_git_archive >= 1.0",
-  "twine >= 3.4.1",
-  "wheel",
-#  "versioneer >= 0.21",
-  "readme-renderer >= 30.0"
+requires = ["pdm-pep517"]
+build-backend = "pdm.pep517.api"
+
+[project]
+name = "nabla-hooks"
+version = "0.1.0"
+description = "Hook to validate branch name and issue"
+authors = [
+    {name = "Andrieu, Alban", email = "alban.andrieu@free.fr"},
 ]
-requires-python = ">3.5"
-#build-backend = "poetry.core.masonry.api"
-build-backend = "setuptools.build_meta"
+dependencies = ["ansible-cmdb==1.31", "ansible-core>=2.11.6", "ansible-lint==5.0.8", "ansicolors==1.1.8", "cfgv==3.3.0", "chardet>=3.0.4", "click>=7.1.1", "click-completion>=0.5.2", "colorama>=0.4.3", "filemagic==1.6", "git-url-parse>=1.2.2", "gitpython>=3.1.1", "jira==3.0.1", "podmena>=0.4.2", "pyyaml>=5.1", "six>=1.14.0", "termcolor>=1.1.0"]
+requires-python = ">=3.8"
+readme = "README.md"
+license = {text = "MIT"}

@@ -22,18 +22,19 @@ __all__ = ['match_msg']
 @click.command()
 @click.argument('commit_msg_filepath', type=click.Path(exists=False))
 @click.argument('commit_type', type=str, default='')  # message for prepare-commit-msg
+@click.option('-j', '--jira', is_flag=True, default=True, help='Jira check')  # noqa: ignore=E501
 @click.option('-u', '--user', required=False, envvar='JIRA_USER', help='JIRA user')  # noqa: ignore=E501
 @click.option('-p', '--password', required=False, prompt=True, hide_input=True, confirmation_prompt=True, envvar='JIRA_PASSWORD', help='JIRA password')  # noqa: ignore=E501
 @click.option('-v', '--verbose', is_flag=True, default=False, help='Switch between INFO and DEBUG logging modes')  # noqa: ignore=E501
-def cli(commit_msg_filepath, commit_type: str = '', user=None, password=None, verbose=False):
+def cli(commit_msg_filepath, commit_type: str = '', jira=True, user=None, password=None, verbose=False):
     """
     Configures git hook commit message using CLI.
 
     :param str commit_msg_filepath: **required** *"./.git/COMMIT_EDITMSG"*, -
-        path of the file where the message is stored by git. If not provided, defaults to hostname
+                    path of the file where the message is stored by git. If not provided, defaults to hostname
 
     :param str commit_msg_filepath: **default** *""*, -
-        Type of the message given by git. If not provided, defaults to empty
+                    Type of the message given by git. If not provided, defaults to empty
 
     :returns: Msg
 
@@ -41,8 +42,8 @@ def cli(commit_msg_filepath, commit_type: str = '', user=None, password=None, ve
 
     .. code-block:: bash
 
-       echo "TEST" > ../.git/COMMIT_EDITMSG
-       ./get_msg.py '../.git/COMMIT_EDITMSG' 'message'
+             echo "TEST" > ../.git/COMMIT_EDITMSG
+             ./get_msg.py '../.git/COMMIT_EDITMSG' 'message'
 
     """
 
@@ -50,25 +51,26 @@ def cli(commit_msg_filepath, commit_type: str = '', user=None, password=None, ve
 
     if verbose:
         click.echo(click.format_filename(commit_msg_filepath))
+        click.echo(jira)
         click.echo(user)
         # click.echo(password)
         click.echo(verbose)
 
     return match_msg(
         commit_msg_filepath=commit_msg_filepath, commit_type=commit_type,
-        user=user, password=password, verbose=verbose,
+        jira=jira, user=user, password=password, verbose=verbose,
     )
 
 
-def match_msg(commit_msg_filepath: str, commit_type: str = '', user=None, password=None, verbose=False) -> str:
+def match_msg(commit_msg_filepath: str, commit_type: str = '', jira=True, user=None, password=None, verbose=False) -> str:
     """
     Configures git hook commit message.
 
     :param str commit_msg_filepath: **required** *"./.git/COMMIT_EDITMSG"*, -
-        path of the file where the message is stored by git. If not provided, defaults to hostname
+                    path of the file where the message is stored by git. If not provided, defaults to hostname
 
     :param str commit_msg_filepath: **default** *""*, -
-        Type of the message given by git. If not provided, defaults to empty
+                    Type of the message given by git. If not provided, defaults to empty
 
     :returns: Msg
     """
@@ -77,9 +79,6 @@ def match_msg(commit_msg_filepath: str, commit_type: str = '', user=None, passwo
         logger.setLevel(logging.DEBUG)
 
     try:
-        basic_auth = get_jira.get_auth.match_auth(
-            user=user, password=password, verbose=verbose,
-        )
 
         # Figure out which branch we're on
         branch = check_output([
@@ -125,9 +124,14 @@ def match_msg(commit_msg_filepath: str, commit_type: str = '', user=None, passwo
                         ),
                     )
 
-                msg = get_jira.get_jira.get_msg(
-                    current_message=current_message, branch=branch, basic_auth=basic_auth, verbose=verbose,
-                )
+                if jira:
+                    basic_auth = get_jira.get_auth.match_auth(
+                        user=user, password=password, verbose=verbose,
+                    )
+
+                    msg = get_jira.get_jira.get_msg(
+                        current_message=current_message, branch=branch, basic_auth=basic_auth, verbose=verbose,
+                    )
 
                 required_message = msg[0]
 

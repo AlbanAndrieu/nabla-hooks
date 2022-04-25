@@ -1,4 +1,6 @@
 {
+    "python.autoComplete.extraPaths": ["__pypackages__/<major.minor>/lib"],
+    "python.analysis.extraPaths": ["__pypackages__/<major.minor>/lib"],
     "files.exclude": {
         "out": true, // set this to true to hide the "out" folder with the compiled JS files
         "**/*.pyc": true,

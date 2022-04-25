@@ -37,7 +37,8 @@ init()
 @click.option('-u', '--user', required=False, envvar='JIRA_USER', help='JIRA user')  # noqa: ignore=E501
 @click.option('-p', '--password', required=False, prompt=False, hide_input=True, confirmation_prompt=True, envvar='JIRA_PASSWORD', help='JIRA password')  # noqa: ignore=E501
 @click.option('-v', '--verbose', is_flag=True, default=False, help='Switch between INFO and DEBUG logging modes')  # noqa: ignore=E501
-def cli(current_message: str, branch: str, user=None, password=None, verbose=False) -> str:
+@click.option('-f', '--fail', is_flag=True, default=False, help='Fail if no issue JIRA found')  # noqa: ignore=E501
+def cli(current_message: str, branch: str, fail=True, user=None, password=None, verbose=False) -> str:
     """Simple program that match jira. From hooks directory : Try
     python -m get_jira.get_jira BMT-13403 feature/TEST-13403 --verbose
     python -m get_jira.get_jira TEST feature/TEST-13403 --verbose
@@ -50,18 +51,19 @@ def cli(current_message: str, branch: str, user=None, password=None, verbose=Fal
         click.echo(branch)
         click.echo(user)
         # click.echo(password)
+        click.echo(fail)
         click.echo(verbose)
 
     basic_auth = match_auth(user, password)
 
-    msg = get_msg(current_message=current_message, branch=branch, basic_auth=basic_auth, verbose=verbose)
+    msg = get_msg(current_message=current_message, branch=branch, basic_auth=basic_auth, verbose=verbose, fail=fail)
 
     print(colored('Message: {}'.format(msg[0]), 'magenta'))
 
     return msg
 
 
-def get_msg(current_message: str, branch: str, basic_auth: Tuple[str, str] = ('', ''), verbose=True) -> Tuple[str, str]:
+def get_msg(current_message: str, branch: str, basic_auth: Tuple[str, str] = ('', ''), verbose=True, fail=True) -> Tuple[str, str]:
 
     issue = match_issue(
         branch=branch, verbose=verbose,
@@ -84,7 +86,7 @@ def get_msg(current_message: str, branch: str, basic_auth: Tuple[str, str] = (''
     return required_message, issue
 
 
-def match_issue(branch: str, verbose=False) -> str:
+def match_issue(branch: str, verbose=False, fail=True) -> str:
 
     issue = 'UNKNOWN'
 
@@ -106,7 +108,8 @@ def match_issue(branch: str, verbose=False) -> str:
                 'Please set a valid JIRA', 'red',
             ),
         )
-        sys.exit(2)
+        if fail:
+            sys.exit(2)
 
     return issue
 
@@ -261,7 +264,8 @@ def match_jira(issue: str, basic_auth: Tuple[str, str] = ('', ''), verbose=False
                 ), 'red',
             ),
         )
-        sys.exit(2)
+        if jira:
+            sys.exit(2)
 
     return required_message
 

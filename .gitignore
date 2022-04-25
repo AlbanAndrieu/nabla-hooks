@@ -1,3 +1,8 @@
+
+# Pdm
+.pdm.toml
+__pypackages__/
+
 # Latex
 *.aux
 *.fdb_latexmk

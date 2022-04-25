@@ -34,6 +34,7 @@ This project intend to be uses by all Nabla products
   * [versioneer](#versioneer)
   * [Test](#test)
   * [Poetry](#poetry)
+  * [Pdm](#pdm)
 - [Update README.md](#update-readmemd)
 - [npm-groovy-lint groovy formating for Jenkinsfile](#npm-groovy-lint-groovy-formating-for-jenkinsfile)
 
@@ -270,6 +271,15 @@ poetry build
 #poetry publish --build
 ```
 
+### Pdm
+
+[pdm](https://pdm.fming.dev/)
+
+```bash
+pdm init
+pdm run flake8
+```
+
 ## Update README.md
 
 
@@ -278,8 +288,8 @@ poetry build
 
 ```bash
 npm install --save markdown-toc
-markdown-toc README.md
-markdown-toc CHANGELOG.md  -i
+markdown-toc README.md -i
+markdown-toc CHANGELOG.md -i
 ```
 
 ```bash

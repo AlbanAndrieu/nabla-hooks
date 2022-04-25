@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
-
-import pytest
 import re
 import sys
 
-# http://blog.habnab.it/blog/2013/07/21/python-packages-and-you/
+import pytest
 
 from hooks.get_jira import get_auth as script1  # The code to test
 from hooks.get_jira import get_jira as script2  # The code to test
+# http://blog.habnab.it/blog/2013/07/21/python-packages-and-you/
 # from hooks import get_msg # NOK
 
 # sys.path.append("../hooks")
