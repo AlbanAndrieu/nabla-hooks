@@ -1,3 +1,4 @@
+<!-- markdown-link-check-disable-next-line -->
 ## [![Nabla](http://albandrieu.com/nabla/index/assets/nabla/nabla-4.png)](https://github.com/AlbanAndrieu)  nabla-hooks
 
 Nabla custom git hooks
@@ -14,6 +15,10 @@ This project intend to be uses by all Nabla products
 
 # Table of contents
 
+<!-- markdown-link-check-disable -->
+
+// spell-checker:disable
+
 <!-- toc -->
 
 - [Requirements](#requirements)
@@ -23,7 +28,7 @@ This project intend to be uses by all Nabla products
   * [Using Pip](#using-pip)
   * [From Source](#from-source)
   * [Add .pre-commit-config.yaml in you git project](#add-pre-commit-configyaml-in-you-git-project)
-  * [Override global environement variable](#override-global-environement-variable)
+  * [Override global environment variable](#override-global-environment-variable)
   * [Local](#local)
   * [Global](#global)
 - [Package nabla-hooks as a developer](#package-nabla-hooks-as-a-developer)
@@ -36,20 +41,26 @@ This project intend to be uses by all Nabla products
   * [Poetry](#poetry)
   * [Pdm](#pdm)
 - [Update README.md](#update-readmemd)
-- [npm-groovy-lint groovy formating for Jenkinsfile](#npm-groovy-lint-groovy-formating-for-jenkinsfile)
+- [npm-groovy-lint groovy formatting for Jenkinsfile](#npm-groovy-lint-groovy-formatting-for-jenkinsfile)
 
 <!-- tocstop -->
+
+// spell-checker:enable
+
+<!-- markdown-link-check-enable -->
 
 ## Requirements
 
   This hooks requires the following to run:
 
+<!-- markdown-link-check-disable-next-line -->
   * [jira](https://pypi.org/project/jira/)
 
 See requirements.txt for mandatory packages.
 
   This pre-commit hooks requires the following to run:
 
+<!-- markdown-link-check-disable-next-line -->
   * [pre-commit](http://pre-commit.com)
 
 ## Install nabla-hooks as a developer
@@ -121,7 +132,7 @@ Run `SKIP=flake8 git commit -am 'Add key'`
 Run `git commit -am 'Add key' --no-verify`
 
 
-### Override global environement variable
+### Override global environment variable
 
 
 #### Login
@@ -131,6 +142,7 @@ See [jira](https://jira.readthedocs.io/en/master/examples.html#authentication)
 ##### With user/pass
 
 
+<!-- markdown-link-check-disable -->
 ```bash
 export JIRA_USER=aandrieu
 export JIRA_PASSWORD=XXX
@@ -138,6 +150,7 @@ export JIRA_URL=https://localhost/jira
 export JIRA_CERT_PATH=/etc/ssl/certs/NABLA-CA-1.crt
 export JIRA_CERT_PATH=/etc/ssl/certs/ca-certificates.crt
 ```
+<!-- markdown-link-check-enable -->
 
 ##### With email/token
 
@@ -162,7 +175,7 @@ See [git-hooks-using-python](http://omerkatz.com/blog/2013/5/23/git-hooks-part-2
 First time run
 
 ```bash
-cp -r hooks/* .git/hooks/` or `rm -Rf ./.git/hooks/ && ln -s ../hooks ./.git/hooks && git checkout thisrepo hooks/
+cp -r hooks/* .git/hooks/` or `rm -Rf ./.git/hooks/ && ln -s ../hooks ./.git/hooks && git checkout repo hooks/
 
 ```
 
@@ -306,12 +319,12 @@ Check syntax
 npm run lint-md
 ```
 
-## npm-groovy-lint groovy formating for Jenkinsfile
+## npm-groovy-lint groovy formatting for Jenkinsfile
 
 Tested with nodejs 12 and 16 on ubuntu 20 and 21 (not working with nodejs 11 and 16)
 
 ```bash
 npm install -g npm-groovy-lint@8.2.0
 npm-groovy-lint --format
-ls -lrta .groovylintrc.json
+ll .groovylintrc.json
 ```
