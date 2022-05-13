@@ -4,6 +4,7 @@
     "**/bower_components/**",
     "**/vscode-extension/**",
     "**/.git/**",
+    ".gitignore",
     ".vscode",
     "megalinter",
     "package-lock.json",
@@ -122,4 +123,3 @@
   ],
   "version": "0.2"
 }
-
