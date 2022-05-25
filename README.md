@@ -74,6 +74,20 @@ virtualenv --no-site-packages /opt/ansible/env38 -p python3.8
 source /opt/ansible/env38/bin/activate
 ```
 
+Install python 3.8 and pyenv
+
+```bash
+curl -L https://pyenv.run | bash
+echo 'export PATH="~/.pyenv/bin:$PATH"' >> ~/.bashrc
+echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
+source ~/.bashrc
+
+pyenv install 3.8.6
+```
+
+and [integrate](https://stackabuse.com/managing-python-environments-with-direnv-and-pyenv/) it with direnv
+
 ```bash
 pip3.8 install -r hooks/requirements.txt -r requirements.testing.txt
 ```
