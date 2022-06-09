@@ -9,7 +9,7 @@
 # shellcheck source=./scripts/run-python.sh
 # echo "${WORKING_DIR}/scripts/run-python.sh"
 
-pip uninstall pylint pytest tox setup-cfg-fmt molecule yamllint pip-upgrade ansible
+#pip uninstall pylint pytest tox setup-cfg-fmt molecule yamllint pip-upgrade ansible
 
 #source /opt/ansible/env38/bin/activate
 
@@ -18,7 +18,7 @@ echo -e "${magenta} pip-upgrade --user hooks/requirements-current-3.8.txt ${NC}"
 echo -e "${magenta} pip-upgrade requirements.testing.txt ${NC}"
 
 echo -e "${magenta} pip install -r ./requirements.txt -r requirements.testing.txt ${NC}"
-#pip install -r ./requirements.txt -r requirements.testing.txt
+pip install -r ./requirements.txt -r requirements.testing.txt
 
 #pip install --upgrade pip
 
@@ -26,6 +26,10 @@ echo -e "${magenta} pip install -r ./requirements.txt -r requirements.testing.tx
 #pip install setup-cfg-fmt
 
 #pip install --upgrade setuptools
-pip install setuptools wheel twine
+echo -e "${magenta} pip install setuptools wheel twine ${NC}"
+
+echo -e "${cyan} poetry update ${NC}"
+#echo -e "${cyan} poetry install ${NC}"
+poetry install
 
 exit 0

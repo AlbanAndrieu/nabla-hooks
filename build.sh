@@ -17,7 +17,7 @@ export REPO_TAG=${REPO_TAG:-"1.0.3"}
 # shellcheck source=./clean.sh
 #${WORKING_DIR}/clean.sh"
 
-#./run-install.sh
+./run-install.sh
 
 #pipenv install
 
@@ -36,7 +36,7 @@ coverage --version || true
 #setup-py-upgrade ./
 setup-cfg-fmt setup.cfg
 
-${WORKING_DIR}/scripts/run-test.sh
+"${WORKING_DIR}/scripts/run-test.sh"
 
 echo -e "${magenta} unset JAVA_HOME ${NC}"
 echo -e "${magenta} /usr/local/sonar-runner/bin/sonar-scanner -Dproject.settings=./sonar-project.properties -Dsonar.scanner.force-deprecated-java-version=true ${NC}"
