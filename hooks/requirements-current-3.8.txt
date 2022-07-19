@@ -2,12 +2,13 @@
 #virtualenv --no-site-packages /opt/ansible/env38 -p python3.8
 #source /opt/ansible/env38/bin/activate
 #pip install -r ./requirements.txt
-#ansible>=2.10.3
+#ansible==5.6.0 # go with ansible-core>=2.12
+#ansible==6.00 # go with ansible-core>=2.13
 ansible-cmdb==1.31
-ansible-core>=2.11.6
+ansible-core>=2.13.0
 ansible-lint==5.0.8
 ansicolors==1.1.8
-cfgv==3.3.0
+cfgv>=3.3.0
 chardet>=3.0.4
 Click>=7.1.1
 click-completion>=0.5.2

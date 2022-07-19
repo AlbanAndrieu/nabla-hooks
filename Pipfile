@@ -23,6 +23,45 @@ six = ">=1.14.0"
 termcolor = ">=1.1.0"
 
 [dev-packages]
+autopep8 = ">=1.5.4"
+bandit = ">=1.7.4"
+checkov = ">=2.0.1144"
+#conan = ">=1.31.0"
+#coverage >= 4.4.1, < 5
+flake8 = ">=3.8.4"
+flake8-polyfill = ">=1.0.2"
+#git-pre-commit-hook-utils = ">=0.0.5"
+#identify[license] = ">=1.5.9"
+identify = {version = ">=1.5.9", extras = ["license"]}
+molecule = ">=3.1.5"
+pep8 = ">=1.7.1"
+pep8-naming = ">=0.11.1"
+pip-upgrader = ">=1.4.15"
+#pipenv>=2022.6.7
+pre-commit = ">=2.19.0"
+pre-commit-hooks = ">=4.2.0"
+pylint = ">=2.12.2"
+pylint-junit = ">=0.2.0"
+pytest = ">=6.1.2"
+pytest-cov = ">=2.10.1"
+# pip install --upgrade pytest-testinfra
+pytest-testinfra = "==6.4.0"
+readme-renderer = {version = ">=24.0", extras = ["md"]}
+selenium = ">=3.141.0"
+semgrep = ">=0.94.0"
+setup-cfg-fmt = ">=1.9.0"
+#setuptools = ">=41.0.0" # See https://github.com/ansible/molecule/issues/2350
+setuptools = "==58.5.3"
+setuptools-scm = "==5.0.2"
+Sphinx = ">=3.3.0"
+#testinfra = "==6.0.0"
+tox = ">=3.14.6"
+twine = ">=3.4.1"
+#virtualenv = ">=20.0.23"
+wheel = ">=0.31.0"
+#versioneer = ">=0.21"
+yamllint = ">=1.25.0"
+black = "==22.3.0"
 
 [requires]
-python_version = "3.8"
+python_version = ">=3.8" # ">=3.8,<3.10"

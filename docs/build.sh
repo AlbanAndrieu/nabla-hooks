@@ -1,7 +1,7 @@
 #!/bin/bash
 #set -xv
 
-WORKING_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
+WORKING_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # shellcheck source=../run-python.sh
 # echo "${WORKING_DIR}/../scripts/run-python.sh"

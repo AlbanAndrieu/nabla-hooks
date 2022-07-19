@@ -21,7 +21,6 @@ pre-commit = "2.15.0"
 pre-commit-hooks = "^3.3.0"
 pytest = "^6.1.2"
 
-
 [tool.pdm]
 [[tool.pdm.source]]
 name = "pypi"
@@ -42,3 +41,11 @@ dependencies = ["ansible-cmdb==1.31", "ansible-core>=2.11.6", "ansible-lint==5.0
 requires-python = ">=3.8"
 readme = "README.md"
 license = {text = "MIT"}
+
+#[virtualenvs]
+#in-project = true
+
+#[repositories]
+
+#[repositories.my-gitlab]
+#url = "https://gitlab.com/api/v4/projects/<your project id>/packages/pypi"

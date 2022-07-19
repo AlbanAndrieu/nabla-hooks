@@ -1,7 +1,12 @@
 #!/bin/bash
 #set -xve
 
-WORKING_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
+if [ "$0" = "${BAHS_SOURCE[0]}" ]; then
+  echo "This script has to be sourced and not executed..."
+  #exit 1
+fi
+
+WORKING_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # source only if terminal supports color, otherwise use unset color vars
 # shellcheck source=/dev/null
@@ -9,6 +14,10 @@ source "${WORKING_DIR}/step-0-color.sh"
 
 # shellcheck source=/dev/null
 source "${WORKING_DIR}/step-1-os.sh"
+
+function float_gt() {
+  perl -e "{if($1>$2){print 1} else {print 0}}"
+}
 
 if [ -n "${USE_SUDO}" ]; then
   echo -e "${green} USE_SUDO is defined ${happy_smiley} : ${USE_SUDO} ${NC}"
@@ -38,7 +47,7 @@ if [ -n "${VIRTUALENV_PATH}" ]; then
 else
   echo -e "${red} ${double_arrow} Undefined build parameter ${head_skull} : VIRTUALENV_PATH, use the default one ${NC}"
   # shellcheck disable=SC2001
-  VIRTUALENV_PATH=/opt/ansible/env$(echo $PYTHON_MAJOR_VERSION | sed 's/\.//g')
+  VIRTUALENV_PATH=/opt/ansible/env$(echo ${PYTHON_MAJOR_VERSION} | sed 's/\.//g')
   export VIRTUALENV_PATH
   echo -e "${magenta} VIRTUALENV_PATH : ${VIRTUALENV_PATH} ${NC}"
 fi
@@ -67,10 +76,11 @@ echo -e "${cyan} Use virtual env ${VIRTUALENV_PATH}/bin/activate ${NC}"
 
 #sudo virtualenv -p /usr/bin/python3.5 /opt/ansible/env35
 echo -e "${green} virtualenv --no-site-packages ${VIRTUALENV_PATH} -p python${PYTHON_MAJOR_VERSION} ${NC}"
-echo -e "${green} source ${VIRTUALENV_PATH}/bin/activate ${NC}"
-if [ -f ${VIRTUALENV_PATH}/bin/activate ]; then
-  # shellcheck disable=SC1090
-  source "${VIRTUALENV_PATH}/bin/activate" || exit 2
+# shellcheck disable=SC1091
+echo -e "${green} . ${VIRTUALENV_PATH}/bin/activate ${NC}"
+if [ -f "${VIRTUALENV_PATH}/bin/activate" ]; then
+  # shellcheck disable=SC1090,SC1091
+  . "${VIRTUALENV_PATH}/bin/activate" || exit 2
 
   #export PYTHONPATH="/usr/local/lib/python${PYTHON_MAJOR_VERSION}/dist-packages/"
   export PATH="${VIRTUALENV_PATH}/bin:${PATH}"
@@ -83,6 +93,7 @@ fi
 
 echo -e "${cyan} =========== ${NC}"
 echo -e "${green} Display virtual env ${NC}"
+virtualenv --version || true
 pip -V || true
 pip freeze | grep ansible || true
 
@@ -97,9 +108,9 @@ echo -e "${green} brew install cairo libxml2 libffi ${NC}"
 
 echo -e "${green} Fix permission rights ${NC}"
 # shellcheck disable=SC2001
-echo -e "${green} chown -R jenkins:docker /opt/ansible/env$(echo $PYTHON_MAJOR_VERSION | sed 's/\.//g') ${NC}"
+echo -e "${green} chown -R jenkins:docker /opt/ansible/env$(echo ${PYTHON_MAJOR_VERSION} | sed 's/\.//g') ${NC}"
 
-if [ -f ${WORKING_DIR}/../playbooks/files/python/requirements-current-${PYTHON_MAJOR_VERSION}.txt ]; then
+if [ -f "${WORKING_DIR}/../playbooks/files/python/requirements-current-${PYTHON_MAJOR_VERSION}.txt" ]; then
   echo -e "${cyan} =========== ${NC}"
   echo -e "${green} Install virtual env requirements : pip install -r ${WORKING_DIR}/../playbooks/files/python/requirements-current-${PYTHON_MAJOR_VERSION}.txt ${NC}"
   #"${VIRTUALENV_PATH}/bin/pip${PYTHON_MAJOR_VERSION}" install -r "${WORKING_DIR}/../playbooks/files/python/requirements-current-${PYTHON_MAJOR_VERSION}.txt"
@@ -165,10 +176,13 @@ echo -e "${green} Checking python ${PYTHON_MAJOR_VERSION} version ${NC}"
 
 python3 --version || true
 pip3 --version || true
+
 if [ -n "${PYTHON_CMD}" ]; then
+  echo -e "${green} PYTHON_CMD is defined ${happy_smiley} : ${PYTHON_CMD} ${NC}"
+
   echo -e "${magenta} ${PYTHON_CMD} --version ${NC}"
   ${PYTHON_CMD} --version || true
-  if [ -f ${VIRTUALENV_PATH}/bin/pip${PYTHON_MAJOR_VERSION} ]; then
+  if [ -f "${VIRTUALENV_PATH}/bin/pip${PYTHON_MAJOR_VERSION}" ]; then
     echo -e "${magenta} ${VIRTUALENV_PATH}/bin/pip${PYTHON_MAJOR_VERSION} --version ${NC}"
     "${VIRTUALENV_PATH}/bin/pip${PYTHON_MAJOR_VERSION}" --version || true
 

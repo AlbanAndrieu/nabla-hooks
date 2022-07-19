@@ -1,5 +1,3 @@
-.direnv/
-
 # Pdm
 .pdm.toml
 __pypackages__/
@@ -109,6 +107,7 @@ celerybeat-schedule
 *.sage.py
 
 # Environments
+.direnv/
 .env
 .venv
 env/
