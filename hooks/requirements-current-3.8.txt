@@ -10,7 +10,7 @@ ansible-lint==5.0.8
 ansicolors==1.1.8
 cfgv>=3.3.0
 chardet>=3.0.4
-Click>=7.1.1
+click>=8.0.1
 click-completion>=0.5.2
 colorama>=0.4.3
 filemagic==1.6 # https://github.com/Linaro/jipdate/issues/30
@@ -18,6 +18,6 @@ git-url-parse>=1.2.2
 GitPython>=3.1.1
 jira==3.0.1
 podmena>=0.4.2
-PyYAML>=5.1
+PyYAML>=5.4.1
 six>=1.14.0
 termcolor>=1.1.0

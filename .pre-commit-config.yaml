@@ -4,7 +4,7 @@
 #   python: python3.7  # Ubuntu 19.04
 
 repos:
- - repo: https://github.com/pre-commit/pre-commit-hooks.git
+  - repo: https://github.com/pre-commit/pre-commit-hooks.git
 # pre-commit-hooks is not working on both environment
 # You will have to switch
 #  pre-commit-hooks.git from v2.1.0 to v2.4.0
@@ -190,13 +190,13 @@ repos:
   #      types: [shell]
   #      always_run: true
   #      verbose: true
- - repo: local
-   hooks:
-    - id: publicversion-check
-      name: PublicVersion check
-      description: Check if version is valid
-      entry: ./test/version.sh
-      language: script
-      types: [shell]
-      always_run: true
-      verbose: true
+  - repo: local
+    hooks:
+      - id: publicversion-check
+        name: PublicVersion check
+        description: Check if version is valid
+        entry: ./test/version.sh
+        language: script
+        types: [shell]
+        always_run: true
+        verbose: true

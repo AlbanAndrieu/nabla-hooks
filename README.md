@@ -89,7 +89,8 @@ pyenv install 3.8.6
 and [integrate](https://stackabuse.com/managing-python-environments-with-direnv-and-pyenv/) it with direnv
 
 ```bash
-pip3.8 install -r hooks/requirements.txt -r requirements.testing.txt
+#pip3.8 install -r hooks/requirements.txt -r requirements.testing.txt
+pipenv install --dev
 ```
 
 ## Install nabla-hooks to use it
@@ -208,6 +209,8 @@ Note:  If you change the templates directory the hooks directory  must be a subd
 Run
 
 ```bash
+git config --global --get init.templatedir 
+rm -Rf .git/hooks
 git config --global init.templatedir /workspace/users/albandrieu30/nabla-hooks/
 ```
 
