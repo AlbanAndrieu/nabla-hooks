@@ -4,9 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-ansible-cmdb = "==1.31"
-ansible-core = ">=2.11.6"
-ansible-lint = "==5.0.8"
+ansible-core = ">=2.13.0"
 ansicolors = "==1.1.8"
 cfgv = "==3.3.0"
 chardet = ">=3.0.4"
@@ -23,7 +21,10 @@ six = ">=1.14.0"
 termcolor = ">=1.1.0"
 
 [dev-packages]
+ansible-cmdb = "==1.31"
+ansible-lint = {extras = ["yamllint"], version = ">=6.0.2"}
 autopep8 = ">=1.5.4"
+ansible-playbook-grapher = "==1.1.0"
 bandit = ">=1.7.4"
 checkov = ">=2.0.1144"
 #conan = ">=1.31.0"
@@ -64,4 +65,4 @@ yamllint = ">=1.25.0"
 black = "==22.3.0"
 
 [requires]
-python_version = ">=3.8" # ">=3.8,<3.10"
+python_version = "3.8"

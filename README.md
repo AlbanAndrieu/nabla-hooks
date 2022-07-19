@@ -21,33 +21,49 @@ This project intend to be uses by all Nabla products
 
 <!-- toc -->
 
-- [Requirements](#requirements)
-- [Install nabla-hooks as a developer](#install-nabla-hooks-as-a-developer)
-  * [Using virtualenv](#using-virtualenv)
-- [Install nabla-hooks to use it](#install-nabla-hooks-to-use-it)
-  * [Using Pip](#using-pip)
-  * [From Source](#from-source)
-  * [Add .pre-commit-config.yaml in you git project](#add-pre-commit-configyaml-in-you-git-project)
-  * [Override global environment variable](#override-global-environment-variable)
-  * [Local](#local)
-  * [Global](#global)
-- [Package nabla-hooks as a developer](#package-nabla-hooks-as-a-developer)
-  * [Build a source distribution (a tar archive of all the files needed to build and install the package):](#build-a-source-distribution-a-tar-archive-of-all-the-files-needed-to-build-and-install-the-package)
-  * [Upload a source distribution](#upload-a-source-distribution)
-- [Test nabla-hooks as a developer](#test-nabla-hooks-as-a-developer)
-  * [shell usage](#shell-usage)
-  * [versioneer](#versioneer)
-  * [Test](#test)
-  * [Poetry](#poetry)
-  * [Pdm](#pdm)
-- [Update README.md](#update-readmemd)
-- [npm-groovy-lint groovy formatting for Jenkinsfile](#npm-groovy-lint-groovy-formatting-for-jenkinsfile)
+- [Initialize](#initialize)
+  * [Requirements](#requirements)
+  * [Install nabla-hooks as a developer](#install-nabla-hooks-as-a-developer)
+    + [Using virtualenv](#using-virtualenv)
+  * [Install nabla-hooks to use it](#install-nabla-hooks-to-use-it)
+    + [Using Pip](#using-pip)
+    + [From Source](#from-source)
+    + [Add .pre-commit-config.yaml in you git project](#add-pre-commit-configyaml-in-you-git-project)
+    + [Override global environment variable](#override-global-environment-variable)
+      - [Login](#login)
+        * [With user/pass](#with-userpass)
+        * [With email/token](#with-emailtoken)
+      - [The Templates Directories](#the-templates-directories)
+    + [Local](#local)
+    + [Global](#global)
+  * [Package nabla-hooks as a developer](#package-nabla-hooks-as-a-developer)
+    + [Build a source distribution (a tar archive of all the files needed to build and install the package):](#build-a-source-distribution-a-tar-archive-of-all-the-files-needed-to-build-and-install-the-package)
+    + [Upload a source distribution](#upload-a-source-distribution)
+  * [Test nabla-hooks as a developer](#test-nabla-hooks-as-a-developer)
+    + [shell usage](#shell-usage)
+    + [versioneer](#versioneer)
+    + [Test](#test)
+    + [Poetry](#poetry)
+    + [Pdm](#pdm)
+  * [Update README.md](#update-readmemd)
+  * [npm-groovy-lint groovy formatting for Jenkinsfile](#npm-groovy-lint-groovy-formatting-for-jenkinsfile)
 
 <!-- tocstop -->
 
 // spell-checker:enable
 
 <!-- markdown-link-check-enable -->
+
+# Initialize
+
+```bash
+direnv allow
+pyenv install 3.8.10
+pyenv local 3.8.10
+python -m pipenv install --dev --ignore-pipfile
+direnv allow
+pre-commit install
+```
 
 ## Requirements
 
@@ -83,14 +99,16 @@ echo 'eval "$(pyenv init -)"' >> ~/.bashrc
 echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
 source ~/.bashrc
 
-pyenv install 3.8.6
+pyenv install 3.8.10
 ```
 
 and [integrate](https://stackabuse.com/managing-python-environments-with-direnv-and-pyenv/) it with direnv
 
 ```bash
 #pip3.8 install -r hooks/requirements.txt -r requirements.testing.txt
-pipenv install --dev
+pipenv check
+python -m pipenv install --dev
+python -m pipenv install --dev --ignore-pipfile
 ```
 
 ## Install nabla-hooks to use it
@@ -209,7 +227,7 @@ Note:  If you change the templates directory the hooks directory  must be a subd
 Run
 
 ```bash
-git config --global --get init.templatedir 
+git config --global --get init.templatedir
 rm -Rf .git/hooks
 git config --global init.templatedir /workspace/users/albandrieu30/nabla-hooks/
 ```
