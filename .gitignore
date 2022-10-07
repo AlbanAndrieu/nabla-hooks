@@ -1,3 +1,5 @@
+output/
+
 # Pdm
 .pdm.toml
 __pypackages__/

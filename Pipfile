@@ -35,6 +35,7 @@ flake8-polyfill = ">=1.0.2"
 #identify[license] = ">=1.5.9"
 identify = {version = ">=1.5.9", extras = ["license"]}
 molecule = ">=3.1.5"
+nox = "==2021.6.12"
 pep8 = ">=1.7.1"
 pep8-naming = ">=0.11.1"
 pip-upgrader = ">=1.4.15"

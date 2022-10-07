@@ -8,8 +8,11 @@ exclude =
     old,
     build,
     dist,
+    docs,
     .eggs,
     .tox,
-    setup.py
-    versioneer.py
-    hooks/_version.py
+    setup.py,
+    versioneer.py,
+    hooks/_version.py,
+    .venv,
+    .direnv,

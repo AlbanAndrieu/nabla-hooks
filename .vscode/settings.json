@@ -1,5 +1,4 @@
 {
-    "python.autoComplete.extraPaths": ["__pypackages__/<major.minor>/lib"],
     "python.analysis.extraPaths": ["__pypackages__/<major.minor>/lib"],
     "files.exclude": {
         "out": true, // set this to true to hide the "out" folder with the compiled JS files
@@ -22,16 +21,16 @@
         ".vscode-test": true,
         ".vscode test": true
     },
-    "python.pythonPath": "/opt/ansible/env38/bin/python",
+    "python.pipenvPath": ".venv/bin/python",
     //"terminal.integrated.shellArgs.linux": [
     //    "-l"
     //],
     "terminal.integrated.env.linux": {
-        "PYTHONPATH": "${workspaceFolder}/hooks:/opt/ansible/env38/bin/:/opt/ansible/env38/lib/python3.8/site-packages/"
+        "PYTHONPATH": "${workspaceFolder}/hooks:.venv/bin/:/opt/ansible/env38/bin/:/opt/ansible/env38/lib/python3.8/site-packages/"
     },
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
-    "python.testing.pytestPath": "/opt/ansible/env38/bin/pytest",
+    "python.testing.pytestPath": ".venv/bin/pytest",
     "python.testing.unittestArgs": [
         "-v",
         "-s",
@@ -50,6 +49,7 @@
         "."
     ],
     "python.autoComplete.extraPaths": [
+        "__pypackages__/<major.minor>/lib",
         "${workspaceFolder}/hooks",
         "./**"
     ],
