@@ -117,7 +117,7 @@ doc: ## Documentation
 .PHONY: flake8
 flake8: ## Linter flake8
 	@echo "=> Linter flake8..."
-	flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+	flake8 hooks tests  --config .flake8 --count --exit-zero --max-line-length=88 --max-complexity=12 --statistics
 
 ## —— Debug 📜🐳 —————————————————————————————————————————————————————————————————
 .PHONY: debug
