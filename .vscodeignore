@@ -81,7 +81,7 @@ pythonFiles/lib/python/bin/**
 pythonFiles/tests/**
 scripts/**
 src/**
-test/**
+tests/**
 tmp/**
 typings/**
 types/**

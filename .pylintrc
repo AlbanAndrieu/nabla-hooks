@@ -13,7 +13,7 @@ ignore=CVS
 # regex matches against base names, not paths.
 ignore-patterns=test_.*?py,versioneer\.py,_version\.py
 
-ignore-paths="^test/.*$", "^hooks/test/.*$", "^scripts/.*$", "^src/tests/.*$"
+ignore-paths="^tests/.*$", "^hooks/tests/.*$", "^scripts/.*$", "^src/tests/.*$"
 
 # Python code to execute, usually for sys.path manipulation such as
 # pygtk.require().

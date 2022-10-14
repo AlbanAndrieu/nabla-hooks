@@ -14,7 +14,7 @@ class TestPackage(unittest.TestCase):
         self.local_test_dir = os.path.dirname(os.path.realpath(__file__))
 
     def run_get_msg(self, cwd, bin, message, env=None):
-        command = '{} {}'.format(bin, message)
+        command = "{} {}".format(bin, message)
 
         result, err = subprocess.Popen(
             [command],
@@ -26,21 +26,21 @@ class TestPackage(unittest.TestCase):
             env=env,
         ).communicate()
 
-        self.assertFalse(err, 'Expected no error but was ' + str(err))
+        self.assertFalse(err, "Expected no error but was " + str(err))
 
         return result
 
     def test_message(self):
         cwd = self.local_test_dir
-        binary = '../bin/get_msg'
-        message = 'data'
+        binary = "../bin/get_msg"
+        message = "data"
 
         result = self.run_get_msg(cwd=cwd, bin=binary, message=message)
         self.assertIn(
-            'Use shell only when shell functionality is required',
+            "Use shell only when shell functionality is required",
             str(result),
         )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

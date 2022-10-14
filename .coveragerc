@@ -1,8 +1,8 @@
 [report]
 include = hooks/*
-omit = hooks/test/*
+omit = hooks/tests/*
     # omit everything in /usr
-    /test/*
+    /tests/*
 
 [html]
 directory = output/htmlcov

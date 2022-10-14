@@ -7,6 +7,7 @@ import certifi
 import urllib3
 from colorama import init
 from termcolor import colored
+
 # WORKAROUND below in case certificate is not install on workstation
 # urllib3.disable_warnings()
 
@@ -14,40 +15,41 @@ from termcolor import colored
 init()
 
 http = urllib3.PoolManager(
-    cert_reqs='CERT_REQUIRED',
+    cert_reqs="CERT_REQUIRED",
     ca_certs=certifi.where(),
 )
 
 
 # USAGE : python -m get_jira.test.check_certificates
 
-print(colored('TEST: https://google.com', 'yellow'))
+print(colored("TEST: https://google.com", "yellow"))
 
 try:
 
-    r = http.request('GET', 'https://google.com')
+    r = http.request("GET", "https://google.com")
     print(r.status)
 
 except urllib3.exceptions.SSLError as e:
     print(e)
-#    sys.stderr.write("Failed to check certificate.  Message: \"%s\".\n" % (e.text));
+    #    sys.stderr.write("Failed to check certificate.  Message: \"%s\".\n" % (e.text));
     sys.exit(2)
 except Exception as e:  # noqa: ignore=E722
     traceback.print_exc()
     print(
         colored(
-            'Oops!  HTTPS is failing. Switch to manual... {}'.format(
+            "Oops!  HTTPS is failing. Switch to manual... {}".format(
                 http,
-            ), 'red',
+            ),
+            "red",
         ),
     )
     sys.exit(2)
 
-print(colored('TEST: https://expired.badssl.com', 'yellow'))
+print(colored("TEST: https://expired.badssl.com", "yellow"))
 
 try:
 
-    r = http.request('GET', 'https://expired.badssl.com')
+    r = http.request("GET", "https://expired.badssl.com")
     print(r.status)
     # http = urllib3.PoolManager(
     #    cert_file='/etc/ssl/certs/UK1VSWCERT01-CA-5.crt',
@@ -59,9 +61,10 @@ except urllib3.exceptions.MaxRetryError as e:
     #    traceback.print_exc()
     print(
         colored(
-            'OK!  HTTPS is failing. As expected... {}'.format(
+            "OK!  HTTPS is failing. As expected... {}".format(
                 e,
-            ), 'green',
+            ),
+            "green",
         ),
     )
 except urllib3.exceptions.SSLError as e:
@@ -70,13 +73,14 @@ except Exception as e:  # noqa: ignore=E722
     traceback.print_exc()
     print(
         colored(
-            'Oops!  HTTPS is failing. Switch to manual... {}'.format(
+            "Oops!  HTTPS is failing. Switch to manual... {}".format(
                 http,
-            ), 'red',
+            ),
+            "red",
         ),
     )
 
-print(colored('TEST: http://fr1cslfrbm0060.misys.global.ad/', 'yellow'))
+print(colored("TEST: http://fr1cslfrbm0060.misys.global.ad/", "yellow"))
 
 # http = urllib3.PoolManager(
 #    cert_file='/etc/ssl/certs/UK1VSWCERT01-CA-5.crt',
@@ -85,7 +89,7 @@ print(colored('TEST: http://fr1cslfrbm0060.misys.global.ad/', 'yellow'))
 
 try:
 
-    r = http.request('GET', 'http://fr1cslfrbm0060.misys.global.ad/')
+    r = http.request("GET", "http://fr1cslfrbm0060.misys.global.ad/")
     print(r.status)
 
     # sys.exit(2)
@@ -94,9 +98,10 @@ except urllib3.exceptions.MaxRetryError as e:
     #    traceback.print_exc()
     print(
         colored(
-            'OK!  HTTPS is failing. As expected... {}'.format(
+            "OK!  HTTPS is failing. As expected... {}".format(
                 e,
-            ), 'green',
+            ),
+            "green",
         ),
     )
 except urllib3.exceptions.SSLError as e:
@@ -105,17 +110,18 @@ except Exception as e:  # noqa: ignore=E722
     traceback.print_exc()
     print(
         colored(
-            'Oops!  HTTPS is failing. Switch to manual... {}'.format(
+            "Oops!  HTTPS is failing. Switch to manual... {}".format(
                 http,
-            ), 'red',
+            ),
+            "red",
         ),
     )
 
-print(colored('TEST: https://almtools.misys.global.ad/jira', 'yellow'))
+print(colored("TEST: https://almtools.misys.global.ad/jira", "yellow"))
 
 try:
 
-    r = http.request('GET', 'https://almtools.misys.global.ad/jira')
+    r = http.request("GET", "https://almtools.misys.global.ad/jira")
     print(r.status)
 
     sys.exit(2)
@@ -124,9 +130,10 @@ except urllib3.exceptions.MaxRetryError as e:
     #    traceback.print_exc()
     print(
         colored(
-            'OK!  HTTPS is failing. As expected... {}'.format(
+            "OK!  HTTPS is failing. As expected... {}".format(
                 e,
-            ), 'green',
+            ),
+            "green",
         ),
     )
 except urllib3.exceptions.SSLError as e:
@@ -135,8 +142,9 @@ except Exception as e:  # noqa: ignore=E722
     traceback.print_exc()
     print(
         colored(
-            'Oops!  HTTPS is failing. Switch to manual... {}'.format(
+            "Oops!  HTTPS is failing. Switch to manual... {}".format(
                 http,
-            ), 'red',
+            ),
+            "red",
         ),
     )

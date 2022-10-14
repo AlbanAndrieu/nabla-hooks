@@ -12,6 +12,8 @@ cd "${WORKING_DIR}/../hooks" || exit
 python3 -m get_jira.get_jira TESTME feature/BMT-13403 -v
 python3 -m get_jira.get_auth -u aandrieu -p XXXX -v
 cd "${WORKING_DIR}" || exit
+
+# shellcheck disable=SC2086
 ${WORKING_DIR}/../hooks/get_msg.py '../.git/COMMIT_EDITMSG'
 
 exit 0

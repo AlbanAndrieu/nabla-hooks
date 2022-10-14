@@ -4,9 +4,9 @@
 # skips  : comma separated list of tests to skip
 # tests  : comma separated list of tests to run
 targets = ./hooks
-exclude: \static,\templates,test,hooks/test,.eggs,.tox
+exclude: \static,\templates,tests,hooks/test,.eggs,.tox
 exclude_dirs:
-#  - hooks/test/test_pytest.py
-  - hooks/test
+#  - hooks/tests/test_pytest.py
+  - hooks/tests
 skips: B404,B607,B603,B101
 recursive = true

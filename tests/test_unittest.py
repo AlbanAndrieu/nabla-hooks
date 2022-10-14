@@ -6,7 +6,7 @@ import unittest
 # import get_jira.get_auth as script1  # The code to test
 
 # sys.path.append("../hooks")
-sys.path.append('./hooks')
+sys.path.append("./hooks")
 
 # import get_jira.get_jira as script2 # The code to test
 
@@ -23,5 +23,5 @@ class TestMyPackage(unittest.TestCase):
         self.assertTrue
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
