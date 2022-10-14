@@ -1,5 +1,5 @@
 # comment
-hooks/
+#hooks/
 doc/
 *.md
 !README.md
