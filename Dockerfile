@@ -23,7 +23,7 @@ RUN pip install --upgrade pip
 COPY --chown=nabla-hooks:nabla-hooks ./hooks/requirements-current-3.8.txt /code/requirements.txt
 
 RUN --mount=type=secret,id=pip.conf,dst=/code/.config/pip/pip.conf,uid=999,gid=999 \
-python -m pip install -r /code/requirements.txt
+python -m pip install --no-cache-dir -r /code/requirements.txt
 
 COPY --chown=nabla-hooks:nabla-hooks . /code/nabla-hooks
 
