@@ -26,21 +26,29 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install dependencies
+      - name: Install pip dependencies
         run: |
-          python -m pip install --upgrade pip
           pip install virtualenv
           virtualenv venv
           source venv/bin/activate
+          python -m pip install --upgrade pip
           python -m pip install flake8 pytest tox tox-gh-actions
           # if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           # if [ -f requirements.testing.txt ]; then pip install -r requirements.testing.txt; fi
-          if [ -f requirements.txt && -f requirements.testing.txt ]; then pip install -r requirements.txt -r requirements.testing.txt; fi
-          python -m pip install pipenv=="2022.6.7"
-          python -m pipenv install --dev --ignore-pipfile
+          if [[ -f requirements.txt && -f requirements.testing.txt ]]; then pip install -r requirements.txt -r requirements.testing.txt; fi
+
+      # - name: Install pipenv dependencies
+      #   run: |
+      #     pip install virtualenv
+      #     virtualenv venv
+      #     source venv/bin/activate
+      #     python -m pip install --upgrade pip
+      #     python -m pip install pipenv=="2022.6.7"
+      #     python -m pipenv install --dev --ignore-pipfile
 
       - name: Lint with flake8
         run: |
+          source venv/bin/activate
           # stop the build if there are Python syntax errors or undefined names
           #flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           flake8 hooks tests  --config .flake8 --count --exit-zero --max-line-length=88 --max-complexity=12 --statistics
