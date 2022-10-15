@@ -29,9 +29,13 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
+          pip install virtualenv
+          virtualenv venv
+          source venv/bin/activate
           python -m pip install flake8 pytest tox tox-gh-actions
           # if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           # if [ -f requirements.testing.txt ]; then pip install -r requirements.testing.txt; fi
+          if [ -f requirements.txt && -f requirements.testing.txt ]; then pip install -r requirements.txt -r requirements.testing.txt; fi
           python -m pip install pipenv=="2022.6.7"
           python -m pipenv install --dev --ignore-pipfile
 
@@ -53,7 +57,7 @@ jobs:
 
       - name: Test with pytest
         run: |
-          pytest
+          python -m pytest --cov=--cov-fail-under=70
 
       - name: Test with tox
         run: |
