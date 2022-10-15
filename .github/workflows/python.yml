@@ -57,14 +57,17 @@ jobs:
 
       - name: Lint with pylint
         run: |
+          source venv/bin/activate
           ./scripts/run-pylint.sh
 
       - name: Lint with bandit
         run: |
+          source venv/bin/activate
           ./scripts/run-bandit.sh
 
       - name: Test with pytest
         run: |
+          source venv/bin/activate
           python -m pytest --cov=--cov-fail-under=70
 
       - name: Test with tox
