@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nabla-hooks"
-version = "1.0.3"
+version = "1.0.4"
 description = "Custom hooks to improve code quality before pushing to git"
 authors = ["Andrieu, Alban <alban.andrieu@free.fr>"]
 license = "MIT"
@@ -10,16 +10,43 @@ packages = [
   { include = "hooks" }
 ]
 
-[tool.poetry.dependencies]
-python = "^3.8"
-jira = "3.0.1"
-colorama = "^0.4.3"
+# [tool.poetry.dependencies]
+# python = "^3.8"
+# jira = "3.0.1"
+# colorama = "^0.4.3"
+#
+# [tool.poetry.dev-dependencies]
+# tox = "3.14.6"
+# pre-commit = "2.15.0"
+# pre-commit-hooks = "^3.3.0"
+# pytest = "^6.1.2"
 
-[tool.poetry.dev-dependencies]
-tox = "3.14.6"
-pre-commit = "2.15.0"
-pre-commit-hooks = "^3.3.0"
-pytest = "^6.1.2"
+[tool.setuptools-pipfile]
+
+#[tool]
+#setuptools-pipfile = "src/Pipfile"
+
+[tool.pytest.ini_options]
+testpaths = "tests/"
+
+[tool.black]
+line-length = 88
+
+[tool.isort]
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+line_length = 88
+
+[tool.coverage.run]
+branch = true
+omit = [
+    "*/tests/*",
+    "*/migrations/*",
+    "*site-packages*",
+    "*__init__.py",
+]
 
 [tool.pdm]
 [[tool.pdm.source]]
@@ -37,7 +64,8 @@ description = "Hook to validate branch name and issue"
 authors = [
     {name = "Andrieu, Alban", email = "alban.andrieu@free.fr"},
 ]
-dependencies = ["ansible-cmdb==1.31", "ansible-core>=2.11.6", "ansible-lint==5.0.8", "ansicolors==1.1.8", "cfgv==3.3.0", "chardet>=3.0.4", "click>=7.1.1", "click-completion>=0.5.2", "colorama>=0.4.3", "filemagic==1.6", "git-url-parse>=1.2.2", "gitpython>=3.1.1", "jira==3.0.1", "podmena>=0.4.2", "pyyaml>=5.1", "six>=1.14.0", "termcolor>=1.1.0"]
+#dependencies = ["ansible-cmdb==1.31", "ansible-core>=2.11.6", "ansible-lint==5.0.8", "ansicolors==1.1.8", "cfgv==3.3.0", "chardet>=3.0.4", "click>=7.1.1", "click-completion>=0.5.2", "colorama>=0.4.3", "filemagic==1.6", "git-url-parse>=1.2.2", "gitpython>=3.1.1", "jira==3.0.1", "podmena>=0.4.2", "pyyaml>=5.1", "six>=1.14.0", "termcolor>=1.1.0"]
+dependencies = ["dynamic"]
 requires-python = ">=3.8"
 readme = "README.md"
 license = {text = "MIT"}

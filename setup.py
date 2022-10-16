@@ -7,58 +7,55 @@ from setuptools import setup
 # from hooks._version import get_versions
 # import versioneer
 
-with open('requirements.txt') as f:
+with open("requirements.txt") as f:
     requirements = f.read().splitlines()
 
 # read the contents of your README file
 from pathlib import Path
+
 this_directory = Path(__file__).parent
-long_description = (this_directory / 'README.md').read_text()
+long_description = (this_directory / "README.md").read_text()
 
 setup(
-    name='nabla-hooks',
+    name="nabla-hooks",
     # version=hooks.__version__,
     # version=get_versions()['version'],
-    version='1.0.3',
+    version="1.0.4",
     # version=versioneer.get_version(),
     # cmdclass=versioneer.get_cmdclass(),
     packages=find_packages(),
     # scripts=["hooks/get_msg.py"],
-
     # Project uses reStructuredText, so ensure that the docutils get
     # installed or upgraded on the target machine
-    #install_requires=["docutils>=0.3", "jira>=2.0.0", "termcolor>=1.1.0"],
-    install_requires=requirements,
-
+    setup_requires="setuptools-pipfile",
+    # install_requires=["docutils>=0.3", "jira>=2.0.0", "termcolor>=1.1.0"],
+    # install_requires=requirements,
     package_data={
         # If any package contains *.txt or *.rst files, include them:
-        '': ['*.txt', '*.rst'],
+        "": ["*.txt", "*.rst"],
         # And include any *.msg files found in the "hooks" package, too:
-        'hooks': ['*.msg'],
+        "hooks": ["*.msg"],
     },
-
     # metadata to display on PyPI
-    author='Alban Andrieu',
-    author_email='alban.andrieu@free.fr',
-    description='This is nabla_custom hooks package',
+    author="Alban Andrieu",
+    author_email="alban.andrieu@free.fr",
+    description="This is nabla_custom hooks package",
     long_description=long_description,
-    long_description_content_type='text/markdown',
-    keywords='nabla hooks',
-    url='https://github.com/AlbanAndrieu/nabla-hooks',
+    long_description_content_type="text/markdown",
+    keywords="nabla hooks",
+    url="https://github.com/AlbanAndrieu/nabla-hooks",
     project_urls={
-        'Bug Tracker': 'https://github.com/AlbanAndrieu/nabla-hooks',
-        'Documentation': 'https://github.com/AlbanAndrieu/nabla-hooks',
-        'Source Code': 'https://github.com/AlbanAndrieu/nabla-hooks',
+        "Bug Tracker": "https://github.com/AlbanAndrieu/nabla-hooks",
+        "Documentation": "https://github.com/AlbanAndrieu/nabla-hooks",
+        "Source Code": "https://github.com/AlbanAndrieu/nabla-hooks",
     },
     classifiers=[
-        'Programming Language :: Python',
+        "Programming Language :: Python",
     ],
-
     entry_points={
-        'console_scripts': [
-            'nabla-hooks = hooks.get_msg:main',
+        "console_scripts": [
+            "nabla-hooks = hooks.get_msg:main",
         ],
     },
-
     # could also include long_description, download_url, etc.
 )

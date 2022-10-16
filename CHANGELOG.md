@@ -10,8 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <!-- toc -->
 
 - [[Unreleased]](#unreleased)
-- [[1.0.3] - 2021-11-09](#103---2021-11-09)
+- [[1.0.4] - 2022-10-16](#104---2022-10-16)
   * [Updated](#updated)
+- [[1.0.3] - 2021-11-10](#103---2021-11-10)
+  * [Updated](#updated-1)
 - [[1.0.2] - 2020-05-28](#102---2020-05-28)
   * [Added](#added)
 
@@ -21,7 +23,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 <!--lint disable no-undefined-references-->
-## [1.0.3] - 2021-11-09
+## [1.0.4] - 2022-10-16
+
+### Updated
+- Improve github actions (virtualenv venv)
+- Start switching to pipenv
+
+<!--lint disable no-undefined-references-->
+## [1.0.3] - 2021-11-10
 
 ### Updated
 - Fix pytest in github actions
