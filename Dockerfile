@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.2.1
-FROM python:3.8
+FROM python:3.10.0
 
 LABEL name="nabla-hooks" version="2.0.3" \
  description="Image used by our products to build python\
