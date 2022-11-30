@@ -15,6 +15,12 @@ SOURCEDIR     = source
 BUILDDIR      = build
 
 # Image
+IMAGE_NAME := $${CI_REGISTRY_IMAGE:-"nabla/nabla-hooks"}
+IMAGE_TAG := $${IMAGE_TAG:-"latest"}
+IMAGE_NEXT_TAG := $${OCI_IMAGE_TAG:-"0.0.1"}
+IMAGE := $(IMAGE_NAME):$(IMAGE_TAG)
+
+# Image
 
 TRIVY_VULN_TYPE = "os,library"
 TRIVY_SECURITY_CHECKS = "vuln,config,secret"
@@ -68,7 +74,8 @@ build-docker-train:  ## Build train container with docker
 build-docker:  ## Build container with docker
 	@echo "=> Building image..."
 	envsubst '$${CI_PIP_GITLABNABLA_TOKEN}' < etc/pip.conf > pip.conf
-	docker build -t $(IMAGE) --secret id=pip.conf,src=pip.conf --squash .
+	# --secret id=pip.conf,src=pip.conf
+	docker build -t $(IMAGE) --squash .
 
 ## —— Buildah Docker 🐶🐳 ————————————————————————————————————————————————————————————————
 .PHONY: build-buildah-docker

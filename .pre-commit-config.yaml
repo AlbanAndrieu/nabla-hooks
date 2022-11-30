@@ -72,7 +72,7 @@ repos:
 #      -   id: no-commit-to-branch
 #        args: [--branch, develop, --branch, master, --branch, release/*]
       - id: end-of-file-fixer
-      - id: fix-encoding-pragma
+#      - id: fix-encoding-pragma
       - id: requirements-txt-fixer
       - id: sort-simple-yaml
       - id: file-contents-sorter

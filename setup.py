@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 # pylint: skip-file
-from setuptools import find_packages
-from setuptools import setup
+from setuptools import find_packages, setup
 
 # import hooks
 # from hooks._version import get_versions
@@ -28,7 +26,7 @@ setup(
     # Project uses reStructuredText, so ensure that the docutils get
     # installed or upgraded on the target machine
     setup_requires="setuptools-pipfile",
-    # install_requires=["docutils>=0.3", "jira>=2.0.0", "termcolor>=1.1.0"],
+    # install_requires=["docutils>=0.3", "jira>=3.0.1", "termcolor>=1.1.0"],
     # install_requires=requirements,
     package_data={
         # If any package contains *.txt or *.rst files, include them:
