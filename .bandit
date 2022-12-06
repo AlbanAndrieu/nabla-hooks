@@ -4,7 +4,7 @@
 # skips  : comma separated list of tests to skip
 # tests  : comma separated list of tests to run
 targets = ./hooks
-exclude: \static,\templates,tests,hooks/test,.eggs,.tox
+#exclude: \static,\templates,tests,hooks/tests,.eggs,.tox
 exclude_dirs:
 #  - hooks/tests/test_pytest.py
   - hooks/tests

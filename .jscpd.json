@@ -5,12 +5,20 @@
     "**/node_modules/**",
     "**/.git/**",
     "**/.rbenv/**",
-    "**/.venv'/**",
+    "**/.venv/**",
+    "**/.direnv/**",
+    "**/*reports/**",
     "**/*cache*/**",
+    "**/*.json",
+    "**/*.yaml",
+    "**/*.yml",
+    "**/*.md",
+    "**/*.html",
+    "**/*.xml",
     "**/.github/**",
     "**/.idea/**",
-    "**/report/**",
+    "**/*.svg",
     "**/target/**",
-    "**/*.svg"
+    "templates/buildah*"
   ]
 }

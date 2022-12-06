@@ -130,14 +130,14 @@ flake8: ## Linter flake8
 .PHONY: debug
 debug: ## Enter container
 	@echo "=> Debuging image..."
-	docker run -it -u 1000:1000 -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro -v /var/run/docker.sock:/var/run/docker.sock --entrypoint /bin/bash $(IMAGE)
+	docker run -it -v /var/run/docker.sock:/var/run/docker.sock --entrypoint /bin/bash $(IMAGE)
 	# podman run --rm -it --pod stack --user 1000:1000 -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro --name nomad $(IMAGE) /bin/bash
 
 ## —— Project 🐝🐳 ———————————————————————————————————————————————————————————————
 .PHONY: exec
 exec: ## Run container
 	@echo "=> Executing image..."
-	docker run -it -u 1000:1000 -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro -v /var/run/docker.sock:/var/run/docker.sock $(IMAGE)
+	docker run -it -v /var/run/docker.sock:/var/run/docker.sock $(IMAGE)
   # podman run --rm -dit --pod stack --user 1000:1000 -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro --name nomad $(IMAGE)
 
 ## —— Tests Dive 🧪🐳🚨 —————————————————————————————————————————————————————————————————
@@ -147,7 +147,7 @@ test-dive: ## Run Dive image tests
 	@echo "CI=true dive --ci --highestUserWastedPercent 0.1 --lowestEfficiency 0.9 --json docker-dive-stats.json $(IMAGE) 1>docker-dive.log 2>docker-dive-error.log"
 	CI=true docker run --rm -it \
       -v /var/run/docker.sock:/var/run/docker.sock \
-      -v  "$(pwd)":"$(pwd)" \
+      -v "$(pwd)":"$(pwd)" \
       -w "$(pwd)" \
       -v "$(pwd)/.dive.yaml":"$(pwd)/.dive.yaml" \
       wagoodman/dive:latest --ci --json docker-dive-stats.json $(IMAGE)

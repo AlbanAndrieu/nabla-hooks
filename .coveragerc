@@ -2,6 +2,7 @@
 [run]
 omit =
     */site-packages/*
+    */dist-packages/*
     */distutils/*
     tests/*
     .venv/*

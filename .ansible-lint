@@ -1,43 +1,16 @@
 ---
 exclude_paths:
-  - ./roles/alban.andrieu.*
-  - ./roles/Stouts.python/
-  - ./roles/Stouts.collectd/
-  - ./roles/andrewrothstein.*
-  - ./roles/angstwad.docker-ubuntu/
-  - ./roles/elliotweiser.osx-command-line-tools/
-  - ./roles/geerlingguy.*
-  - ./roles/ansible-role-nodejs/
-  - ./roles/ansible-swapfile/
-  - ./roles/ansiblebit.oracle-java/
-  - ./roles/common/
-  - ./roles/devbox.chrome/
-  - ./roles/docker/
-  - ./roles/idealista-java/
-  - ./roles/locale/
-  - ./roles/mac-dev-playbook/
-  - ./roles/maven/
-  - ./roles/nexus/
-  - ./roles/nodejs/
-  - ./roles/opencl/
-  - ./roles/repo-epel/
-  - ./roles/repo-remi/
-  - ./roles/security/
-  - ./roles/ssl.ca-certificate/
-  - ./roles/ssl.certificate/
-  - ./roles/vagrant/
-  - ./roles/yarn/
-  - ./roles/zabbix/
-  - ./roles/jermon.ansible-role-cpan/
-  - ./roles/anxs.perl/
-  - ./.venv/
-  - ./.direnv/
+  - ./roles/*
+  - .venv/
+  - .direnv/
+  - .github/
+  - .gitlab/
 # parseable: true
 # quiet: true
 # rulesdir:
 #   - ./rule/directory/
 skip_list:
-  - '602'    # See https://github.com/ansible/ansible-lint/issues/457
+  - '602'  # See https://github.com/ansible/ansible-lint/issues/457
   - '204'
   - '503'
 #   - skip_this_tag
@@ -47,3 +20,6 @@ skip_list:
 #   - run_this_tag
 use_default_rules: true
 # verbosity: 1
+
+# Offline mode disables installation of requirements.yml
+offline: true

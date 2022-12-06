@@ -1,0 +1,47 @@
+---
+version: "2"
+plugins:
+  semgrep:
+    enabled: false
+  bandit:
+    enabled: true
+  pylint:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+        python:
+          python_version: 3
+  fixme:
+    enabled: true
+  markdownlint:
+    enabled: false
+    checks:
+      MD002:  # "First header should be a h1 header"
+        enabled: false
+  shellcheck:
+    enabled: true
+exclude_patterns:
+  - .direnv/**/*
+  - .venv/**/*
+  - .mypy_cache/
+  # - tests/
+  - config/
+  - db/
+  - dist/
+  - features/
+  - "**/node_modules/"
+  - "**/node_cache/"
+  - script/
+  - "**/spec/"
+  - "**/test/"
+  - "**/tests/"
+  - Tests/
+  - "**/vendor/"
+  - "**/*_test.go"
+  - "**/*.d.ts"
+  - "**/*.min.js"
+  - "**/*.min.css"
+  - "**/__tests__/"
+  - "**/__mocks__/"

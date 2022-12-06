@@ -1,8 +1,4 @@
 ---
-# default_language_version:
-#   python: python3.6  # Ubuntu 18.04.3
-#   python: python3.7  # Ubuntu 19.04
-
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks.git
     # pre-commit-hooks is not working on both environment
@@ -20,10 +16,10 @@ repos:
         args: ['--maxkb=123']
         exclude: >
           (?x)^(
-              .pnp.cjs|
-              package-lock.json|
-              poetry.lock|
-              Pipfile.lock|
+            .pnp.cjs|
+            package-lock.json|
+            poetry.lock|
+            Pipfile.lock|
           )$
       - id: check-case-conflict
       - id: check-docstring-first
@@ -43,8 +39,8 @@ repos:
       - id: check-yaml
         exclude: >
           (?x)^(
-              .gitlab-ci.yml|
-              k8s/.*|
+            .gitlab-ci.yml|
+            k8s/.*|
           )$
       - id: check-symlinks
       - id: check-merge-conflict
@@ -76,10 +72,10 @@ repos:
       - id: requirements-txt-fixer
       - id: sort-simple-yaml
       - id: file-contents-sorter
-  - repo: https://github.com/pre-commit/mirrors-autopep8
-    rev: v1.7.0
-    hooks:
-      - id: autopep8
+  # - repo: https://github.com/pre-commit/mirrors-autopep8
+  #   rev: v2.0.0
+  #   hooks:
+  #     - id: autopep8
   - repo: https://github.com/psf/black
     rev: 22.10.0
     hooks:
@@ -90,10 +86,16 @@ repos:
         # https://pre-commit.com/#top_level-default_language_version
         language_version: python3.8
   - repo: https://github.com/PyCQA/flake8
-    rev: 3.9.2
+    rev: 5.0.4
     hooks:
       - id: flake8
         args: [--max-line-length=88, --max-complexity=30]
+        additional_dependencies:
+          - flake8-broken-line==0.6.0
+          - flake8-bugbear==22.10.27
+          - flake8-comprehensions==3.10.1
+          - flake8-debugger==4.1.2
+          - flake8-string-format==0.3.0
   - repo: https://github.com/pre-commit/pre-commit.git
     rev: v2.20.0
     hooks:
@@ -104,14 +106,14 @@ repos:
 #      - id: reorder-python-imports
 #        exclude: ^.cache/
 #  #    language_version: python3
-  - repo: https://github.com/pycqa/isort
-    rev: 5.5.2
-    hooks:
-      - id: isort
-  - repo: https://github.com/asottile/add-trailing-comma
-    rev: v2.3.0
-    hooks:
-      - id: add-trailing-comma
+  # - repo: https://github.com/pycqa/isort
+  #   rev: 5.10.1
+  #   hooks:
+  #     - id: isort
+  # - repo: https://github.com/asottile/add-trailing-comma
+  #   rev: v2.3.0
+  #   hooks:
+  #     - id: add-trailing-comma
   - repo: https://github.com/willthames/ansible-lint.git
     rev: v6.3.0
     hooks:
@@ -132,7 +134,6 @@ repos:
     rev: 1.0.5
     hooks:
       - id: shell-lint
-        # entry: pre_commit_hooks/shell-lint.sh -x
         args: [-x]
         exclude: >
           (?x)^(
@@ -140,14 +141,10 @@ repos:
               hooks|
               tests/.*
           )$
-  - repo: https://github.com/asottile/pyupgrade
-    rev: v3.1.0
-    hooks:
-      - id: pyupgrade
-  - repo: https://github.com/pre-commit/mirrors-autopep8
-    rev: v1.7.0
-    hooks:
-      - id: autopep8
+  # - repo: https://github.com/asottile/pyupgrade
+  #   rev: v3.2.2
+  #   hooks:
+  #     - id: pyupgrade
   - repo: https://github.com/PyCQA/bandit
     rev: 1.7.4
     hooks:
@@ -207,3 +204,25 @@ repos:
         types: [shell]
         always_run: true
         verbose: true
+  - repo: https://github.com/zricethezav/gitleaks
+    rev: v8.8.7
+    hooks:
+      - id: gitleaks-docker
+        entry: zricethezav/gitleaks protect --verbose --redact --staged
+  # - repo: local
+  #   hooks:
+  #     - id: lint
+  #       name: Lint
+  #       entry: python3 -m nox -rs lint
+  #       language: system
+  #       pass_filenames: false
+  #     - id: black
+  #       name: Black
+  #       entry: python3 -m nox -rs black
+  #       language: system
+  #       pass_filenames: false
+  #     - id: test
+  #       name: Test
+  #       entry: python3 -m nox -rs test
+  #       language: system
+  #       pass_filenames: false

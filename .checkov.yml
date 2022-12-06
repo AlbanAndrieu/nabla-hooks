@@ -1,0 +1,27 @@
+---
+branch: main
+# check:
+# - CKV_DOCKER_1
+compact: true
+# directory:
+# - test-dir
+docker-image: registry.gitlab.com/jusmundi-group/web/templates/jm-oci/jm-ubuntu
+dockerfile-path: Dockerfile
+download-external-modules: true
+evaluate-variables: true
+# external-checks-dir:
+# - sample-dir
+external-modules-download-path: .external_modules
+framework:
+  - all
+# skip-download: true
+# quiet: true
+repo-id: jusmundi-group/web/templates/jm-oci/jm-ubuntu
+# skip-check:
+# - CKV_DOCKER_3
+# - CKV_DOCKER_2
+skip-fixes: true
+# skip-framework:
+# - dockerfile
+# - secrets
+soft-fail: true

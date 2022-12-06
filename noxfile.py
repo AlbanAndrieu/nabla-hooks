@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import nox
 
 nox.options.sessions = "lint", "black", "test"
@@ -27,7 +28,7 @@ def lint(session):
         "--config=.flake8",
         "--max-line-length=88",
         "--max-complexity=12",
-        *args
+        *args,
     )
 
 
