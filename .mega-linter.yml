@@ -39,6 +39,7 @@ DOCKERFILE_HADOLINT_ARGUMENTS: --ignore DL3003 --ignore DL3007 --ignore DL3013 -
   SC2015 --ignore SC2016 --ignore SC2039 --ignore SC2086 --ignore SC1091
 REPOSITORY_DEVSKIM_DISABLE_ERRORS_IF_LESS_THAN: 10
 REPOSITORY_DEVSKIM_ARGUMENTS: --severity critical,important --ignore-globs **/.git/**,**/bin/**,.mypy_cache/**,**/tests/**,**/README.md
+REPOSITORY_TRIVY_ARGUMENTS: --security-checks vuln,config,secret --vuln-type os,library --ignore-unfixed --skip-dirs .direnv --skip-dirs .venv --skip-files pip.conf --skip-files Pipfile
 REPOSITORY_DEVSKIM_DISABLE_ERRORS: true
 REPOSITORY_GITLEAKS_DISABLE_ERRORS: false
 REPOSITORY_SECRETLINT_DISABLE_ERRORS: false
@@ -48,8 +49,8 @@ PYTHON_BANDIT_DISABLE_ERRORS: true
 PYTHON_MYPY_DISABLE_ERRORS: true
 PYTHON_PYLINT_DISABLE_ERRORS: true
 PYTHON_PYRIGHT_DISABLE_ERRORS: true
-ADDITIONAL_EXCLUDED_DIRECTORIES: (\.venv/|\.direnv/|\.mypy_cache/)
-EXCLUDED_DIRECTORIES: .mypy_cache
+# ADDITIONAL_EXCLUDED_DIRECTORIES: (\.venv/|\.direnv/|\.mypy_cache/)
+EXCLUDED_DIRECTORIES: [".github", ".gitlab-ci", "node_modules", ".venv", ".direnv", ".mypy_cache"]
 SHOW_ELAPSED_TIME: true
 JSON_REPORTER: true
 SARIF_REPORTER: true

@@ -1,13 +1,19 @@
 {
+  "version": "0.2",
+  "language": "en",
+  "noConfigSearch": true,
   "ignorePaths": [
     "**/node_modules/**",
     "**/bower_components/**",
     "**/vscode-extension/**",
     "**/.git/**",
     ".gitignore",
+    "**/.pnpm-lock.json",
     ".vscode",
     "megalinter",
     "package-lock.json",
+    "Pipfile",
+    "Pipfile.lock",
     "playbooks/files/python/**",
     "requirements*.txt",
     "rasterize.js",
@@ -28,12 +34,12 @@
     "Dockerfile(-.+)?",
     ".jscpd.json",
     ".mega-linter.yml",
+    ".yamllint",
+    "pre-commit",
     ".pre-commit-config.yaml",
     "LICENSE",
     "report"
   ],
-  "language": "en",
-  "noConfigSearch": true,
   "words": [
     "Andrieu",
     "Alban",
@@ -112,14 +118,13 @@
     "scaleway"
   ],
   "languageSettings": [
-  {
-    "languageId": "markdown",
-    "caseSensitive": true
-  },
-  {
-    "languageId": "javascript",
-    "caseSensitive": false
-  }
-  ],
-  "version": "0.2"
+    {
+      "languageId": "markdown",
+      "caseSensitive": true
+    },
+    {
+      "languageId": "javascript",
+      "caseSensitive": false
+    }
+  ]
 }

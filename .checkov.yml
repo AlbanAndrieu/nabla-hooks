@@ -16,7 +16,7 @@ framework:
   - all
 # skip-download: true
 # quiet: true
-repo-id: jusmundi-group/web/templates/jm-oci/jm-ubuntu
+repo-id: AlbanAndrieu/nabla-hooks/
 # skip-check:
 # - CKV_DOCKER_3
 # - CKV_DOCKER_2

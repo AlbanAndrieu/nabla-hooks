@@ -7,26 +7,27 @@
 SHELL         = bash
 ME            = $(shell whoami)
 
+# Image
+APP_NAME     = nabla-hooks
+OCI_REGISTRY = nabla # 783876277037.dkr.ecr.eu-west-3.amazonaws.com
+AWS_REGION   = eu-west-3
+OCI_IMAGE := $(OCI_REGISTRY)/$(APP_NAME)
+OCI_TAG := $${OCI_TAG:-"latest"}
+IMAGE_NEXT_TAG := $${OCI_IMAGE_TAG:-"0.0.1"}
+IMAGE := $(OCI_IMAGE):$(OCI_TAG)
+
+TRIVY_VULN_TYPE = "os,library"
+TRIVY_SECURITY_CHECKS = "vuln,config,secret"
+TRIVY_GLOBAL_SECURITY_CHECKS = --security-checks ${TRIVY_SECURITY_CHECKS} --vuln-type ${TRIVY_VULN_TYPE}
+TRIVY_ARGS = --skip-dirs .direnv --skip-dirs .venv --skip-dirs ./node_modules --skip-dirs /usr/local/lib/python3.8/dist-packages/ansible/galaxy/ --skip-dirs /home/ubuntu/.local/lib/python3.8/site-packages/awscli/ --skip-dirs /home/ubuntu/.local/share/virtualenvs/ --skip-dirs /home/ubuntu/.local/lib/python3.8/site-packages/rsa/ --skip-dirs /home/ubuntu/.local/lib/python3.8/site-packages/botocore/data/ --skip-dirs /usr/lib/node_modules/ --skip-files /usr/local/bin/container-structure-test
+CS_SEVERITY_REPORT_THRESHOLD = "HIGH,CRITICAL"
+
 # You can set these variables from the command line, and also
 # from the environment for the first two.
 SPHINXOPTS    ?=
 SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = source
 BUILDDIR      = build
-
-# Image
-IMAGE_NAME := $${CI_REGISTRY_IMAGE:-"nabla/nabla-hooks"}
-IMAGE_TAG := $${IMAGE_TAG:-"latest"}
-IMAGE_NEXT_TAG := $${OCI_IMAGE_TAG:-"0.0.1"}
-IMAGE := $(IMAGE_NAME):$(IMAGE_TAG)
-
-# Image
-
-TRIVY_VULN_TYPE = "os,library"
-TRIVY_SECURITY_CHECKS = "vuln,config,secret"
-TRIVY_GLOBAL_SECURITY_CHECKS = --security-checks ${TRIVY_SECURITY_CHECKS} --vuln-type ${TRIVY_VULN_TYPE}
-TRIVY_ARGS = --skip-dirs .direnv --skip-dirs ./node_modules --skip-dirs /usr/local/lib/python3.8/dist-packages/ansible/galaxy/ --skip-dirs /home/ubuntu/.local/lib/python3.8/site-packages/awscli/ --skip-dirs /home/ubuntu/.local/share/virtualenvs/ --skip-dirs /home/ubuntu/.local/lib/python3.8/site-packages/rsa/ --skip-dirs /home/ubuntu/.local/lib/python3.8/site-packages/botocore/data/ --skip-dirs /usr/lib/node_modules/ --skip-files /usr/local/bin/container-structure-test
-CS_SEVERITY_REPORT_THRESHOLD = "HIGH,CRITICAL"
 
 # Executables: local only
 DOCKER        = docker
@@ -67,13 +68,13 @@ clean: clean-docker
 build-docker-train:  ## Build train container with docker
 	@echo "=> Building train image..."
 	envsubst '$${CI_PIP_GITLABNABLA_TOKEN}' < etc/pip.conf > pip.conf
-	docker build -t $(IMAGE) --secret id=pip.conf,src=pip.conf --squash -f Dockerfile.train .
+	docker build -t $(IMAGE) --build-arg CI_PIP_GITLABNABLA_TOKEN=$${CI_PIP_GITLABNABLA_TOKEN} --squash -f Dockerfile.train .
 
 ## —— Docker 🐳 ————————————————————————————————————————————————————————————————
 .PHONY: build-docker
 build-docker:  ## Build container with docker
 	@echo "=> Building image..."
-	envsubst '$${CI_PIP_GITLABNABLA_TOKEN}' < etc/pip.conf > pip.conf
+	# envsubst '$${CI_PIP_GITLABNABLA_TOKEN}' < etc/pip.conf > pip.conf
 	# --secret id=pip.conf,src=pip.conf
 	docker build -t $(IMAGE) --squash .
 
@@ -81,7 +82,7 @@ build-docker:  ## Build container with docker
 .PHONY: build-buildah-docker
 build-buildah-docker: ## Build container with buildah
 	@echo "=> Building image..."
-	buildah bud -t $(IMAGE) .
+	buildah bud -t $(IMAGE) --build-arg CI_PIP_GITLABNABLA_TOKEN=$${CI_PIP_GITLABNABLA_TOKEN} .
 
 ## —— Buildah 🐶 ————————————————————————————————————————————————————————————————
 .PHONY: build-buildah
@@ -97,7 +98,7 @@ build: build-docker
 .PHONY: up-docker
 up-docker:
 	@echo "up docker"
-	docker run -it -u 1000:1000 $(IMAGE)
+	docker run -it $(IMAGE)
 
 ## —— Up Python ✅🐍 —————————————————————————————————————————————————————————————————
 .PHONY: up-python
@@ -130,15 +131,13 @@ flake8: ## Linter flake8
 .PHONY: debug
 debug: ## Enter container
 	@echo "=> Debuging image..."
-	docker run -it -v /var/run/docker.sock:/var/run/docker.sock --entrypoint /bin/bash $(IMAGE)
-	# podman run --rm -it --pod stack --user 1000:1000 -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro --name nomad $(IMAGE) /bin/bash
+	docker run -it --entrypoint /bin/bash $(IMAGE)
 
 ## —— Project 🐝🐳 ———————————————————————————————————————————————————————————————
 .PHONY: exec
 exec: ## Run container
 	@echo "=> Executing image..."
 	docker run -it -v /var/run/docker.sock:/var/run/docker.sock $(IMAGE)
-  # podman run --rm -dit --pod stack --user 1000:1000 -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro --name nomad $(IMAGE)
 
 ## —— Tests Dive 🧪🐳🚨 —————————————————————————————————————————————————————————————————
 .PHONY: test-dive
@@ -169,6 +168,13 @@ test-codeclimate:
 test-semgrep:
 	@echo "=> Testing Semgrep image..."
 	semgrep --config auto .
+
+# —— Tests Nox 🧪 —————————————————————————————————————————————————————————————————
+.PHONY: test-nox
+test-nox:
+	@echo "=> Testing python..."
+	@echo "=> python -m pytest --cov=hooks --cov-fail-under=70"
+	nox
 
 ## —— Tests Tox 🧪 —————————————————————————————————————————————————————————————————
 .PHONY: test-tox
@@ -217,20 +223,20 @@ sast: sast-fs-docker ## Run Trivy sast
 .PHONY: deploy-docker
 deploy-docker: ## Push to registry
 	@echo "=> Tagging image..."
-	docker tag $(IMAGE) $(IMAGE_NAME):$(IMAGE_NEXT_TAG)
+	docker tag $(IMAGE) $(OCI_IMAGE):$(IMAGE_NEXT_TAG)
 	@echo "=> aws ecr get-login-password --region \$${AWS_REGION:-"eu-west-3"} | docker login --username AWS --password-stdin \$${OCI_REGISTRY:-\"783876277037.dkr.ecr.eu-west-3.amazonaws.com\"} "
 	@echo "=> Pushing image..."
-	@echo "=> TODO => docker push $(IMAGE_NAME):$(IMAGE_NEXT_TAG)"
-	@echo "=> TODO => docker push $(IMAGE_NAME):latest"
+	@echo "=> TODO => docker push $(OCI_IMAGE):$(IMAGE_NEXT_TAG)"
+	@echo "=> TODO => docker push $(OCI_IMAGE):latest"
 
 ## —— Deploy Buildah 💾🐶 ———————————————————————————————————————————————————————————————
 .PHONY: deploy-buildah
 deploy-buildah: ## Push to registry
 	@echo "=> Tagging image..."
-	buildah tag $(IMAGE) $(IMAGE_NAME):$(IMAGE_NEXT_TAG)
+	buildah tag $(IMAGE) $(OCI_IMAGE):$(IMAGE_NEXT_TAG)
 	@echo "=> Pushing image..."
-	@echo "=> TODO => buildah push $(IMAGE_NAME):$(IMAGE_NEXT_TAG)"
-	@echo "=> TODO => buildah push $(IMAGE_NAME):latest"
+	@echo "=> TODO => buildah push $(OCI_IMAGE):$(IMAGE_NEXT_TAG)"
+	@echo "=> TODO => buildah push $(OCI_IMAGE):latest"
 
 ## —— Deploy 💾👑 ———————————————————————————————————————————————————————————————
 .PHONY: deploy
