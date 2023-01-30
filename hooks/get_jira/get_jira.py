@@ -82,7 +82,7 @@ def cli(
         click.echo(fail)
         click.echo(verbose)
 
-    basic_auth = match_auth(user, password)
+    basic_auth = match_auth(user, password)  # noqa: F821
 
     msg = get_msg(
         current_message=current_message,
