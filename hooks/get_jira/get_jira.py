@@ -21,9 +21,11 @@ from colorama import init
 from jira import JIRA
 from jira.exceptions import JIRAError
 from termcolor import colored
-# from get_jira.get_auth import match_auth
+
+from get_jira.get_auth import match_auth
+
 http = urllib3.PoolManager(
-    cert_reqs='CERT_REQUIRED',
+    cert_reqs="CERT_REQUIRED",
     ca_certs=certifi.where(),
 )
 
@@ -32,20 +34,46 @@ init()
 
 
 @click.command()
-@click.argument('current_message', type=str)
-@click.argument('branch', type=str)
-@click.option('-u', '--user', required=False, envvar='JIRA_USER', help='JIRA user')  # noqa: ignore=E501
-@click.option('-p', '--password', required=False, prompt=False, hide_input=True, confirmation_prompt=True, envvar='JIRA_PASSWORD', help='JIRA password')  # noqa: ignore=E501
-@click.option('-v', '--verbose', is_flag=True, default=False, help='Switch between INFO and DEBUG logging modes')  # noqa: ignore=E501
-@click.option('-f', '--fail', is_flag=True, default=False, help='Fail if no issue JIRA found')  # noqa: ignore=E501
-def cli(current_message: str, branch: str, fail=True, user=None, password=None, verbose=False) -> str:
+@click.argument("current_message", type=str)
+@click.argument("branch", type=str)
+@click.option(
+    "-u", "--user", required=False, envvar="JIRA_USER", help="JIRA user"
+)  # noqa: ignore=E501
+@click.option(
+    "-p",
+    "--password",
+    required=False,
+    prompt=False,
+    hide_input=True,
+    confirmation_prompt=True,
+    envvar="JIRA_PASSWORD",
+    help="JIRA password",
+)  # noqa: ignore=E501
+@click.option(
+    "-v",
+    "--verbose",
+    is_flag=True,
+    default=False,
+    help="Switch between INFO and DEBUG logging modes",
+)  # noqa: ignore=E501
+@click.option(
+    "-f", "--fail", is_flag=True, default=False, help="Fail if no issue JIRA found"
+)  # noqa: ignore=E501
+def cli(
+    current_message: str,
+    branch: str,
+    fail=True,
+    user=None,
+    password=None,
+    verbose=False,
+) -> str:
     """Simple program that match jira. From hooks directory : Try
     python -m get_jira.get_jira BMT-13403 feature/TEST-13403 --verbose
     python -m get_jira.get_jira TEST feature/TEST-13403 --verbose
     python -m get_jira.get_jira 'Test message' feature/TEST-99999 --verbose
     """
 
-    logger.info('Collecting JIRA')
+    logger.info("Collecting JIRA")
 
     if verbose:
         click.echo(branch)
@@ -56,56 +84,79 @@ def cli(current_message: str, branch: str, fail=True, user=None, password=None, 
 
     basic_auth = match_auth(user, password)
 
-    msg = get_msg(current_message=current_message, branch=branch, basic_auth=basic_auth, verbose=verbose, fail=fail)
+    msg = get_msg(
+        current_message=current_message,
+        branch=branch,
+        basic_auth=basic_auth,
+        verbose=verbose,
+        fail=fail,
+    )
 
-    print(colored('Message: {}'.format(msg[0]), 'magenta'))
+    print(colored("Message: {}".format(msg[0]), "magenta"))
 
     return msg
 
 
-def get_msg(current_message: str, branch: str, basic_auth: Tuple[str, str] = ('', ''), verbose=True, fail=True) -> Tuple[str, str]:
+def get_msg(
+    current_message: str,
+    branch: str,
+    basic_auth: Tuple[str, str] = ("", ""),
+    verbose=True,
+    fail=True,
+) -> Tuple[str, str]:
 
     issue = match_issue(
-        branch=branch, verbose=verbose,
+        branch=branch,
+        verbose=verbose,
     )
 
-    required_message = ''
+    required_message = ""
 
     # Test that message has not already been populated
     if issue not in current_message:
         required_message = match_jira(
-            issue=issue, basic_auth=basic_auth, verbose=verbose,
+            issue=issue,
+            basic_auth=basic_auth,
+            verbose=verbose,
         )
 
         # Appending current message
-        required_message = '{} : {}'.format(required_message, current_message)
+        required_message = "{} : {}".format(required_message, current_message)
     else:
         if verbose:
-            print(colored('Issue number already detected in message: {}'.format(required_message), 'yellow'))
+            print(
+                colored(
+                    "Issue number already detected in message: {}".format(
+                        required_message
+                    ),
+                    "yellow",
+                )
+            )
 
     return required_message, issue
 
 
 def match_issue(branch: str, verbose=False, fail=True) -> str:
 
-    issue = 'UNKNOWN'
+    issue = "UNKNOWN"
 
     try:
 
         # Matches any unique issue code
         pattern = re.compile(
-            r'(^feature|^feat|^bugfix|^fix|^docs|^style|^refactor|^perf|^test|^chore)\/([A-Z]{3,5}-[0-9]+)',
+            r"(^feature|^feat|^bugfix|^fix|^docs|^style|^refactor|^perf|^test|^chore)\/([A-Z]{3,5}-[0-9]+)",  # noqa: E501
         )
         issue = re.search(pattern, branch).group(2)  # Extract issue code
         if verbose:
-            print(colored('Issue number detected : {}.'.format(issue), 'green'))
+            print(colored("Issue number detected : {}.".format(issue), "green"))
 
     except Exception as e:  # noqa: ignore=E722
         if verbose:
             traceback.print_exc()
         print(
             colored(
-                'Please set a valid JIRA', 'red',
+                "Please set a valid JIRA",
+                "red",
             ),
         )
         if fail:
@@ -118,16 +169,17 @@ def get_jira_url() -> str:
 
     try:
 
-        url = os.environ.get('JIRA_URL')
+        url = os.environ.get("JIRA_URL")
 
         if not url:
-            server = 'localhost/jira'
-            url = 'https://%s' % server
+            server = "localhost/jira"
+            url = "https://%s" % server
 
     except KeyError:
         print(
             colored(
-                'Please set the environment variable JIRA_URL', 'red',
+                "Please set the environment variable JIRA_URL",
+                "red",
             ),
         )
         sys.exit(3)
@@ -139,15 +191,16 @@ def get_certificat_path() -> str:
 
     try:
 
-        certificat_path = os.environ.get('JIRA_CERT_PATH')
+        certificat_path = os.environ.get("JIRA_CERT_PATH")
 
         if not certificat_path:
-            certificat_path = '/etc/ssl/certs/ca-certificates.crt'
+            certificat_path = "/etc/ssl/certs/ca-certificates.crt"
 
     except KeyError:
         print(
             colored(
-                'Please set the environment variable JIRA_CERT_PATH', 'red',
+                "Please set the environment variable JIRA_CERT_PATH",
+                "red",
             ),
         )
         sys.exit(3)
@@ -155,20 +208,22 @@ def get_certificat_path() -> str:
     return certificat_path
 
 
-def match_jira(issue: str, basic_auth: Tuple[str, str] = ('', ''), verbose=False) -> str:
+def match_jira(
+    issue: str, basic_auth: Tuple[str, str] = ("", ""), verbose=False
+) -> str:
 
     # WORKAROUND below in case certificate is not install on workstation
     urllib3.disable_warnings()
 
-    required_message = ''
+    required_message = ""
 
     try:
 
         # print(colored('URL : {}.'.format(get_jira_url()), 'red'))
 
         options = {
-            'server': get_jira_url(),
-            'verify': False,
+            "server": get_jira_url(),
+            "verify": False,
             # 'verify': True,
             # 'client_cert': get_certificat_path(),
         }
@@ -176,9 +231,9 @@ def match_jira(issue: str, basic_auth: Tuple[str, str] = ('', ''), verbose=False
         jira = JIRA(options, basic_auth=basic_auth)
 
         issue_to_check = jira.issue(issue)
-        status = '{}'.format(issue_to_check.fields.status).strip().lower()
+        status = "{}".format(issue_to_check.fields.status).strip().lower()
 
-        issuetype = '{}'.format(issue_to_check.fields.issuetype.name).strip().lower()
+        issuetype = "{}".format(issue_to_check.fields.issuetype.name).strip().lower()
 
         # versions = jira.project_versions('TEST')
         # print(
@@ -193,47 +248,53 @@ def match_jira(issue: str, basic_auth: Tuple[str, str] = ('', ''), verbose=False
         if verbose:
             print(
                 colored(
-                    'Project key : {}'.format(
+                    "Project key : {}".format(
                         issue_to_check.fields.project.key,
-                    ), 'magenta',
+                    ),
+                    "magenta",
                 ),
             )
             print(
                 colored(
-                    'Issue Type : {}'.format(
+                    "Issue Type : {}".format(
                         issuetype,
-                    ), 'magenta',
+                    ),
+                    "magenta",
                 ),
-            )               # 'Story'
+            )  # 'Story'
             print(
                 colored(
-                    'Status : {}'.format(
+                    "Status : {}".format(
                         status,
-                    ), 'magenta',
+                    ),
+                    "magenta",
                 ),
-            )               # 'Story'
+            )  # 'Story'
             print(
                 colored(
-                    'Reporter : {}'.format(
+                    "Reporter : {}".format(
                         issue_to_check.fields.reporter.displayName,
-                    ), 'magenta',
+                    ),
+                    "magenta",
                 ),
             )
 
-        statustocheck = ['closed', 'done']
+        statustocheck = ["closed", "done"]
 
         if any(sta in status for sta in statustocheck):
             print(
                 colored(
-                    'Status : {}'.format(
+                    "Status : {}".format(
                         status,
-                    ), 'red',
+                    ),
+                    "red",
                 ),
             )
             sys.exit(3)
 
-        required_message = '{} : {}'.format(
-            issue, issue_to_check.fields.issuetype.name,
+        required_message = "{} : {}".format(
+            issue,
+            issue_to_check.fields.issuetype.name,
         )
     except JIRAError as e:
         if verbose:
@@ -241,17 +302,19 @@ def match_jira(issue: str, basic_auth: Tuple[str, str] = ('', ''), verbose=False
         if e.status_code == 404:
             print(
                 colored(
-                    '{}'.format(
+                    "{}".format(
                         e.text,
-                    ), 'red',
+                    ),
+                    "red",
                 ),
             )
         if e.status_code == 401:
             print(
                 colored(
-                    'Login to JIRA failed. Check your username and password {}'.format(
+                    "Login to JIRA failed. Check your username and password {}".format(
                         options,
-                    ), 'red',
+                    ),
+                    "red",
                 ),
             )
     except Exception as e:  # noqa: ignore=E722
@@ -259,9 +322,10 @@ def match_jira(issue: str, basic_auth: Tuple[str, str] = ('', ''), verbose=False
             traceback.print_exc()
         print(
             colored(
-                'Oops!  JIRA is failing. Switch to manual... {}'.format(
+                "Oops!  JIRA is failing. Switch to manual... {}".format(
                     issue,
-                ), 'red',
+                ),
+                "red",
             ),
         )
         if jira:
@@ -270,7 +334,7 @@ def match_jira(issue: str, basic_auth: Tuple[str, str] = ('', ''), verbose=False
     return required_message
 
 
-logger = logging.getLogger('hooks.get_jira.get_jira')
+logger = logging.getLogger("hooks.get_jira.get_jira")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     cli(None)

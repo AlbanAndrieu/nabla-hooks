@@ -39,7 +39,7 @@ VERBOSE=false
 DEBUG=false
 MAX_NUMBER=2
 DEBUGFILE=
-BRANCH="'TODO|master|develop|release|HEAD'"
+BRANCH="'TODO|main|master|develop|release|HEAD'"
 while true; do
   case "$1" in
   -v | --verbose)
