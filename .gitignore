@@ -7,7 +7,7 @@
 docker-dive-stats.json
 scan-report*.md
 results.sarif
-reports/
+# reports/
 megalinter-reports/
 output/
 

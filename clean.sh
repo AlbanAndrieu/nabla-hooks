@@ -8,6 +8,7 @@ find . -maxdepth 2 -mindepth 2 -regextype posix-egrep -type d -regex '.+/.*egg-i
 find . -maxdepth 2 -mindepth 2 -regextype posix-egrep -type d -regex '.*__pycache__.*' -exec rm -rf {} \;
 find hooks -type f -name "*.pyc" -delete
 
+rm -Rf output/ || true
 mkdir output || true
 
 #lib/

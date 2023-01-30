@@ -22,7 +22,7 @@ from jira import JIRA
 from jira.exceptions import JIRAError
 from termcolor import colored
 
-from get_jira.get_auth import match_auth
+# from get_jira.get_auth import match_auth
 
 http = urllib3.PoolManager(
     cert_reqs="CERT_REQUIRED",
