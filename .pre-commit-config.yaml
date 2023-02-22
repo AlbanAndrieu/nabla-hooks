@@ -214,19 +214,6 @@ repos:
     rev: v6.19.0
     hooks:
       - id: megalinter-incremental  # Faster, less thorough
-        args:
-          - mega-linter-runner
-          - --containername
-          - "megalinter-incremental"
-          - --remove-container
-          - --fix
-          - --env
-          - "'APPLY_FIXES=all'"
-          - --env
-          - "'CLEAR_REPORT_FOLDER=true'"
-          - --env
-          - "'LOG_LEVEL=warning'"
-          - --filesonly
         stages:
           - commit
       # - id: megalinter-full # Slower, more thorough
