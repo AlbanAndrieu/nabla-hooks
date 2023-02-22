@@ -77,7 +77,7 @@ repos:
   #   hooks:
   #     - id: autopep8
   - repo: https://github.com/psf/black
-    rev: 22.10.0
+    rev: 23.1.0
     hooks:
       - id: black
         # It is recommended to specify the latest version of Python
@@ -97,7 +97,7 @@ repos:
         #   - flake8-debugger==4.1.2
         #   - flake8-string-format==0.3.0
   - repo: https://github.com/pre-commit/pre-commit.git
-    rev: v2.20.0
+    rev: v3.0.4
     hooks:
       - id: validate_manifest
 #  - repo: https://github.com/asottile/reorder_python_imports.git
@@ -125,7 +125,7 @@ repos:
     hooks:
       - id: hindent
   - repo: https://github.com/scop/pre-commit-shfmt
-    rev: v3.5.1-1
+    rev: v3.6.0-1
     hooks:
       # Choose one of:
       # - id: shfmt         # native (requires Go to build)
@@ -149,11 +149,12 @@ repos:
     rev: 1.7.4
     hooks:
       - id: bandit
+        args: [-c, .bandit.yml]
         exclude: >
           (?x)^(
-              versioneer.py|
-              hooks/_version.py|
-              hooks/tests/|
+            versioneer.py|
+            hooks/_version.py|
+            hooks/tests/|
           )$
   - repo: https://github.com/IamTheFij/ansible-pre-commit
     rev: v0.1.2
@@ -168,7 +169,7 @@ repos:
         args: [--permissive, --verbose, --dockerfile, ./Dockerfile]
         always_run: false
   - repo: https://github.com/jorisroovers/gitlint
-    rev: v0.18.0
+    rev: v0.19.0dev
     hooks:
       - id: gitlint
   - repo: local
@@ -210,7 +211,7 @@ repos:
   #     - id: gitleaks-docker
   #       entry: zricethezav/gitleaks protect --verbose --redact --staged
   - repo: https://github.com/oxsecurity/megalinter
-    rev: v6.15.0
+    rev: v6.19.0
     hooks:
       - id: megalinter-incremental  # Faster, less thorough
         args:

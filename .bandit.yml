@@ -1,4 +1,4 @@
 ---
-exclude_dirs: ['tests', 'static', 'templates', 'hooks/tests', '.eggs', '.tox', '.venv', '.direnv']
-# tests: ['B201', 'B301']
+exclude_dirs: ['hooks/tests/', 'tests', 'static', 'templates', '.eggs', '.tox', '.venv', '.direnv']
+
 skips: ['B101', 'B404', 'B607', 'B603']

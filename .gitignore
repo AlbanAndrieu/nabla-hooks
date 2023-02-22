@@ -74,8 +74,6 @@ npm/
 .scannerwork/
 .ssh/
 
-hooks
-
 .idea/*
 .idea/workspace.xml
 .project
