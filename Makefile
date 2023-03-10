@@ -104,13 +104,13 @@ up-docker:
 ## —— Up Python ✅🐍 —————————————————————————————————————————————————————————————————
 .PHONY: up-python
 up-python:
-	@echo "up python http://0.0.0.0:8000/ping"
+	@echo "up python http://0.0.0.0:8080/health"
 	python -m serve
 
 ## —— Up Python ✅🦄 —————————————————————————————————————————————————————————————————
 .PHONY: up-uvicorn
 up-uvicorn:
-	@echo "up uvicorn http://0.0.0.0:8080/ping"
+	@echo "up uvicorn http://0.0.0.0:8080/v1/ping"
 	.venv/bin/uvicorn serve:app --host 0.0.0.0 --port 8080
 
 ## —— Up ✅ —————————————————————————————————————————————————————————————————

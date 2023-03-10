@@ -4,9 +4,12 @@ from fastapi import APIRouter
 from starlette.responses import JSONResponse
 
 # from citation.api.api_models import XMLResponse, PlainResponse
+# from citation.documents_ids_fetcher import fetch_documents_ids
+# from citation.predict import predict_citations_db
 # from citation.utils import DocumentType
 
-router = APIRouter(prefix="/nabla")
+router = APIRouter(prefix="/v1")
+
 
 # @router.get("/request/newsletter_ids/{document_type}")
 # async def request_newsletter_ids(

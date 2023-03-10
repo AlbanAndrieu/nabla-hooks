@@ -86,7 +86,7 @@ ENV PATH=/code/.local/bin/:${PATH}
 WORKDIR /code/jm-python
 
 # HEALTHCHECK NONE
-HEALTHCHECK CMD curl --fail http://localhost:8080/ping || exit 1
+HEALTHCHECK CMD curl --fail http://localhost:8080/v1/ping || exit 1
 
 EXPOSE 8080
 
