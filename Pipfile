@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+# HOOK
 ansible-core = "~=2.13.6"
 ansicolors = "~=1.1.8"
 cfgv = "~=3.3.0"
@@ -20,7 +21,22 @@ pyyaml = "~=6.0"
 six = "~=1.16.0"
 termcolor = "~=2.1.1"
 
+# API
+
+fastapi = "~=0.90.0" # A version greater than 0.90.0 breaks the code
+# starlette = "~=0.23.0"
+uvicorn = {version = ">=0.20.0", extras = ["standard"]}
+asyncpg = "~=0.27.0"
+pydantic = ">=1.8.0,<2.0.0"
+spacy = "~=3.5.0"
+python-keystoneclient = "~=5.1.0"
+python-swiftclient = "~=4.2.0"
+prometheus-fastapi-instrumentator = "~=5.10.0"
+
 [dev-packages]
+httpx = "~=0.23.3" # For testing fastAPI only
+awscli = "~=1.27.88"
+awscli-plugin-endpoint = "~=0.4"
 ansible-cmdb = "~=1.31"
 ansible-lint = {extras = ["yamllint"], version = "~=6.0.2"}
 autopep8 = "~=2.0.0"
@@ -70,4 +86,4 @@ wheel = "~=0.38.4"
 yamllint = "~=1.28.0"
 
 [requires]
-python_full_version = "3.8.10"
+python_full_version = "3.10"

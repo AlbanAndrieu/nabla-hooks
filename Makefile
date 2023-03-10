@@ -9,7 +9,8 @@ ME            = $(shell whoami)
 
 # Image
 APP_NAME     = nabla-hooks
-OCI_REGISTRY = nabla # 783876277037.dkr.ecr.eu-west-3.amazonaws.com
+# 783876277037.dkr.ecr.eu-west-3.amazonaws.com
+OCI_REGISTRY = nabla
 AWS_REGION   = eu-west-3
 OCI_IMAGE := $(OCI_REGISTRY)/$(APP_NAME)
 OCI_TAG := $${OCI_TAG:-"latest"}
@@ -38,12 +39,12 @@ DOCKER        = docker
 	            # there is no name conflict between your files and your targets.
 
 ## —— 🐝 The Strangebuzz Docker Makefile 🐝 ———————————————————————————————————
+.PHONY: help Makefile
 help: ## Outputs this help screen
 	@grep -E '(^[a-zA-Z0-9_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 .PHONY: help Makefile
-
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
@@ -53,7 +54,7 @@ help: ## Outputs this help screen
 .PHONY: all
 all: down clean build up test
 
-## —— Clean Docker 🧹🐳 ———————————————————————————————————————————————————————————————
+## —— Clean Docker 🧹🐳💩 ———————————————————————————————————————————————————————————————
 .PHONY: clean-docker
 clean-docker:
 	@echo "=> Cleaning image..."
@@ -104,11 +105,17 @@ up-docker:
 .PHONY: up-python
 up-python:
 	@echo "up python http://0.0.0.0:8000/ping"
-	python main.py
+	python -m serve
+
+## —— Up Python ✅🦄 —————————————————————————————————————————————————————————————————
+.PHONY: up-uvicorn
+up-uvicorn:
+	@echo "up uvicorn http://0.0.0.0:8080/ping"
+	.venv/bin/uvicorn serve:app --host 0.0.0.0 --port 8080
 
 ## —— Up ✅ —————————————————————————————————————————————————————————————————
 .PHONY: up
-up: up-docker # Serve up (uvicorn)
+up: up-uvicorn # Serve up (uvicorn)
 
 .PHONY: down
 down:
@@ -117,25 +124,27 @@ down:
 .PHONY: run
 run: down up
 
+## —— Doc 📜 —————————————————————————————————————————————————————————————————
 .PHONY: doc
 doc: ## Documentation
 	@echo "=> Doc..."
 	sphinx-build ./docs _build --color -W -bhtml
 
+## —— Lint 🧪 —————————————————————————————————————————————————————————————————
 .PHONY: flake8
 flake8: ## Linter flake8
 	@echo "=> Linter flake8..."
-	flake8 hooks tests  --config .flake8 --count --exit-zero --max-line-length=88 --max-complexity=12 --statistics
+	flake8 ./hooks/ tests  --config .flake8 --count --exit-zero --max-line-length=88 --max-complexity=12 --statistics
 
 ## —— Debug 📜🐳 —————————————————————————————————————————————————————————————————
 .PHONY: debug
 debug: ## Enter container
 	@echo "=> Debuging image..."
-	docker run -it --entrypoint /bin/bash $(IMAGE)
+	docker run -it -u 0 --entrypoint /bin/bash --env CI_PIP_GITLABNABLA_TOKEN=$${CI_PIP_GITLABNABLA_TOKEN} $(IMAGE)
 
 ## —— Project 🐝🐳 ———————————————————————————————————————————————————————————————
-.PHONY: exec
-exec: ## Run container
+.PHONY: start
+start: ## Run container
 	@echo "=> Executing image..."
 	docker run -it -v /var/run/docker.sock:/var/run/docker.sock $(IMAGE)
 
@@ -161,7 +170,14 @@ test-dive-ci: ## Run Dive image tests for CI
 .PHONY: test-codeclimate
 test-codeclimate:
 	@echo "=> Testing Codeclimate image..."
-	codeclimate analyze
+	@echo "codeclimate analyze"
+	docker run \
+  --interactive --tty --rm \
+  --env CODECLIMATE_CODE="$PWD" \
+  --volume "$PWD":/code \
+  --volume /var/run/docker.sock:/var/run/docker.sock \
+  --volume /tmp/cc:/tmp/cc \
+  codeclimate/codeclimate analyze
 
 ## —— Tests Semgrep 🧪👽 —————————————————————————————————————————————————————————————————
 .PHONY: test-semgrep
@@ -169,7 +185,7 @@ test-semgrep:
 	@echo "=> Testing Semgrep image..."
 	semgrep --config auto .
 
-# —— Tests Nox 🧪 —————————————————————————————————————————————————————————————————
+## —— Tests Nox 🧪⛓️ —————————————————————————————————————————————————————————————————
 .PHONY: test-nox
 test-nox:
 	@echo "=> Testing python..."
@@ -224,10 +240,11 @@ sast: sast-fs-docker ## Run Trivy sast
 deploy-docker: ## Push to registry
 	@echo "=> Tagging image..."
 	docker tag $(IMAGE) $(OCI_IMAGE):$(IMAGE_NEXT_TAG)
+	@echo "=> docker login registry.gitlab.com --username \$${GITLAB_PRIVATE_USERNAME} --password \$${GITLAB_FULL_PRIVATE_TOKEN}"
 	@echo "=> aws ecr get-login-password --region \$${AWS_REGION:-"eu-west-3"} | docker login --username AWS --password-stdin \$${OCI_REGISTRY:-\"783876277037.dkr.ecr.eu-west-3.amazonaws.com\"} "
 	@echo "=> Pushing image..."
-	@echo "=> TODO => docker push $(OCI_IMAGE):$(IMAGE_NEXT_TAG)"
-	@echo "=> TODO => docker push $(OCI_IMAGE):latest"
+	@echo "=> By Hand 👊 => docker push $(OCI_IMAGE):$(IMAGE_NEXT_TAG)"
+	@echo "=> By Hand ✌ => docker push $(OCI_IMAGE):latest"
 
 ## —— Deploy Buildah 💾🐶 ———————————————————————————————————————————————————————————————
 .PHONY: deploy-buildah
