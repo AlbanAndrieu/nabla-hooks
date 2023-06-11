@@ -77,14 +77,14 @@ repos:
   #   hooks:
   #     - id: autopep8
   - repo: https://github.com/psf/black
-    rev: 23.1.0
+    rev: 23.3.0
     hooks:
       - id: black
         # It is recommended to specify the latest version of Python
         # supported by your project here, or alternatively use
         # pre-commit's default_language_version, see
         # https://pre-commit.com/#top_level-default_language_version
-        language_version: python3.8
+        language_version: python3.10
   - repo: https://github.com/PyCQA/flake8
     rev: 6.0.0
     hooks:
@@ -97,7 +97,7 @@ repos:
         #   - flake8-debugger==4.1.2
         #   - flake8-string-format==0.3.0
   - repo: https://github.com/pre-commit/pre-commit.git
-    rev: v3.0.4
+    rev: v3.3.2
     hooks:
       - id: validate_manifest
 #  - repo: https://github.com/asottile/reorder_python_imports.git
@@ -115,7 +115,7 @@ repos:
   #   hooks:
   #     - id: add-trailing-comma
   - repo: https://github.com/willthames/ansible-lint.git
-    rev: v6.9.1
+    rev: v6.17.0
     hooks:
       - id: ansible-lint
         files: \.(yaml|yml)$
@@ -125,7 +125,7 @@ repos:
     hooks:
       - id: hindent
   - repo: https://github.com/scop/pre-commit-shfmt
-    rev: v3.6.0-1
+    rev: v3.6.0-2
     hooks:
       # Choose one of:
       # - id: shfmt         # native (requires Go to build)
@@ -146,7 +146,7 @@ repos:
   #   hooks:
   #     - id: pyupgrade
   - repo: https://github.com/PyCQA/bandit
-    rev: 1.7.4
+    rev: 1.7.5
     hooks:
       - id: bandit
         args: [-c, .bandit.yml]
@@ -169,7 +169,7 @@ repos:
         args: [--permissive, --verbose, --dockerfile, ./Dockerfile]
         always_run: false
   - repo: https://github.com/jorisroovers/gitlint
-    rev: v0.19.0dev
+    rev: v0.19.1
     hooks:
       - id: gitlint
   - repo: local
@@ -211,7 +211,7 @@ repos:
   #     - id: gitleaks-docker
   #       entry: zricethezav/gitleaks protect --verbose --redact --staged
   - repo: https://github.com/oxsecurity/megalinter
-    rev: v6.19.0
+    rev: v7.0.4
     hooks:
       - id: megalinter-incremental  # Faster, less thorough
         stages:

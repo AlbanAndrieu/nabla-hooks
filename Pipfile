@@ -20,9 +20,7 @@ podmena = "~=0.6.1"
 pyyaml = "~=6.0"
 six = "~=1.16.0"
 termcolor = "~=2.1.1"
-
 # API
-
 fastapi = "~=0.90.0" # A version greater than 0.90.0 breaks the code
 # starlette = "~=0.23.0"
 uvicorn = {version = ">=0.20.0", extras = ["standard"]}
@@ -31,7 +29,12 @@ pydantic = ">=1.8.0,<2.0.0"
 spacy = "~=3.5.0"
 python-keystoneclient = "~=5.1.0"
 python-swiftclient = "~=4.2.0"
+prometheus-client = "~=0.16.0"
 prometheus-fastapi-instrumentator = "~=5.10.0"
+opentelemetry-distro = "~=0.39b0"
+opentelemetry-exporter-otlp = "~=1.18.0"
+opentelemetry-instrumentation-fastapi = "~=0.39b0"
+opentelemetry-exporter-jaeger-thrift = "~=1.13.0"
 
 [dev-packages]
 httpx = "~=0.23.3" # For testing fastAPI only

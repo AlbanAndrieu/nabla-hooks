@@ -111,7 +111,7 @@ up-python:
 .PHONY: up-uvicorn
 up-uvicorn:
 	@echo "up uvicorn http://0.0.0.0:8080/v1/ping"
-	.venv/bin/uvicorn serve:app --host 0.0.0.0 --port 8080
+	.venv/bin/uvicorn nabla.main:app --reload --workers 1 --host 0.0.0.0 --port 8080
 
 ## —— Up ✅ —————————————————————————————————————————————————————————————————
 .PHONY: up
