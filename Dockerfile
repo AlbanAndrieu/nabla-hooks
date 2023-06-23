@@ -7,7 +7,7 @@ FROM pytorch/pytorch:1.13.1-cuda11.6-cudnn8-runtime as prebuild
 # FROM pytorch/pytorch:1.7.1-cuda11.0-cudnn8-runtime as prebuild
 # FROM python:3.10
 
-LABEL name="jm-python" version="2.0.3" \
+LABEL name="nabla-hooks" version="2.0.3" \
  description="Image used by our products to build python\
  this image is running on Ubuntu 22.10." \
  com.nabla.vendor="NABLA Incorporated"
@@ -78,6 +78,7 @@ python -m pipenv install --site-packages --system
 USER jm-python
 
 COPY --chown=jm-python:jm-python hooks/ /code/jm-python/hooks/
+COPY --chown=jm-python:jm-python nabla/ /code/jm-python/nabla/
 COPY --chown=jm-python:jm-python serve.py /code/jm-python/
 RUN mkdir -p /code/jm-python/var/
 

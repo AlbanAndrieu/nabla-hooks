@@ -31,4 +31,6 @@ This project intend to be uses by all Nabla products
 [metrics](http://localhost:8080/metrics)
 
 [tracing worker sample](https://github.com/temporalio/samples-python/blob/main/open_telemetry/worker.py)
+
+[prometheus fastAPI guide](https://dev.to/ken_mwaura1/getting-started-monitoring-a-fastapi-app-with-grafana-and-prometheus-a-step-by-step-guide-3fbn)
 [prometheus fastAPI sample](https://github.com/SigNoz/sample-fastAPI-app/blob/main/app/main.py)
