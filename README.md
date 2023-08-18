@@ -1,5 +1,5 @@
 <!-- markdown-link-check-disable-next-line -->
-## [![Nabla](http://bababou.albandrieu.com/nabla/index/assets/nabla/nabla-4.png)](https://github.com/AlbanAndrieu)  nabla-hooks
+# [![Nabla](http://bababou.albandrieu.com/nabla/index/assets/nabla/nabla-4.png)](https://github.com/AlbanAndrieu)  nabla-hooks
 
 Nabla custom git hooks
 
@@ -52,6 +52,8 @@ This project intend to be uses by all Nabla products
 
 # [Initialize](#table-of-contents)
 
+Using pipenv Pipfile
+
 ```bash
 direnv allow
 pyenv install 3.8.10
@@ -59,6 +61,13 @@ pyenv local 3.8.10
 python -m pipenv install --dev --ignore-pipfile
 direnv allow
 pre-commit install
+```
+
+Using poetry pyproject.toml
+
+```bash
+pip install -U poetry pipenv-poetry-migrate
+pipenv-poetry-migrate -f Pipfile -t pyproject.toml --no-use-group-notation
 ```
 
 ## [Requirements](#table-of-contents)
