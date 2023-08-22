@@ -27,7 +27,7 @@ CS_SEVERITY_REPORT_THRESHOLD = "HIGH,CRITICAL"
 # from the environment for the first two.
 SPHINXOPTS    ?=
 SPHINXBUILD   ?= sphinx-build
-SOURCEDIR     = source
+SOURCEDIR     = docs
 BUILDDIR      = build
 
 # Executables: local only

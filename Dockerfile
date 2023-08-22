@@ -61,7 +61,7 @@ COPY --chown=jm-python:jm-python Pipfile* /code/
 # RUN --mount=type=secret,id=pip.conf,dst=/code/.config/pip/pip.conf,uid=999,gid=999 \
 RUN --mount=type=secret,id=Pipfile,dst=/code/Pipfile,uid=999,gid=999 \
 python -m pip install --upgrade pip && \
-python -m pip install --no-cache-dir --user --upgrade pipenv && \
+python -m pip install --no-cache-dir --user --upgrade pipenv==2023.7.23 && \
 python -m pip install --no-cache-dir --user --upgrade virtualenv && \
 python -m pipenv install --site-packages --system
 # python -m pip install --no-cache-dir -r /code/requirements.txt
