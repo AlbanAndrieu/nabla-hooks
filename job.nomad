@@ -2,7 +2,7 @@
 
 variable "env" {
   type    = string
-  default = "[[ .ENV ]]"
+  default = "dev"
 
   validation {
     condition     = var.env == "dev" || var.env == "uat" || var.env == "prod"
@@ -15,7 +15,7 @@ variable "team" {
   default = "uat"
 
   validation {
-    condition     = var.team == "uat" || var.team == "prod" || var.team == "dev"
+    condition     = var.team == "ateam" || var.team == "bteam" || var.team == "uat" || var.team == "prod" || var.team == "dev"
     error_message = "The env value must be valid team ateam or bteam."
   }
 }

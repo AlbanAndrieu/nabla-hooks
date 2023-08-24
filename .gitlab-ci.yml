@@ -1,0 +1,117 @@
+---
+stages:
+  - static
+  - test
+  - build
+  - deploy
+
+include:
+  - project: jusmundi-group/infrastructure/ci-templates
+    ref: main
+    file: "/templates/default.gitlab-ci.yml"
+
+  - project: jusmundi-group/infrastructure/ci-templates
+    ref: main
+    file: "/templates/docker-build.gitlab-ci.yml"
+
+  - project: jusmundi-group/infrastructure/ci-templates
+    ref: main
+    file: "/templates/deploy-nomad.gitlab-ci.yml"
+
+  - project: jusmundi-group/infrastructure/ci-templates
+    ref: main
+    file: "/templates/test-python.gitlab-ci.yml"
+
+  - project: jusmundi-group/infrastructure/ci-templates
+    ref: main
+    file: "/templates/_apk.gitlab-ci.yml"
+
+  - project: jusmundi-group/infrastructure/ci-templates
+    ref: main
+    file: "/templates/data.gitlab-ci.yml"
+
+variables:
+  CI_IMAGE_PYTHON: python:3.10
+  CI_REGISTRY: registry.gitlab.com
+  OCI_REGISTRY: ${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}
+  DOCKER_BUILD_OPT: "--build-arg CI_PIP_GITLABJUSMUNDI_TOKEN=${CI_PIP_GITLABJUSMUNDI_TOKEN} " # --squash
+  NOMAD_SERVICE_DEPLOY_URL_SUFFIX: docs
+  # REGISTRY: 783876277037.dkr.ecr.eu-west-3.amazonaws.com
+
+lint-flake8:
+  extends: .lint-flake8
+  variables:
+    DEFAULT_FLAKE8_ARGS: "--max-line-length=88 --max-complexity=30"
+  # BELOW is needed as we do not use jm-ubuntu but python:3.9
+  before_script:
+    - !reference [.install-pip3, script]
+    - !reference [.pipenv-install, script]
+
+test-pytest:
+  extends: .test-pytest
+  allow_failure: true
+  needs: ["lint-flake8"]
+  variables:
+    DEFAULT_COV_ARGS: "--cov-fail-under=70"
+    DEFAULT_PIPENV_ARGS: "--system --dev --ignore-pipfile" # --dev  --verbose --index=https://package_read:${CI_PIP_GITLABJUSMUNDI_TOKEN}@gitlab.com/api/v4/groups/7364654/-/packages/pypi/simple
+  # BELOW is needed as we do not use jm-ubuntu but python:3.9
+  before_script:
+    # - export PIPENV_INSTALL_TIMEOUT=1800 # 900 is 15 minutes
+    - !reference [.install-pip3, script]
+    - !reference [.pipenv-install, script]
+
+mega_linter:
+  extends: .mega_linter_common
+  needs: ["test-pytest"]
+  allow_failure: true
+
+docker-build:
+  extends: .docker-build
+  tags:
+    # - jusmundi-shared-runner
+    # - jusmundi-grabackprod-test
+    - jusmundi-nomad-runner
+    # - docker # no space left on device
+  timeout: 2 hours 10 minutes
+  variables:
+    CS_SEVERITY_THRESHOLD: "CRITICAL"
+    CS_SEVERITY_FILESYTEM_THRESHOLD: "CRITICAL"
+    # CUSTOM_CONTAINER_SCANNING_DISABLED: "true"
+    # CONTAINER_SCANNING_GITLAB_CODEQUALITY_TEMPLATE_DISABLE: "true"
+    TRIVY_TIMEOUT: "20m0s"
+    TRIVY_SCANNERS: "vuln"
+    TRIVY_ARGS: "--skip-dirs .direnv --skip-dirs .venv --skip-files /code/fastapi-sample/pyproject.toml --skip-files /code/fastapi-sample/Pipfile --skip-files /code/fastapi-sample/pip.conf --skip-files code/fastapi-sample/Dockerfile.train_neuralcoref"
+    TRIVY_EXIT_ON_FAILURE: 0
+    TRIVY_FILESYTEM_EXIT_ON_FAILURE: 0
+  after_script:
+    - !reference [.oci-image, script]
+    - !reference [.login-gitlab-docker, script]
+    - !reference [.common-docker-release, script]
+
+code_quality:
+  extends: .code_quality
+  stage: build
+  needs: ["docker-build"]
+  dependencies:
+    - docker-build
+
+deploy:dev:
+  extends: .deploy:dev
+  needs: ["docker-build"]
+  tags:
+    # - jusmundi-shared-runner
+    - jusmundi-nomad-runner
+
+deploy:uat:
+  extends: .deploy:uat
+  needs: ["docker-build"]
+  tags:
+    # - jusmundi-shared-runner
+    - jusmundi-nomad-runner
+
+deploy:prod:
+  extends: .deploy:prod
+  needs: ["docker-build"]
+  tags:
+    # - jusmundi-shared-runner
+    - jusmundi-nomad-runner
