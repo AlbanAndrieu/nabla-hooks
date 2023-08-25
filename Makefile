@@ -128,7 +128,7 @@ run: down up
 .PHONY: doc
 doc: ## Documentation
 	@echo "=> Doc..."
-	sphinx-build ./docs _build --color -W -bhtml
+	sphinx-build ./docs ./docs/_build --color -W -bhtml
 
 ## —— Lint 🧪 —————————————————————————————————————————————————————————————————
 .PHONY: flake8

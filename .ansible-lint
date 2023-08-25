@@ -5,6 +5,7 @@ exclude_paths:
   - .direnv/
   - .github/
   - .gitlab/
+  - .gitlab-ci.yml
 # parseable: true
 # quiet: true
 # rulesdir:

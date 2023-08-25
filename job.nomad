@@ -26,12 +26,12 @@ variable "datacenters" {
   default     = ["gra"]
 }
 
-job "nabla-hook" {
+job "nabla-hooks" {
   datacenters = var.datacenters
   namespace   = "datascience"
   type        = "service"
 
-  group "nabla-hook" {
+  group "nabla-hooks" {
     count = 1
 
     # Canary disable, because service is too big 10 G minimum and cluster is not sized for it, so auto_promote set to false
@@ -69,7 +69,7 @@ job "nabla-hook" {
     //   access_mode     = "multi-node-multi-writer"
     // }
 
-    task "nabla-hook" {
+    task "nabla-hooks" {
       driver = "docker"
       config {
         image = "[[ .CONTAINER_IMAGE ]]"
@@ -86,7 +86,7 @@ job "nabla-hook" {
 
       template {
         data        = <<EOF
-# {{ with secret "datascience/nabla-hook/${var.env}" }}
+# {{ with secret "datascience/nabla-hooks/${var.env}" }}
 # {{.Data.data.ENV}}
 # {{ end }}
 TEMPORALIO_HOST="temporal-app.service.gra.dev.consul"
@@ -98,13 +98,13 @@ EOF
       }
 
       service {
-        name = "nabla-hook"
+        name = "nabla-hooks"
         port = "server"
 
         tags = [
           "traefik.enable=true",
-          "traefik.http.routers.nabla-hook-${var.env}.entrypoints=http",
-          "traefik.http.routers.nabla-hook-${var.env}.rule=Host(`nabla-hook.service.gra.${var.env}.consul`)",
+          "traefik.http.routers.nabla-hooks-${var.env}.entrypoints=http",
+          "traefik.http.routers.nabla-hooks-${var.env}.rule=Host(`nabla-hooks.service.gra.${var.env}.consul`)",
         ]
 
         # Meta keys are also interpretable.
@@ -112,7 +112,7 @@ EOF
           version  = "v0.0.1"
           region   = "${node.region}"
           dc       = "${node.datacenter}"
-          service  = "nabla-hook-${var.env}"
+          service  = "nabla-hooks-${var.env}"
           team     = "${var.team}"
         }
 
@@ -126,81 +126,81 @@ EOF
           timeout  = "20m"
         }
 
-      } # service nabla-hook
+      } # service nabla-hooks
 
       resources {
         cpu    = 200 # MHz
         memory = 100 # MB
       }
-    } # task nabla-hook
+    } # task nabla-hooks
 
-    task "nabla-hook-worker" {
-      driver = "docker"
-      config {
-        image = "[[ .CONTAINER_IMAGE ]]"
-        image_pull_timeout = "25m"
-        ports = ["worker"]
-        # force_pull = true
+#    task "nabla-hooks-worker" {
+#      driver = "docker"
+#      config {
+#        image = "[[ .CONTAINER_IMAGE ]]"
+#        image_pull_timeout = "25m"
+#        ports = ["worker"]
+#        # force_pull = true
+#
+#        command = "python"
+#        args = [
+#            "-m",
+#            "serve_worker",
+#        ]
+#        shm_size = 536870912 # 512MB
+#      }
+#
+#      // volume_mount {
+#      //   volume      = "nabla"
+#      //   destination = "/usr/share/data/"
+#      //   read_only   = false
+#      // }
+#
+#      vault {
+#        policies  = ["cicd"]
+#      }
+#
+#      template {
+#        data        = <<EOF
+##{{ with secret "datascience/nabla-hooks/${var.env}" }}
+##{{.Data.data.ENV}}
+##{{ end }}
+#TEMPORALIO_HOST="temporal-app.service.gra.dev.consul"
+#UVICORN_LOG_LEVEL=debug
+#EOF
+#        destination = "${NOMAD_SECRETS_DIR}/.env.local"
+#
+#        env         = true
+#      }
+#
+#      service {
+#        name = "nabla-hooks-worker"
+#        port = "worker"
+#
+#        tags = [
+#          "traefik.enable=true",
+#          "traefik.http.routers.nabla-hooks-worker-${var.env}.entrypoints=http",
+#          "traefik.http.routers.nabla-hooks-worker-${var.env}.rule=Host(`nabla-hooks-worker.service.gra.${var.env}.consul`) || Host(`nabla-hooks-worker.${var.env}.service.gra.${var.env}.consul`)",
+#        ]
+#
+#        check {
+#          name     = "server-prometheus"
+#          port     = "worker"
+#          type     = "http"
+#          path     = "/metrics"
+#          interval = "5m"
+#          timeout  = "20m"
+#        }
+#
+#      } # service worker
+#
+#      resources {
+#        cpu    = var.env == "dev" ? "1000" : "2000" # MHz
+#        memory = var.env == "dev" ? "4000" : "5000" # MB 5Gb minimum
+#      }
+#    } # task nabla-hooks-worker
 
-        command = "python"
-        args = [
-            "-m",
-            "serve_worker",
-        ]
-        shm_size = 536870912 # 512MB
-      }
-
-      // volume_mount {
-      //   volume      = "nabla"
-      //   destination = "/usr/share/data/"
-      //   read_only   = false
-      // }
-
-      vault {
-        policies  = ["cicd"]
-      }
-
-      template {
-        data        = <<EOF
-#{{ with secret "datascience/nabla-hook/${var.env}" }}
-#{{.Data.data.ENV}}
-#{{ end }}
-TEMPORALIO_HOST="temporal-app.service.gra.dev.consul"
-UVICORN_LOG_LEVEL=debug
-EOF
-        destination = "${NOMAD_SECRETS_DIR}/.env.local"
-
-        env         = true
-      }
-
-      service {
-        name = "nabla-hook-worker"
-        port = "worker"
-
-        tags = [
-          "traefik.enable=true",
-          "traefik.http.routers.nabla-hook-worker-${var.env}.entrypoints=http",
-          "traefik.http.routers.nabla-hook-worker-${var.env}.rule=Host(`nabla-hook-worker.service.gra.${var.env}.consul`) || Host(`nabla-hook-worker.${var.env}.service.gra.${var.env}.consul`)",
-        ]
-
-        check {
-          name     = "server-prometheus"
-          port     = "worker"
-          type     = "http"
-          path     = "/metrics"
-          interval = "5m"
-          timeout  = "20m"
-        }
-
-      } # service worker
-
-      resources {
-        cpu    = var.env == "dev" ? "1000" : "2000" # MHz
-        memory = var.env == "dev" ? "4000" : "5000" # MB 5Gb minimum
-      }
-    } # task nabla-hook-worker
-
-    task "nabla-hook-kong-registration" {
+    task "nabla-hooks-kong-registration" {
 
       driver = "docker"
 
@@ -224,7 +224,7 @@ EOF
           "--state",
           "/kong.yml",
           "--select-tag",
-          "nabla-hook"
+          "nabla-hooks"
         ]
       }
 
@@ -235,11 +235,11 @@ EOF
 _format_version: "3.0"
 _info:
   select_tags:
-  - nabla-hook
+  - nabla-hooks
 services:
 - connect_timeout: 60000
-  host: nabla-hook.service.gra.${var.env}.consul
-  name: nabla-hook
+  host: nabla-hooks.service.gra.${var.env}.consul
+  name: nabla-hooks
   path: /
   port: 80
   protocol: http
@@ -248,16 +248,16 @@ services:
   routes:
   - hosts:
     %{ if var.env == "uat" }
-    - nabla-hook.staging.int.jusmundi.com
+    - nabla-hooks.staging.int.jusmundi.com
     %{ endif }
-    - nabla-hook.${var.env}.int.jusmundi.com
+    - nabla-hooks.${var.env}.int.jusmundi.com
     https_redirect_status_code: 426
     methods:
     - GET
     - PUT
     - POST
     - DELETE
-    name: nabla-hook
+    name: nabla-hooks
     path_handling: v0
     preserve_host: false
     protocols:
@@ -268,7 +268,7 @@ services:
     response_buffering: true
     strip_path: true
   tags:
-  - nabla-hook
+  - nabla-hooks
   write_timeout: 60000
 EOF
       }
@@ -280,56 +280,56 @@ EOF
 
     } # task kong-registration
 
-     task "nabla-hook-kong-disable" {
+#     task "nabla-hooks-kong-disable" {
+#
+#       driver = "docker"
+#
+#       lifecycle {
+#         hook = "poststop"
+#       }
+#
+#       config {
+#         image = "docker.io/kong/deck:v1.19.1"
+#
+#         volumes = [
+#           "local/kong.yml:/kong.yml"
+#         ]
+#
+#         image_pull_timeout = "10m"
+#
+#         args = [
+#           "--kong-addr",
+#           "http://kong-admin.service.gra.${var.env}.consul",
+#           "sync",
+#           "--state",
+#           "/kong.yml",
+#           "--select-tag",
+#           "nabla-hooks"
+#         ]
+#       }
+#
+#       template {
+#         destination = "local/kong.yml"
+#
+#         data = <<EOF
+# _format_version: "3.0"
+# _info:
+#   select_tags:
+#   - nabla-hooks
+# services:
+# - name: nabla-hooks
+#   enabled: false
+#   host: nabla-hooks.service.gra.${var.env}.consul
+# EOF
+#       }
+#
+#       resources {
+#         cpu    = 300 # Mhz
+#         memory = 300 # MB
+#       }
+#
+#     } # task kong-disable
 
-       driver = "docker"
-
-       lifecycle {
-         hook = "poststop"
-       }
-
-       config {
-         image = "docker.io/kong/deck:v1.19.1"
-
-         volumes = [
-           "local/kong.yml:/kong.yml"
-         ]
-
-         image_pull_timeout = "10m"
-
-         args = [
-           "--kong-addr",
-           "http://kong-admin.service.gra.${var.env}.consul",
-           "sync",
-           "--state",
-           "/kong.yml",
-           "--select-tag",
-           "nabla-hook"
-         ]
-       }
-
-       template {
-         destination = "local/kong.yml"
-
-         data = <<EOF
-_format_version: "3.0"
-_info:
-  select_tags:
-  - nabla-hook
-services:
-- name: nabla-hook
-  enabled: false
-  host: nabla-hook.service.gra.${var.env}.consul
-EOF
-       }
-
-       resources {
-         cpu    = 300 # Mhz
-         memory = 300 # MB
-       }
-
-     } # task kong-disable
-
-  } # group nabla-hook
+  } # group nabla-hooks
 
 }
