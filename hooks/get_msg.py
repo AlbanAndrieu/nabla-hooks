@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 import logging
 import os
 import re
@@ -16,17 +15,51 @@ from termcolor import colored
 # use Colorama to make Termcolor work on Windows too
 init()
 
-__all__ = ['match_msg']
+__all__ = ["match_msg"]
 
 
 @click.command()
-@click.argument('commit_msg_filepath', type=click.Path(exists=False))
-@click.argument('commit_type', type=str, default='')  # message for prepare-commit-msg
-@click.option('-j', '--jira', is_flag=True, default=True, help='Jira check')  # noqa: ignore=E501
-@click.option('-u', '--user', required=False, envvar='JIRA_USER', help='JIRA user')  # noqa: ignore=E501
-@click.option('-p', '--password', required=False, prompt=True, hide_input=True, confirmation_prompt=True, envvar='JIRA_PASSWORD', help='JIRA password')  # noqa: ignore=E501
-@click.option('-v', '--verbose', is_flag=True, default=False, help='Switch between INFO and DEBUG logging modes')  # noqa: ignore=E501
-def cli(commit_msg_filepath, commit_type: str = '', jira=True, user=None, password=None, verbose=False):
+@click.argument("commit_msg_filepath", type=click.Path(exists=False))
+@click.argument("commit_type", type=str, default="")  # message for prepare-commit-msg
+@click.option(
+    "-j",
+    "--jira",
+    is_flag=True,
+    default=True,
+    help="Jira check",
+)  # noqa: E501
+@click.option(
+    "-u",
+    "--user",
+    required=False,
+    envvar="JIRA_USER",
+    help="JIRA user",
+)  # noqa: E501
+@click.option(
+    "-p",
+    "--password",
+    required=False,
+    prompt=True,
+    hide_input=True,
+    confirmation_prompt=True,
+    envvar="JIRA_PASSWORD",
+    help="JIRA password",
+)  # noqa: E501
+@click.option(
+    "-v",
+    "--verbose",
+    is_flag=True,
+    default=False,
+    help="Switch between INFO and DEBUG logging modes",
+)  # noqa: E501
+def cli(
+    commit_msg_filepath,
+    commit_type: str = "",
+    jira=True,
+    user=None,
+    password=None,
+    verbose=False,
+):
     """
     Configures git hook commit message using CLI.
 
@@ -47,7 +80,7 @@ def cli(commit_msg_filepath, commit_type: str = '', jira=True, user=None, passwo
 
     """
 
-    logger.info('Collecting branch')
+    logger.info("Collecting branch")
 
     if verbose:
         click.echo(click.format_filename(commit_msg_filepath))
@@ -57,12 +90,23 @@ def cli(commit_msg_filepath, commit_type: str = '', jira=True, user=None, passwo
         click.echo(verbose)
 
     return match_msg(
-        commit_msg_filepath=commit_msg_filepath, commit_type=commit_type,
-        jira=jira, user=user, password=password, verbose=verbose,
+        commit_msg_filepath=commit_msg_filepath,
+        commit_type=commit_type,
+        jira=jira,
+        user=user,
+        password=password,
+        verbose=verbose,
     )
 
 
-def match_msg(commit_msg_filepath: str, commit_type: str = '', jira=True, user=None, password=None, verbose=False) -> str:
+def match_msg(
+    commit_msg_filepath: str,
+    commit_type: str = "",
+    jira=True,
+    user=None,
+    password=None,
+    verbose=False,
+) -> str:
     """
     Configures git hook commit message.
 
@@ -79,58 +123,73 @@ def match_msg(commit_msg_filepath: str, commit_type: str = '', jira=True, user=N
         logger.setLevel(logging.DEBUG)
 
     try:
-
         # Figure out which branch we're on
-        branch = check_output([
-            '/usr/bin/git', 'symbolic-ref', '--short',
-            'HEAD',
-        ]).strip().decode('utf-8')
+        branch = (
+            check_output(
+                [
+                    "/usr/bin/git",
+                    "symbolic-ref",
+                    "--short",
+                    "HEAD",
+                ],
+            )
+            .strip()
+            .decode("utf-8")
+        )
 
         logger.debug(r"msg: On branch '{}'".format(branch))
-        regex = re.compile('^feature|^bugfix')
+        regex = re.compile("^feature|^bugfix")
 
         filename = os.path.expanduser(commit_msg_filepath)
-        required_message = ''
+        required_message = ""
 
         if os.path.exists(filename):
-            with open(commit_msg_filepath, 'r+') as f:
+            with open(commit_msg_filepath, "r+") as f:
                 current_message = f.read()
                 f.seek(0, 0)
 
             if not current_message:
                 print(
                     colored(
-                        'Current message is empty.', 'red',
+                        "Current message is empty.",
+                        "red",
                     ),
                 )
             else:
                 if verbose:
                     print(
                         colored(
-                            'Message before is : {}'.format(
+                            "Message before is : {}".format(
                                 current_message,
-                            ), 'yellow',
+                            ),
+                            "yellow",
                         ),
                     )
 
             # Populate the commit message with the issue #, if there is one
             if re.match(regex, branch):
-                if 'message' in commit_type:
+                if "message" in commit_type:
                     print(
                         colored(
                             "Oh hey, it's an issue branch : {}.".format(
                                 branch,
-                            ), 'green',
+                            ),
+                            "green",
                         ),
                     )
 
                 if jira:
                     basic_auth = get_jira.get_auth.match_auth(
-                        user=user, password=password, verbose=verbose,
+                        user=user,
+                        password=password,
+                        verbose=verbose,
                     )
 
                     msg = get_jira.get_jira.get_msg(
-                        current_message=current_message, branch=branch, basic_auth=basic_auth, verbose=verbose,
+                        current_message=current_message,
+                        branch=branch,
+                        basic_auth=basic_auth,
+                        verbose=verbose,
                     )
 
                 required_message = msg[0]
@@ -142,26 +201,27 @@ def match_msg(commit_msg_filepath: str, commit_type: str = '', jira=True, user=N
                 if verbose:
                     print(
                         colored(
-                            'Message after is : {}'.format(
+                            "Message after is : {}".format(
                                 required_message,
-                            ), 'yellow',
+                            ),
+                            "yellow",
                         ),
                     )
-                with open(commit_msg_filepath, 'r+') as f:
+                with open(commit_msg_filepath, "r+") as f:
                     f.seek(0, 0)
-                    f.write('{}'.format(required_message))
+                    f.write("{}".format(required_message))
 
         return required_message
 
-    except:  # noqa: ignore=E722
+    except:  # noqa: E722
         traceback.print_exc()
         sys.exit(2)
 
 
-logger = logging.getLogger('hooks.get_msg')
+logger = logging.getLogger("hooks.get_msg")
 logger.setLevel(logging.INFO)
 stdoutlog = logging.StreamHandler(sys.stdout)
 logger.addHandler(stdoutlog)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     cli(None)

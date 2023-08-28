@@ -1,17 +1,11 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 import logging
 import os
 import re
 import sys
 import traceback
-from typing import (  # for annotation purposes only
-    #    Any,
-    #    Dict,
-    #    List,
+from typing import (  # for annotation purposes only; Any,; Dict,; List,; Iterator,; Pattern,; noqa: E501
     Tuple,
-    #    Iterator,
-    #    Pattern,
 )
 
 import certifi
@@ -37,8 +31,12 @@ init()
 @click.argument("current_message", type=str)
 @click.argument("branch", type=str)
 @click.option(
-    "-u", "--user", required=False, envvar="JIRA_USER", help="JIRA user"
-)  # noqa: ignore=E501
+    "-u",
+    "--user",
+    required=False,
+    envvar="JIRA_USER",
+    help="JIRA user",
+)  # noqa: E501
 @click.option(
     "-p",
     "--password",
@@ -48,17 +46,21 @@ init()
     confirmation_prompt=True,
     envvar="JIRA_PASSWORD",
     help="JIRA password",
-)  # noqa: ignore=E501
+)  # noqa: E501
 @click.option(
     "-v",
     "--verbose",
     is_flag=True,
     default=False,
     help="Switch between INFO and DEBUG logging modes",
-)  # noqa: ignore=E501
+)  # noqa: E501
 @click.option(
-    "-f", "--fail", is_flag=True, default=False, help="Fail if no issue JIRA found"
-)  # noqa: ignore=E501
+    "-f",
+    "--fail",
+    is_flag=True,
+    default=False,
+    help="Fail if no issue JIRA found",
+)  # noqa: E501
 def cli(
     current_message: str,
     branch: str,
@@ -104,7 +106,6 @@ def get_msg(
     verbose=True,
     fail=True,
 ) -> Tuple[str, str]:
-
     issue = match_issue(
         branch=branch,
         verbose=verbose,
@@ -127,21 +128,19 @@ def get_msg(
             print(
                 colored(
                     "Issue number already detected in message: {}".format(
-                        required_message
+                        required_message,
                     ),
                     "yellow",
-                )
+                ),
             )
 
     return required_message, issue
 
 
 def match_issue(branch: str, verbose=False, fail=True) -> str:
-
     issue = "UNKNOWN"
 
     try:
-
         # Matches any unique issue code
         pattern = re.compile(
             r"(^feature|^feat|^bugfix|^fix|^docs|^style|^refactor|^perf|^test|^chore)\/([A-Z]{3,5}-[0-9]+)",  # noqa: E501
@@ -150,7 +149,7 @@ def match_issue(branch: str, verbose=False, fail=True) -> str:
         if verbose:
             print(colored("Issue number detected : {}.".format(issue), "green"))
 
-    except Exception as e:  # noqa: ignore=E722
+    except Exception:  # noqa: E722
         if verbose:
             traceback.print_exc()
         print(
@@ -166,9 +165,7 @@ def match_issue(branch: str, verbose=False, fail=True) -> str:
 
 
 def get_jira_url() -> str:
-
     try:
-
         url = os.environ.get("JIRA_URL")
 
         if not url:
@@ -188,9 +185,7 @@ def get_jira_url() -> str:
 
 
 def get_certificat_path() -> str:
-
     try:
-
         certificat_path = os.environ.get("JIRA_CERT_PATH")
 
         if not certificat_path:
@@ -209,16 +204,16 @@ def get_certificat_path() -> str:
 
 
 def match_jira(
-    issue: str, basic_auth: Tuple[str, str] = ("", ""), verbose=False
+    issue: str,
+    basic_auth: Tuple[str, str] = ("", ""),
+    verbose=False,
 ) -> str:
-
     # WORKAROUND below in case certificate is not install on workstation
     urllib3.disable_warnings()
 
     required_message = ""
 
     try:
-
         # print(colored('URL : {}.'.format(get_jira_url()), 'red'))
 
         options = {
@@ -317,7 +312,7 @@ def match_jira(
                     "red",
                 ),
             )
-    except Exception as e:  # noqa: ignore=E722
+    except Exception:  # noqa: E722
         if verbose:
             traceback.print_exc()
         print(

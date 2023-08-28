@@ -1,10 +1,11 @@
 import logging
+import os
 
 import uvicorn
+from nabla.main import app
 
-host = "0.0.0.0"
+EXPOSE_HOST = os.environ.get("EXPOSE_HOST", "0.0.0.0")
 EXPOSE_PORT = os.environ.get("EXPOSE_PORT", 8080)
-app_name = "nabla.main:app"
 
 
 class EndpointFilter(logging.Filter):
@@ -21,5 +22,13 @@ if __name__ == "__main__":
     log_config = uvicorn.config.LOGGING_CONFIG
     log_config["formatters"]["access"][
         "fmt"
-    ] = "%(asctime)s %(levelname)s [%(name)s] [%(filename)s:%(lineno)d] [trace_id=%(otelTraceID)s span_id=%(otelSpanID)s resource.service.name=%(otelServiceName)s] - %(message)s"
-    uvicorn.run(app_name, host=host, port=EXPOSE_PORT, log_config=log_config)
+    ] = "%(asctime)s %(levelname)s [%(name)s] [%(filename)s:%(lineno)d] [trace_id=%(otelTraceID)s span_id=%(otelSpanID)s resource.service.name=%(otelServiceName)s] - %(message)s"  # noqa: E501
+    config = uvicorn.Config(
+        app,
+        host=EXPOSE_HOST,
+        port=EXPOSE_PORT,
+        log_config=log_config,
+        log_level="info",
+    )
+    server = uvicorn.Server(config)
+    server.run()

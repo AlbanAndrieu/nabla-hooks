@@ -4,10 +4,10 @@ import time
 from typing import Dict
 
 from fastapi import FastAPI
-
-# from nabla import logger
 from nabla.api import ping, v1
 from nabla.utils import PrometheusMiddleware, metrics, setting_otlp
+
+# from nabla import logger
 
 # from prometheus_fastapi_instrumentator import Instrumentator
 
@@ -17,11 +17,10 @@ from nabla.utils import PrometheusMiddleware, metrics, setting_otlp
 # from citation.infrastructure.crud_exceptions import CrudError, NotFoundInJM
 
 
-
-
 APP_NAME = os.environ.get("APP_NAME", "nabla-hooks")
 OTLP_GRPC_ENDPOINT = os.environ.get(
-    "OTLP_GRPC_ENDPOINT", "http://grpc.jaeger-collector-grpc.service.gra.dev.consul"
+    "OTLP_GRPC_ENDPOINT",
+    "http://otel-collector.service.gra.dev.consul:4317",
 )
 # http://grpc.jaeger-collector-grpc.service.gra.dev.consul
 # http://jaeger-collector-grpc.service.gra.dev.consul:14250
@@ -32,6 +31,7 @@ OTLP_GRPC_ENDPOINT = os.environ.get(
 logging.info("Creating API")
 app = FastAPI(
     title="Nabla V1",
+    description="Nabla V1",
     version="0.0.1",
 )
 
@@ -106,7 +106,7 @@ async def cpu_task():
 @app.on_event("startup")
 async def startup():
     # await database.connect()
-    ## Instrumentator().instrument(app).expose(app)
+    # # Instrumentator().instrument(app).expose(app)
     # FastAPIInstrumentor.instrument_app(app)
     logging.info("API is ready")
 

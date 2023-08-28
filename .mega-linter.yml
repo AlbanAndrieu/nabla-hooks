@@ -15,6 +15,8 @@ DISABLE:
   - SPELL  # Uncomment to disable checks of spelling mistakes
   - JAVASCRIPT
   - YAML
+  - TEKTON
+  - SPELL_LYCHEE
 DISABLE_LINTERS:
   # - JSON_PRETTIER
   # - JSON_JSONLINT
@@ -22,15 +24,18 @@ DISABLE_LINTERS:
   - REPOSITORY_DEVSKIM
   - REPOSITORY_TRIVY
   - REPOSITORY_SYFT
+  - TERRAFORM_TERRAGRUNT
+  - TERRAFORM_TERRASCAN
+  - TERRAFORM_KICS
   - PYTHON_MYPY
   - PYTHON_PYRIGHT
   - PYTHON_PYLINT
 IGNORE_GITIGNORED_FILES: true
-FILTER_REGEX_EXCLUDE: (\.automation/test|\.automation/generated|\.github/workflows|\.venv/|\.direnv/|\.mypy_cache/|docs/javascripts|docs/overrides|docs/json-schemas|flavors|clj-kondo|TEMPLATES|tests)
+FILTER_REGEX_EXCLUDE: (megalinter-reports/|\.automation/test|\.automation/generated|\.github/workflows|\.venv/|\.direnv/|\.mypy_cache/|docs/javascripts|docs/overrides|docs/json-schemas|flavors|clj-kondo|TEMPLATES|tests)
 JSON_JSONLINT_FILTER_REGEX_EXCLUDE: (\.vscode/)
 YAML_YAMLLINT_FILTER_REGEX_EXCLUDE: (templates/\.mega-linter\.yml)
 YAML_PRETTIER_FILTER_REGEX_EXCLUDE: (templates/\.mega-linter\.yml|mkdocs\.yml)
-YAML_V8R_FILTER_REGEX_EXCLUDE: (descriptors|templates/\.mega-linter\.yml|\.codecov\.yml)
+JSON_V8R_FILTER_REGEX_EXCLUDE: (test\|.vscode/settings.json|Brewfile.lock.json|package-lock.json|bower.json|kics-config.json|\.mega-linter\.yml|\.codecov\.yml)
 BASH_FILTER_REGEX_EXCLUDE: (lib)
 MARKDOWN_FILTER_REGEX_EXCLUDE: (license\.md)
 MARKDOWN_MARKDOWN_LINK_CHECK_DISABLE_ERRORS: true
@@ -49,18 +54,37 @@ PYTHON_BANDIT_DISABLE_ERRORS: true
 PYTHON_MYPY_DISABLE_ERRORS: true
 PYTHON_PYLINT_DISABLE_ERRORS: true
 PYTHON_PYRIGHT_DISABLE_ERRORS: true
+YAML_V8R_FILE_NAMES_REGEX:
+  [
+    ".codeclimate.yml",
+    ".dive.yaml",
+    ".gitlab-ci.yml",
+    ".mega-linter.yml",
+    ".checkov.yml",
+  ]
 # ADDITIONAL_EXCLUDED_DIRECTORIES: (\.venv/|\.direnv/|\.mypy_cache/)
-EXCLUDED_DIRECTORIES: [".github", ".gitlab-ci", "node_modules", ".venv", ".direnv", ".mypy_cache"]
+EXCLUDED_DIRECTORIES:
+  [".github", ".gitlab-ci", "node_modules", ".venv", ".direnv", ".mypy_cache"]
 SHOW_ELAPSED_TIME: true
 JSON_REPORTER: true
 SARIF_REPORTER: true
 FILEIO_REPORTER: false
 VALIDATE_ALL_CODEBASE: false
+PLUGINS:
+  - https://raw.githubusercontent.com/nvuillam/mega-linter/master/.automation/test/mega-linter-plugin-test/test.megalinter-descriptor.yml
+#  - https://raw.githubusercontent.com/oxsecurity/megalinter/master/.automation/test/mega-linter-plugin-test/test.megalinter-descriptor.yml
 PRE_COMMANDS:
   - command: pip install flake8-cognitive-complexity
     venv: flake8  # Will be run within flake8 python virtualenv. There is one virtualenv per python-based linter, with the same name
   - command: echo "This is Mega-Linter PRE_COMMAND on own Mega-Linter ! :)"
     cwd: root
+  - command: |-
+      echo $(ls -lah .gitignore | sed 's/\s\+/ /g' | cut -d ' ' -f3,4 | sed 's/ /\:/') > perms.txt
+    cwd: "workspace"
 POST_COMMANDS:
   - command: echo "This is Mega-Linter POST_COMMAND on own Mega-Linter ! :)"
     cwd: workspace
+  - command: |-
+      find . -user root -group root -exec chown $(cat perms.txt) {} \;
+      rm perms.txt
+    cwd: "workspace"

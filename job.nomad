@@ -50,9 +50,9 @@ job "nabla-hooks" {
         to     = 8080
       }
 
-      port "worker" {
-        to     = 9000
-      }
+      # port "worker" {
+      #   to     = 9000
+      # }
     }
 
     restart {
@@ -77,7 +77,8 @@ job "nabla-hooks" {
 
         # force_pull = true
         shm_size = 536870912 # 512MB
-        image_pull_timeout = "25m"
+        auth_soft_fail = true
+        # image_pull_timeout = "25m"
       }
 
       vault {
@@ -86,11 +87,10 @@ job "nabla-hooks" {
 
       template {
         data        = <<EOF
-# {{ with secret "datascience/nabla-hooks/${var.env}" }}
-# {{.Data.data.ENV}}
-# {{ end }}
-TEMPORALIO_HOST="temporal-app.service.gra.dev.consul"
 UVICORN_LOG_LEVEL=debug
+OTEL_RESOURCE_ATTRIBUTES=service.name=nabla-hooks
+OTEL_SERVICE_NAME=nabla-hooks
+OTEL_EXPORTER_OTLP_ENDPOINT="http://otel-collector.service.gra.${var.env}.consul:4317"
 EOF
         destination = "${NOMAD_SECRETS_DIR}/.env.local"
 
@@ -120,10 +120,10 @@ EOF
           name     = "server-alive"
           port     = "server"
           type     = "http"
-          path     = "heatlh" # v1/ping /docs /metrics
-          # 2m because can be heavy to lead, better to put it at this interval
-          interval = "2m"
-          timeout  = "20m"
+          path     = "/heatlh" # v1/ping /docs /metrics
+          # 30s because can be heavy to lead, better to put it at this interval
+          interval = "30s"
+          timeout  = "5s"
         }
 
       } # service nabla-hooks
@@ -162,9 +162,6 @@ EOF
 #
 #      template {
 #        data        = <<EOF
-##{{ with secret "datascience/nabla-hooks/${var.env}" }}
-##{{.Data.data.ENV}}
-##{{ end }}
 #TEMPORALIO_HOST="temporal-app.service.gra.dev.consul"
 #UVICORN_LOG_LEVEL=debug
 #EOF

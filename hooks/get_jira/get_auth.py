@@ -1,16 +1,10 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 import getpass
 import logging
 import os
 import sys
-from typing import (  # for annotation purposes only
-    #    Any,
-    #    Dict,
-    #    List,
+from typing import (  # for annotation purposes only; Any,; Dict,; List,; Iterator,; Pattern,; noqa: E501
     Tuple,
-    #    Iterator,
-    #    Pattern,
 )
 
 import click
@@ -23,8 +17,12 @@ init()
 
 @click.command()
 @click.option(
-    "-u", "--user", required=False, envvar="JIRA_USER", help="JIRA user"
-)  # noqa: ignore=E501
+    "-u",
+    "--user",
+    required=False,
+    envvar="JIRA_USER",
+    help="JIRA user",
+)  # noqa: E501
 @click.option(
     "-p",
     "--password",
@@ -34,14 +32,14 @@ init()
     confirmation_prompt=True,
     envvar="JIRA_PASSWORD",
     help="JIRA password",
-)  # noqa: ignore=E501
+)  # noqa: E501
 @click.option(
     "-v",
     "--verbose",
     is_flag=True,
     default=False,
     help="Switch between INFO and DEBUG logging modes",
-)  # noqa: ignore=E501
+)  # noqa: E501
 def cli(user=None, password=None, verbose=False) -> Tuple[str, str]:
     """Simple program that match jira. From hooks directory : Try python -m get_jira.get_auth -u aandrieu -p XXXX --verbose"""  # noqa:E501
 
@@ -51,9 +49,7 @@ def cli(user=None, password=None, verbose=False) -> Tuple[str, str]:
 
 
 def get_user(user=None, verbose=False) -> str:
-
     try:
-
         if not user:
             if verbose:
                 print(
@@ -85,9 +81,7 @@ def get_user(user=None, verbose=False) -> str:
 
 
 def get_password(password=None, verbose=False) -> str:
-
     try:
-
         if not password:
             if verbose:
                 print(
@@ -123,7 +117,6 @@ def get_password(password=None, verbose=False) -> str:
 
 
 def match_auth(user=None, password=None, verbose=False) -> Tuple[str, str]:
-
     if verbose:
         logger.setLevel(logging.DEBUG)
         click.echo(user)
@@ -138,7 +131,7 @@ def match_auth(user=None, password=None, verbose=False) -> Tuple[str, str]:
 
     if not basic_auth:
         print(
-            colored("Authentification cannot be empty : {}.".format(basic_auth), "red")
+            colored("Authentification cannot be empty : {}.".format(basic_auth), "red"),
         )
         sys.exit(3)
     else:
