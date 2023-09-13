@@ -210,7 +210,7 @@ venv.bak/
 .spyderproject
 .spyproject
 # vscode
-.vscode
+# .vscode
 /vscode
 # pycharm
 .idea

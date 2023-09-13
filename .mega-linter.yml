@@ -30,6 +30,7 @@ DISABLE_LINTERS:
   - PYTHON_MYPY
   - PYTHON_PYRIGHT
   - PYTHON_PYLINT
+  - JAVASCRIPT_STANDARD  # Using JAVASCRIPT_ES
 IGNORE_GITIGNORED_FILES: true
 FILTER_REGEX_EXCLUDE: (megalinter-reports/|\.automation/test|\.automation/generated|\.github/workflows|\.venv/|\.direnv/|\.mypy_cache/|docs/javascripts|docs/overrides|docs/json-schemas|flavors|clj-kondo|TEMPLATES|tests)
 JSON_JSONLINT_FILTER_REGEX_EXCLUDE: (\.vscode/)
