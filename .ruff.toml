@@ -1,0 +1,9 @@
+
+# Extend the `pyproject.toml` file in the parent directory.
+extend = "./pyproject.toml"
+
+# But use a different line length.
+line-length = 120
+
+# Never enforce `E501` (line length violations).
+ignore = ["E501"]

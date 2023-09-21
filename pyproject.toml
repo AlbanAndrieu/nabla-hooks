@@ -21,10 +21,8 @@ name = "gitlab"
 # export POETRY_GITLAB_TOKEN_GITLAB=${CI_PIP_GITLABJUSMUNDI_TOKEN}
 url = "https://gitlab.com/api/v4/projects/7364654/packages/pypi/simple"
 
-
 [tool.poetry.dependencies]
 python = "^3.10"
-ansible-cmdb = "~=1.31"
 ansible-core = "~=2.15.2"
 ansicolors = "~=1.1.8"
 cfgv = "~=3.3.0"
@@ -47,14 +45,25 @@ spacy = "~=3.5.4"
 python-keystoneclient = "~=5.1.0"
 python-swiftclient = "~=4.2.0"
 prometheus-client = "~=0.16.0"
+reretry = ">=0.11.8"
+
+# See https://github.com/temporalio/samples-python/blob/main/pyproject.toml
+[tool.poetry.group.encryption]
+optional = true
+dependencies = { cryptography = "~=41.0.2", aiohttp = "^3.8.1" }
+
+[tool.poetry.group.open_telemetry]
+optional = true
+[tool.poetry.group.open_telemetry.dependencies]
+temporalio = { version = "*", extras = ["opentelemetry"] }
 opentelemetry-distro = "~=0.39b0"
 opentelemetry-exporter-otlp = "~=1.19.0"
+opentelemetry-exporter-otlp-proto-grpc = "1.19.0"
 opentelemetry-instrumentation-fastapi = "~=0.39b0"
 opentelemetry-instrumentation-logging = "~=0.39b0"
 opentelemetry-exporter-jaeger-thrift = "~=1.13.0"
 opentelemetry-api = "~=1.19.0"
 opentelemetry-sdk = "~=1.19.0"
-reretry = ">=0.11.8"
 
 [tool.poetry.dev-dependencies]
 ansible-cmdb = "~=1.31"
@@ -63,11 +72,11 @@ ansible-playbook-grapher = "~=1.1.0"
 autopep8 = "~=2.0.0"
 bandit = ">=1.7.4"
 black = {version = "~=23.7.0", extras = ["d"]}
-checkov = ">=2.2.95"
-flake8 = "~=6.0.0"
+checkov = ">=2.3.115"
+flake8 = "~=6.1.0"
 flake8-formatter-junit-xml = "~=0.0.6"
 httpx = "~=0.23.3"
-molecule = "~=3.6.1"
+molecule = "~=5.1.0"
 nox = "~=2023.4.22"
 pep8 = "~=1.7.1"
 pep8-naming = "~=0.13.2"
@@ -102,6 +111,52 @@ testpaths = "tests/"
 
 [tool.black]
 line-length = 88
+
+[tool.ruff]
+# Enable the pycodestyle (`E`) and Pyflakes (`F`) rules by default.
+# Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
+# McCabe complexity (`C901`) by default.
+select = ["E", "F"]
+ignore = []
+
+# Allow autofix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+]
+per-file-ignores = {}
+
+# Same as Black.
+line-length = 88
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+# Assume Python 3.8
+target-version = "py38"
 
 [tool.isort]
 multi_line_output = 3

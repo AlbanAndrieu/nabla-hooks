@@ -1,96 +1,93 @@
 {
-    "python.analysis.extraPaths": ["__pypackages__/<major.minor>/lib"],
-    "files.exclude": {
-        "out": true, // set this to true to hide the "out" folder with the compiled JS files
-        "**/*.pyc": true,
-        ".nyc_output": true,
-        "obj": true,
-        "bin": true,
-        "**/__pycache__": true,
-        "**/node_modules": true,
-        ".vscode-test": false,
-        ".vscode test": false,
-        "**/.mypy_cache/**": true,
-        "**/.ropeproject/**": true
-    },
-    "search.exclude": {
-        "out": true, // set this to false to include "out" folder in search results
-        "**/node_modules": true,
-        "coverage": true,
-        "languageServer*/**": true,
-        ".vscode-test": true,
-        ".vscode test": true
-    },
-    "python.pipenvPath": ".venv/bin/python",
-    //"terminal.integrated.shellArgs.linux": [
-    //    "-l"
-    //],
-    "terminal.integrated.env.linux": {
-        "PYTHONPATH": "${workspaceFolder}/hooks:.venv/bin/:/opt/ansible/env38/bin/:/opt/ansible/env38/lib/python3.8/site-packages/"
-    },
-    "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true,
-    "python.testing.pytestPath": ".venv/bin/pytest",
-    "python.testing.unittestArgs": [
-        "-v",
-        "-s",
-        "./test",
-        "-p",
-        "*test*.py"
-    ],
-    "python.linting.enabled": false,
-    "python.workspaceSymbols.enabled": false,
-    "python.formatting.provider": "black",
-    "python.testing.nosetestsEnabled": false,
-    "python.testing.cwd": "${workspaceFolder}",
-    "python.testing.pytestArgs": [
-        //"--ignore=src/ptvsd/_vendored/",
-        "--disable-warnings",
-        "."
-    ],
-    "python.autoComplete.extraPaths": [
-        "__pypackages__/<major.minor>/lib",
-        "${workspaceFolder}/hooks",
-        "./**"
-    ],
-    "python.analysis.logLevel": "Trace",
-    "python.linting.pylintEnabled": false,
-    "python.linting.flake8Enabled": true,
-    "python.linting.flake8Args": [
-        // Match what black does.
-        "--max-line-length=88"
-    ],
-    "latex-workshop.latex.tools": [
-        {
-          "name": "pdflatex",
-          "command": "pdflatex",
-          "args": [
-            "-shell-escape",
-            "-synctex=1",
-            "-interaction=nonstopmode",
-            "-file-line-error",
-            "%DOC%"
-          ],
-          "env": {}
-        }
+  "python.analysis.extraPaths": ["__pypackages__/<major.minor>/lib"],
+  "files.exclude": {
+    "out": true, // set this to true to hide the "out" folder with the compiled JS files
+    "**/*.pyc": true,
+    ".nyc_output": true,
+    "obj": true,
+    "bin": true,
+    "**/__pycache__": true,
+    "**/node_modules": true,
+    ".vscode-test": false,
+    ".vscode test": false,
+    "**/.mypy_cache/**": true,
+    "**/.ropeproject/**": true
+  },
+  "search.exclude": {
+    "out": true, // set this to false to include "out" folder in search results
+    "**/node_modules": true,
+    "coverage": true,
+    "languageServer*/**": true,
+    ".vscode-test": true,
+    ".vscode test": true
+  },
+  "python.pipenvPath": ".venv/bin/python",
+  //"terminal.integrated.shellArgs.linux": [
+  //    "-l"
+  //],
+  "terminal.integrated.env.linux": {
+    "PYTHONPATH": "${workspaceFolder}/hooks:.venv/bin/:/opt/ansible/env38/bin/:/opt/ansible/env38/lib/python3.8/site-packages/"
+  },
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true,
+  "python.testing.pytestPath": ".venv/bin/pytest",
+  "python.testing.unittestArgs": ["-v", "-s", "./test", "-p", "*test*.py"],
+  "python.linting.enabled": false,
+  "python.workspaceSymbols.enabled": false,
+  "python.formatting.provider": "black",
+  "python.testing.nosetestsEnabled": false,
+  "python.testing.cwd": "${workspaceFolder}",
+  "python.testing.pytestArgs": [
+    //"--ignore=src/ptvsd/_vendored/",
+    "--disable-warnings",
+    "."
+  ],
+  "python.autoComplete.extraPaths": [
+    "__pypackages__/<major.minor>/lib",
+    "${workspaceFolder}/hooks",
+    "./**"
+  ],
+  "python.analysis.logLevel": "Trace",
+  "python.linting.pylintEnabled": false,
+  "python.linting.flake8Enabled": true,
+  "python.linting.flake8Args": [
+    // Match what black does.
+    "--max-line-length=88"
+  ],
+  "latex-workshop.latex.tools": [
+    {
+      "name": "pdflatex",
+      "command": "pdflatex",
+      "args": [
+        "-shell-escape",
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "%DOC%"
       ],
-      "latex-workshop.latex.recipe.default": "first",
-      "latex-workshop.latex.recipes": [
-
-        {
-          "name": "pdflatex",
-          "tools": [
-            "pdflatex"
-          ]
-        },
-        {
-          "name": "pdflatex ➞ bibtex ➞ pdflatex × 2",
-          "tools": [
-            "pdflatex",
-            "bibtex",
-            "pdflatex",
-            "pdflatex"
-          ]
-        }
-    ],
+      "env": {}
+    }
+  ],
+  "latex-workshop.latex.recipe.default": "first",
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "pdflatex",
+      "tools": ["pdflatex"]
+    },
+    {
+      "name": "pdflatex ➞ bibtex ➞ pdflatex × 2",
+      "tools": ["pdflatex", "bibtex", "pdflatex", "pdflatex"]
+    }
+  ],
+  "[python]": {
+    "editor.formatOnType": true,
+    "python.linting.lintOnSave": true,
+    "python.linting.enable": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true,
+      "source.fixAll": true
+    },
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true
+  }
 }
