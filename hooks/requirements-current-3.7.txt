@@ -2,7 +2,7 @@
 #virtualenv --no-site-packages /opt/ansible/env37 -p python3.7
 #source /opt/ansible/env37/bin/activate
 #pip install -r ./requirements.txt
-ansible==2.9.4
+ansible==4.2.0
 #ansible-cmdb==1.30
 ansible-lint==4.2.0
 ansicolors==1.1.8
