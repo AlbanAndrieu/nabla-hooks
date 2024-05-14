@@ -2,7 +2,7 @@
 #virtualenv --no-site-packages /opt/ansible/env36 -p python3.6
 #source /opt/ansible/env36/bin/activate
 #pip install -r ./requirements.txt
-ansible==4.2.0
+ansible==8.5.0
 #ansible-cmdb==1.30
 ansible-lint==4.2.0
 ansicolors==1.1.8
@@ -15,7 +15,7 @@ colorama==0.4.3
 #docker-compose==1.23.1
 #git-pre-commit-hook-utils==0.0.5
 git-url-parse==1.2.2
-GitPython==3.0.5
+GitPython==3.1.41
 jira==2.0.0
 podmena==0.4.0
 PyYAML>=5.1
