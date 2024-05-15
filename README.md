@@ -1,5 +1,5 @@
 <!-- markdown-link-check-disable-next-line -->
-# [![Nabla](http://bababou.albandrieu.com/nabla/index/assets/nabla/nabla-4.png)](https://github.com/AlbanAndrieu)  nabla-hooks
+# [![Nabla](https://bababou.albandrieu.com/nabla/index/assets/nabla/nabla-4.png)](https://github.com/AlbanAndrieu)  nabla-hooks
 
 Nabla custom git hooks
 
@@ -7,7 +7,6 @@ Nabla custom git hooks
 [![Gitter](https://badges.gitter.im/nabla-hooks/Lobby.svg)](https://gitter.im/nabla-hooks/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 [![Jenkins build Status](http://albandrieu.com/jenkins/buildStatus/icon?job=nabla-hooks)](http://albandrieu.com/jenkins/job/nabla-hooks/)
-[![Travis Build Status](https://travis-ci.org/AlbanAndrieu/nabla-hooks.svg?branch=master)](https://travis-ci.org/AlbanAndrieu/nabla-hooks)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=nabla%3Anabla-hooks&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=nabla%3Anabla-hooks)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/AlbanAndrieu/nabla-hooks.svg)](https://github.com/AlbanAndrieu/nabla-hooks/pulls)
 
@@ -20,29 +19,6 @@ This project intend to be uses by all Nabla products
 // spell-checker:disable
 
 <!-- toc -->
-
-- [Initialize](#initialize)
-  * [Requirements](#requirements)
-  * [Install nabla-hooks as a developer](#install-nabla-hooks-as-a-developer)
-    + [Using virtualenv](#using-virtualenv)
-  * [Install nabla-hooks to use it](#install-nabla-hooks-to-use-it)
-    + [Using Pip](#using-pip)
-    + [From Source](#from-source)
-    + [Add .pre-commit-config.yaml in you git project](#add-pre-commit-configyaml-in-you-git-project)
-    + [Override global environment variable](#override-global-environment-variable)
-    + [Local](#local)
-    + [Global](#global)
-  * [Package nabla-hooks as a developer](#package-nabla-hooks-as-a-developer)
-    + [Build a source distribution (a tar archive of all the files needed to build and install the package):](#build-a-source-distribution-a-tar-archive-of-all-the-files-needed-to-build-and-install-the-package)
-    + [Upload a source distribution](#upload-a-source-distribution)
-  * [Test nabla-hooks as a developer](#test-nabla-hooks-as-a-developer)
-    + [shell usage](#shell-usage)
-    + [versioneer](#versioneer)
-    + [Test](#test)
-    + [Poetry](#poetry)
-    + [Pdm](#pdm)
-  * [Update README.md](#update-readmemd)
-  * [npm-groovy-lint groovy formatting for Jenkinsfile](#npm-groovy-lint-groovy-formatting-for-jenkinsfile)
 
 <!-- tocstop -->
 
