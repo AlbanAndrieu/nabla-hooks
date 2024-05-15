@@ -13,6 +13,14 @@
 
 #source /opt/ansible/env38/bin/activate
 
+echo -e "${magenta} sudo apt install ruby gem ${NC}"
+
+#echo -e "${magenta} rm -Rf /home/albanandrieu/.pyenv ${NC}"
+#echo -e "${magenta} curl -L https://pyenv.run | bash ${NC}"
+
+echo -e "${magenta} pyenv install 3.8.19 ${NC}"
+echo -e "${magenta} pyenv install 3.10.9 ${NC}"
+
 echo -e "${magenta} /opt/ansible/env38/bin/pip3.8 install pip-upgrader ${NC}"
 echo -e "${magenta} pip-upgrade --user hooks/requirements-current-3.8.txt ${NC}"
 echo -e "${magenta} pip-upgrade requirements.testing.txt ${NC}"
@@ -20,7 +28,7 @@ echo -e "${magenta} pip-upgrade requirements.testing.txt ${NC}"
 echo -e "${magenta} pip install -r ./requirements.txt -r requirements.testing.txt ${NC}"
 pip install -r ./requirements.txt -r requirements.testing.txt
 
-#pip install --upgrade pip
+echo -e "${magenta} pip install --upgrade pip ${NC}"
 
 #pip install setup-py-upgrade
 #pip install setup-cfg-fmt

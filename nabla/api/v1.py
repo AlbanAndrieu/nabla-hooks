@@ -12,7 +12,6 @@ from starlette.responses import JSONResponse
 # from datetime import date, timedelta
 
 
-
 random.seed(54321)
 
 logger = logging.getLogger(__name__)
@@ -27,14 +26,20 @@ router = APIRouter(prefix="/v1")
 # See https://github.com/KenMwaura1/Fast-Api-Grafana-Starter/blob/main/src/app/main.py
 # Define a counter metric
 REQUESTS_COUNT = Counter(
-    "requests_total", "Total number of requests", ["method", "endpoint", "status_code"]
+    "requests_total",
+    "Total number of requests",
+    ["method", "endpoint", "status_code"],
 )
 # Define a histogram metric
 REQUESTS_TIME = Histogram(
-    "requests_time", "Request processing time", ["method", "endpoint"]
+    "requests_time",
+    "Request processing time",
+    ["method", "endpoint"],
 )
 api_request_summary = Histogram(
-    "api_request_summary", "Request processing time", ["method", "endpoint"]
+    "api_request_summary",
+    "Request processing time",
+    ["method", "endpoint"],
 )
 api_request_counter = Counter(
     "api_request_counter",
@@ -77,7 +82,8 @@ async def exception():
         # Update the span status to failed.
         span.set_status(Status(StatusCode.ERROR, "internal error"))
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Got sadness"
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Got sadness",
         ) from ex
 
 
