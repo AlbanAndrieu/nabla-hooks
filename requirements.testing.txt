@@ -28,7 +28,7 @@ selenium>=3.141.0
 semgrep>=0.94.0
 setup-cfg-fmt>=1.9.0
 #setuptools>=41.0.0 # See https://github.com/ansible/molecule/issues/2350
-setuptools==58.5.3
+setuptools==65.5.1
 setuptools-scm==5.0.2
 Sphinx>=3.3.0
 #testinfra==6.0.0
