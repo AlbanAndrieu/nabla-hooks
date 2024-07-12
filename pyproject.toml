@@ -71,7 +71,7 @@ ansible-lint = {extras = ["yamllint"], version = ">=6.0.2"}
 ansible-playbook-grapher = "~=1.1.0"
 autopep8 = "~=2.0.0"
 bandit = ">=1.7.4"
-black = {version = "~=23.7.0", extras = ["d"]}
+black = {version = "~=24.3.0", extras = ["d"]}
 checkov = ">=2.3.115"
 flake8 = "~=6.1.0"
 flake8-formatter-junit-xml = "~=0.0.6"
