@@ -4189,12 +4189,12 @@ testutils = ["gitpython (>3)"]
 
 [[package]]
 name = "pylint-junit"
-version = "0.3.2"
+version = "0.3.4"
 description = "pylint reporter for junit format."
 optional = false
 python-versions = "*"
 files = [
-    {file = "pylint_junit-0.3.2.tar.gz", hash = "sha256:c6dbe956e55bb9b365d86e2ec77b58df6b95262b5515d187ac54b8359507174b"},
+    {file = "pylint_junit-0.3.4-py2.py3-none-any.whl", hash = "sha256:006f8e793a1b64f1e0c8a29c6ee531b8af971deddafbc605c3076270f36c88f0"},
 ]
 
 [package.dependencies]
