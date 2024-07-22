@@ -54,8 +54,8 @@ WORKDIR /code
 USER jm-python
 
 # RUN --mount=type=secret,id=Pipfile,dst=/code/Pipfile,uid=999,gid=999
-COPY --chown=jm-python:jm-python ./hooks/requirements-current-3.8.txt /code/requirements.txt
-COPY --chown=jm-python:jm-python Pipfile* /code/
+COPY --chown=jm-python:jm-python --chmod=755 ./hooks/requirements-current-3.8.txt /code/requirements.txt
+COPY --chown=jm-python:jm-python --chmod=755 Pipfile* /code/
 
 # hadolint ignore=DL3013
 # RUN --mount=type=secret,id=pip.conf,dst=/code/.config/pip/pip.conf,uid=999,gid=999 \
@@ -77,9 +77,9 @@ python -m pipenv install --site-packages --system
 
 USER jm-python
 
-COPY --chown=jm-python:jm-python hooks/ /code/jm-python/hooks/
-COPY --chown=jm-python:jm-python nabla/ /code/jm-python/nabla/
-COPY --chown=jm-python:jm-python serve.py /code/jm-python/
+COPY --chown=jm-python:jm-python --chmod=755 hooks/ /code/jm-python/hooks/
+COPY --chown=jm-python:jm-python --chmod=755 nabla/ /code/jm-python/nabla/
+COPY --chown=jm-python:jm-python --chmod=755 serve.py /code/jm-python/
 RUN mkdir -p /code/jm-python/var/
 
 ENV PATH=/code/.local/bin/:${PATH}
