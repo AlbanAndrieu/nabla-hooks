@@ -10,7 +10,15 @@
     "schedule": "after 10pm on sunday"
   },
   "packageRules": [{
-    "packageNames": ["aws-sdk"],
+    "packageNames": ["colorama"],
     "schedule": "before 5am every wednesday"
-  }]
+  },
+  {
+    "packagePatterns": ["^jira.*"],
+    "groupName": "jira",
+    "automerge": true
+  }
+],
+  "rangeStrategy": "pin",
+  "ignorePaths": ["tests/**"],
 }
