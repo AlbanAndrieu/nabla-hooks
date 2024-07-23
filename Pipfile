@@ -44,7 +44,7 @@ reretry = ">=0.11.8"
 [dev-packages]
 ansible-cmdb = "~=1.31"
 ansible-lint = {extras = ["yamllint"], version = ">=6.0.2"} # 6.17.2
-ansible-playbook-grapher = "~=1.1.0"
+ansible-playbook-grapher = "~=1.2.0"
 # NOK awscli = "~=1.27.88"
 # NOK awscli-plugin-endpoint = "~=0.4"
 autopep8 = "~=2.0.0"
