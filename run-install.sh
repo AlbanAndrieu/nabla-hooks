@@ -18,6 +18,7 @@ echo -e "${magenta} sudo apt install ruby gem ${NC}"
 #echo -e "${magenta} rm -Rf /home/albanandrieu/.pyenv ${NC}"
 #echo -e "${magenta} curl -L https://pyenv.run | bash ${NC}"
 
+echo -e "${magenta} pyenv update ${NC}"
 echo -e "${magenta} pyenv install 3.8.19 ${NC}"
 echo -e "${magenta} pyenv install 3.10.9 ${NC}"
 
