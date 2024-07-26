@@ -1,7 +1,8 @@
 # pylint: skip-file
 import os
 
-from setuptools import find_packages, setup
+from setuptools import find_packages
+from setuptools import setup
 
 # import hooks
 # from hooks._version import get_versions
@@ -20,7 +21,7 @@ setup(
     name="nabla-hooks",
     # version=hooks.__version__,
     # version=get_versions()['version'],
-    # version="1.0.4",
+    # version="1.0.5",
     version=os.getenv("PACKAGE_VERSION"),
     # version=versioneer.get_version(),
     # cmdclass=versioneer.get_cmdclass(),

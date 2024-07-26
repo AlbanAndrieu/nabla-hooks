@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nabla-hooks"
-version = "1.0.4"
+version = "1.0.5"
 description = "Custom hooks to improve code quality before pushing to git"
 authors = ["Andrieu, Alban <alban.andrieu@free.fr>"]
 license = "MIT"
@@ -22,8 +22,8 @@ name = "gitlab"
 url = "https://gitlab.com/api/v4/projects/7364654/packages/pypi/simple"
 
 [tool.poetry.dependencies]
-python = "^3.10"
-ansible-core = ">=2.11.6"
+python = ">=3.10"
+ansible-core = ">=2.14.14"
 ansicolors = ">=1.1.8"
 cfgv = ">=3.3.0"
 chardet = ">=5.0.0"
@@ -37,7 +37,7 @@ podmena = ">=0.6.1"
 pyyaml = ">=6.0"
 six = ">=1.16.0"
 termcolor = ">=2.1.1"
-fastapi = ">=0.95.0"
+fastapi = ">=0.110.3"
 uvicorn = {version = ">=0.20.0", extras = ["standard"]}
 asyncpg = ">=0.27.0"
 spacy = ">=3.5.4"
@@ -101,7 +101,7 @@ semgrep = ">=1.15.0"
 setup-cfg-fmt = ">=2.2.0"
 setuptools = ">=68.0.0"
 sphinx = ">=7.1.2"
-testinfra = ">=6.0.0"
+# testinfra = ">=6.0.0"  # pip uninstall testinfra
 tox = ">=3.27.1"
 twine = ">=4.0.2"
 wheel = ">=0.41.1"
@@ -159,8 +159,8 @@ line-length = 88
 # Allow unused variables when underscore-prefixed.
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
-# Assume Python 3.8
-target-version = "py38"
+# Assume Python 3.10.9
+target-version = "py310"
 
 [tool.isort]
 multi_line_output = 3
@@ -189,7 +189,7 @@ build-backend = "pdm.pep517.api"
 
 [project]
 name = "nabla-hooks"
-version = "1.0.4"
+version = "1.0.5"
 description = "Hook to validate branch name and issue"
 authors = [
     {name = "Andrieu, Alban", email = "alban.andrieu@free.fr"},

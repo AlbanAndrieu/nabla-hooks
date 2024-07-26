@@ -6,7 +6,7 @@ WORKING_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=/dev/null
 source "${WORKING_DIR}/scripts/step-1-os.sh"
 
-export REPO_TAG=${REPO_TAG:-"1.0.4"}
+export REPO_TAG=${REPO_TAG:-"1.0.5"}
 
 # shellcheck source=./docs/build.sh
 #echo "${WORKING_DIR}/docs/build.sh"
@@ -21,7 +21,7 @@ export REPO_TAG=${REPO_TAG:-"1.0.4"}
 
 #pipenv install
 
-export TOX_TARGET=${TOX_TARGET:-"py38"} # tox --notest  # Pre-populate virtualenv use TOX_TARGET
+export TOX_TARGET=${TOX_TARGET:-"py310"} # tox --notest  # Pre-populate virtualenv use TOX_TARGET
 
 #export PATH="${VIRTUALENV_PATH}/bin:${PATH}"
 echo -e "${cyan} PATH : ${PATH} ${NC}"

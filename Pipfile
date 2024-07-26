@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 ansible-cmdb = ">=1.31"
-ansible-core = ">=2.17.2"
+ansible-core = ">=2.14.14"
 ansicolors = ">=1.1.8"
 cfgv = ">=3.3.0"
 chardet = ">=5.0.0"
@@ -85,7 +85,7 @@ setup-cfg-fmt = ">=2.2.0"
 setuptools = ">=68.0.0"
 #setuptools-scm = ">=5.0.2"
 sphinx = ">=7.1.2"
-testinfra = ">=6.0.0"
+# testinfra = ">=6.0.0"  # pip uninstall testinfra
 tox = ">=3.27.1"
 twine = ">=4.0.2"
 #virtualenv = ">=20.0.23"
@@ -94,4 +94,4 @@ wheel = ">=0.41.1"
 # yamllint = ">=1.28.0"
 
 [requires]
-python_version = "^3.10"
+python_version = ">=3.10"

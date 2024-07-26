@@ -10,10 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <!-- toc -->
 
 - [[Unreleased]](#unreleased)
-- [[1.0.4] - 2022-10-16](#104---2022-10-16)
+- [[1.0.5] - 2024-07-26](#105---2024-07-26)
   * [Updated](#updated)
-- [[1.0.3] - 2021-11-10](#103---2021-11-10)
+- [[1.0.5] - 2022-10-16](#105---2022-10-16)
   * [Updated](#updated-1)
+- [[1.0.3] - 2021-11-10](#103---2021-11-10)
+  * [Updated](#updated-2)
 - [[1.0.2] - 2020-05-28](#102---2020-05-28)
   * [Added](#added)
 
@@ -23,7 +25,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 <!--lint disable no-undefined-references-->
-## [1.0.4] - 2022-10-16
+## [1.0.5] - 2024-07-26
+
+### Updated
+- Use python 3.10.9 as default python
+
+<!--lint disable no-undefined-references-->
+## [1.0.5] - 2022-10-16
 
 ### Updated
 - Improve github actions (virtualenv venv)

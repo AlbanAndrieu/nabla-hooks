@@ -7,7 +7,7 @@ locations = "hooks", "tests", "noxfile.py"
 @nox.session(python=False)
 def test(session):
     # session.install("pytest", "pytest-cov", "pytest-asyncio")
-    session.run("python", "-m", "pytest", "--cov=hooks")
+    session.run("python", "-W ignore:pkg_resources", "-m", "pytest", "--cov=hooks")
 
 
 @nox.session(python=False)
