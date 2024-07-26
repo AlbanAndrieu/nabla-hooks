@@ -7,7 +7,7 @@ on:
   #  branches: [ "master" ]
   schedule:
     - cron: "7 13 * * 6"
-  workflow_dispatch
+  workflow_dispatch:
 
 jobs:
   analyze:

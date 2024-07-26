@@ -16,8 +16,13 @@
       "packagePatterns": ["^jira.*"],
       "groupName": "jira",
       "automerge": true
+    },
+    {
+      "packagePatterns": ["^cryptography.*"],
+      "groupName": "cryptography",
+      "automerge": true
     }
   ],
-  "rangeStrategy": "pin",
+  "rangeStrategy": "auto",
   "ignorePaths": ["tests/**"]
 }
