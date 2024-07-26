@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 import nox
 
 nox.options.sessions = "lint", "black", "test"
-locations = "hooks", "test", "noxfile.py"
+locations = "hooks", "tests", "noxfile.py"
 
 
 @nox.session(python=False)

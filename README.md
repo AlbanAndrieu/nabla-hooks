@@ -20,6 +20,29 @@ This project intend to be uses by all Nabla products
 
 <!-- toc -->
 
+- [Initialize](#initialize)
+  * [Requirements](#requirements)
+  * [Install nabla-hooks as a developer](#install-nabla-hooks-as-a-developer)
+    + [Using virtualenv](#using-virtualenv)
+  * [Install nabla-hooks to use it](#install-nabla-hooks-to-use-it)
+    + [Using Pip](#using-pip)
+    + [From Source](#from-source)
+    + [Add .pre-commit-config.yaml in you git project](#add-pre-commit-configyaml-in-you-git-project)
+    + [Override global environment variable](#override-global-environment-variable)
+    + [Local](#local)
+    + [Global](#global)
+  * [Package nabla-hooks as a developer](#package-nabla-hooks-as-a-developer)
+    + [Build a source distribution (a tar archive of all the files needed to build and install the package):](#build-a-source-distribution-a-tar-archive-of-all-the-files-needed-to-build-and-install-the-package)
+    + [Upload a source distribution](#upload-a-source-distribution)
+  * [Test nabla-hooks as a developer](#test-nabla-hooks-as-a-developer)
+    + [shell usage](#shell-usage)
+    + [versioneer](#versioneer)
+    + [Test](#test)
+    + [Poetry](#poetry)
+    + [Pdm](#pdm)
+  * [Update README.md](#update-readmemd)
+  * [npm-groovy-lint groovy formatting for Jenkinsfile](#npm-groovy-lint-groovy-formatting-for-jenkinsfile)
+
 <!-- tocstop -->
 
 // spell-checker:enable
@@ -32,8 +55,8 @@ Using pipenv Pipfile
 
 ```bash
 direnv allow
-pyenv install 3.8.10
-pyenv local 3.8.10
+pyenv install 3.10.9
+pyenv local 3.10.9
 python -m pipenv install --dev --ignore-pipfile
 direnv allow
 pre-commit install
@@ -64,11 +87,11 @@ See requirements.txt for mandatory packages.
 
 ### Using virtualenv
 
-Install python 3.8 and virtualenv
+Install python 3.10 and virtualenv
 
 ```bash
-virtualenv --no-site-packages /opt/ansible/env38 -p python3.8
-source /opt/ansible/env38/bin/activate
+virtualenv --no-site-packages /opt/ansible/env310 -p python3.10
+source /opt/ansible/env310/bin/activate
 ```
 
 Install python 3.8 and pyenv
@@ -80,7 +103,7 @@ echo 'eval "$(pyenv init -)"' >> ~/.bashrc
 echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
 source ~/.bashrc
 
-pyenv install 3.8.10
+pyenv install 3.10.9
 ```
 
 and [integrate](https://stackabuse.com/managing-python-environments-with-direnv-and-pyenv/) it with direnv
@@ -277,9 +300,10 @@ python setup.py install
 ### Test
 
 ```bash
+source deactivate
 tox --notest
 tox -e py  # Run tox using the version of Python in PATH
-tox py38
+tox py310
 ```
 
 From root directory

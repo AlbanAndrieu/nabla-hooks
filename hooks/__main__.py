@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 # Copyright (c) 2018-2019 Alban Andrieu <alban.andrieu@free.fr>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,13 +23,13 @@ import sys
 
 
 def main():
-    print('Use shell only when shell functionality is required')
+    print("Use shell only when shell functionality is required")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     try:
         sys.exit(main())
-    except IOError as exc:
+    except OSError as exc:
         if exc.errno != errno.EPIPE:
             raise
     except RuntimeError as e:

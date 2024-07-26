@@ -1,5 +1,19 @@
 # vi: ft=yaml.ansible.jinja2
 ---
+fail_fast: true
+minimum_pre_commit_version: 3.7.1
+exclude: "docs/_build/"
+ci:
+  # format compatible with commitlint
+  autoupdate_commit_msg: 'chore: pre-commit autoupdate'
+  autoupdate_schedule: monthly
+  autofix_commit_msg: |
+    chore: auto fixes from pre-commit.com hooks
+    for more information, see https://pre-commit.ci
+  skip:
+    # https://github.com/pre-commit-ci/issues/issues/55
+    - pip-compile
+    - schemas
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks.git
     # pre-commit-hooks is not working on both environment
@@ -84,8 +98,8 @@ repos:
 #        args: [--branch, develop, --branch, master, --branch, release/*]
       - id: end-of-file-fixer
       - id: fix-byte-order-marker
-      - id: fix-encoding-pragma
-        args: [--remove]
+      # - id: fix-encoding-pragma
+      #   args: [--remove]
       - id: requirements-txt-fixer
       - id: sort-simple-yaml
       - id: file-contents-sorter

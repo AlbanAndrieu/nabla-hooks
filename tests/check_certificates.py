@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 import sys
 import traceback
 
@@ -25,7 +24,6 @@ http = urllib3.PoolManager(
 print(colored("TEST: https://google.com", "yellow"))
 
 try:
-
     r = http.request("GET", "https://google.com")
     print(r.status)
 
@@ -48,7 +46,6 @@ except Exception as e:  # noqa: ignore=E722
 print(colored("TEST: https://expired.badssl.com", "yellow"))
 
 try:
-
     r = http.request("GET", "https://expired.badssl.com")
     print(r.status)
     # http = urllib3.PoolManager(
@@ -88,7 +85,6 @@ print(colored("TEST: http://fr1cslfrbm0060.misys.global.ad/", "yellow"))
 #    ca_certs='/etc/ssl/certs/ca-certificates.crt')
 
 try:
-
     r = http.request("GET", "http://fr1cslfrbm0060.misys.global.ad/")
     print(r.status)
 
@@ -120,7 +116,6 @@ except Exception as e:  # noqa: ignore=E722
 print(colored("TEST: https://almtools.misys.global.ad/jira", "yellow"))
 
 try:
-
     r = http.request("GET", "https://almtools.misys.global.ad/jira")
     print(r.status)
 

@@ -1,7 +1,9 @@
 """Test the API."""
+
 from typing import Dict
 
 from fastapi.testclient import TestClient
+
 # from unittest.mock import patch
 
 # @patch("citation.infrastructure.connect_to_cloud.connect_to_cloud")
