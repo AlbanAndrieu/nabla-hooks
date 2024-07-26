@@ -267,6 +267,8 @@ export TWINE_PASSWORD=pypi-
 python3 -m twine upload --repository nabla-hooks dist/* --verbose
 ```
 
+See [nabla-hooks-1.0.5](https://pypi.org/project/nabla-hooks/1.0.5/)
+
 All in one
 
 ```bash
