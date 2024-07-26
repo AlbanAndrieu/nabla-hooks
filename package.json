@@ -9,8 +9,8 @@
   ],
   "license": "UNLICENSED",
   "engines": {
-    "node": ">=11.12.0",
-    "npm": ">=6.13.6",
+    "node": "22.5.1",
+    "npm": "10.8.2",
     "node-gyp": ">=3.0.3",
     "grunt": ">=1.2.0"
   },
@@ -42,11 +42,11 @@
     "defaultSeverity": "warning"
   },
   "dependencies": {
-    "cli": "^1.0.1"
+    "cli": "1.0.1"
   },
   "devDependencies": {
-    "@secretlint/secretlint-rule-preset-recommend": "^8.2.4",
-    "markdown-toc": "^1.2.0",
+    "@secretlint/secretlint-rule-preset-recommend": "8.2.4",
+    "markdown-toc": "1.2.0",
     "remark-cli": "^12.0.1",
     "remark-lint": "^10.0.0",
     "remark-preset-lint-recommended": "^7.0.0"
