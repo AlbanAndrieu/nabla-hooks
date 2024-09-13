@@ -9,6 +9,7 @@ Nabla custom git hooks
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=nabla%3Anabla-hooks&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=nabla%3Anabla-hooks)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/AlbanAndrieu/nabla-hooks.svg)](https://github.com/AlbanAndrieu/nabla-hooks/pulls)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FAlbanAndrieu%2Fnabla-hooks.svg?type=shield&issueType=license)](https://app.fossa.com/projects/git%2Bgithub.com%2FAlbanAndrieu%2Fnabla-hooks?ref=badge_shield&issueType=license)
 
 This project intend to be uses by all Nabla products
 
