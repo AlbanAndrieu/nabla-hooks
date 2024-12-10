@@ -23,7 +23,7 @@ repos:
     #    rev: v2.2.3 # ok python3.6  # 19.04 but failing on 18.04.3
     #    rev: v2.4.0 # ok python3.6 on Ubuntu 18.04 AND python3.7 on Ubuntu 19.04
     #    rev: v3.4.0 # ok python3.6 on Ubuntu 18.04 AND python3.7 on Ubuntu 19.04 AND python3.8 on Ubuntu 20.04
-    rev: v4.6.0  # ok python3.6 on Ubuntu 18.04 AND python3.7 on Ubuntu 19.04 AND python3.8 on Ubuntu 20.04
+    rev: v5.0.0  # ok python3.6 on Ubuntu 18.04 AND python3.7 on Ubuntu 19.04 AND python3.8 on Ubuntu 20.04
     hooks:
       - id: trailing-whitespace
         args: [--markdown-linebreak-ext=md]
@@ -110,7 +110,7 @@ repos:
     hooks:
       - id: autopep8
   - repo: https://github.com/psf/black
-    rev: 24.4.2
+    rev: 24.10.0
     hooks:
       - id: black
         # It is recommended to specify the latest version of Python
@@ -119,16 +119,16 @@ repos:
         # https://pre-commit.com/#top_level-default_language_version
         language_version: python3.10
   - repo: https://github.com/PyCQA/flake8
-    rev: 7.1.0
+    rev: 7.1.1
     hooks:
       - id: flake8
         args: [--max-line-length=88, --max-complexity=30]
   - repo: https://github.com/asottile/reorder_python_imports.git
-    rev: v3.13.0
+    rev: v3.14.0
     hooks:
       - id: reorder-python-imports
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.16.0
+    rev: v3.19.0
     hooks:
       - id: pyupgrade
   # - repo: https://github.com/pycqa/isort
@@ -136,7 +136,7 @@ repos:
   #   hooks:
   #     - id: isort
   - repo: https://github.com/pre-commit/pre-commit.git
-    rev: v3.7.1
+    rev: v4.0.1
     hooks:
       - id: validate_manifest
   - repo: https://github.com/asottile/add-trailing-comma
@@ -144,7 +144,7 @@ repos:
     hooks:
       - id: add-trailing-comma
   - repo: https://github.com/willthames/ansible-lint.git
-    rev: v24.7.0
+    rev: v24.12.0
     hooks:
       - id: ansible-lint
         files: \.(yaml|yml)$
@@ -161,7 +161,7 @@ repos:
     hooks:
       - id: hindent
   - repo: https://github.com/scop/pre-commit-shfmt
-    rev: v3.8.0-1
+    rev: v3.10.0-2
     hooks:
       # Choose one of:
       # - id: shfmt         # native (requires Go to build)
@@ -183,7 +183,7 @@ repos:
     hooks:
       - id: encryption-check
   - repo: https://github.com/PyCQA/bandit
-    rev: 1.7.9
+    rev: 1.8.0
     hooks:
       - id: bandit
         args: [-c, .bandit.yml]
@@ -207,11 +207,11 @@ repos:
         args: [--permissive, --verbose, --dockerfile, ./Dockerfile]
         always_run: false
   - repo: https://github.com/hadolint/hadolint
-    rev: v2.13.0-beta
+    rev: v2.13.1-beta
     hooks:
       - id: hadolint-docker
   - repo: https://github.com/zricethezav/gitleaks
-    rev: v8.18.4
+    rev: v8.21.2
     hooks:
       - id: gitleaks-docker
         entry: zricethezav/gitleaks protect --verbose --redact --staged
@@ -258,7 +258,7 @@ repos:
   #     - id: gitleaks-docker
   #       entry: zricethezav/gitleaks protect --verbose --redact --staged
   - repo: https://github.com/oxsecurity/megalinter
-    rev: v7.13.0
+    rev: v8.3.0
     hooks:
       - id: megalinter-incremental  # Faster, less thorough
         stages:
