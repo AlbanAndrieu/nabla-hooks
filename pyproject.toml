@@ -62,7 +62,7 @@ optional = true
 [tool.poetry.group.open_telemetry.dependencies]
 opentelemetry-distro = "0.40b0" # 0.47b0
 opentelemetry-exporter-otlp = ">=1.19.0"
-opentelemetry-exporter-otlp-proto-grpc = "1.26.0"
+opentelemetry-exporter-otlp-proto-grpc = "1.30.0"
 opentelemetry-instrumentation-fastapi = "0.40b0" # 0.47b0
 opentelemetry-instrumentation-logging = "0.40b0" # 0.47b0
 opentelemetry-exporter-jaeger-thrift = ">=1.13.0"
