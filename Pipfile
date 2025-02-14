@@ -22,7 +22,7 @@ pyyaml = ">=6.0"
 six = ">=1.16.0"
 termcolor = ">=2.1.1"
 # API
-fastapi = ">=0.95.0" # A version greater than 0.90.0 breaks the code
+fastapi = ">=0.115.3" # A version greater than 0.90.0 breaks the code
 # starlette = ">=0.23.0"
 uvicorn = {version = ">=0.20.0", extras = ["standard"]}
 asyncpg = ">=0.27.0"
@@ -32,13 +32,13 @@ python-keystoneclient = ">=5.1.0"
 python-swiftclient = ">=4.2.0"
 prometheus-client = ">=0.16.0"
 # prometheus-fastapi-instrumentator = ">=5.10.0"
-opentelemetry-distro = "~=0.39b0"
-opentelemetry-exporter-otlp = "~=1.26.0"
-opentelemetry-instrumentation-fastapi = "~=0.39b0"
-opentelemetry-instrumentation-logging = "~=0.39b0"
-opentelemetry-exporter-jaeger-thrift = "~=1.21.0"
-opentelemetry-api = "~=1.26.0"
-opentelemetry-sdk = "~=1.26.0"
+opentelemetry-distro = ">=0.49b1"
+opentelemetry-exporter-otlp = ">=1.30.0"
+opentelemetry-instrumentation-fastapi = ">=0.49b1"
+opentelemetry-instrumentation-logging = ">=0.49b1"
+opentelemetry-exporter-jaeger-thrift = ">=1.13.0"
+opentelemetry-api = ">=1.30.0"
+opentelemetry-sdk = ">=1.30.0"
 reretry = ">=0.11.8"
 
 [dev-packages]
