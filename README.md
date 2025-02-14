@@ -306,7 +306,7 @@ python setup.py install
 source deactivate
 tox --notest
 tox -e py  # Run tox using the version of Python in PATH
-tox py310
+tox py312
 ```
 
 From root directory

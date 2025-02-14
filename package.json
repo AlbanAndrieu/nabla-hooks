@@ -3,7 +3,7 @@
   "description": "Hooks sample",
   "branchVersion": "^1.0.1",
   "branchPattern": "1.0.*",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "pre-commit": [
     "precommit"
   ],

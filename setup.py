@@ -21,7 +21,7 @@ setup(
     name="nabla-hooks",
     # version=hooks.__version__,
     # version=get_versions()['version'],
-    # version="1.0.5",
+    # version="1.0.6",
     version=os.getenv("PACKAGE_VERSION"),
     # version=versioneer.get_version(),
     # cmdclass=versioneer.get_cmdclass(),

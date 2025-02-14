@@ -14,7 +14,7 @@ OCI_REGISTRY = nabla
 AWS_REGION   = eu-west-3
 OCI_IMAGE := $(OCI_REGISTRY)/$(APP_NAME)
 OCI_TAG := $${OCI_TAG:-"latest"}
-IMAGE_NEXT_TAG := $${OCI_IMAGE_TAG:-"1.0.5"}
+IMAGE_NEXT_TAG := $${OCI_IMAGE_TAG:-"1.0.6"}
 IMAGE := $(OCI_IMAGE):$(OCI_TAG)
 
 TRIVY_VULN_TYPE = "os,library"
@@ -198,7 +198,7 @@ test-nox:
 test-tox:
 	@echo "=> Testing python..."
 	@echo "=> tox --notest"
-	tox py310
+	tox py312
 
 ## —— Tests CST 🧪🕳️ —————————————————————————————————————————————————————————————————
 .PHONY: test-cst

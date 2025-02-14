@@ -3,9 +3,9 @@
 
 #WORKING_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
 
-export TOX_TARGET=${TOX_TARGET:-"py310"} # tox --notest  # Pre-populate virtualenv use TOX_TARGET
+export TOX_TARGET=${TOX_TARGET:-"py312"} # tox --notest  # Pre-populate virtualenv use TOX_TARGET
 
-export TOXENV=${TOXENV:-"py310"}
+export TOXENV=${TOXENV:-"py312"}
 #pip install -U tox
 #pip install tox==3.14.3
 
