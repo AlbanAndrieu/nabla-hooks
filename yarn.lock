@@ -1613,7 +1613,7 @@ remark-lint-ordered-list-marker-style@^4.0.0:
 
 remark-lint@^10.0.0, remark-lint@^10.0.1:
   version "10.0.1"
-  resolved "https://registry.npmjs.org/remark-lint/-/remark-lint-10.0.1.tgz"
+  resolved "https://registry.yarnpkg.com/remark-lint/-/remark-lint-10.0.1.tgz#56d64e28a6373f10a4508e644c9d5a8056f9c9ca"
   integrity sha512-1+PYGFziOg4pH7DDf1uMd4AR3YuO2EMnds/SdIWMPGT7CAfDRSnAmpxPsJD0Ds3IKpn97h3d5KPGf1WFOg6hXQ==
   dependencies:
     "@types/mdast" "^4.0.0"
