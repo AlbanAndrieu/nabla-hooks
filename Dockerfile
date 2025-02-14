@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.12
+# syntax=docker/dockerfile:1.13
 
 # dockerfile_lint - ignore
 # hadolint ignore=DL3007
@@ -8,7 +8,7 @@ FROM pytorch/pytorch:1.13.1-cuda11.6-cudnn8-runtime as prebuild
 # FROM python:3.10
 
 # dockerfile_lint - ignore
-LABEL name="nabla-hooks" version="1.0.5" \
+LABEL name="nabla-hooks" version="1.0.6" \
  description="Image used by our products to build python\
  this image is running on Ubuntu 22.10." \
  com.nabla.vendor="NABLA Incorporated"
@@ -17,10 +17,11 @@ LABEL name="nabla-hooks" version="1.0.5" \
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # No interactive frontend during docker build
-ENV DEBIAN_FRONTEND=noninteractive \
-    DEBCONF_NONINTERACTIVE_SEEN=true
+# dockerfile_lint - ignore
+ENV DEBIAN_FRONTEND=noninteractive
+ENV DEBCONF_NONINTERACTIVE_SEEN=true
 
-    ENV LANG en_US.UTF-8
+ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 ENV TERM="xterm-256color"

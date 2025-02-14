@@ -1,7 +1,7 @@
 {
   "name": "nabla-hooks",
   "description": "Hooks sample",
-  "branchVersion": "^1.0.1",
+  "branchVersion": "^1.0.6",
   "branchPattern": "1.0.*",
   "version": "1.0.6",
   "pre-commit": [
