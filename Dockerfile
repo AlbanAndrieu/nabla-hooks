@@ -2,9 +2,9 @@
 
 # dockerfile_lint - ignore
 # hadolint ignore=DL3007
-FROM pytorch/pytorch:1.13.1-cuda11.6-cudnn8-runtime as prebuild
-# FROM pytorch/pytorch:1.13.0-cuda11.6-cudnn8-runtime as prebuild
-# FROM pytorch/pytorch:1.7.1-cuda11.0-cudnn8-runtime as prebuild
+FROM pytorch/pytorch:1.13.1-cuda11.6-cudnn8-runtime AS prebuild
+# FROM pytorch/pytorch:1.13.0-cuda11.6-cudnn8-runtime AS prebuild
+# FROM pytorch/pytorch:1.7.1-cuda11.0-cudnn8-runtime AS prebuild
 # FROM python:3.10
 
 # dockerfile_lint - ignore

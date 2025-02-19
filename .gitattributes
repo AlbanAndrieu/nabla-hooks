@@ -1,1 +1,13 @@
 hooks/_version.py export-subst
+
+# Collapse all files with a .txt extension
+*.txt gitlab-generated
+
+# Collapse all files within the docs directory
+docs/** gitlab-generated
+
+# Do not collapse package-lock.json poetry.lock
+package-lock.json -gitlab-generated
+yarn.lock -gitlab-generated
+poetry.lock -gitlab-generated
+Pipfile.lock -gitlab-generated

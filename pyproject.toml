@@ -1,3 +1,20 @@
+[project]
+name = "nabla-hooks"
+version = "1.0.6"
+description = "Hook to validate branch name and issue"
+authors = [
+    {name = "Andrieu, Alban", email = "alban.andrieu@free.fr"},
+]
+# dependencies = ["ansible-cmdb==1.31", "ansible-core>=2.11.6", "ansible-lint==5.0.8", "ansicolors==1.1.8", "cfgv==3.3.0", "chardet>=3.0.4", "click>=7.1.1", "click-completion>=0.5.2", "colorama>=0.4.3", "filemagic==1.6", "git-url-parse>=1.2.2", "gitpython>=3.1.1", "jira==3.8.0", "podmena>=0.4.2", "pyyaml>=5.1", "six>=1.14.0", "termcolor>=1.1.0"]
+# dependencies = ["dynamic"]
+dependencies = []
+requires-python = ">=3.10"
+readme = "README.md"
+license = {text = "MIT"}
+
+#[virtualenvs]
+#in-project = true
+
 [tool.poetry]
 name = "nabla-hooks"
 version = "1.0.6"
@@ -5,7 +22,11 @@ description = "Custom hooks to improve code quality before pushing to git"
 authors = ["Andrieu, Alban <alban.andrieu@free.fr>"]
 license = "MIT"
 homepage = "https://github.com/AlbanAndrieu/nabla-hooks"
-readme = "README.md"
+readme = ["README.md", "LICENSE"]
+
+# Keywords (translated to tags on the package index)
+keywords = ["packaging", "poetry"]
+
 classifiers = [
     "Private :: Do not Upload"
 ]
@@ -13,6 +34,7 @@ classifiers = [
 packages = [
   { include = "hooks" }
 ]
+# requires-poetry = ">=2.0"
 
 [[tool.poetry.source]]
 name = "gitlab"
@@ -190,19 +212,3 @@ verify_ssl = true
 # build-backend = "pdm.pep517.api"
 requires = ["poetry-core>=1.2.0"]
 build-backend = "poetry.core.masonry.api"
-
-[project]
-name = "nabla-hooks"
-version = "1.0.6"
-description = "Hook to validate branch name and issue"
-authors = [
-    {name = "Andrieu, Alban", email = "alban.andrieu@free.fr"},
-]
-# dependencies = ["ansible-cmdb==1.31", "ansible-core>=2.11.6", "ansible-lint==5.0.8", "ansicolors==1.1.8", "cfgv==3.3.0", "chardet>=3.0.4", "click>=7.1.1", "click-completion>=0.5.2", "colorama>=0.4.3", "filemagic==1.6", "git-url-parse>=1.2.2", "gitpython>=3.1.1", "jira==3.8.0", "podmena>=0.4.2", "pyyaml>=5.1", "six>=1.14.0", "termcolor>=1.1.0"]
-dependencies = ["dynamic"]
-requires-python = ">=3.10"
-readme = "README.md"
-license = {text = "MIT"}
-
-#[virtualenvs]
-#in-project = true
