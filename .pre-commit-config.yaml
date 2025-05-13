@@ -95,8 +95,8 @@ repos:
           (?x)^(
               tests/.*|
           )$
-#      -   id: no-commit-to-branch
-#        args: [--branch, develop, --branch, master, --branch, release/*]
+#      - id: no-commit-to-branch
+#        args: [--branch, main, --branch, master, --branch, release/*]
       - id: end-of-file-fixer
       - id: fix-byte-order-marker
       # - id: fix-encoding-pragma
@@ -119,11 +119,19 @@ repos:
   #       # pre-commit's default_language_version, see
   #       # https://pre-commit.com/#top_level-default_language_version
   #       # language_version: python3.12
-  - repo: https://github.com/PyCQA/flake8
-    rev: 7.2.0
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.11.9
     hooks:
-      - id: flake8
-        args: [--max-line-length=88, --max-complexity=30]
+      # Run the linter.
+      - id: ruff
+        args: [ --fix ]
+      # Run the formatter.
+      - id: ruff-format
+  # - repo: https://github.com/PyCQA/flake8
+  #   rev: 7.1.0
+  #   hooks:
+  #     - id: flake8
+  #       args: [--max-line-length=88, --max-complexity=30]
   # WARNING reorder_python_imports conflict with black
   - repo: https://github.com/asottile/reorder_python_imports.git
     rev: v3.14.0
@@ -198,7 +206,7 @@ repos:
   - repo: https://github.com/IamTheFij/ansible-pre-commit
     rev: v1.0.1
     hooks:
-      - id: encryption-check      
+      - id: encryption-check
   - repo: https://github.com/Lucas-C/pre-commit-hooks-nodejs
     rev: v1.1.2
     hooks:
@@ -215,15 +223,15 @@ repos:
     rev: v2.13.1-beta
     hooks:
       - id: hadolint-docker
+  - repo: https://github.com/jorisroovers/gitlint
+    rev: v0.19.1
+    hooks:
+      - id: gitlint
   - repo: https://github.com/zricethezav/gitleaks
     rev: v8.26.0
     hooks:
       - id: gitleaks-docker
         entry: zricethezav/gitleaks protect --verbose --redact --staged
-  - repo: https://github.com/jorisroovers/gitlint
-    rev: v0.19.1
-    hooks:
-      - id: gitlint
   - repo: local
     hooks:
       - id: git-branches-check
