@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.13
+# syntax=docker/dockerfile:1.15
 
 # dockerfile_lint - ignore
 # hadolint ignore=DL3007
@@ -60,8 +60,8 @@ USER jm-python
 COPY --chown=jm-python:jm-python --chmod=755 ./hooks/requirements-current-3.8.txt /code/requirements.txt
 COPY --chown=jm-python:jm-python --chmod=755 Pipfile* /code/
 
-# hadolint ignore=DL3013
 # RUN --mount=type=secret,id=pip.conf,dst=/code/.config/pip/pip.conf,uid=999,gid=999 \
+# hadolint ignore=DL3013,DL3042
 RUN --mount=type=secret,id=Pipfile,dst=/code/Pipfile,uid=999,gid=999 \
 python -m pip install --upgrade pip && \
 python -m pip install --no-cache-dir --user --upgrade pipenv==2023.7.23 && \
