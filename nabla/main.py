@@ -4,8 +4,9 @@ import time
 from typing import Dict
 
 from fastapi import FastAPI
-from nabla.api import ping, v1
-from nabla.utils import PrometheusMiddleware, metrics, setting_otlp
+
+from nabla.api import ping
+from nabla.api import v1
 
 # from nabla import logger
 
@@ -44,17 +45,6 @@ app = FastAPI(
 #     allow_methods=["DELETE", "GET", "POST", "PUT"],
 #     allow_headers=["*"],
 # )
-
-# Setting metrics middleware
-app.add_middleware(
-    PrometheusMiddleware,
-    app_name=APP_NAME,
-)
-
-app.add_route("/metrics", metrics)
-
-# Setting OpenTelemetry exporter
-setting_otlp(app, APP_NAME, OTLP_GRPC_ENDPOINT)
 
 
 @app.get("/")

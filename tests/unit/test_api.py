@@ -1,16 +1,9 @@
 """Test the API."""
-
 from typing import Dict
 
 from fastapi.testclient import TestClient
 
 # from unittest.mock import patch
-
-# @patch("citation.infrastructure.connect_to_cloud.connect_to_cloud")
-# @patch("jm_ner.predict.Predict")
-# @patch("citation.tokenizer.spacy_tokenizer.SimpleSpacy")
-# @patch("citation.tokenizer.jm_tokenizer.JMTokenizer")
-# @patch("citation.target_categorizer.target_categorizer.TargetCategorizer")
 
 
 def test_ping(*args) -> None:
@@ -20,10 +13,10 @@ def test_ping(*args) -> None:
 
     client = TestClient(app)
     expected_status: int = 200
-    expected_response: Dict[str, str] = {"ping": "pong"}
+    expected_response: Dict[str, str] = {"ping": "pong v1!"}
 
     # when
-    response = client.get("/citemap/ping")
+    response = client.get("/v1/ping")
 
     # then
     assert response.status_code == expected_status

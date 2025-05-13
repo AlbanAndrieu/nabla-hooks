@@ -377,6 +377,14 @@ python-versions = "*"
 files = []
 
 [[package]]
+name = "pytest-env"
+version = "1.1.5"
+description = "pytest plugin that allows you to add environment variables."
+optional = false
+python-versions = "*"
+files = []
+
+[[package]]
 name = "pytest-order"
 version = "1.3.0"
 description = "pytest plugin to run your tests in a specific order"
@@ -531,4 +539,4 @@ files = []
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<4.0"
-content-hash = "0d52739aa08df64539b4a6166fceeef8e63b9a2ac307308fa98af3351b2d1a40"
+content-hash = "c7d6fe506118c58e79aae39ddc40a5e38aa726cfaab46ffcfdb9239149c5c350"
