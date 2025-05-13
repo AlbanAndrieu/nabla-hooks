@@ -21,4 +21,7 @@ echo -e "${magenta} bandit-config-generator --out bandit.yml ${NC}"
 echo -e "${magenta} bandit --ini .bandit  --configfile .bandit.yml -r hooks ${NC}"
 echo -e "${magenta} bandit -c .bandit.yml -r hooks ${NC}"
 
+echo -e "${magenta} bandit -c .bandit.yml -r hooks -f xml -o bandit-output.xml ${NC}"
+echo -e "${magenta} bandit -c .bandit.yml -r hooks -f json  -o bandit-output.json ${NC}"
+
 exit 0

@@ -4,6 +4,9 @@
 WORKING_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # shellcheck source=/dev/null
+source "${WORKING_DIR}/scripts/step-0-color.sh"
+
+# shellcheck source=/dev/null
 source "${WORKING_DIR}/scripts/step-1-os.sh"
 
 export REPO_TAG=${REPO_TAG:-"1.0.6"}
@@ -17,7 +20,8 @@ export REPO_TAG=${REPO_TAG:-"1.0.6"}
 # shellcheck source=./clean.sh
 #${WORKING_DIR}/clean.sh"
 
-./run-install.sh
+echo -e "${cyan} ${WORKING_DIR}/scripts/run-install.sh ${NC}"
+"${WORKING_DIR}/scripts/run-install.sh"
 
 #pipenv install
 
@@ -34,6 +38,7 @@ python -V || true
 coverage --version || true
 
 #setup-py-upgrade ./
+echo -e "${magenta} setup-cfg-fmt setup.cfg ${NC}"
 setup-cfg-fmt setup.cfg
 
 "${WORKING_DIR}/scripts/run-test.sh"

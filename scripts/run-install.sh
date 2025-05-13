@@ -11,7 +11,7 @@
 
 #pip uninstall pylint pytest tox setup-cfg-fmt molecule yamllint pip-upgrade ansible
 
-#source /opt/ansible/env38/bin/activate
+# source /opt/ansible/env38/bin/activate
 
 echo -e "${magenta} sudo apt install ruby gem ${NC}"
 
@@ -34,7 +34,7 @@ echo -e "${magenta} pip install --upgrade pip ${NC}"
 #pip install setup-py-upgrade
 #pip install setup-cfg-fmt
 
-#pip install --upgrade setuptools
+# pip install --upgrade setuptools
 echo -e "${magenta} pip install setuptools wheel twine ${NC}"
 
 echo -e "${cyan} poetry update ${NC}"

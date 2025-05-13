@@ -24,6 +24,7 @@ elif type lsb_release >/dev/null 2>&1; then
   VER=$(lsb_release -sr)
 elif [ -f /etc/lsb-release ]; then
   # For some versions of Debian/Ubuntu without lsb_release command
+  # shellcheck disable=SC1091
   . /etc/lsb-release
   OS=${DISTRIB_ID}
   VER=${DISTRIB_RELEASE}
