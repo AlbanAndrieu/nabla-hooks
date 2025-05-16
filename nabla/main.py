@@ -1,6 +1,7 @@
 import logging
 import os
 import time
+from contextlib import asynccontextmanager
 from typing import Dict
 
 from fastapi import FastAPI
@@ -28,13 +29,15 @@ OTLP_GRPC_ENDPOINT = os.environ.get(
 # http://otel-collector.service.gra.dev.consul:4317
 # http://otel-collector.service.gra.dev.consul:9411/api/v2/spans
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    logging.info("API is ready")
+
+
 # logger.info("Creating API")
 logging.info("Creating API")
-app = FastAPI(
-    title="Nabla V1",
-    description="Nabla V1",
-    version="0.0.1",
-)
+app = FastAPI(title="Nabla V1", description="Nabla V1", version="0.0.1", lifespan=lifespan)
 
 # origins = ["http://localhost", "http://localhost:8080", "http://localhost:5173", "*"]
 
@@ -91,19 +94,6 @@ async def cpu_task():
         i * i * i
     logging.error("cpu task")
     return "CPU bound task finish!"
-
-
-@app.on_event("startup")
-async def startup():
-    # await database.connect()
-    # # Instrumentator().instrument(app).expose(app)
-    # FastAPIInstrumentor.instrument_app(app)
-    logging.info("API is ready")
-
-
-# @app.on_event("shutdown")
-# async def shutdown():
-#     await database.disconnect()
 
 
 @app.get("/health")

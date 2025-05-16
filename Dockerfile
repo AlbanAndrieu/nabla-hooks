@@ -44,8 +44,35 @@ RUN ln -fs /usr/share/zoneinfo/${TZ} /etc/localtime && locale-gen en_US.UTF-8 \
     && dpkg-reconfigure --frontend noninteractive tzdata
 
 # Turns off buffering for easier container logging
-ENV PYTHONUNBUFFERED=1
-ENV PIP_NO_CACHE_DIR=off
+# python
+ENV PYTHONUNBUFFERED=1 \
+    # prevents python creating .pyc files
+    PYTHONDONTWRITEBYTECODE=1 \
+    # pip
+    PIP_NO_CACHE_DIR=off \
+    PIP_DISABLE_PIP_VERSION_CHECK=on \
+    PIP_DEFAULT_TIMEOUT=100 \
+    # poetry
+    # https://python-poetry.org/docs/configuration/#using-environment-variables
+    POETRY_VERSION=1.8.3 \
+    # make poetry install to this location
+    POETRY_HOME="/opt/poetry" \
+    POETRY_NO_INTERACTION=1 \
+    # make poetry create the virtual environment in the project's root
+    # it gets named `.venv`
+    POETRY_VIRTUALENVS_IN_PROJECT=true \
+    # do not ask any interactive question
+    POETRY_NO_INTERACTION=1 \
+    POETRY_VIRTUALENVS_CREATE=1 \
+    POETRY_CACHE_DIR=/tmp/poetry_cache \
+    # paths
+    # this is where our requirements + virtual environment will live
+    # PYSETUP_PATH="/opt/pysetup" \
+    PYSETUP_PATH="/code" \
+    VENV_PATH="/code/.venv"
+
+# prepend poetry and venv to path
+ENV PATH="${POETRY_HOME}/bin:$VENV_PATH/bin:$PATH"
 
 # Explicitly set user/group IDs
 RUN groupadd -r jm-python --gid=999 && useradd -m -d /code -r -g jm-python --uid=999 jm-python
@@ -63,7 +90,8 @@ COPY --chown=jm-python:jm-python --chmod=755 Pipfile* /code/
 # RUN --mount=type=secret,id=pip.conf,dst=/code/.config/pip/pip.conf,uid=999,gid=999 \
 # hadolint ignore=DL3013,DL3042
 RUN --mount=type=secret,id=Pipfile,dst=/code/Pipfile,uid=999,gid=999 \
-python -m pip install --upgrade pip && \
+python -m pip install --no-cache-dir --upgrade pip==25.1.1 && \
+python -m pip install --no-cache-dir poetry=="${POETRY_VERSION}" ansible==2.10.7 && \
 python -m pip install --no-cache-dir --user --upgrade pipenv==2023.7.23 && \
 python -m pip install --no-cache-dir --user --upgrade virtualenv && \
 python -m pipenv install --site-packages --system
