@@ -70,7 +70,7 @@ echo -e "${cyan} install locally ${NC}"
 python3 setup.py install
 
 git tags
-git describe --tag --dirty
+git describe --tags --dirty --always --long
 
 echo -e "${cyan} test locally ${NC}"
 python ./bin/get_msg test

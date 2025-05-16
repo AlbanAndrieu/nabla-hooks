@@ -39,8 +39,8 @@ toml = ["tomli; python_version < '3.11'"]
 #in-project = true
 
 [tool.poetry]
-# name = "nabla-hooks"
-# version = "1.0.6"
+name = "nabla-hooks"
+version = "1.0.6"
 # description = "Custom hooks to improve code quality before pushing to git"
 # authors = ["Andrieu, Alban <alban.andrieu@free.fr>"]
 # license = "MIT"
