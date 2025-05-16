@@ -47,7 +47,7 @@ ansible-playbook-grapher = ">=1.2.0"
 autopep8 = ">=2.0.0"
 bandit = ">=1.7.4"
 black = {version = ">=23.7.0", extras = ["d"]}
-checkov = ">=2.3.115"
+checkov = ">=3.2.424"
 #conan = ">=1.31.0"
 #coverage >= 4.4.1, < 5
 flake8 = ">=6.1.0"
@@ -59,6 +59,8 @@ httpx = ">=0.23.3" # For testing fastAPI only
 #identify = {version = ">=2.5.9", extras = ["license"]}
 molecule = ">=3.6.1"
 nox = ">=2023.4.22"
+packaging = ">=24.2"
+poetry = ">=1.8.2"
 pep8 = ">=1.7.1"
 pep8-naming = ">=0.13.2"
 # pip-upgrader = ">=1.4.15"
@@ -88,6 +90,7 @@ sphinx = ">=7.1.2"
 tox = ">=3.27.1"
 twine = ">=4.0.2"
 #virtualenv = ">=20.0.23"
+versioneer = {version = ">=0.29", extras = ["toml"]}
 wheel = ">=0.45.1"
 #versioneer = ">=0.21"
 # yamllint = ">=1.28.0"

@@ -1,7 +1,12 @@
+[build-system]
+requires = ["poetry-core>=1.2.0", "setuptools>=68.0.0", "versioneer[toml]>=0.29", "wheel"]
+# build-backend = "setuptools.build_meta"
+build-backend = "poetry.core.masonry.api"
+
 [project]
 name = "nabla-hooks"
 version = "1.0.6"
-description = "Hook to validate branch name and issue"
+description = "Custom hooks to improve code quality before pushing to git"
 authors = [
     {name = "Andrieu, Alban", email = "alban.andrieu@free.fr"},
 ]
@@ -10,22 +15,24 @@ authors = [
 dependencies = []
 requires-python = ">=3.10"
 readme = "README.md"
-license = {text = "MIT"}
+# license = { text = "Apache License" }
+# license = { file = "LICENSE" }
+license-files = ["LICENSE"]
+
+# Keywords (translated to tags on the package index)
+keywords = ["packaging", "poetry"]
 
 #[virtualenvs]
 #in-project = true
 
 [tool.poetry]
-name = "nabla-hooks"
-version = "1.0.6"
-description = "Custom hooks to improve code quality before pushing to git"
-authors = ["Andrieu, Alban <alban.andrieu@free.fr>"]
-license = "MIT"
+# name = "nabla-hooks"
+# version = "1.0.6"
+# description = "Custom hooks to improve code quality before pushing to git"
+# authors = ["Andrieu, Alban <alban.andrieu@free.fr>"]
+# license = "MIT"
+# readme = ["README.md", "LICENSE"]
 homepage = "https://github.com/AlbanAndrieu/nabla-hooks"
-readme = ["README.md", "LICENSE"]
-
-# Keywords (translated to tags on the package index)
-keywords = ["packaging", "poetry"]
 
 classifiers = [
     "Private :: Do not Upload"
@@ -34,6 +41,7 @@ classifiers = [
 packages = [
   { include = "hooks" }
 ]
+
 # requires-poetry = ">=2.0"
 
 [[tool.poetry.source]]
@@ -124,6 +132,7 @@ bandit = ">=1.7.4" # TODO 1.8.3
 checkov = ">=2.3.115"
 httpx = ">=0.23.3"
 molecule = ">=3.6.1"
+packaging = ">=24.2"
 pep8 = ">=1.7.1"
 pep8-naming = ">=0.13.2"
 pip-upgrader = ">=1.4.15"
@@ -137,6 +146,7 @@ setuptools = ">=68.0.0"
 sphinx = ">=7.1.2"
 # testinfra = ">=6.0.0"  # pip uninstall testinfra
 twine = ">=4.0.2"
+versioneer = {version = ">=0.29", extras = ["toml"]}
 wheel = ">=0.41.1" # 0.45.1
 
 [tool.setuptools-pipfile]
@@ -218,6 +228,10 @@ name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
 
-[build-system]
-requires = ["poetry-core>=1.2.0"]
-build-backend = "poetry.core.masonry.api"
+[tool.versioneer]
+VCS = "git"
+style = "pep440"
+versionfile_source = "hooks/_version.py"
+versionfile_build = "hooks/_version.py"
+tag_prefix = ""
+parentdir_prefix = "nabla-hooks-"

@@ -58,6 +58,11 @@ echo -e "${cyan} PACKAGE ${NC}"
 
 echo -e "${cyan} pandoc --from=markdown --to=rst --output=README.rst README.md ${NC}"
 
+# See https://github.com/python-versioneer/python-versioneer/blob/master/INSTALL.md
+echo -e "${cyan} versioneer install --vendor ${NC}"
+echo -e "${cyan} Verify versioneer version ${NC}"
+python setup.py version
+
 echo -e "${cyan} python setup.py sdist bdist_wheel ${NC}"
 python setup.py sdist bdist_wheel
 echo -e "${magenta} twine upload dist/* ${NC}"
