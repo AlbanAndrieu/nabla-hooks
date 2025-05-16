@@ -21,7 +21,6 @@ colorama>=0.4.6
 fastapi[standard]>=0.115.8
 git-url-parse>=1.2.2
 gitpython>=3.1.44
-httpx>=0.28.1
 jira>=3.8.0
 opentelemetry-api>=1.30.0
 opentelemetry-distro>=0.49b1
