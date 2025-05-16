@@ -21,7 +21,7 @@ export REPO_TAG=${REPO_TAG:-"1.0.6"}
 #${WORKING_DIR}/clean.sh"
 
 echo -e "${cyan} ${WORKING_DIR}/scripts/run-install.sh ${NC}"
-"${WORKING_DIR}/scripts/run-install.sh"
+# "${WORKING_DIR}/scripts/run-install.sh"
 
 #pipenv install
 

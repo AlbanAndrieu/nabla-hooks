@@ -27,7 +27,7 @@ echo -e "${magenta} pip-upgrade --user hooks/requirements-current-3.8.txt ${NC}"
 echo -e "${magenta} pip-upgrade requirements.testing.txt ${NC}"
 
 echo -e "${magenta} pip install -r ./requirements.txt -r requirements.testing.txt ${NC}"
-pip install -r ./requirements.txt -r requirements.testing.txt
+# pip install -r ./requirements.txt -r requirements.testing.txt
 
 echo -e "${magenta} pip install --upgrade pip ${NC}"
 

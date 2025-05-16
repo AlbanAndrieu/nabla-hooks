@@ -12,8 +12,8 @@ export TOXENV=${TOXENV:-"py312"}
 #tox -e py  # Run tox using the version of Python in `PATH`
 
 rm -Rf .tox/
-echo -e "${magenta} tox ${TOX_TARGET} ${NC}"
-tox "${TOX_TARGET}"
+echo -e "${magenta} tox -e ${TOX_TARGET} ${NC}"
+tox -e "${TOX_TARGET}"
 RC=$?
 if [ ${RC} -ne 0 ]; then
   echo ""

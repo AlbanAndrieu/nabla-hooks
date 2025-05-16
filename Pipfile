@@ -4,11 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-ansible-cmdb = ">=1.31"
-ansible-core = ">=2.14.14"
 ansicolors = ">=1.1.8"
-cfgv = ">=3.3.0"
-chardet = ">=3.0.2" # chardet = "*"   # for twine upload dist/
+# cfgv = ">=3.3.0"
+# chardet = ">=3.0.2" # chardet = "*"   # for twine upload dist/
 click = ">=8.1.3"
 click-completion = ">=0.5.2"
 colorama = ">=0.4.6"
@@ -19,18 +17,12 @@ gitpython = ">=3.1.29"
 jira = ">=3.8.0"
 podmena = ">=0.6.1"
 pyyaml = ">=6.0"
-six = ">=1.16.0"
+# six = ">=1.16.0"
 termcolor = ">=2.1.1"
-# API
-fastapi = ">=0.115.3" # A version greater than 0.90.0 breaks the code
-# starlette = ">=0.23.0"
+fastapi = {version = ">=0.115.3", extras = ["standard"]}
 uvicorn = {version = ">=0.20.0", extras = ["standard"]}
 asyncpg = ">=0.27.0"
 # pydantic = ">=1.8.0,<2.0.0"
-spacy = ">=3.5.4"
-python-keystoneclient = ">=5.1.0"
-python-swiftclient = ">=4.2.0"
-prometheus-client = ">=0.16.0"
 # prometheus-fastapi-instrumentator = ">=5.10.0"
 opentelemetry-distro = ">=0.49b1"
 opentelemetry-exporter-otlp = ">=1.30.0"
@@ -39,10 +31,15 @@ opentelemetry-instrumentation-logging = ">=0.49b1"
 opentelemetry-exporter-jaeger-thrift = ">=1.13.0"
 opentelemetry-api = ">=1.30.0"
 opentelemetry-sdk = ">=1.30.0"
+python-keystoneclient = ">=5.1.0"
+python-swiftclient = ">=4.2.0"
+prometheus-client = ">=0.16.0"
 reretry = ">=0.11.8"
+spacy = ">=3.5.4"
 
 [dev-packages]
 ansible-cmdb = ">=1.31"
+ansible-core = ">=2.14.14"
 ansible-lint = {extras = ["yamllint"], version = ">=6.0.2"} # 6.17.2
 ansible-playbook-grapher = ">=1.2.0"
 # NOK awscli = ">=1.27.88"
@@ -50,10 +47,10 @@ ansible-playbook-grapher = ">=1.2.0"
 autopep8 = ">=2.0.0"
 bandit = ">=1.7.4"
 black = {version = ">=23.7.0", extras = ["d"]}
-checkov = ">=2.2.95"
+checkov = ">=2.3.115"
 #conan = ">=1.31.0"
 #coverage >= 4.4.1, < 5
-flake8 = ">=6.0.0"
+flake8 = ">=6.1.0"
 flake8-formatter-junit-xml = ">=0.0.6"
 #flake8-polyfill = ">=1.0.2"
 #git-pre-commit-hook-utils = ">=0.0.5"
@@ -66,7 +63,7 @@ pep8 = ">=1.7.1"
 pep8-naming = ">=0.13.2"
 pip-upgrader = ">=1.4.15"
 #pipenv>=2022.6.7
-pre-commit = ">=2.20.0"
+pre-commit = ">=3.7.1" # 4.0.1
 pre-commit-hooks = ">=4.4.0"
 pylint = ">=2.15.6"
 pylint-junit = ">=0.3.2"
@@ -79,7 +76,7 @@ pytest-order = ">=1.0.1"
 pytest-testinfra = ">=6.4.0"
 readme-renderer = {version = ">=37.3", extras = ["md"]}
 selenium = ">=4.6.0"
-semgrep = ">=1.15.0"
+# semgrep = ">=1.15.0"
 setup-cfg-fmt = ">=2.2.0"
 #setuptools = ">=41.0.0" # See https://github.com/ansible/molecule/issues/2350
 setuptools = ">=68.0.0"
@@ -89,7 +86,7 @@ sphinx = ">=7.1.2"
 tox = ">=3.27.1"
 twine = ">=4.0.2"
 #virtualenv = ">=20.0.23"
-wheel = ">=0.41.1"
+wheel = ">=0.45.1"
 #versioneer = ">=0.21"
 # yamllint = ">=1.28.0"
 

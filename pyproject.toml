@@ -38,8 +38,8 @@ packages = [
 
 [[tool.poetry.source]]
 name = "gitlab"
-url = "https://gitlab.com/api/v4/projects/7364654/packages/pypi/simple"
-priority = "primary"
+url = "https://gitlab.com/api/v4/groups/7364654/-/packages/pypi/simple"
+priority = "explicit"
 
 
 # [[tool.poetry.source]]
@@ -48,10 +48,10 @@ priority = "primary"
 
 [tool.poetry.dependencies]
 python = ">=3.10,<4.0"
-ansible-core = ">=2.14.14"
+# ansible-core = ">=2.14.14"
 ansicolors = ">=1.1.8"
-cfgv = ">=3.3.0"
-chardet = ">=3.0.2" # for twine upload
+# cfgv = ">=3.3.0"
+# chardet = ">=3.0.2" # for twine upload
 click = ">=8.1.3"
 click-completion = ">=0.5.2"
 colorama = ">=0.4.6"
@@ -60,7 +60,7 @@ gitpython = ">=3.1.29"
 jira = ">=3.8.0"
 podmena = ">=0.6.1"
 pyyaml = ">=6.0"
-six = ">=1.16.0"
+# six = ">=1.16.0"
 termcolor = ">=2.1.1"
 fastapi = {version = ">=0.115.3", extras = ["standard"]}
 uvicorn = {version = ">=0.20.0", extras = ["standard"]}
@@ -68,12 +68,12 @@ asyncpg = ">=0.27.0"
 spacy = ">=3.5.4"
 python-keystoneclient = ">=5.1.0"
 python-swiftclient = ">=4.2.0"
-prometheus-client = ">=0.16.0"
+prometheus-client = ">=0.20.0"
 reretry = ">=0.11.8"
 
 # See https://github.com/temporalio/samples-python/blob/main/pyproject.toml
 [tool.poetry.group.encryption]
-optional = true
+optional = false
 dependencies = { cryptography = ">=41.0.2", aiohttp = "^3.8.1" }
 
 [tool.poetry.group.open_telemetry]
@@ -89,44 +89,55 @@ opentelemetry-exporter-jaeger-thrift = ">=1.13.0"
 opentelemetry-api = ">=1.30.0"
 opentelemetry-sdk = ">=1.30.0"
 
-[tool.poetry.group.dev.dependencies]
-ansible-cmdb = ">=1.31"
-ansible-lint = {extras = ["yamllint"], version = ">=6.0.2"}
-ansible-playbook-grapher = ">=1.1.3"
-autopep8 = ">=2.0.0"
-bandit = ">=1.7.4" # TODO 1.8.3
-black = {version = ">=23.7.0", extras = ["d"]}
-checkov = ">=2.3.115"
-flake8 = ">=7.1.1"
-flake8-formatter-junit-xml = ">=0.0.6"
-httpx = ">=0.23.3"
-molecule = ">=3.6.1"
-nox = ">=2023.4.22"
-pep8 = ">=1.7.1"
-pep8-naming = ">=0.13.2"
-pip-upgrader = ">=1.4.15"
-pre-commit = ">=3.7.1" # 4.0.1
-pre-commit-hooks = ">=4.4.0"
-pylint = ">=2.15.6"
-pylint-junit = ">=0.3.2"
+[tool.poetry.group.test]
+optional = true
+[tool.poetry.group.test.dependencies]
+coverage = ">= 7.2.7"
+# molecule = "~=5.1.0"
 pytest = ">=7.2.0" # ">=8.3.3,<9.0.0"
-pytest-cov = ">=4.0.0"
+pytest-cov = ">=6.0.0"
 pytest-env = ">=1.1.5"
 # pytest-mock = ">=3.14.0"
 pytest-dependency = ">=0.5.1"
 pytest-asyncio = ">=0.21.0"
 pytest-order = ">=1.0.1"
 pytest-testinfra = ">=10.1.1"
+nox = ">=2023.4.22"
+tox = ">=3.27.1"
+
+[tool.poetry.group.format]
+optional = true
+[tool.poetry.group.format.dependencies]
+# autopep8 = ">=2.0.0"
+black = {version = ">=23.9.1", extras = ["d"]}
+flake8 = ">=6.1.0"
+flake8-formatter-junit-xml = ">=0.0.6"
+pylint = ">=2.15.6"
+pylint-junit = ">=0.3.2"
+ruff = ">=0.5.1"
+
+[tool.poetry.group.dev.dependencies]
+ansible-cmdb = ">=1.31"
+ansible-lint = {extras = ["yamllint"], version = ">=6.0.2"}
+ansible-playbook-grapher = ">=1.1.3"
+bandit = ">=1.7.4" # TODO 1.8.3
+checkov = ">=2.3.115"
+httpx = ">=0.23.3"
+molecule = ">=3.6.1"
+pep8 = ">=1.7.1"
+pep8-naming = ">=0.13.2"
+pip-upgrader = ">=1.4.15"
+pre-commit = ">=3.7.1" # 4.0.1
+pre-commit-hooks = ">=4.4.0"
 readme-renderer = {version = ">=37.3", extras = ["md"]}
 selenium = ">=4.6.0"
-semgrep = ">=1.15.0"
+# semgrep = ">=1.15.0"
 setup-cfg-fmt = ">=2.2.0"
 setuptools = ">=68.0.0"
 sphinx = ">=7.1.2"
 # testinfra = ">=6.0.0"  # pip uninstall testinfra
-tox = ">=3.27.1"
 twine = ">=4.0.2"
-wheel = ">=0.45.1"
+wheel = ">=0.41.1" # 0.45.1
 
 [tool.setuptools-pipfile]
 
@@ -208,7 +219,5 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [build-system]
-# requires = ["pdm-pep517"]
-# build-backend = "pdm.pep517.api"
 requires = ["poetry-core>=1.2.0"]
 build-backend = "poetry.core.masonry.api"
