@@ -65,6 +65,19 @@ python setup.py version
 
 echo -e "${cyan} python setup.py sdist bdist_wheel ${NC}"
 python setup.py sdist bdist_wheel
+
+echo -e "${cyan} install locally ${NC}"
+python3 setup.py install
+
+git tags
+git describe --tag --dirty
+
+echo -e "${cyan} test locally ${NC}"
+python ./bin/get_msg test
+
+echo -e "${cyan} test locally with pytest ${NC}"
+pytest --cache-clear --setup-show tests/test_package.py
+
 echo -e "${magenta} twine upload dist/* ${NC}"
 
 echo -e "${cyan} https://pypi.org/project/nabla-hooks/${REPO_TAG}/ ${NC}"

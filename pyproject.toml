@@ -5,10 +5,14 @@ build-backend = "poetry.core.masonry.api"
 
 [project]
 name = "nabla-hooks"
-version = "1.0.6"
+# version = "1.0.6"
+dynamic = [ "version" ]
 description = "Custom hooks to improve code quality before pushing to git"
 authors = [
     {name = "Andrieu, Alban", email = "alban.andrieu@free.fr"},
+]
+maintainers = [
+  { name = "Andrieu, Alban", email = "alban.andrieu@free.fr" }
 ]
 # dependencies = ["ansible-cmdb==1.31", "ansible-core>=2.11.6", "ansible-lint==5.0.8", "ansicolors==1.1.8", "cfgv==3.3.0", "chardet>=3.0.4", "click>=7.1.1", "click-completion>=0.5.2", "colorama>=0.4.3", "filemagic==1.6", "git-url-parse>=1.2.2", "gitpython>=3.1.1", "jira==3.8.0", "podmena>=0.4.2", "pyyaml>=5.1", "six>=1.14.0", "termcolor>=1.1.0"]
 # dependencies = ["dynamic"]
@@ -16,11 +20,20 @@ dependencies = []
 requires-python = ">=3.10"
 readme = "README.md"
 # license = { text = "Apache License" }
-# license = { file = "LICENSE" }
 license-files = ["LICENSE"]
 
 # Keywords (translated to tags on the package index)
-keywords = ["packaging", "poetry"]
+keywords = ["packaging", "poetry" ,"nabla-hooks"]
+
+classifiers = [
+  "Private :: Do not Upload"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/AlbanAndrieu/nabla-hooks"
+
+[project.optional-dependencies]
+toml = ["tomli; python_version < '3.11'"]
 
 #[virtualenvs]
 #in-project = true
@@ -32,11 +45,11 @@ keywords = ["packaging", "poetry"]
 # authors = ["Andrieu, Alban <alban.andrieu@free.fr>"]
 # license = "MIT"
 # readme = ["README.md", "LICENSE"]
-homepage = "https://github.com/AlbanAndrieu/nabla-hooks"
+# homepage = "https://github.com/AlbanAndrieu/nabla-hooks"
 
-classifiers = [
-    "Private :: Do not Upload"
-]
+# classifiers = [
+#     "Private :: Do not Upload"
+# ]
 
 packages = [
   { include = "hooks" }
@@ -156,6 +169,9 @@ wheel = ">=0.41.1" # 0.45.1
 
 [tool.pytest.ini_options]
 testpaths = "tests/"
+# addopts = "--durations=12  --disable-socket --allow-hosts=localhost,127.0.0.1,::1 --strict-markers"
+# asyncio_default_fixture_loop_scope = "session"
+# asyncio_mode = "auto"  # See pytest-asyncio plug-in
 
 [tool.black]
 line-length = 88
@@ -233,5 +249,7 @@ VCS = "git"
 style = "pep440"
 versionfile_source = "hooks/_version.py"
 versionfile_build = "hooks/_version.py"
-tag_prefix = ""
-parentdir_prefix = "nabla-hooks-"
+tag_prefix = "v-"
+# tag_prefix = "demo-"
+# parentdir_prefix = "nabla-hooks-"
+parentdir_prefix = ""

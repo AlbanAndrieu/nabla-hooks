@@ -23,7 +23,9 @@ import sys
 
 
 def main():
-    print("Use shell only when shell functionality is required")
+    # print("Use shell only when shell functionality is required")
+    print("This is doing nothing and exit with error 7")
+    sys.exit(7)
 
 
 if __name__ == "__main__":

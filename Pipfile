@@ -47,7 +47,7 @@ ansible-playbook-grapher = ">=1.2.0"
 autopep8 = ">=2.0.0"
 bandit = ">=1.7.4"
 black = {version = ">=23.7.0", extras = ["d"]}
-checkov = ">=3.2.424"
+checkov = ">=2.3.115" # 3.2.424
 #conan = ">=1.31.0"
 #coverage >= 4.4.1, < 5
 flake8 = ">=6.1.0"

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import os  # nosec
 import subprocess  # nosec
 import unittest
@@ -6,7 +5,9 @@ import unittest
 # echo "TEST" > ../.git/COMMIT_EDITMSG
 # ./get_msg.py '../.git/COMMIT_EDITMSG' 'message'
 
-# First install me : /opt/ansible/env38/bin/python3 setup.py install
+# First install me :
+# /opt/ansible/env38/bin/python3 setup.py install
+# python3 setup.py install
 
 
 class TestPackage(unittest.TestCase):
@@ -37,7 +38,7 @@ class TestPackage(unittest.TestCase):
 
         result = self.run_get_msg(cwd=cwd, bin=binary, message=message)
         self.assertIn(
-            "Use shell only when shell functionality is required",
+            "This is doing nothing and exit with error 7",
             str(result),
         )
 

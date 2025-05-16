@@ -4,5 +4,11 @@ from hooks import __version__
 
 
 def test_version():
-    # assert __version__ == '1.0.2'
-    assert re.match(r"^1.0.6.+$", __version__)  # nosec
+    # assert __version__ == 'v1.0.6'
+    assert re.match(r"^0\+untagged.*.dirty+$", __version__)  # nosec
+
+    __version_test__ = "v1.0.6"
+    assert __version_test__ == "v1.0.6"
+
+    assert re.match(r"^v1.0.6?.+$", __version_test__)  # nosec
+    assert re.match(r"^v\d{1,5}\.\d{1,5}\.\d{1,5}$", __version_test__)  # nosec

@@ -312,8 +312,8 @@ tox -e py312
 From root directory
 
 ```bash
-pytest --cache-clear --setup-show hooks/test/test_pytest.py
-pytest --cache-clear --setup-show test/package.py
+pytest --cache-clear --setup-show hooks/tests/pytest_test.py
+pytest --cache-clear --setup-show tests/test_package.py
 ```
 
 ### Poetry

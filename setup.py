@@ -24,7 +24,9 @@ setup(
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
     packages=find_packages(),
+    # package_dir={"": "hooks"},
     # scripts=["hooks/get_msg.py"],
+    scripts=["bin/get_msg"],
     # Project uses reStructuredText, so ensure that the docutils get
     # installed or upgraded on the target machine
     # setup_requires="setuptools-pipfile",
