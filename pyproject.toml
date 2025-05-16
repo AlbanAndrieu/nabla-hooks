@@ -15,11 +15,12 @@ maintainers = [
   { name = "Andrieu, Alban", email = "alban.andrieu@free.fr" }
 ]
 # dependencies = ["ansible-cmdb==1.31", "ansible-core>=2.11.6", "ansible-lint==5.0.8", "ansicolors==1.1.8", "cfgv==3.3.0", "chardet>=3.0.4", "click>=7.1.1", "click-completion>=0.5.2", "colorama>=0.4.3", "filemagic==1.6", "git-url-parse>=1.2.2", "gitpython>=3.1.1", "jira==3.8.0", "podmena>=0.4.2", "pyyaml>=5.1", "six>=1.14.0", "termcolor>=1.1.0"]
-# dependencies = ["dynamic"]
-dependencies = []
+dependencies = ["dynamic"]
+# dependencies = []
 requires-python = ">=3.10"
 readme = "README.md"
 # license = { text = "Apache License" }
+# license = "Apache License"
 license-files = ["LICENSE"]
 
 # Keywords (translated to tags on the package index)
@@ -160,7 +161,8 @@ sphinx = ">=7.1.2"
 # testinfra = ">=6.0.0"  # pip uninstall testinfra
 twine = ">=4.0.2"
 versioneer = {version = ">=0.29", extras = ["toml"]}
-wheel = ">=0.41.1" # 0.45.1
+wheel = ">=0.45.1"
+srsly = ">=2.4.8" # Downgrading srsly (2.5.1 -> 2.4.8) with python  3.13.3
 
 [tool.setuptools-pipfile]
 
