@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.10", "3.11"]
+        python-version: ["3.11", "3.12"]
     env:
       JIRA_USER: aandrieu
       JIRA_PASSWORD: XXX
@@ -37,7 +37,7 @@ jobs:
           virtualenv venv
           source venv/bin/activate
           python -m pip install --upgrade pip
-          python -m pip install flake8 pytest pytest-env tox tox-gh-actions poetry
+          python -m pip install flake8 pytest pytest-env tox tox-gh-actions poetry==1.8.2
           if [[ -f requirements.txt && -f requirements.testing.txt ]]; then pip install -r requirements.txt -r requirements.testing.txt; fi
           poetry install
 

@@ -5,24 +5,30 @@
 # -i https://package_read:${CI_PIP_GITLABJUSMUNDI_TOKEN}@gitlab.com/api/v4/groups/7364654/-/packages/pypi/simple
 # jmwandb==1.0.0
 -i https://pypi.python.org/simple
-#ansible==5.6.0 # go with ansible-core>=2.12
-#ansible==6.00 # go with ansible-core>=2.13
-ansible-cmdb>=1.31
-ansible-core>=2.13.0
+# ansible==5.6.0 # go with ansible-core>=2.12
+# ansible==6.00 # go with ansible-core>=2.13
+# ansible-cmdb>=1.31
+ansible-core>=2.18.2
 ansible-lint>=5.0.8
 ansicolors>=1.1.8
-cfgv>=3.3.0
-chardet>=3.0.4
-click>=8.0.1
+asyncpg>=0.30.0
+cfgv>=3.4.0
+chardet>=5.2.0
+click>=8.1.8
 click-completion>=0.5.2
-colorama>=0.4.3
+colorama>=0.4.6
 # filemagic==1.6 # https://github.com/Linaro/jipdate/issues/30
-fastapi>=0.115.3
+fastapi[standard]>=0.115.8
 git-url-parse>=1.2.2
-GitPython>=3.1.1
+gitpython>=3.1.44
 jira>=3.8.0
-podmena>=0.4.2
-PyYAML>=5.4.1
-six>=1.14.0
-termcolor>=1.1.0
-uvicorn>=0.20.0
+podmena>=0.6.1
+prometheus-client>=0.21.1
+python-keystoneclient>=5.5.0
+python-swiftclient>=4.6.0
+pyyaml>=6.0.2
+reretry>=0.11.8
+six>=1.17.0
+spacy>=3.8.4
+termcolor>=2.5.0
+uvicorn[standard]>=0.34.0
