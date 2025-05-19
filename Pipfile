@@ -41,7 +41,7 @@ uvicorn = {version = ">=0.20.0", extras = ["standard"]}
 ansible-cmdb = ">=1.31"
 ansible-core = ">=2.14.14"
 ansible-lint = {extras = ["yamllint"], version = ">=6.0.2"} # 6.17.2
-ansible-playbook-grapher = ">=1.2.0"
+ansible-playbook-grapher = ">=2.9.2"
 # NOK awscli = ">=1.27.88"
 # NOK awscli-plugin-endpoint = ">=0.4"
 autopep8 = ">=2.0.0"
