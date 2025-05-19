@@ -56,8 +56,6 @@ packages = [
   { include = "hooks" }
 ]
 
-# requires-poetry = ">=2.0"
-
 [[tool.poetry.source]]
 name = "gitlab"
 url = "https://gitlab.com/api/v4/groups/7364654/-/packages/pypi/simple"
