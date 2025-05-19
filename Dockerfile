@@ -91,7 +91,7 @@ COPY --chown=jm-python:jm-python --chmod=755 Pipfile* /code/
 # hadolint ignore=DL3013,DL3042
 RUN --mount=type=secret,id=Pipfile,dst=/code/Pipfile,uid=999,gid=999 \
 python -m pip install --no-cache-dir --upgrade pip==25.1.1 && \
-python -m pip install --no-cache-dir poetry=="${POETRY_VERSION}" ansible==2.10.7 && \
+python -m pip install --no-cache-dir poetry=="${POETRY_VERSION}" ansible==11.5.0 && \
 python -m pip install --no-cache-dir --user --upgrade pipenv==2023.7.23 && \
 python -m pip install --no-cache-dir --user --upgrade virtualenv && \
 python -m pipenv install --site-packages --system
