@@ -42,6 +42,8 @@ jobs:
           if [[ -f requirements.txt && -f requirements.testing.txt ]]; then pip install -r requirements.txt -r requirements.testing.txt; fi
           echo "pip install DONE"
           poetry --version
+          poetry lock
+          echo "poetry lock DONE"
           poetry install
           echo "poetry install DONE"
 
