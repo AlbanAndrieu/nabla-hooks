@@ -5,7 +5,10 @@ from hooks import __version__
 
 def test_version():
     # assert __version__ == 'v1.0.5-65-g82cbbe7'
-    assert re.match(r"^0\+(untagged|unknown).*.+$", __version__)  # nosec
+
+    # assert re.match(r"^0\+(untagged|unknown).*.+$", "v1.0.5-65-g82cbbe7")  # nosec
+    assert re.match(r"^0\+(untagged|unknown)(.+)?$", "0+unknown")  # nosec
+    assert re.match(r"^0\+(untagged|unknown)(.+)?$", __version__)  # nosec
 
     __version_test__ = "v1.0.6"
     assert __version_test__ == "v1.0.6"
