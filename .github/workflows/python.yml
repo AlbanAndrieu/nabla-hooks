@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.12", "3.13"]
+        python-version: ["3.11", "3.12"]
     env:
       JIRA_USER: aandrieu
       JIRA_PASSWORD: XXX
@@ -41,6 +41,10 @@ jobs:
           echo "pip install basic DONE"
           if [[ -f requirements.txt && -f requirements.testing.txt ]]; then pip install -r requirements.txt -r requirements.testing.txt; fi
           echo "pip install DONE"
+          
+      - name: Install poetry dependencies
+        run: |          
+          source venv/bin/activate        
           poetry --version
           poetry lock
           echo "poetry lock DONE"
