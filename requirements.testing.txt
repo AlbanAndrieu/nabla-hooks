@@ -25,6 +25,7 @@ pylint>=2.12.2
 pylint-junit>=0.2.0
 pytest>=6.1.2
 pytest-cov>=2.10.1
+pytest-env>=1.1.5
 # pip install --upgrade pytest-testinfra
 pytest-testinfra>=6.4.0
 # readme-renderer[md]>=24.0
