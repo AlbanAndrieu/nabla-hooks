@@ -276,12 +276,12 @@ test = ["black", "coverage-enable-subprocess", "coverage[toml] (>=6.4.4)", "ipdb
 
 [[package]]
 name = "ansible-playbook-grapher"
-version = "2.9.2"
+version = "2.10.0"
 description = "A command line tool to create a graph representing your Ansible playbook tasks and roles."
 optional = false
 python-versions = "*"
 files = [
-    {file = "ansible_playbook_grapher-2.9.2-py2.py3-none-any.whl", hash = "sha256:b8fdc8dc82b7d4f0469455b53a6bcaf08292fc027997035f1657ab1d0ac646f9"},
+    {file = "ansible_playbook_grapher-2.10.0-py2.py3-none-any.whl", hash = "sha256:c5bf750356629cd08b9f0d4f4f442fd99cc5b19ff60a85c763d1e2b7b8644e6f"},
 ]
 
 [package.dependencies]
