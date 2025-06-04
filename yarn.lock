@@ -106,10 +106,10 @@
   resolved "https://registry.npmjs.org/@pkgjs/parseargs/-/parseargs-0.11.0.tgz"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
-"@secretlint/secretlint-rule-preset-recommend@^9.3.3":
-  version "9.3.3"
-  resolved "https://registry.yarnpkg.com/@secretlint/secretlint-rule-preset-recommend/-/secretlint-rule-preset-recommend-9.3.3.tgz#1f574f442a8eb229f9ab5e3a75bfbe24f54d7f31"
-  integrity sha512-zT8zxh1z28Vzc9S5FVMbfWOITNikTYmajLTuX4D8lhGM3bx7xDopUJnsEtj1lAGc5WcCZ3baMJ3xCFZeDv/SAg==
+"@secretlint/secretlint-rule-preset-recommend@^9.3.4":
+  version "9.3.4"
+  resolved "https://registry.yarnpkg.com/@secretlint/secretlint-rule-preset-recommend/-/secretlint-rule-preset-recommend-9.3.4.tgz#f266289036ee41c1e53868fa36016db42161de8a"
+  integrity sha512-RvzrLNN2A0B2bYQgRSRjh2dkdaIDuhXjj4SO5bElK1iBtJNiD6VBTxSSY1P3hXYaBeva7MEF+q1PZ3cCL8XYOA==
 
 "@types/concat-stream@^2.0.0":
   version "2.0.3"
