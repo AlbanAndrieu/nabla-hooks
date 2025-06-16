@@ -192,7 +192,7 @@ repos:
             docs/Makefile|
           )$
   - repo: https://github.com/PyCQA/bandit
-    rev: 1.8.3
+    rev: 1.8.4
     hooks:
       - id: bandit
         args: [-c, .bandit.yml]
@@ -271,7 +271,7 @@ repos:
   #     - id: gitleaks-docker
   #       entry: zricethezav/gitleaks protect --verbose --redact --staged
   - repo: https://github.com/oxsecurity/megalinter
-    rev: v8.7.0
+    rev: v8.8.0
     hooks:
       - id: megalinter-incremental  # Faster, less thorough
         stages:
