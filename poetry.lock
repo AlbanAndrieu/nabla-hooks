@@ -273,14 +273,14 @@ resolvelib = ">=0.5.3,<1.1.0"
 
 [[package]]
 name = "ansible-lint"
-version = "25.5.0"
+version = "25.6.0"
 description = "Checks playbooks for practices and behavior that could potentially be improved"
 optional = false
 python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "ansible_lint-25.5.0-py3-none-any.whl", hash = "sha256:25b03f3b58a84bd38f86532a08e38b652252baf175142988cb1071aee49a0eca"},
-    {file = "ansible_lint-25.5.0.tar.gz", hash = "sha256:4182520f233eef4248bc4cf4b6074e25cdaf5be21cf9be944aabc85df5407e9c"},
+    {file = "ansible_lint-25.6.0-py3-none-any.whl", hash = "sha256:bf19fd0f377ac4e4f4682d8abc4479a844ce08e09589215c9da4be0f77c0f8e5"},
+    {file = "ansible_lint-25.6.0.tar.gz", hash = "sha256:7040afaa315ff3e035980d67653fda36d9a274e8c633ac3056908e5cdc10772e"},
 ]
 
 [package.dependencies]
@@ -294,7 +294,7 @@ packaging = ">=22.0"
 pathspec = ">=0.10.3"
 pyyaml = ">=6.0.2"
 referencing = ">=0.36.2"
-"ruamel.yaml" = ">=0.18.5,<0.18.7 || >0.18.7,<0.18.8 || >0.18.8"
+"ruamel.yaml" = ">=0.18.11"
 subprocess-tee = ">=0.4.1"
 wcmatch = [
     {version = ">=8.1.2", markers = "python_version < \"3.12\""},
@@ -304,7 +304,7 @@ yamllint = ">=1.34.0"
 
 [package.extras]
 docs = ["mkdocs-ansible (>=25.5.0)"]
-test = ["black", "coverage-enable-subprocess", "coverage[toml] (>=6.4.4)", "ipdb", "ipython", "jmespath", "license-expression (>=30.3.0)", "mypy", "netaddr", "pip", "psutil", "pylint", "pytest (>=7.2.2)", "pytest-instafail (>=0.5.0)", "pytest-mock", "pytest-plus (>=0.6)", "pytest-sugar", "pytest-xdist[psutil,setproctitle] (>=2.1.0)", "ruamel-yaml-clib", "ruamel.yaml (>=0.17.31)", "tox (>=4.0.0)", "tox (>=4.24.2)", "tox-extra (>=2.1)", "tox-uv (>=1.25)", "types-jsonschema", "types-pyyaml"]
+test = ["black", "coverage-enable-subprocess", "coverage[toml] (>=6.4.4)", "ipdb", "ipython", "jmespath", "license-expression (>=30.3.0)", "mypy", "netaddr", "pip", "psutil", "pylint", "pytest (>=7.2.2)", "pytest-instafail (>=0.5.0)", "pytest-mock", "pytest-plus (>=0.6)", "pytest-sugar", "pytest-xdist[psutil,setproctitle] (>=2.1.0)", "ruamel-yaml-clib", "ruamel.yaml (>=0.18.11)", "tox (>=4.0.0)", "tox (>=4.24.2)", "tox-extra (>=2.1)", "tox-uv (>=1.25)", "types-jsonschema", "types-pyyaml"]
 
 [[package]]
 name = "ansible-playbook-grapher"
@@ -468,7 +468,7 @@ description = "Backport of CPython tarfile module"
 optional = false
 python-versions = ">=3.8"
 groups = ["dev"]
-markers = "python_version < \"3.12\" and platform_machine != \"ppc64le\" and platform_machine != \"s390x\""
+markers = "platform_machine != \"ppc64le\" and platform_machine != \"s390x\" and python_version < \"3.12\""
 files = [
     {file = "backports.tarfile-1.2.0-py3-none-any.whl", hash = "sha256:77e284d754527b01fb1e6fa8a1afe577858ebe4e9dad8919e34c862cb399bc34"},
     {file = "backports_tarfile-1.2.0.tar.gz", hash = "sha256:d75e02c268746e1b8144c278978b6e98e85de6ad16f8e4b0844a154557eca991"},
@@ -4157,8 +4157,8 @@ astroid = ">=3.3.8,<=3.4.0.dev0"
 colorama = {version = ">=0.4.5", markers = "sys_platform == \"win32\""}
 dill = [
     {version = ">=0.2", markers = "python_version < \"3.11\""},
+    {version = ">=0.3.6", markers = "python_version >= \"3.11\""},
     {version = ">=0.3.7", markers = "python_version >= \"3.12\""},
-    {version = ">=0.3.6", markers = "python_version == \"3.11\""},
 ]
 isort = ">=4.2.5,<5.13 || >5.13,<7"
 mccabe = ">=0.6,<0.8"
