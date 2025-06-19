@@ -94,7 +94,7 @@ reretry = ">=0.11.8"
 # See https://github.com/temporalio/samples-python/blob/main/pyproject.toml
 [tool.poetry.group.encryption]
 optional = false
-dependencies = { cryptography = ">=41.0.2", aiohttp = ">=3.12.13" }
+dependencies = { cryptography = ">=41.0.2", aiohttp = "^3.8.1" }
 
 [tool.poetry.group.open_telemetry]
 optional = true
@@ -114,7 +114,6 @@ optional = true
 [tool.poetry.group.test.dependencies]
 coverage = ">= 7.2.7"
 # molecule = "~=5.1.0"
-mypy = ">=1.16.0"
 pytest = ">=7.2.0" # ">=8.3.3,<9.0.0"
 pytest-cov = ">=6.0.0"
 pytest-env = ">=1.1.5"
@@ -142,10 +141,10 @@ ansible-cmdb = ">=1.31"
 ansible-lint = {extras = ["yamllint"], version = ">=6.0.2"}
 ansible-playbook-grapher = ">=2.9.2"
 bandit = ">=1.7.4" # TODO 1.8.3
-checkov = ">=3.2.442" # 2.3.115
+checkov = ">=2.3.115"
 httpx = ">=0.23.3"
 molecule = ">=3.6.1"
-packaging = ">=23.0"
+packaging = ">=24.2"
 pep8 = ">=1.7.1"
 pep8-naming = ">=0.13.2"
 pip-upgrader = ">=1.4.15"
