@@ -468,7 +468,7 @@ description = "Backport of CPython tarfile module"
 optional = false
 python-versions = ">=3.8"
 groups = ["dev"]
-markers = "platform_machine != \"ppc64le\" and platform_machine != \"s390x\" and python_version < \"3.12\""
+markers = "python_version < \"3.12\" and platform_machine != \"ppc64le\" and platform_machine != \"s390x\""
 files = [
     {file = "backports.tarfile-1.2.0-py3-none-any.whl", hash = "sha256:77e284d754527b01fb1e6fa8a1afe577858ebe4e9dad8919e34c862cb399bc34"},
     {file = "backports_tarfile-1.2.0.tar.gz", hash = "sha256:d75e02c268746e1b8144c278978b6e98e85de6ad16f8e4b0844a154557eca991"},
@@ -972,14 +972,14 @@ files = [
 
 [[package]]
 name = "checkov"
-version = "3.2.442"
+version = "3.2.450"
 description = "Infrastructure as code static analysis"
 optional = false
 python-versions = ">=3.8"
 groups = ["dev"]
 files = [
-    {file = "checkov-3.2.442-py3-none-any.whl", hash = "sha256:e94a3283bff9b4a81e54e57b4a00b02259dec0d85b17bf17e00652d137bd1a6d"},
-    {file = "checkov-3.2.442.tar.gz", hash = "sha256:e5206872de63d389cfb1b7c1212ce4b5a147986152e890461d87251726b4b0e7"},
+    {file = "checkov-3.2.450-py3-none-any.whl", hash = "sha256:59ea44393603b873ba523b83d447b9374aecca8ace8f9a38eb414b5fbaa9e482"},
+    {file = "checkov-3.2.450.tar.gz", hash = "sha256:a48fee815a973cadc3dea68c2a05a88ef745bfbeb497a319e6a05e0c8b8808ce"},
 ]
 
 [package.dependencies]
@@ -4157,8 +4157,8 @@ astroid = ">=3.3.8,<=3.4.0.dev0"
 colorama = {version = ">=0.4.5", markers = "sys_platform == \"win32\""}
 dill = [
     {version = ">=0.2", markers = "python_version < \"3.11\""},
-    {version = ">=0.3.6", markers = "python_version >= \"3.11\""},
     {version = ">=0.3.7", markers = "python_version >= \"3.12\""},
+    {version = ">=0.3.6", markers = "python_version == \"3.11\""},
 ]
 isort = ">=4.2.5,<5.13 || >5.13,<7"
 mccabe = ">=0.6,<0.8"
