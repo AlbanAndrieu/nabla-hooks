@@ -543,14 +543,14 @@ ply = "*"
 
 [[package]]
 name = "bc-python-hcl2"
-version = "0.4.2"
+version = "0.4.3"
 description = "A parser for HCL2"
 optional = false
 python-versions = ">=3.8"
 groups = ["dev"]
 files = [
-    {file = "bc-python-hcl2-0.4.2.tar.gz", hash = "sha256:ac8ff59fb9bd437ea29b89a7d7c507fd0a1e957845bae9aeac69f2892b8d681e"},
-    {file = "bc_python_hcl2-0.4.2-py3-none-any.whl", hash = "sha256:90d2afbaa2c7e77b7b30bf58180084e11d95287f7c3e19c5bfbdb54ab2fd80e9"},
+    {file = "bc_python_hcl2-0.4.3-py3-none-any.whl", hash = "sha256:b0cce4cea16823f7da7fefa0f8177dfb91f51a1befe64ef59d8fe4d5ac616eec"},
+    {file = "bc_python_hcl2-0.4.3.tar.gz", hash = "sha256:fae62b2a41a675ad330d134d82576526db755f72bbd0e5a850de3d85fc24c40e"},
 ]
 
 [package.dependencies]
@@ -973,14 +973,14 @@ files = [
 
 [[package]]
 name = "checkov"
-version = "3.2.450"
+version = "3.2.454"
 description = "Infrastructure as code static analysis"
 optional = false
 python-versions = ">=3.8"
 groups = ["dev"]
 files = [
-    {file = "checkov-3.2.450-py3-none-any.whl", hash = "sha256:59ea44393603b873ba523b83d447b9374aecca8ace8f9a38eb414b5fbaa9e482"},
-    {file = "checkov-3.2.450.tar.gz", hash = "sha256:a48fee815a973cadc3dea68c2a05a88ef745bfbeb497a319e6a05e0c8b8808ce"},
+    {file = "checkov-3.2.454-py3-none-any.whl", hash = "sha256:7de15dba07712be8377cea3b8644418228eee1be5980a3cc49a137ebe3c04a0c"},
+    {file = "checkov-3.2.454.tar.gz", hash = "sha256:bfa20fccc6b65045e967dc3c63c778eb9672d650406fad79910c656ab4a50bb3"},
 ]
 
 [package.dependencies]
@@ -991,7 +991,7 @@ argcomplete = ">=3.0.0,<4.0.0"
 asteval = "1.0.5"
 bc-detect-secrets = "1.5.44"
 bc-jsonpath-ng = "1.6.1"
-bc-python-hcl2 = "0.4.2"
+bc-python-hcl2 = "0.4.3"
 boto3 = "1.35.49"
 cachetools = ">=5.2.0,<6.0.0"
 charset-normalizer = ">=3.1.0,<4.0.0"
