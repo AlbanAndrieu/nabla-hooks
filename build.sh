@@ -63,8 +63,13 @@ echo -e "${cyan} versioneer install --vendor ${NC}"
 echo -e "${cyan} Verify versioneer version ${NC}"
 python setup.py version
 
-echo -e "${cyan} python setup.py sdist bdist_wheel ${NC}"
-python setup.py sdist bdist_wheel
+# echo -e "${cyan} python setup.py sdist bdist_wheel ${NC}"
+# DEPRECATED : python setup.py sdist bdist_wheel
+echo -e "${cyan} pip wheel --no-deps -w dist . ${NC}"
+pip wheel --no-deps -w dist .
+
+echo -e "${cyan} python3 -m build ${NC}"
+python3 -m build # builds both sdist and wheel
 
 echo -e "${cyan} install locally ${NC}"
 python3 setup.py install

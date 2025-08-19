@@ -6,7 +6,7 @@ build-backend = "poetry.core.masonry.api"
 [project]
 name = "nabla-hooks"
 # version = "1.0.6"
-dynamic = [ "version" ]
+dynamic = [ "version", "license" ]
 description = "Custom hooks to improve code quality before pushing to git"
 authors = [
     {name = "Andrieu, Alban", email = "alban.andrieu@free.fr"},
