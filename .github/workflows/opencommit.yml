@@ -14,13 +14,13 @@ jobs:
     permissions: write-all
     steps:
       - name: Setup Node.js Environment
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '22'
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
         with:
           fetch-depth: 0
-      - uses: di-sukharev/opencommit@github-action-v1.0.4
+      - uses: di-sukharev/opencommit@4e25f1460af4747fba99415afec991f3dfe8444f # github-action-v1.0.4
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
