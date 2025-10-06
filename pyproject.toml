@@ -177,6 +177,22 @@ testpaths = "tests/"
 [tool.black]
 line-length = 88
 
+[tool.pyright]
+include = ["nabla"]
+exclude = ["**/node_modules",
+    "**/__pycache__",
+    "nabla/experimental",
+    "nabla/typestubs"
+]
+venvPath = "."
+venv = ".venv"
+
+reportMissingImports = "error"
+reportMissingTypeStubs = false
+
+pythonVersion = "3.12"
+pythonPlatform = "Linux"
+
 [tool.ruff]
 # Enable the pycodestyle (`E`) and Pyflakes (`F`) rules by default.
 # Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
