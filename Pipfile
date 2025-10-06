@@ -92,6 +92,7 @@ tox = ">=3.27.1"
 twine = ">=4.0.2"
 #virtualenv = ">=20.0.23"
 versioneer = {version = ">=0.29", extras = ["toml"]}
+versioningit = ">=3.3.0"
 wheel = ">=0.45.1"
 # yamllint = ">=1.28.0"
 
