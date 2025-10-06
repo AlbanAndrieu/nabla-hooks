@@ -2,7 +2,18 @@
 ---
 fail_fast: true
 minimum_pre_commit_version: 3.7.1
-exclude: "docs/_build/"
+exclude: |
+  (?x)^(
+      .*\{\{.*\}\}.*|     # Exclude any files with cookiecutter variables
+      docs/site/.*|       # Exclude mkdocs compiled files
+      docs/_build/.*|
+      \.history/.*|       # Exclude history files
+      .*cache.*/.*|       # Exclude cache directories
+      .*venv.*/.*|        # Exclude virtual environment directories
+      .direnv/.*|
+      .yarn/.*|
+      .ansible/.*|
+  )$
 ci:
   # format compatible with commitlint
   autoupdate_commit_msg: 'chore: pre-commit autoupdate'
@@ -14,6 +25,9 @@ ci:
     # https://github.com/pre-commit-ci/issues/issues/55
     - pip-compile
     - schemas
+default_install_hook_types:
+  - pre-commit
+  - commit-msg
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks.git
     # pre-commit-hooks is not working on both environment
@@ -45,6 +59,7 @@ repos:
       - id: check-case-conflict
       - id: check-docstring-first
       - id: check-executables-have-shebangs
+        name: "📁 filesystem/⚙️ exec · Verify shebang preset"
         exclude: >
           (?x)^(
               clean.bat|
@@ -99,17 +114,15 @@ repos:
 #        args: [--branch, main, --branch, master, --branch, release/*]
       - id: end-of-file-fixer
       - id: fix-byte-order-marker
-      # - id: fix-encoding-pragma
-      #   args: [--remove]
       - id: requirements-txt-fixer
       - id: sort-simple-yaml
       - id: file-contents-sorter
       - id: mixed-line-ending
         args: [--fix=lf]
-  # - repo: https://github.com/pre-commit/mirrors-autopep8
-  #   rev: v2.0.4
-  #   hooks:
-  #     - id: autopep8
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.20.0
+    hooks:
+      - id: pyupgrade
   # - repo: https://github.com/psf/black
   #   rev: 25.1.0
   #   hooks:
@@ -120,13 +133,30 @@ repos:
   #       # https://pre-commit.com/#top_level-default_language_version
   #       # language_version: python3.12
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.12.9
+    rev: v0.13.3
     hooks:
       # Run the linter.
-      - id: ruff
+      - id: ruff-check
+        name: "🐍 python · Check with Ruff"
         args: [ --fix ]
       # Run the formatter.
       - id: ruff-format
+        name: "🐍 python · Format with Ruff"
+      # STRICT
+      - id: ruff
+        args: [ --fix ]
+  # STRICT
+  - repo: https://github.com/RobertCraigie/pyright-python
+    rev: v1.1.406
+    hooks:
+      - id: pyright
+        name: "🐍 python · Check types"
+  - repo: https://github.com/abravalheri/validate-pyproject
+    rev: v0.24.1
+    hooks:
+      - id: validate-pyproject
+        name: "🐍 python · Validate pyproject.toml"
+        additional_dependencies: ["validate-pyproject-schema-store[all]"]
   # - repo: https://github.com/PyCQA/flake8
   #   rev: 7.1.0
   #   hooks:
@@ -138,11 +168,7 @@ repos:
   #   hooks:
   #     - id: reorder-python-imports
   #       exclude: ^.cache/
-  #    language_version: python3
-  - repo: https://github.com/asottile/pyupgrade
-    rev: v3.20.0
-    hooks:
-      - id: pyupgrade
+  # #    language_version: python3
   # - repo: https://github.com/pycqa/isort
   #   rev: 5.10.1
   #   hooks:
@@ -155,8 +181,8 @@ repos:
     rev: v3.2.0
     hooks:
       - id: add-trailing-comma
-  - repo: https://github.com/willthames/ansible-lint.git
-    rev: v25.8.1
+  - repo: https://github.com/ansible-community/ansible-lint.git
+    rev: v25.9.1
     hooks:
       - id: ansible-lint
         files: \.(yaml|yml)$
@@ -168,6 +194,11 @@ repos:
             playbooks/group_vars/all/vault.yml|
             .gitlab-ci.yml|
           )$
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.37.1
+    hooks:
+      - id: yamllint
+        args: [--format, parsable, --strict]
   - repo: https://github.com/doublify/pre-commit-hindent.git
     rev: b3680b6ebf9f7cf29b19307f246adef66756feef
     hooks:
@@ -182,6 +213,7 @@ repos:
     rev: 1.0.5
     hooks:
       - id: shell-lint
+        name: "🐚 shell · Lint shell scripts"
         args: [-x]
         exclude: >
           (?x)^(
@@ -190,7 +222,19 @@ repos:
             hooks|
             tests/.*|
             docs/Makefile|
+            .envrc|
           )$
+  # STRICT
+  - repo: https://github.com/openstack/bashate
+    rev: 2.1.1
+    hooks:
+      - id: bashate
+        name: "🐚 shell · Check shell script code style"
+  - repo: https://github.com/mrtazz/checkmake.git
+    rev: 0.2.2
+    hooks:
+      - id: checkmake
+        name: "🐮 Makefile · Lint Makefile"
   - repo: https://github.com/PyCQA/bandit
     rev: 1.8.6
     hooks:
@@ -207,6 +251,21 @@ repos:
     rev: v1.0.1
     hooks:
       - id: encryption-check
+  - repo: https://github.com/hukkin/mdformat
+    rev: 0.7.22
+    hooks:
+      - id: mdformat
+        name: "📝 markdown · Format markdown"
+        additional_dependencies:
+          - mdformat-gfm          # GitHub-Flavored Markdown support
+          - mdformat-ruff         # Python code formatting
+          - mdformat-frontmatter  # YAML frontmatter support
+          - ruff                  # Required for mdformat-ruff
+  - repo: https://github.com/markdownlint/markdownlint
+    rev: v0.12.0
+    hooks:
+      - id: markdownlint
+        name: "📝 markdown · Lint markdown"
   - repo: https://github.com/Lucas-C/pre-commit-hooks-nodejs
     rev: v1.1.2
     hooks:
@@ -216,11 +275,8 @@ repos:
         files: ^src/
       - id: markdown-toc
         args: [--maxdepth, "3", -i]
-      # - id: dockerfile_lint
-      #   args: [--permissive, --verbose, --dockerfile, ./Dockerfile]
-      #   always_run: false
   - repo: https://github.com/hadolint/hadolint
-    rev: v2.13.1-beta
+    rev: v2.14.0
     hooks:
       - id: hadolint-docker
   - repo: https://github.com/jorisroovers/gitlint
@@ -231,6 +287,7 @@ repos:
     rev: v8.28.0
     hooks:
       - id: gitleaks-docker
+        name: "🔒 security · Detect hardcoded secrets"
         entry: zricethezav/gitleaks protect --verbose --redact --staged
   - repo: local
     hooks:
@@ -270,8 +327,16 @@ repos:
   #   hooks:
   #     - id: gitleaks-docker
   #       entry: zricethezav/gitleaks protect --verbose --redact --staged
+  # - repo: https://github.com/commitizen-tools/commitizen
+  #   rev: v4.9.1  # Replace with latest tag
+  #   hooks:
+  #     - id: commitizen
+  #     - id: commitizen-branch
+  #       stages: [pre-push]
+  # - repo: https://github.com/oxsecurity/megalinter
+  #   rev: v9.0.1
   - repo: https://github.com/oxsecurity/megalinter
-    rev: v8.8.0
+    rev: v9.0.1
     hooks:
       - id: megalinter-incremental  # Faster, less thorough
         stages:
