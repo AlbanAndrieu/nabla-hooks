@@ -197,11 +197,11 @@ pythonPlatform = "Linux"
 # Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
 # McCabe complexity (`C901`) by default.
 select = ["E", "F"]
-ignore = []
+lint.ignore = []
 
 # Allow autofix for all enabled rules (when `--fix`) is provided.
-fixable = ["ALL"]
-unfixable = []
+lint.fixable = ["ALL"]
+lint.unfixable = []
 
 # Exclude a variety of commonly ignored directories.
 exclude = [
@@ -227,13 +227,13 @@ exclude = [
     "node_modules",
     "venv",
 ]
-per-file-ignores = {}
+lint.per-file-ignores = {}
 
 # Same as Black.
 line-length = 88
 
 # Allow unused variables when underscore-prefixed.
-dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+lint.dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
 # Assume Python 3.12.3
 target-version = "py312"
