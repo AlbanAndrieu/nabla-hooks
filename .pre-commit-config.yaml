@@ -1,6 +1,6 @@
 # vi: ft=yaml.ansible.jinja2
 ---
-fail_fast: true
+# fail_fast: true
 minimum_pre_commit_version: 4.2.0
 exclude: |
   (?x)^(
@@ -106,12 +106,6 @@ repos:
               roles/jenkins-master/defaults/main.yml|
               roles/jenkins-master/README.md|
           )$
-      # Disable as incompatible with black formatting
-      # - id: double-quote-string-fixer
-      #   exclude: >
-      #     (?x)^(
-      #         tests/.*|
-      #     )$
       - id: name-tests-test
         exclude: >
           (?x)^(
@@ -133,19 +127,9 @@ repos:
     rev: v3.21.0
     hooks:
       - id: pyupgrade
-  # - repo: https://github.com/psf/black
-  #   rev: 25.1.0
-  #   hooks:
-  #     - id: black
-  #       # It is recommended to specify the latest version of Python
-  #       # supported by your project here, or alternatively use
-  #       # pre-commit's default_language_version, see
-  #       # https://pre-commit.com/#top_level-default_language_version
-  #       # language_version: python3.12
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.14.0
     hooks:
-      # Run the linter.
       - id: ruff-check
         name: "🐍 python · Check with Ruff"
         args: [ --fix ]
@@ -153,14 +137,12 @@ repos:
           (?x)^(
               ccds/hook_utils/dependencies.py|
           )$
-      # Run the formatter.
       - id: ruff-format
         name: "🐍 python · Format with Ruff"
         exclude: >
           (?x)^(
               ccds/hook_utils/dependencies.py|
           )$
-      # STRICT
       - id: ruff
         name: "🐍 python · Fix with Ruff"
         args: [ --fix ]
@@ -168,7 +150,6 @@ repos:
           (?x)^(
               ccds/hook_utils/dependencies.py|
           )$
-  # STRICT
   - repo: https://github.com/RobertCraigie/pyright-python
     rev: v1.1.406
     hooks:
@@ -184,22 +165,6 @@ repos:
       - id: validate-pyproject
         name: "🐍 python · Validate pyproject.toml"
         additional_dependencies: ["validate-pyproject-schema-store[all]"]
-  # - repo: https://github.com/PyCQA/flake8
-  #   rev: 7.1.0
-  #   hooks:
-  #     - id: flake8
-  #       args: [--max-line-length=88, --max-complexity=30]
-  # WARNING reorder_python_imports conflict with black and ruff
-  # - repo: https://github.com/asottile/reorder_python_imports.git
-  #   rev: v3.14.0
-  #   hooks:
-  #     - id: reorder-python-imports
-  #       exclude: ^.cache/
-  # #    language_version: python3
-  # - repo: https://github.com/pycqa/isort
-  #   rev: 5.10.1
-  #   hooks:
-  #     - id: isort
   - repo: https://github.com/pre-commit/pre-commit.git
     rev: v4.3.0
     hooks:
@@ -252,7 +217,6 @@ repos:
             docs/Makefile|
             .envrc|
           )$
-  # STRICT
   - repo: https://github.com/openstack/bashate
     rev: 2.1.1
     hooks:
@@ -442,8 +406,8 @@ repos:
   #         - --filesonly
   #         - --flavor
   #         - "python"
-  # - repo: local
-  #   hooks:
+  - repo: local
+    hooks:
   #     - id: lint
   #       name: Lint
   #       entry: python3 -m nox -rs lint
@@ -459,20 +423,10 @@ repos:
   #       entry: python3 -m nox -rs test
   #       language: system
   #       pass_filenames: false
-  - repo: local
-    hooks:
       - id: pytest-collect
         name: 🧪 test · Validate test formatting
         entry: ./.venv/bin/pytest tests
         language: system
         types: [python]
         args: ["--collect-only"]
-        pass_filenames: false
-      # STRICT
-      - id: pytest-fast
-        name: 🧪 test · Run fast tests
-        entry: ./.venv/bin/pytest tests
-        language: system
-        types: [python]
-        args: ["--max-timeout=3"]
         pass_filenames: false

@@ -31,7 +31,7 @@ readonly KERNEL
 
 MACHINE=$(uname -m)
 if [[ $MACHINE == "aarch64" ]]; then
-  MACHINE="arm64";
+  MACHINE="arm64"
 fi
 readonly MACHINE
 
@@ -446,7 +446,10 @@ check_flaky_tests_cli_version() {
   download_cmd "https://api.github.com/repos/trunk-io/analytics-cli/releases/latest" "${flaky_tests_latest_file}"
   local download_pid="$!"
 
-  { sleep 3; kill "$download_pid"; } &
+  {
+    sleep 3
+    kill "$download_pid"
+  } &
   local timeout_pid="$!"
 
   if ! wait "${download_pid}" 2>/dev/null; then
@@ -515,8 +518,7 @@ if [[ $TRUNK_FLAKY_TESTS_INVOCATION == false && ! -e ${TOOL_DIR}/trunk ]]; then
   download_cli "${version}" "${version_sha256:-}"
   echo # add newline between launcher and CLI output
 elif [[ $TRUNK_FLAKY_TESTS_INVOCATION == true ]]; then
-  for arg in "$@"
-  do
+  for arg in "$@"; do
     shift
     if [[ "$arg" = "--upgrade" ]]; then
       download_flaky_tests_latest_cli

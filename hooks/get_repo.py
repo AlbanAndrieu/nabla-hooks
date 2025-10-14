@@ -19,7 +19,7 @@ init()
     required=False,
     envvar="JIRA_USER",
     help="JIRA user",
-)  # noqa: E501
+)
 @click.option(
     "-p",
     "--password",
@@ -29,14 +29,14 @@ init()
     confirmation_prompt=True,
     envvar="JIRA_PASSWORD",
     help="JIRA password",
-)  # noqa: E501
+)
 @click.option(
     "-v",
     "--verbose",
     is_flag=True,
     default=False,
     help="Switch between INFO and DEBUG logging modes",
-)  # noqa: E501
+)
 def cli(user=None, password=None, verbose=False):
     """Simple program that check a commit message. Try ./get_repo.py -v"""
 

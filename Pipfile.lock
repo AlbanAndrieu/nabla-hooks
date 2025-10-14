@@ -6354,7 +6354,7 @@
             "markers": "python_version >= '3.9'",
             "version": "==0.27.1"
         },
-        "ruamel.yaml": {
+        "ruamel-yaml": {
             "hashes": [
                 "sha256:148f6488d698b7a5eded5ea793a025308b25eca97208181b6a026037f391f701",
                 "sha256:dbfca74b018c4c3fba0b9cc9ee33e53c371194a9000e694995e620490fd40700"
@@ -6362,7 +6362,7 @@
             "markers": "python_version >= '3.8'",
             "version": "==0.18.15"
         },
-        "ruamel.yaml.clib": {
+        "ruamel-yaml-clib": {
             "hashes": [
                 "sha256:040ae85536960525ea62868b642bdb0c2cc6021c9f9d507810c0c604e66f5a7b",
                 "sha256:0467c5965282c62203273b838ae77c0d29d7638c8a4e3a1c8bdd3602c10904e4",
@@ -6411,7 +6411,7 @@
                 "sha256:fc4b630cd3fa2cf7fce38afa91d7cfe844a9f75d7f0f36393fa98815e911d987",
                 "sha256:fd5415dded15c3822597455bc02bcd66e81ef8b7a48cb71a33628fc9fdde39df"
             ],
-            "markers": "python_version >= '3.9'",
+            "markers": "python_version < '3.14'",
             "version": "==0.2.12"
         },
         "ruff": {

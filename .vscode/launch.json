@@ -1,31 +1,31 @@
 {
-  // Use IntelliSense to learn about possible attributes.
-  // Hover to view descriptions of existing attributes.
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-  "version": "0.2.0",
-  "configurations": [
-    // Debug the currently active file
-    {
-      "name": "Debug Current File",
-      "type": "debugpy",
-      "request": "launch",
-      "program": "${file}",
-      "console": "integratedTerminal"
-    },
-    {
-      "name": "Python: get_msg",
-      "type": "debugpy",
-      "request": "launch",
-      "program": "hooks/get_msg.py",
-      "args": ["./.git/COMMIT_EDITMSG"],
-      "console": "integratedTerminal"
-    },
-    {
-      "name": "Debug Tests",
-      "type": "debugpy",
-      "request": "launch",
-      "console": "integratedTerminal",
-      "justMyCode": false
-    }
-  ]
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		// Debug the currently active file
+		{
+			"name": "Debug Current File",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "${file}",
+			"console": "integratedTerminal"
+		},
+		{
+			"name": "Python: get_msg",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "hooks/get_msg.py",
+			"args": ["./.git/COMMIT_EDITMSG"],
+			"console": "integratedTerminal"
+		},
+		{
+			"name": "Debug Tests",
+			"type": "debugpy",
+			"request": "launch",
+			"console": "integratedTerminal",
+			"justMyCode": false
+		}
+	]
 }

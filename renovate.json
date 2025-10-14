@@ -1,34 +1,32 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-     "config:recommended",
-     "helpers:pinGitHubActionDigests",
-     ":dependencyDashboard"],
-  "timezone": "Europe/Paris",
-  "schedule": [
-    "before 10am on monday",
-    "after 3pm on friday"
-  ],
-  "lockFileMaintenance": {
-    "enabled": true,
-    "schedule": "after 10pm on sunday"
-  },
-  "packageRules": [
-    {
-      "packageNames": ["colorama"],
-      "schedule": "before 5am every wednesday"
-    },
-    {
-      "packagePatterns": ["^jira.*"],
-      "groupName": "jira",
-      "automerge": true
-    },
-    {
-      "packagePatterns": ["^cryptography.*"],
-      "groupName": "cryptography",
-      "automerge": true
-    }
-  ],
-  "rangeStrategy": "auto",
-  "ignorePaths": ["tests/**"]
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": [
+		"config:recommended",
+		"helpers:pinGitHubActionDigests",
+		":dependencyDashboard"
+	],
+	"timezone": "Europe/Paris",
+	"schedule": ["before 10am on monday", "after 3pm on friday"],
+	"lockFileMaintenance": {
+		"enabled": true,
+		"schedule": "after 10pm on sunday"
+	},
+	"packageRules": [
+		{
+			"packageNames": ["colorama"],
+			"schedule": "before 5am every wednesday"
+		},
+		{
+			"packagePatterns": ["^jira.*"],
+			"groupName": "jira",
+			"automerge": true
+		},
+		{
+			"packagePatterns": ["^cryptography.*"],
+			"groupName": "cryptography",
+			"automerge": true
+		}
+	],
+	"rangeStrategy": "auto",
+	"ignorePaths": ["tests/**"]
 }

@@ -22,7 +22,7 @@ init()
     required=False,
     envvar="JIRA_USER",
     help="JIRA user",
-)  # noqa: E501
+)
 @click.option(
     "-p",
     "--password",
@@ -32,16 +32,16 @@ init()
     confirmation_prompt=True,
     envvar="JIRA_PASSWORD",
     help="JIRA password",
-)  # noqa: E501
+)
 @click.option(
     "-v",
     "--verbose",
     is_flag=True,
     default=False,
     help="Switch between INFO and DEBUG logging modes",
-)  # noqa: E501
+)
 def cli(user=None, password=None, verbose=False) -> Tuple[str, str]:
-    """Simple program that match jira. From hooks directory : Try python -m get_jira.get_auth -u aandrieu -p XXXX --verbose"""  # noqa:E501
+    """Simple program that match jira. From hooks directory : Try python -m get_jira.get_auth -u aandrieu -p XXXX --verbose"""
 
     logger.info("Collecting authentifcation")
 

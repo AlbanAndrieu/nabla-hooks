@@ -1,158 +1,158 @@
 {
-  "files.exclude": {
-	// Option #02
-    "**/{{ cookiecutter.module_name }}/": false,
-    // Version Control
-    "**/.git": false,
-    "**/.gitattributes": false,
-    "**/.github": false,
-    "**/.gitignore": false,
-    "**/.hg": false,
-    "**/.svn": false,
-    "**/CVS": false,
-    // System Files
-    "**/.DS_Store": false,
-    "**/Thumbs.db": false,
-    "**/*.bak": false,
-    "**/*.sav": false,
-    "**/*.backup": false,
-    "**/.*.swp": false,
-    "**/*~[0-9]*": false,
-    // Development Environment
-    "**/__pycache__": false,
-    "**/*.py[cod]": false,
-    "**/*$py.class": false,
-    "**/.editorconfig": false,
-    "**/.env": false,
-    "**/.idea": false,
-    "**/.ipynb_checkpoints": false,
-    "**/.mypy_cache": false,
-    "**/.prettierrc": false,
-    "**/.pytest_cache": false,
-    "**/.python-version": false,
-    "**/.ruff_cache": false,
-    "**/.ruby-lsp": false,
-    "**/.venv": false,
-    "**/.vscode": false,
-    "**/*.sublime-*": false,
-    "**/venv": false,
-    // Build and Distribution
-    "**/build": false,
-    "**/dist": false,
-    "**/*.egg-info": false,
-    "**/wheels": false,
-    "**/downloads": false,
-    // Project Files
-    "**/logs": false,
-    "**/scripts": false,
-    "**/tests": false,
-    "CHANGELOG.md": false,
-    "LICENSE.md": false,
-    "MANIFEST": false,
-    "requirements.txt": false,
-    // Documentation
-    "**/docs/_build": false,
-    "**/site": false,
-    // Testing and Coverage
-    "**/.coverage": false,
-    "**/.coverage.*": false,
-    "**/htmlcov": false,
-    "**/coverage.xml": false,
-    "**/*.cover": false,
-    // Databases
-    "**/dump.rdb": false,
-    // LaTeX
-    "**/*.aux": true,
-    "**/*.bbl": true,
-    "**/*.bcf": true,
-    "**/*.blg": true,
-    "**/*.fdb_latexmk": true,
-    "**/*.fls": true,
-    "**/*.lof": true,
-    "**/*.log": false,
-    "**/*.lot": true,
-    "**/*.out": true,
-    "**/*.synctex.gz*": true,
-    "**/*.toc": true,
-    "**/_minted*": true,
-    "out": true,
-    ".nyc_output": true,
-    "obj": true,
-    "bin": true,
-    "**/node_modules": true,
-    ".vscode-test": false,
-    ".vscode test": false,
-    "**/.ropeproject/**": true
-  },
-  "search.exclude": {
-    "out": true,
-    "**/node_modules": true,
-    "coverage": true,
-    "languageServer*/**": true,
-    ".vscode-test": true,
-    ".vscode test": true
-  },
-  "python.pipenvPath": ".venv/bin/python",
-  "terminal.integrated.env.linux": {
-    "PYTHONPATH": "${workspaceFolder}/hooks:.venv/bin/:/opt/ansible/env38/bin/:/opt/ansible/env38/lib/python3.8/site-packages/"
-  },
-  "python.testing.unittestEnabled": false,
-  "python.testing.pytestEnabled": true,
-  "python.testing.pytestPath": ".venv/bin/pytest",
-  "python.testing.unittestArgs": ["-v", "-s", "./test", "-p", "*test*.py"],
-  "python.testing.cwd": "${workspaceFolder}",
-  "python.testing.pytestArgs": ["--disable-warnings", "."],
-  "python.autoComplete.extraPaths": [
-    "__pypackages__/<major.minor>/lib",
-    "${workspaceFolder}/hooks",
-    "./**"
-  ],
-  "python.analysis.logLevel": "Trace",
-  "python.linting.flake8Enabled": true,
-  "python.linting.flake8Args": ["--max-line-length=120"],
-  "latex-workshop.latex.tools": [
-    {
-      "name": "pdflatex",
-      "command": "pdflatex",
-      "args": [
-        "-shell-escape",
-        "-synctex=1",
-        "-interaction=nonstopmode",
-        "-file-line-error",
-        "%DOC%"
-      ],
-      "env": {}
-    }
-  ],
-  "latex-workshop.latex.recipe.default": "first",
-  "latex-workshop.latex.recipes": [
-    {
-      "name": "pdflatex",
-      "tools": ["pdflatex"]
-    },
-    {
-      "name": "pdflatex ➞ bibtex ➞ pdflatex × 2",
-      "tools": ["pdflatex", "bibtex", "pdflatex", "pdflatex"]
-    }
-  ],
-  "[python]": {
-    "editor.formatOnType": true,
-    "python.linting.lintOnSave": true,
-    "python.linting.enable": true,
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": "explicit",
-      "source.fixAll": "explicit"
-    },
-    "editor.defaultFormatter": "charliermarsh.ruff",
-    "editor.formatOnSave": false
-  },
-  "ruff.nativeServer": true,
-  "sqlfluff.dialect": "postgres",
-  "sqlfluff.excludeRules": ["AL06"],
-  "npm.packageManager": "npm",
+	"files.exclude": {
+		// Option #02
+		"**/{{ cookiecutter.module_name }}/": false,
+		// Version Control
+		"**/.git": false,
+		"**/.gitattributes": false,
+		"**/.github": false,
+		"**/.gitignore": false,
+		"**/.hg": false,
+		"**/.svn": false,
+		"**/CVS": false,
+		// System Files
+		"**/.DS_Store": false,
+		"**/Thumbs.db": false,
+		"**/*.bak": false,
+		"**/*.sav": false,
+		"**/*.backup": false,
+		"**/.*.swp": false,
+		"**/*~[0-9]*": false,
+		// Development Environment
+		"**/__pycache__": false,
+		"**/*.py[cod]": false,
+		"**/*$py.class": false,
+		"**/.editorconfig": false,
+		"**/.env": false,
+		"**/.idea": false,
+		"**/.ipynb_checkpoints": false,
+		"**/.mypy_cache": false,
+		"**/.prettierrc": false,
+		"**/.pytest_cache": false,
+		"**/.python-version": false,
+		"**/.ruff_cache": false,
+		"**/.ruby-lsp": false,
+		"**/.venv": false,
+		"**/.vscode": false,
+		"**/*.sublime-*": false,
+		"**/venv": false,
+		// Build and Distribution
+		"**/build": false,
+		"**/dist": false,
+		"**/*.egg-info": false,
+		"**/wheels": false,
+		"**/downloads": false,
+		// Project Files
+		"**/logs": false,
+		"**/scripts": false,
+		"**/tests": false,
+		"CHANGELOG.md": false,
+		"LICENSE.md": false,
+		"MANIFEST": false,
+		"requirements.txt": false,
+		// Documentation
+		"**/docs/_build": false,
+		"**/site": false,
+		// Testing and Coverage
+		"**/.coverage": false,
+		"**/.coverage.*": false,
+		"**/htmlcov": false,
+		"**/coverage.xml": false,
+		"**/*.cover": false,
+		// Databases
+		"**/dump.rdb": false,
+		// LaTeX
+		"**/*.aux": true,
+		"**/*.bbl": true,
+		"**/*.bcf": true,
+		"**/*.blg": true,
+		"**/*.fdb_latexmk": true,
+		"**/*.fls": true,
+		"**/*.lof": true,
+		"**/*.log": false,
+		"**/*.lot": true,
+		"**/*.out": true,
+		"**/*.synctex.gz*": true,
+		"**/*.toc": true,
+		"**/_minted*": true,
+		"out": true,
+		".nyc_output": true,
+		"obj": true,
+		"bin": true,
+		"**/node_modules": true,
+		".vscode-test": false,
+		".vscode test": false,
+		"**/.ropeproject/**": true
+	},
+	"search.exclude": {
+		"out": true,
+		"**/node_modules": true,
+		"coverage": true,
+		"languageServer*/**": true,
+		".vscode-test": true,
+		".vscode test": true
+	},
+	"python.pipenvPath": ".venv/bin/python",
+	"terminal.integrated.env.linux": {
+		"PYTHONPATH": "${workspaceFolder}/hooks:.venv/bin/:/opt/ansible/env38/bin/:/opt/ansible/env38/lib/python3.8/site-packages/"
+	},
+	"python.testing.unittestEnabled": false,
+	"python.testing.pytestEnabled": true,
+	"python.testing.pytestPath": ".venv/bin/pytest",
+	"python.testing.unittestArgs": ["-v", "-s", "./test", "-p", "*test*.py"],
+	"python.testing.cwd": "${workspaceFolder}",
+	"python.testing.pytestArgs": ["--disable-warnings", "."],
+	"python.autoComplete.extraPaths": [
+		"__pypackages__/<major.minor>/lib",
+		"${workspaceFolder}/hooks",
+		"./**"
+	],
+	"python.analysis.logLevel": "Trace",
+	"python.linting.flake8Enabled": true,
+	"python.linting.flake8Args": ["--max-line-length=120"],
+	"latex-workshop.latex.tools": [
+		{
+			"name": "pdflatex",
+			"command": "pdflatex",
+			"args": [
+				"-shell-escape",
+				"-synctex=1",
+				"-interaction=nonstopmode",
+				"-file-line-error",
+				"%DOC%"
+			],
+			"env": {}
+		}
+	],
+	"latex-workshop.latex.recipe.default": "first",
+	"latex-workshop.latex.recipes": [
+		{
+			"name": "pdflatex",
+			"tools": ["pdflatex"]
+		},
+		{
+			"name": "pdflatex ➞ bibtex ➞ pdflatex × 2",
+			"tools": ["pdflatex", "bibtex", "pdflatex", "pdflatex"]
+		}
+	],
+	"[python]": {
+		"editor.formatOnType": true,
+		"python.linting.lintOnSave": true,
+		"python.linting.enable": true,
+		"editor.codeActionsOnSave": {
+			"source.organizeImports": "explicit",
+			"source.fixAll": "explicit"
+		},
+		"editor.defaultFormatter": "charliermarsh.ruff",
+		"editor.formatOnSave": false
+	},
+	"ruff.nativeServer": true,
+	"sqlfluff.dialect": "postgres",
+	"sqlfluff.excludeRules": ["AL06"],
+	"npm.packageManager": "npm",
 	"files.associations": {
 		"wrangler.json": "jsonc"
-  },
-  "cursorpyright.analysis.logLevel": "Trace",
-  "git.ignoreLimitWarning": true
+	},
+	"cursorpyright.analysis.logLevel": "Trace",
+	"git.ignoreLimitWarning": true
 }

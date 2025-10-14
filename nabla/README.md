@@ -1,5 +1,6 @@
 <!-- markdown-link-check-disable-next-line -->
-## [![Nabla](http://bababou.albandrieu.com/nabla/index/assets/nabla/nabla-4.png)](https://github.com/AlbanAndrieu)  nabla-hooks
+
+## [![Nabla](http://bababou.albandrieu.com/nabla/index/assets/nabla/nabla-4.png)](https://github.com/AlbanAndrieu) nabla-hooks
 
 Nabla custom fastAPI
 

@@ -43,8 +43,7 @@ def configure_github_repo(
         if not no_github:
             if not _check_gh_cli():
                 raise RuntimeError(
-                    "gh CLI is required but not installed or not authenticated. "
-                    "Use no_github=True to skip GitHub operations.",
+                    "gh CLI is required but not installed or not authenticated. Use no_github=True to skip GitHub operations.",
                 )
 
         # Change to specified directory

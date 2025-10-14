@@ -36,7 +36,7 @@ init()
     required=False,
     envvar="JIRA_USER",
     help="JIRA user",
-)  # noqa: E501
+)
 @click.option(
     "-p",
     "--password",
@@ -46,21 +46,21 @@ init()
     confirmation_prompt=True,
     envvar="JIRA_PASSWORD",
     help="JIRA password",
-)  # noqa: E501
+)
 @click.option(
     "-v",
     "--verbose",
     is_flag=True,
     default=False,
     help="Switch between INFO and DEBUG logging modes",
-)  # noqa: E501
+)
 @click.option(
     "-f",
     "--fail",
     is_flag=True,
     default=False,
     help="Fail if no issue JIRA found",
-)  # noqa: E501
+)
 def cli(
     current_message: str,
     branch: str,
@@ -143,13 +143,13 @@ def match_issue(branch: str, verbose=False, fail=True) -> str:
     try:
         # Matches any unique issue code
         pattern = re.compile(
-            r"(^feature|^feat|^bugfix|^fix|^docs|^style|^refactor|^perf|^test|^chore)\/([A-Z]{3,5}-[0-9]+)",  # noqa: E501
+            r"(^feature|^feat|^bugfix|^fix|^docs|^style|^refactor|^perf|^test|^chore)\/([A-Z]{3,5}-[0-9]+)",
         )
         issue = re.search(pattern, branch).group(2)  # Extract issue code
         if verbose:
             print(colored("Issue number detected : {}.".format(issue), "green"))
 
-    except Exception:  # noqa: E722
+    except Exception:
         if verbose:
             traceback.print_exc()
         print(
@@ -312,7 +312,7 @@ def match_jira(
                     "red",
                 ),
             )
-    except Exception:  # noqa: E722
+    except Exception:
         if verbose:
             traceback.print_exc()
         print(

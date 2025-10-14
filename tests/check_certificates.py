@@ -31,7 +31,7 @@ except urllib3.exceptions.SSLError as e:
     print(e)
     #    sys.stderr.write("Failed to check certificate.  Message: \"%s\".\n" % (e.text));
     sys.exit(2)
-except Exception as e:  # noqa: ignore=E722
+except Exception:  # noqa: ignore=E722
     traceback.print_exc()
     print(
         colored(
@@ -66,7 +66,7 @@ except urllib3.exceptions.MaxRetryError as e:
     )
 except urllib3.exceptions.SSLError as e:
     print(e)
-except Exception as e:  # noqa: ignore=E722
+except Exception:  # noqa: ignore=E722
     traceback.print_exc()
     print(
         colored(
@@ -102,7 +102,7 @@ except urllib3.exceptions.MaxRetryError as e:
     )
 except urllib3.exceptions.SSLError as e:
     print(e)
-except Exception as e:  # noqa: ignore=E722
+except Exception:  # noqa: ignore=E722
     traceback.print_exc()
     print(
         colored(
@@ -133,7 +133,7 @@ except urllib3.exceptions.MaxRetryError as e:
     )
 except urllib3.exceptions.SSLError as e:
     print(e)
-except Exception as e:  # noqa: ignore=E722
+except Exception:  # noqa: ignore=E722
     traceback.print_exc()
     print(
         colored(

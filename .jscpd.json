@@ -1,24 +1,24 @@
 {
-  "threshold": 10,
-  "reporters": ["html", "markdown"],
-  "ignore": [
-    "**/node_modules/**",
-    "**/.git/**",
-    "**/.rbenv/**",
-    "**/.venv/**",
-    "**/.direnv/**",
-    "**/*reports/**",
-    "**/*cache*/**",
-    "**/*.json",
-    "**/*.yaml",
-    "**/*.yml",
-    "**/*.md",
-    "**/*.html",
-    "**/*.xml",
-    "**/.github/**",
-    "**/.idea/**",
-    "**/*.svg",
-    "**/target/**",
-    "templates/buildah*"
-  ]
+	"threshold": 10,
+	"reporters": ["html", "markdown"],
+	"ignore": [
+		"**/node_modules/**",
+		"**/.git/**",
+		"**/.rbenv/**",
+		"**/.venv/**",
+		"**/.direnv/**",
+		"**/*reports/**",
+		"**/*cache*/**",
+		"**/*.json",
+		"**/*.yaml",
+		"**/*.yml",
+		"**/*.md",
+		"**/*.html",
+		"**/*.xml",
+		"**/.github/**",
+		"**/.idea/**",
+		"**/*.svg",
+		"**/target/**",
+		"templates/buildah*"
+	]
 }

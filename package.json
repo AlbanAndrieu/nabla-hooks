@@ -1,74 +1,66 @@
 {
-  "name": "nabla-hooks",
-  "description": "Hooks sample",
-  "branchVersion": "^1.0.6",
-  "branchPattern": "1.0.*",
-  "version": "1.0.6",
-  "author": "Alban Andrieu <alban.andrieu@free.fr> (http://albandrieu.com)",
-  "main": "scripts.js",
-  "license": "MIT",
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://www.opensource.org/licenses/MIT"
-    }
-  ],
-  "pre-commit": [
-    "precommit"
-  ],
-  "engines": {
-    "node": ">=20.14.0",
-    "npm": ">=10.8.2",
-    "node-gyp": ">=3.0.3"
-  },
-  "engine-strict": true,
-  "browserslist": [
-    "last 1 version",
-    "> 1%",
-    "maintained node versions",
-    "not dead"
-  ],
-  "eslintConfig": {
-    "parserOptions": {
-      "ecmaVersion": 6
-    },
-    "plugins": [
-      "compat"
-    ],
-    "rules": {
-      "compat/compat": "warn"
-    }
-  },
-  "stylelint": {
-    "plugins": [
-      "stylelint-no-unsupported-browser-features"
-    ],
-    "rules": {
-      "plugin/no-unsupported-browser-features": true
-    },
-    "defaultSeverity": "warning"
-  },
-  "dependencies": {
-    "cli": "^1.0.1"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.34.0",
-    "@secretlint/secretlint-rule-preset-recommend": "^11.2.5",
-    "eslint": "^9.36.0",
-    "eslint-formatter-gitlab": "^6.0.1",
-    "markdown-toc": "^1.2.0",
-    "remark-cli": "^12.0.1",
-    "remark-lint": "^10.0.1",
-    "remark-preset-lint-recommended": "^7.0.1",
-    "typescript": "^5.9.2",
-    "typescript-eslint": "^8.46.1"
-  },
-  "scripts": {
-    "lint-md": "remark ."
-  },
-  "remarkConfig": {
-    "plugins": [
-      "remark-preset-lint-recommended"
-    ]
-  }
+	"name": "nabla-hooks",
+	"description": "Hooks sample",
+	"branchVersion": "^1.0.6",
+	"branchPattern": "1.0.*",
+	"version": "1.0.6",
+	"author": "Alban Andrieu <alban.andrieu@free.fr> (http://albandrieu.com)",
+	"main": "scripts.js",
+	"license": "MIT",
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "http://www.opensource.org/licenses/MIT"
+		}
+	],
+	"pre-commit": ["precommit"],
+	"engines": {
+		"node": ">=20.14.0",
+		"npm": ">=10.8.2",
+		"node-gyp": ">=3.0.3"
+	},
+	"engine-strict": true,
+	"browserslist": [
+		"last 1 version",
+		"> 1%",
+		"maintained node versions",
+		"not dead"
+	],
+	"eslintConfig": {
+		"parserOptions": {
+			"ecmaVersion": 6
+		},
+		"plugins": ["compat"],
+		"rules": {
+			"compat/compat": "warn"
+		}
+	},
+	"stylelint": {
+		"plugins": ["stylelint-no-unsupported-browser-features"],
+		"rules": {
+			"plugin/no-unsupported-browser-features": true
+		},
+		"defaultSeverity": "warning"
+	},
+	"dependencies": {
+		"cli": "^1.0.1"
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.34.0",
+		"@secretlint/secretlint-rule-preset-recommend": "^11.2.5",
+		"eslint": "^9.36.0",
+		"eslint-formatter-gitlab": "^6.0.1",
+		"markdown-toc": "^1.2.0",
+		"remark-cli": "^12.0.1",
+		"remark-lint": "^10.0.1",
+		"remark-preset-lint-recommended": "^7.0.1",
+		"typescript": "^5.9.2",
+		"typescript-eslint": "^8.46.1"
+	},
+	"scripts": {
+		"lint-md": "remark ."
+	},
+	"remarkConfig": {
+		"plugins": ["remark-preset-lint-recommended"]
+	}
 }

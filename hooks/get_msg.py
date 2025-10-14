@@ -27,14 +27,14 @@ __all__ = ["match_msg"]
     is_flag=True,
     default=True,
     help="Jira check",
-)  # noqa: E501
+)
 @click.option(
     "-u",
     "--user",
     required=False,
     envvar="JIRA_USER",
     help="JIRA user",
-)  # noqa: E501
+)
 @click.option(
     "-p",
     "--password",
@@ -44,14 +44,14 @@ __all__ = ["match_msg"]
     confirmation_prompt=True,
     envvar="JIRA_PASSWORD",
     help="JIRA password",
-)  # noqa: E501
+)
 @click.option(
     "-v",
     "--verbose",
     is_flag=True,
     default=False,
     help="Switch between INFO and DEBUG logging modes",
-)  # noqa: E501
+)
 def cli(
     commit_msg_filepath,
     commit_type: str = "",

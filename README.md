@@ -1,11 +1,11 @@
 <!-- markdown-link-check-disable-next-line -->
-# [![Nabla](https://bababou.albandrieu.com/nabla/index/assets/nabla/nabla-4.png)](https://github.com/AlbanAndrieu)  nabla-hooks
+
+# [![Nabla](https://bababou.albandrieu.com/nabla/index/assets/nabla/nabla-4.png)](https://github.com/AlbanAndrieu) nabla-hooks
 
 Nabla custom git hooks
 
 [![License](http://img.shields.io/:license-apache-blue.svg?style=flat-square)](http://www.apache.org/licenses/LICENSE-2.0.html)
 [![Gitter](https://badges.gitter.im/nabla-hooks/Lobby.svg)](https://gitter.im/nabla-hooks/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=nabla%3Anabla-hooks&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=nabla%3Anabla-hooks)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/AlbanAndrieu/nabla-hooks.svg)](https://github.com/AlbanAndrieu/nabla-hooks/pulls)
@@ -72,17 +72,19 @@ pipenv-poetry-migrate -f Pipfile -t pyproject.toml --no-use-group-notation
 
 ## [Requirements](#table-of-contents)
 
-  This hooks requires the following to run:
+This hooks requires the following to run:
 
 <!-- markdown-link-check-disable-next-line -->
-  * [jira](https://pypi.org/project/jira/)
+
+- [jira](https://pypi.org/project/jira/)
 
 See requirements.txt for mandatory packages.
 
-  This pre-commit hooks requires the following to run:
+This pre-commit hooks requires the following to run:
 
 <!-- markdown-link-check-disable-next-line -->
-  * [pre-commit](http://pre-commit.com)
+
+- [pre-commit](http://pre-commit.com)
 
 ## [Install nabla-hooks as a developer](#table-of-contents)
 
@@ -169,9 +171,7 @@ Run `pre-commit run --all-files`
 Run `SKIP=flake8 git commit -am 'Add key'`
 Run `git commit -am 'Add key' --no-verify`
 
-
 ### Override global environment variable
-
 
 #### Login
 
@@ -179,8 +179,8 @@ See [jira](https://jira.readthedocs.io/en/master/examples.html#authentication)
 
 ##### With user/pass
 
-
 <!-- markdown-link-check-disable -->
+
 ```bash
 export JIRA_USER=aandrieu
 export JIRA_PASSWORD=XXX
@@ -188,6 +188,7 @@ export JIRA_URL=https://localhost/jira
 export JIRA_CERT_PATH=/etc/ssl/certs/NABLA-CA-1.crt
 export JIRA_CERT_PATH=/etc/ssl/certs/ca-certificates.crt
 ```
+
 <!-- markdown-link-check-enable -->
 
 ##### With email/token
@@ -225,9 +226,9 @@ The `/usr/share/git-core/templates/` directory on Linux and `C:/Program Files (x
 
 The `.git/hooks/` directory is the directory in which the hooks templates are being copied to.
 
-The hooked are being copied from the `[...]/share/git-core/templates/` directory.  There are other types of templates but they are out of scope for this post.
+The hooked are being copied from the `[...]/share/git-core/templates/` directory. There are other types of templates but they are out of scope for this post.
 
-Note:  If you change the templates directory the hooks directory  must be a subdirectory of the templates directory. Do not set the templates directory to the desired hooks directory instead.
+Note: If you change the templates directory the hooks directory must be a subdirectory of the templates directory. Do not set the templates directory to the desired hooks directory instead.
 
 Run
 
@@ -242,6 +243,7 @@ git config --global init.templatedir /workspace/users/albandrieu30/nabla-hooks/
 See [setup-cfg](http://sametmax.com/vive-setup-cfg-et-mort-a-pyproject-toml/)
 
 ### Build a source distribution (a tar archive of all the files needed to build and install the package):
+
 `python3 setup.py sdist`
 Builds wheels:
 `python3 setup.py bdist_wheel`
@@ -286,6 +288,7 @@ python
 
 ```python
 from hooks import get_msg
+
 match_msg
 ```
 
@@ -338,9 +341,8 @@ pdm run flake8
 
 ## [Update README.md](#table-of-contents)
 
-
-  * [github-markdown-toc](https://github.com/jonschlinkert/markdown-toc)
-  * With [github-markdown-toc](https://github.com/Lucas-C/pre-commit-hooks-nodejs)
+- [github-markdown-toc](https://github.com/jonschlinkert/markdown-toc)
+- With [github-markdown-toc](https://github.com/Lucas-C/pre-commit-hooks-nodejs)
 
 ```bash
 npm install --save markdown-toc
@@ -356,7 +358,6 @@ pre-commit run markdown-toc
 
 Check syntax
 [remark-lint](https://github.com/remarkjs/remark-lint#cli)
-
 
 ```bash
 npm run lint-md

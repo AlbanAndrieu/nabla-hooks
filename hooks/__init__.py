@@ -20,4 +20,5 @@ del get_versions
 __all__ = ("__version__", "signing_uuid")
 
 from . import _version
-__version__ = _version.get_versions()['version']
+
+__version__ = _version.get_versions()["version"]

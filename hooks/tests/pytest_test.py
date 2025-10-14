@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import re
 import sys
 
@@ -38,7 +37,7 @@ def test_get_user_nok():
 def test_get_jira_url():
     my_url = script2.get_jira_url()
     print(my_url)
-    # url_regex = re.compile(r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))", re.IGNORECASE) # noqa: E501
+    # url_regex = re.compile(r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))", re.IGNORECASE)
     url_regex = re.compile(r"^\w+")
     r1 = re.findall(url_regex, "https://localhost/jira")
     print(r1)
