@@ -88,7 +88,7 @@ jobs:
           run-install: false
 
       - name: Set up Poetry
-        uses: abatilo/actions-poetry@v3
+        uses: abatilo/actions-poetry@v4
         with:
           poetry-version: latest
 
