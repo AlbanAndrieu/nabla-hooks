@@ -6,4 +6,4 @@ extend = "./pyproject.toml"
 line-length = 120
 
 # Never enforce `E501` (line length violations).
-ignore = ["E501"]
+lint.ignore = ["E501", "E203", "RUF012"]

@@ -1,7 +1,7 @@
 # vi: ft=yaml.ansible.jinja2
 ---
 fail_fast: true
-minimum_pre_commit_version: 3.7.1
+minimum_pre_commit_version: 4.2.0
 exclude: |
   (?x)^(
       .*\{\{.*\}\}.*|     # Exclude any files with cookiecutter variables
@@ -16,7 +16,7 @@ exclude: |
   )$
 ci:
   # format compatible with commitlint
-  autoupdate_commit_msg: 'chore: pre-commit autoupdate'
+  autoupdate_commit_msg: "chore: pre-commit autoupdate"
   autoupdate_schedule: monthly
   autofix_commit_msg: |
     chore: auto fixes from pre-commit.com hooks
@@ -30,21 +30,15 @@ default_install_hook_types:
   - commit-msg
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks.git
-    # pre-commit-hooks is not working on both environment
-    # You will have to switch
-    # pre-commit-hooks.git from v2.1.0 to v2.4.0
-    #    rev: v2.1.0 # ok python3.6  # 18.04.3
-    #    rev: v2.2.3 # ok python3.6  # 19.04 but failing on 18.04.3
-    #    rev: v2.4.0 # ok python3.6 on Ubuntu 18.04 AND python3.7 on Ubuntu 19.04
-    #    rev: v3.4.0 # ok python3.6 on Ubuntu 18.04 AND python3.7 on Ubuntu 19.04 AND python3.8 on Ubuntu 20.04
-    rev: v6.0.0  # ok python3.6 on Ubuntu 18.04 AND python3.7 on Ubuntu 19.04 AND python3.8 on Ubuntu 20.04
+    rev: v6.0.0
     hooks:
       - id: trailing-whitespace
         args: [--markdown-linebreak-ext=md]
       - id: check-ast
       - id: end-of-file-fixer
       - id: check-added-large-files
-        args: ["--maxkb=123"]
+        name: "🌳 git · Block large file commits"
+        args: [--maxkb=123]
         exclude: >
           (?x)^(
             .pnp.cjs|
@@ -57,6 +51,9 @@ repos:
           )$
       - id: check-builtin-literals
       - id: check-case-conflict
+        name: "📁 filesystem/📝 names · Check case sensitivity"
+      - id: check-illegal-windows-names
+        name: "📁 filesystem/📝 names · Validate Windows filenames"
       - id: check-docstring-first
       - id: check-executables-have-shebangs
         name: "📁 filesystem/⚙️ exec · Verify shebang preset"
@@ -70,10 +67,11 @@ repos:
               .direnv|
           )$
       - id: check-shebang-scripts-are-executable
+        name: "📁 filesystem/⚙️ exec · Verify script permissions"
       - id: check-json
         exclude: >
           (?x)^(
-            ^.vscode/|
+            ^.vscode/.*|
             .devcontainer/devcontainer.json|
           )$
       - id: check-symlinks
@@ -88,7 +86,16 @@ repos:
             k8s/.*|
           )$
       - id: check-symlinks
+        name: "📁 filesystem/🔗 symlink · Check symlink validity"
+      - id: destroyed-symlinks
+        name: "📁 filesystem/🔗 symlink · Detect broken symlinks"
       - id: check-merge-conflict
+        name: "🌳 git · Detect conflict markers"
+      - id: forbid-new-submodules
+        name: "🌳 git · Prevent submodule creation"
+      # - id: no-commit-to-branch
+      #   name: "🌳 git · Protect main branches"
+      #   args: [--branch, main, --branch, master, --branch, release/*]
       - id: debug-statements
         exclude: ^.cache/
       - id: detect-private-key
@@ -110,8 +117,6 @@ repos:
           (?x)^(
               tests/.*|
           )$
-#      - id: no-commit-to-branch
-#        args: [--branch, main, --branch, master, --branch, release/*]
       - id: end-of-file-fixer
       - id: fix-byte-order-marker
       - id: requirements-txt-fixer
@@ -119,8 +124,13 @@ repos:
       - id: file-contents-sorter
       - id: mixed-line-ending
         args: [--fix=lf]
+  - repo: https://github.com/jorisroovers/gitlint
+    rev: v0.19.1
+    hooks:
+      - id: gitlint
+        name: "🌳 git · Lint"
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.20.0
+    rev: v3.21.0
     hooks:
       - id: pyupgrade
   # - repo: https://github.com/psf/black
@@ -133,24 +143,41 @@ repos:
   #       # https://pre-commit.com/#top_level-default_language_version
   #       # language_version: python3.12
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.13.3
+    rev: v0.14.0
     hooks:
       # Run the linter.
       - id: ruff-check
         name: "🐍 python · Check with Ruff"
         args: [ --fix ]
+        exclude: >
+          (?x)^(
+              ccds/hook_utils/dependencies.py|
+          )$
       # Run the formatter.
       - id: ruff-format
         name: "🐍 python · Format with Ruff"
+        exclude: >
+          (?x)^(
+              ccds/hook_utils/dependencies.py|
+          )$
       # STRICT
       - id: ruff
+        name: "🐍 python · Fix with Ruff"
         args: [ --fix ]
+        exclude: >
+          (?x)^(
+              ccds/hook_utils/dependencies.py|
+          )$
   # STRICT
   - repo: https://github.com/RobertCraigie/pyright-python
     rev: v1.1.406
     hooks:
       - id: pyright
         name: "🐍 python · Check types"
+        exclude: >
+          (?x)^(
+              ccds/hook_utils/.*|
+          )$
   - repo: https://github.com/abravalheri/validate-pyproject
     rev: v0.24.1
     hooks:
@@ -178,11 +205,11 @@ repos:
     hooks:
       - id: validate_manifest
   - repo: https://github.com/asottile/add-trailing-comma
-    rev: v3.2.0
+    rev: v4.0.0
     hooks:
       - id: add-trailing-comma
   - repo: https://github.com/ansible-community/ansible-lint.git
-    rev: v25.9.1
+    rev: v25.9.2
     hooks:
       - id: ansible-lint
         files: \.(yaml|yml)$
@@ -209,6 +236,7 @@ repos:
       # Choose one of:
       # - id: shfmt         # native (requires Go to build)
       - id: shfmt-docker  # Docker image (requires Docker to run)
+        name: "🐚 shell · Format shell scripts"
   - repo: https://github.com/detailyang/pre-commit-shell
     rev: 1.0.5
     hooks:
@@ -235,22 +263,6 @@ repos:
     hooks:
       - id: checkmake
         name: "🐮 Makefile · Lint Makefile"
-  - repo: https://github.com/PyCQA/bandit
-    rev: 1.8.6
-    hooks:
-      - id: bandit
-        args: [-c, .bandit.yml]
-        exclude: >
-          (?x)^(
-            noxfile.py|
-            versioneer.py|
-            hooks/_version.py|
-            hooks/tests/|
-          )$
-  - repo: https://github.com/IamTheFij/ansible-pre-commit
-    rev: v1.0.1
-    hooks:
-      - id: encryption-check
   - repo: https://github.com/hukkin/mdformat
     rev: 0.7.22
     hooks:
@@ -266,14 +278,36 @@ repos:
     hooks:
       - id: markdownlint
         name: "📝 markdown · Lint markdown"
+  - repo: https://github.com/biomejs/pre-commit
+    rev: "v2.2.6"
+    hooks:
+      - id: biome-check
+        name: "🟨 javascript · Lint, format, and safe fixes with Biome"
+        additional_dependencies: ["@biomejs/biome@1.9.4"]
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.34.1
+    hooks:
+      - id: check-github-workflows
+        name: "🐙 github-actions · Validate gh workflow files"
+        args: ["--verbose"]
+      - id: check-taskfile
+        name: "✅ taskfile · Validate Task configuration"
   - repo: https://github.com/Lucas-C/pre-commit-hooks-nodejs
     rev: v1.1.2
     hooks:
       - id: htmllint
+        name: "📝 html · Lint html"
         args: [--config, .eslintrc.json]
-        # args: [--config, .htmlhintrc]
         files: ^src/
+      - id: htmlhint
+        name: "📝 html · Hint html"
+        args: [--config, .htmlhintrc]
+        exclude: >
+          (?x)^(
+              installer/.*|
+          )$
       - id: markdown-toc
+        name: "📝 markdown · Toc markdown"
         args: [--maxdepth, "3", -i]
   - repo: https://github.com/hadolint/hadolint
     rev: v2.14.0
@@ -283,6 +317,37 @@ repos:
     rev: v0.19.1
     hooks:
       - id: gitlint
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.8.6
+    hooks:
+      - id: bandit
+        name: "🔒 security · Detect security issues"
+        args: [-c, .bandit.yml]
+        exclude: >
+          (?x)^(
+            noxfile.py|
+            versioneer.py|
+            hooks/_version.py|
+            hooks/tests/|
+            ccds/hook_utils/configure_vcs.py|
+            ccds/hook_utils/configure_gh.py|
+            ccds/hook_utils/configure_ssh.py|
+            ccds/hook_utils/custom_config.py|
+          )$
+  - repo: https://github.com/IamTheFij/ansible-pre-commit
+    rev: v1.0.1
+    hooks:
+      - id: encryption-check
+        name: "🔒 security · Detect encryption"
+        exclude: >
+          (?x)^(
+              .github/workflows/vault.yml|
+              infra/terraform/nomad/jobs/vault-backup.nomad|
+              infra/terraform/vault/.*|
+              infra/terraform/nomad/jobs/example/vault-backup.nomad|
+              infra/terraform/nomad/jobs/files/vector/vault-logs-vector.yml|
+              infra/terraform/nomad/jobs/vault-logs-vector.nomad|
+          )$
   - repo: https://github.com/zricethezav/gitleaks
     rev: v8.28.0
     hooks:
@@ -327,14 +392,15 @@ repos:
   #   hooks:
   #     - id: gitleaks-docker
   #       entry: zricethezav/gitleaks protect --verbose --redact --staged
-  # - repo: https://github.com/commitizen-tools/commitizen
-  #   rev: v4.9.1  # Replace with latest tag
-  #   hooks:
-  #     - id: commitizen
-  #     - id: commitizen-branch
-  #       stages: [pre-push]
-  # - repo: https://github.com/oxsecurity/megalinter
-  #   rev: v9.0.1
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v4.9.1 # Replace with latest tag
+    hooks:
+      - id: commitizen
+        name: "🌳 git · Validate commit message"
+        stages: [commit-msg]
+        additional_dependencies: [cz-conventional-gitmoji]
+      - id: commitizen-branch
+        stages: [pre-push]
   - repo: https://github.com/oxsecurity/megalinter
     rev: v9.0.1
     hooks:
@@ -355,7 +421,27 @@ repos:
           - "'LOG_LEVEL=warning'"
           - --filesonly
           - --flavor
-          - "python"
+          - "python"  # - repo: https://github.com/oxsecurity/megalinter
+  #   rev: v9.0.1
+  #   hooks:
+  #     - id: megalinter-incremental  # Faster, less thorough
+  #       stages:
+  #         - pre-commit
+  #       args:
+  #         - mega-linter-runner
+  #         - --containername
+  #         - "megalinter-incremental"
+  #         - --remove-container
+  #         # - --fix
+  #         # - --env
+  #         # - "'APPLY_FIXES=all'"
+  #         - --env
+  #         - "'CLEAR_REPORT_FOLDER=true'"
+  #         - --env
+  #         - "'LOG_LEVEL=warning'"
+  #         - --filesonly
+  #         - --flavor
+  #         - "python"
   # - repo: local
   #   hooks:
   #     - id: lint
@@ -373,3 +459,20 @@ repos:
   #       entry: python3 -m nox -rs test
   #       language: system
   #       pass_filenames: false
+  - repo: local
+    hooks:
+      - id: pytest-collect
+        name: 🧪 test · Validate test formatting
+        entry: ./.venv/bin/pytest tests
+        language: system
+        types: [python]
+        args: ["--collect-only"]
+        pass_filenames: false
+      # STRICT
+      - id: pytest-fast
+        name: 🧪 test · Run fast tests
+        entry: ./.venv/bin/pytest tests
+        language: system
+        types: [python]
+        args: ["--max-timeout=3"]
+        pass_filenames: false

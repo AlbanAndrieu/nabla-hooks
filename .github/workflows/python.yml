@@ -8,7 +8,7 @@ on:
     branches:
       - master
   pull_request:
-      types: [opened, synchronize, reopened]
+    types: [opened, synchronize, reopened]
 
 jobs:
   build:
@@ -41,10 +41,10 @@ jobs:
           echo "pip install basic DONE"
           if [[ -f requirements.txt && -f requirements.testing.txt ]]; then pip install -r requirements.txt -r requirements.testing.txt; fi
           echo "pip install DONE"
-          
+
       - name: Install poetry dependencies
-        run: |          
-          source venv/bin/activate        
+        run: |
+          source venv/bin/activate
           poetry --version
           poetry lock
           echo "poetry lock DONE"
@@ -86,12 +86,21 @@ jobs:
           python3 setup.py install
           echo "setup.py install DONE"
           pytest --cache-clear --setup-show tests/test_package.py
-          python -m pytest --cov=hooks --cov-fail-under=30
+          python -m pytest --cov=hooks --cov-fail-under=30 --junit-xml=junit.xml -o junit_family=xunit1
 
       - name: Test with tox
         run: |
           source venv/bin/activate
           tox
+
+      - name: Upload Test Results to Trunk.io
+        if: ${{ !cancelled() }}   # Upload the results even if the tests fail
+        continue-on-error: true   # don't fail this job if the upload fails
+        uses: trunk-io/analytics-uploader@v1
+        with:
+          junit-paths: "**/*.xml"
+          org-slug: alban
+          token: $TRUNK_API_TOKEN
 
   sonarcloud:
     runs-on: ubuntu-latest
@@ -102,13 +111,7 @@ jobs:
           fetch-depth: 0
       - name: SonarCloud Scan
         # You may pin to the exact commit or the version.
-        # uses: SonarSource/sonarcloud-github-action@de2e56b42aa84d0b1c5b622644ac17e505c9a049
-        uses: sonarsource/sonarcloud-github-action@v5.0.0
-        with:
-          # Additional arguments to the sonarcloud scanner
-          args:  # optional
-          # Set the sonar.projectBaseDir analysis property
-          projectBaseDir:  # optional, default is .
+        uses: SonarSource/sonarqube-scan-action@@v6.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

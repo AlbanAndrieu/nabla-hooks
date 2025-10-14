@@ -12,16 +12,13 @@ click = ">=8.1.3"
 click-completion = ">=0.5.2"
 colorama = ">=0.4.6" # awscli needed
 cryptography = ">=41.0.3"
-#filemagic = ">=1.6"
 fastapi = {version = ">=0.115.3", extras = ["standard"]}
+fastapi-featureflags = ">=0.4.7"
 git-url-parse = ">=1.2.2"
-gitpython = ">=3.1.29"
+gitpython = ">=3.1.33"
 jira = ">=3.8.0"
 podmena = ">=0.6.1"
 pyyaml = ">=6.0"
-# six = ">=1.16.0"
-# pydantic = ">=1.8.0,<2.0.0"
-# prometheus-fastapi-instrumentator = ">=5.10.0"
 mypy = ">=1.16.0"
 opentelemetry-distro = ">=0.49b1"
 opentelemetry-exporter-otlp = ">=1.30.0"
@@ -40,17 +37,15 @@ uvicorn = {version = ">=0.20.0", extras = ["standard"]}
 
 [dev-packages]
 ansible-cmdb = ">=1.31"
-ansible-core = ">=2.14.14"
-ansible-lint = {extras = ["yamllint"], version = ">=6.0.2"} # 6.17.2
+ansible-core = ">=2.16.8"
+ansible-lint = ">=25.8.2"
 ansible-playbook-grapher = ">=2.9.2"
 # NOK awscli = ">=1.27.88"
 # NOK awscli-plugin-endpoint = ">=0.4"
-autopep8 = ">=2.0.0"
-bandit = ">=1.7.4"
+autopep8 = ">=2.0.1"
+bandit = ">=1.8.3"
 black = {version = ">=23.7.0", extras = ["d"]}
-checkov = ">=2.3.115" # 3.2.424
-#conan = ">=1.31.0"
-#coverage >= 4.4.1, < 5
+checkov = ">=2.3.115"
 flake8 = ">=6.1.0"
 flake8-formatter-junit-xml = ">=0.0.6"
 #flake8-polyfill = ">=1.0.2"
@@ -58,10 +53,11 @@ flake8-formatter-junit-xml = ">=0.0.6"
 httpx = ">=0.23.3" # For testing fastAPI only
 #identify[license] = ">=1.5.9"
 #identify = {version = ">=2.5.9", extras = ["license"]}
-molecule = ">=3.6.1"
+molecule = ">=5.1.0"
+mypy = ">=1.16.0"
 nox = ">=2023.4.22"
 packaging = ">=24.2"
-poetry = ">=1.8.2"
+poetry = ">=2.2.1"
 pep8 = ">=1.7.1"
 pep8-naming = ">=0.13.2"
 # pip-upgrader = ">=1.4.15"
@@ -79,13 +75,13 @@ pytest-order = ">=1.0.1"
 # pip install --upgrade pytest-testinfra
 pytest-testinfra = ">=6.4.0"
 readme-renderer = {version = ">=37.3", extras = ["md"]}
-ruff = ">=0.4.4"
+ruff = ">=0.5.1"
+sqlfluff = ">=3.1.0"
 selenium = ">=4.6.0"
 semgrep = ">=1.15.0"
 setup-cfg-fmt = ">=2.2.0"
 #setuptools = ">=41.0.0" # See https://github.com/ansible/molecule/issues/2350
 setuptools = ">=80.7.1"
-#setuptools-scm = ">=5.0.2"
 sphinx = ">=7.1.2"
 # testinfra = ">=6.0.0"  # pip uninstall testinfra
 tox = ">=3.27.1"

@@ -4,9 +4,9 @@ update: insecure
 pin: false
 schedule: "every week"
 assignees:
- - AlbanAndrieu
+  - AlbanAndrieu
 search: false
 requirements:
- - setup.cfg:
+  - setup.cfg:
     pin: false
     update: insecure

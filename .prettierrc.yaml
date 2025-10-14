@@ -1,5 +1,5 @@
 ---
 overrides:
-    - files: '*.md'
-      options:
-          tabWidth: 4
+  - files: '*.md'
+    options:
+      tabWidth: 2
