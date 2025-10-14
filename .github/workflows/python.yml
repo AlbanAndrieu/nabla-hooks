@@ -21,7 +21,7 @@ jobs:
       JIRA_USER: aandrieu
       JIRA_PASSWORD: XXX
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0
@@ -105,7 +105,7 @@ jobs:
   sonarcloud:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0
