@@ -1,4 +1,5 @@
 """Test the API."""
+
 from typing import Dict
 
 from fastapi.testclient import TestClient

@@ -4,10 +4,18 @@
   "branchVersion": "^1.0.6",
   "branchPattern": "1.0.*",
   "version": "1.0.6",
+  "author": "Alban Andrieu <alban.andrieu@free.fr> (http://albandrieu.com)",
+  "main": "scripts.js",
+  "license": "MIT",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/MIT"
+    }
+  ],
   "pre-commit": [
     "precommit"
   ],
-  "license": "UNLICENSED",
   "engines": {
     "node": ">=20.14.0",
     "npm": ">=10.8.2",

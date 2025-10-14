@@ -2,8 +2,48 @@
 # Extend the `pyproject.toml` file in the parent directory.
 extend = "./pyproject.toml"
 
+exclude = [
+    ".git",
+    "__pycache__",
+    "build",
+    "dist",
+    "docs",
+    ".eggs",
+    ".tox",
+    ".venv",
+    ".direnv",
+    "noxfile.py",
+    "nabla/panda/",
+    "nabla/loki/influxdb.py",
+    "nabla/_version.py",
+]
 # But use a different line length.
-line-length = 120
+line-length = 180
 
-# Never enforce `E501` (line length violations).
-lint.ignore = ["E501", "E203", "RUF012"]
+[lint]
+ignore = ["E501", "E203", "RUF012"]
+select = [
+    "B",
+    "C",
+    "E",
+    "F",
+    "W",
+    "S",
+    "A",
+    "LOG",
+    "RUF",
+    "PLC",
+    "PLE",
+    "PLW",
+    "C90"
+]
+
+[lint.mccabe]
+max-complexity = 10
+
+[lint.per-file-ignores]
+"tests/*" = ["S101"]
+"nabla/tools/*" = ["S602", "S607"]
+
+[format]
+line-ending = "lf"

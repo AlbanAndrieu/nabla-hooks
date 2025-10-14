@@ -3,8 +3,6 @@ from setuptools import find_packages
 from setuptools import setup
 
 import versioneer
-# import hooks
-# from hooks._version import get_versions
 
 with open("requirements.txt") as f:
     requirements = f.read().splitlines()
@@ -17,10 +15,6 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name="nabla-hooks",
-    # version=hooks.__version__,
-    # version=get_versions()['version'],
-    # version="1.0.6",
-    # version=os.getenv("PACKAGE_VERSION"),
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
     packages=find_packages(),

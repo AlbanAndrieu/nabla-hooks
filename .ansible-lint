@@ -5,10 +5,11 @@ exclude_paths:
   - .direnv/
   - .github/
   - .gitlab/
+  - megalinter-reports/*
+  - .node_cache/
   - .gitlab-ci.yml
-  - megalinter-reports/
 # parseable: true
-# quiet: true
+quiet: false
 # rulesdir:
 #   - ./rule/directory/
 skip_list:
@@ -21,7 +22,7 @@ skip_list:
 # tags:
 #   - run_this_tag
 use_default_rules: true
-# verbosity: 1
+verbosity: 1
 
 # Offline mode disables installation of requirements.yml
 offline: true

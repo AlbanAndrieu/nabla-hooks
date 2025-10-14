@@ -1,7 +1,6 @@
 # Home made custom exception
 
 .editorconfig
-.env.secrets
 .dvc/config
 **/*.log
 docker-dive-stats.json
@@ -10,6 +9,40 @@ results.sarif
 # reports/
 megalinter-reports/
 output/
+
+.netlify/
+
+# dotenv environment variable files
+
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.secrets
+.env.local
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+
+report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
+
+# Runtime data
+
+pids
+_.pid
+_.seed
+\*.pid.lock
+
+# Folder view configuration files
+.DS_Store
+Desktop.ini
+
+# Thumbnail cache files
+._*
+Thumbs.db
+
+# Files that might appear on external disks
+.Spotlight-V100
+.Trashes
 
 # Generate files as they might contains credentials
 /pip.conf
@@ -39,7 +72,6 @@ _minted-*/
 # To avoid adding encrypted files with git add -u or -a
 
 .checkstyle
-.DS_Store
 
 *~
 *.swp
@@ -69,6 +101,7 @@ bower_components/
 npm/
 .node_cache/
 .node_tmp/
+.nuxt/
 
 # sonar
 .scannerwork/
@@ -225,7 +258,6 @@ cython_debug/
 # Overall ignored files
 local/
 ./*.ipynb
-.python-version
 
 # Rope project settings
 .ropeproject
@@ -244,10 +276,14 @@ local/
 
 # Logs
 logs
+_.log
 *.log
 npm-debug.log*
+npm-debug.log_
 yarn-debug.log*
 yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
 
 # Runtime data
 pids
@@ -283,11 +319,19 @@ jspm_packages/
 # Typescript v1 declaration files
 typings/
 
+# TypeScript cache
+
+\*.tsbuildinfo
+
 # Optional npm cache directory
 .npm
 
 # Optional eslint cache
 .eslintcache
+
+# Optional stylelint cache
+
+.stylelintcache
 
 # Optional REPL history
 .node_repl_history
@@ -302,9 +346,6 @@ typings/
 
 # Compiled class file
 *.class
-
-# Log file
-*.log
 
 # BlueJ files
 *.ctxt
@@ -352,3 +393,8 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 #.mvn/timing.properties
+
+# wrangler project
+
+.dev.vars
+.wrangler/

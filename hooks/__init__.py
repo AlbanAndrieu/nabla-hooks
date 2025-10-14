@@ -3,7 +3,7 @@
 This module allow to customize git hooks.
 """
 
-# import hooks.get_jira  # noqa: F401
+# import hooks.get_jira
 import uuid
 
 
@@ -18,3 +18,6 @@ __version__ = get_versions()["version"]
 del get_versions
 
 __all__ = ("__version__", "signing_uuid")
+
+from . import _version
+__version__ = _version.get_versions()['version']

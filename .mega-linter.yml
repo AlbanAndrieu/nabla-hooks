@@ -1,11 +1,23 @@
 ---
+# yamllint disable rule:line-length
 # Configuration file for MegaLinter
-# See all available variables at https://oxsecurity.github.io/megalinter/configuration/ and in linters documentation
-
-APPLY_FIXES: none  # all, none, or list of linter keys
+# See all available variables at https://megalinter.io/latest/config-file/ and in linters documentation
+APPLY_FIXES: all  # all, none, or list of linter keys
 DEFAULT_BRANCH: main  # Usually master or main
 # ENABLE: # If you use ENABLE variable, all other languages/formats/tooling-formats will be disabled by default
-# ENABLE_LINTERS: # If you use ENABLE_LINTERS variable, all other linters will be disabled by default
+#   - PYTHON, BASH
+ENABLE_LINTERS:  # If you use ENABLE_LINTERS variable, all other linters will be disabled by default
+  - REPOSITORY_SECRETLINT
+  - REPOSITORY_GITLEAKS
+  - REPOSITORY_TRIVY
+  # - PYTHON_PYRIGHT
+  # - TERRAFORM_TERRASCAN
+  - BASH_SHELLCHECK
+  - MAKEFILE_CHECKMAKE
+  - ANSIBLE_ANSIBLE_LINT
+  - REPOSITORY_GIT_DIFF
+  - DOCKERFILE_HADOLINT
+  - JUPYTER_JUPYFMT
 DISABLE:
   - CLOUDFORMATION
   # - COPYPASTE  # Uncomment to disable checks of abusive copy-pastes
@@ -17,21 +29,31 @@ DISABLE:
   - YAML
   - TEKTON
   - SPELL_LYCHEE
+  # - PYTHON
+DISABLE_ERRORS_LINTERS:
+  - COPYPASTE_JSCPD
 DISABLE_LINTERS:
   # - JSON_PRETTIER
   # - JSON_JSONLINT
   # - DOCKERFILE_HADOLINT
+  - PYTHON_MYPY
+  - PYTHON_ISORT
+  - REPOSITORY_CHECKOV
   - REPOSITORY_DEVSKIM
-  - REPOSITORY_TRIVY
+  - REPOSITORY_DUSTILOCK
+  # - REPOSITORY_TRIVY
+  - REPOSITORY_TRIVY_SBOM
   - REPOSITORY_SYFT
+  - REPOSITORY_KICS
+  - REPOSITORY_GRYPE
+  - REPOSITORY_TRUFFLEHOG
+  # - RST_RST_LINT
+  - RST_RSTCHECK
   - TERRAFORM_TERRAGRUNT
   - TERRAFORM_TERRASCAN
   - TERRAFORM_KICS
-  - PYTHON_MYPY
-  - PYTHON_PYRIGHT
-  - PYTHON_PYLINT
-  - JAVASCRIPT_STANDARD  # Using JAVASCRIPT_ES
 IGNORE_GITIGNORED_FILES: true
+# yamllint disable-line rule:line-length
 FILTER_REGEX_EXCLUDE: (megalinter-reports/|\.automation/test|\.automation/generated|\.github/workflows|\.venv/|\.direnv/|\.mypy_cache/|docs/javascripts|docs/overrides|docs/json-schemas|flavors|clj-kondo|TEMPLATES|tests)
 JSON_JSONLINT_FILTER_REGEX_EXCLUDE: (\.vscode/)
 YAML_YAMLLINT_FILTER_REGEX_EXCLUDE: (templates/\.mega-linter\.yml)
@@ -43,18 +65,56 @@ MARKDOWN_MARKDOWN_LINK_CHECK_DISABLE_ERRORS: true
 SPELL_MISSPELL_FILTER_REGEX_EXCLUDE: (\.automation/generated|docs/descriptors)
 DOCKERFILE_HADOLINT_ARGUMENTS: --ignore DL3003 --ignore DL3007 --ignore DL3013 --ignore DL3016 --ignore DL3018 --ignore DL3028 --ignore DL4001 --ignore DL4006 --ignore
   SC2015 --ignore SC2016 --ignore SC2039 --ignore SC2086 --ignore SC1091
-REPOSITORY_DEVSKIM_DISABLE_ERRORS_IF_LESS_THAN: 10
-REPOSITORY_DEVSKIM_ARGUMENTS: --severity critical,important --ignore-globs **/.git/**,**/bin/**,.mypy_cache/**,**/tests/**,**/README.md
-REPOSITORY_TRIVY_ARGUMENTS: --security-checks vuln,config,secret --vuln-type os,library --ignore-unfixed --skip-dirs .direnv --skip-dirs .venv --skip-files pip.conf --skip-files Pipfile
+DOCKERFILE_HADOLINT_DISABLE_ERRORS: false
+DOCKERFILE_HADOLINT_DISABLE_ERRORS_IF_LESS_THAN: 2
 REPOSITORY_DEVSKIM_DISABLE_ERRORS: true
+REPOSITORY_DEVSKIM_DISABLE_ERRORS_IF_LESS_THAN: 10
+REPOSITORY_DEVSKIM_ARGUMENTS: --severity critical,important --ignore-globs **/.git/**,**/bin/**,.mypy_cache/**,**/tests/**,**/README.md,.npm/**
+REPOSITORY_TRIVY_ARGUMENTS: --scanners vuln,misconfig,secret,license --vuln-type os,library --ignore-unfixed --ignorefile .trivyignore.yaml --skip-dirs .direnv --skip-dirs .venv --skip-dirs code/.venv --skip-dirs megalinter-reports --skip-dirs node_modules/cpu-features --skip-files pip.conf --skip-files Pipfile
+REPOSITORY_TRIVY_DISABLE_ERRORS: false
+REPOSITORY_TRIVY_DISABLE_ERRORS_IF_LESS_THAN: 10
+REPOSITORY_CHECKOV_DISABLE_ERRORS_IF_LESS_THAN: 1
+TERRAFORM_TERRASCAN_ARGUMENTS: -i terraform -t docker -t github -d terraform
+TERRAFORM_TERRASCAN_DISABLE_ERRORS: true
+REPOSITORY_KICS_DISABLE_ERRORS_IF_LESS_THAN: 230
 REPOSITORY_GITLEAKS_DISABLE_ERRORS: false
+REPOSITORY_GITLEAKS_ARGUMENTS: -v --no-git
+REPOSITORY_GITLEAKS_PR_COMMITS_SCAN: true
+REPOSITORY_SEMGREP_RULESETS:
+  [
+    "p/comment",
+    "p/cwe-top-25",
+    "p/docker-compose",
+    "p/dockerfile",
+    "p/owasp-top-ten",
+    "p/python",
+    "p/r2c-security-audit",
+    "p/secure-defaults",
+    "p/terraform",
+  ]
+PULL_REQUEST: true
 REPOSITORY_SECRETLINT_DISABLE_ERRORS: false
-BASH_SHELLCHECK_DISABLE_ERRORS: true
-PYTHON_BANDIT_DISABLE_ERRORS: true
-# REPOSITORY_TRIVY_DISABLE_ERRORS: true
+ANSIBLE_ANSIBLE_LINT_DISABLE_ERRORS_IF_LESS_THAN: 10
+GO_REVIVE_DISABLE_ERRORS: false
+GO_REVIVE_DISABLE_ERRORS_IF_LESS_THAN: 300
+GO_GOLANGCI_LINT_DISABLE_ERRORS: false
+GO_GOLANGCI_LINT_DISABLE_ERRORS_IF_LESS_THAN: 2
+RST_RST_LINT_FILTER_REGEX_EXCLUDE: (test\|examples|docs/source/index\.rst)
+RST_RSTCHECK_FILTER_REGEX_EXCLUDE: (test\|examples|docs/source/index\.rst)
+BASH_SHELLCHECK_ARGUMENTS: -e "SC2162"
+BASH_SHELLCHECK_FILTER_REGEX_EXCLUDE: (test\|examples|docs/Makefile)
+BASH_SHELLCHECK_DISABLE_ERRORS: false
+BASH_SHELLCHECK_DISABLE_ERRORS_IF_LESS_THAN: 7
+PYTHON_PYRIGHT_DISABLE_ERRORS: false
+PYTHON_PYRIGHT_DISABLE_ERRORS_IF_LESS_THAN: 60
 PYTHON_MYPY_DISABLE_ERRORS: true
+PYTHON_MYPY_DISABLE_ERRORS_IF_LESS_THAN: 50
 PYTHON_PYLINT_DISABLE_ERRORS: true
-PYTHON_PYRIGHT_DISABLE_ERRORS: true
+PYTHON_PYLINT_DISABLE_ERRORS_IF_LESS_THAN: 50
+PYTHON_ISORT_DISABLE_ERRORS: true
+PYTHON_ISORT_DISABLE_ERRORS_IF_LESS_THAN: 50
+PYTHON_BANDIT_DISABLE_ERRORS: true
+PYTHON_BANDIT_DISABLE_ERRORS_IF_LESS_THAN: 10
 YAML_V8R_FILE_NAMES_REGEX:
   [
     ".codeclimate.yml",
@@ -64,16 +124,22 @@ YAML_V8R_FILE_NAMES_REGEX:
     ".checkov.yml",
   ]
 # ADDITIONAL_EXCLUDED_DIRECTORIES: (\.venv/|\.direnv/|\.mypy_cache/)
-EXCLUDED_DIRECTORIES:
-  [".github", ".gitlab-ci", "node_modules", ".venv", ".direnv", ".mypy_cache"]
+EXCLUDED_DIRECTORIES: [".github", ".gitlab-ci", "node_modules", ".venv", ".direnv", ".mypy_cache"]
+PARALLEL: true
+CLEAR_REPORT_FOLDER: true
+PRINT_ALPACA: false
+FAIL_IF_UPDATED_SOURCES: false
 SHOW_ELAPSED_TIME: true
 JSON_REPORTER: true
 SARIF_REPORTER: true
 FILEIO_REPORTER: false
-VALIDATE_ALL_CODEBASE: false
+VALIDATE_ALL_CODEBASE: true
+FLAVOR_SUGGESTIONS: false
+SHOW_SKIPPED_LINTERS: false
+# API_REPORTER: true
 PLUGINS:
-  - https://raw.githubusercontent.com/nvuillam/mega-linter/master/.automation/test/mega-linter-plugin-test/test.megalinter-descriptor.yml
-#  - https://raw.githubusercontent.com/oxsecurity/megalinter/master/.automation/test/mega-linter-plugin-test/test.megalinter-descriptor.yml
+  # yamllint disable-line rule:line-length
+  - https://raw.githubusercontent.com/kpj/jupyfmt/master/mega-linter-plugin-jupyfmt/jupyfmt.megalinter-descriptor.yml
 PRE_COMMANDS:
   - command: pip install flake8-cognitive-complexity
     venv: flake8  # Will be run within flake8 python virtualenv. There is one virtualenv per python-based linter, with the same name

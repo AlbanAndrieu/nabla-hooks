@@ -1,0 +1,20 @@
+{
+  "exclude": [
+    "**/__pycache__",
+    "noxfile.py",
+    ".venv"
+  ],
+  "pythonVersion": "3.10",
+  "pythonPlatform": "All",
+  "typeCheckingMode": "standard",
+
+  "reportUnnecessaryTypeIgnoreComment": true,
+  "reportImportCycles": true,
+  "reportUnusedVariable": true,
+  "reportUnnecessaryIsInstance":true,
+  "reportUnnecessaryCast": true,
+  "reportUnnecessaryComparison": true,
+  "reportUnnecessaryContains": true,
+  "reportAssertAlwaysTrue": true,
+  "reportImplicitStringConcatenation": true
+}

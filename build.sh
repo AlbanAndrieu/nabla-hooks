@@ -59,6 +59,7 @@ echo -e "${cyan} PACKAGE ${NC}"
 echo -e "${cyan} pandoc --from=markdown --to=rst --output=README.rst README.md ${NC}"
 
 # See https://github.com/python-versioneer/python-versioneer/blob/master/INSTALL.md
+echo -e "${cyan}sudo apt install python3-versioneer ${NC}"
 echo -e "${cyan} versioneer install --vendor ${NC}"
 echo -e "${cyan} Verify versioneer version ${NC}"
 python setup.py version

@@ -1,8 +1,8 @@
 ---
 stages:
   - static
-  - test
   - build
+  - test
   - deploy
 
 include:
@@ -31,7 +31,7 @@ include:
     file: "/templates/data.gitlab-ci.yml"
 
 variables:
-  CI_IMAGE_PYTHON: python:3.10
+  CI_IMAGE_PYTHON: python:3.13
   CI_REGISTRY: registry.gitlab.com
   OCI_REGISTRY: ${CI_REGISTRY}/${CI_PROJECT_NAMESPACE}
   DOCKER_BUILD_OPT: "--build-arg CI_PIP_GITLABJUSMUNDI_TOKEN=${CI_PIP_GITLABJUSMUNDI_TOKEN} " # --squash
@@ -54,9 +54,8 @@ test-pytest:
   variables:
     DEFAULT_COV_ARGS: "--cov-fail-under=70"
     DEFAULT_PIPENV_ARGS: "--system --dev --ignore-pipfile" # --dev  --verbose --index=https://package_read:${CI_PIP_GITLABJUSMUNDI_TOKEN}@gitlab.com/api/v4/groups/7364654/-/packages/pypi/simple
-  # BELOW is needed as we do not use jm-ubuntu but python:3.9
+  # BELOW is needed as we do not use jm-ubuntu but python:3.13
   before_script:
-    # - export PIPENV_INSTALL_TIMEOUT=1800 # 900 is 15 minutes
     - !reference [.install-pip3, script]
     - !reference [.pipenv-install, script]
 
@@ -67,10 +66,6 @@ mega_linter:
 
 docker-build:
   extends: .docker-build
-  tags:
-    # - jusmundi-shared-runner
-    # - jusmundi-grabackprod-test
-    - jusmundi-nomad-runner
     # - docker # no space left on device
   timeout: 2 hours 10 minutes
   variables:
@@ -98,20 +93,10 @@ code_quality:
 deploy:dev:
   extends: .deploy:dev
   needs: ["docker-build"]
-  tags:
-    # - jusmundi-shared-runner
-    - jusmundi-nomad-runner
 
 deploy:uat:
   extends: .deploy:uat
   needs: ["docker-build"]
-  tags:
-    # - jusmundi-shared-runner
-    - jusmundi-nomad-runner
 
 deploy:prod:
   extends: .deploy:prod
-  needs: ["docker-build"]
-  tags:
-    # - jusmundi-shared-runner
-    - jusmundi-nomad-runner
