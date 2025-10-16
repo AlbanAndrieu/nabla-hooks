@@ -2,22 +2,22 @@
 ---
 # fail_fast: true
 minimum_pre_commit_version: 4.2.0
-exclude: |
-  (?x)^(
-      .*\{\{.*\}\}.*|     # Exclude any files with cookiecutter variables
-      docs/site/.*|       # Exclude mkdocs compiled files
-      docs/_build/.*|
-      \.history/.*|       # Exclude history files
-      .*cache.*/.*|       # Exclude cache directories
-      .*venv.*/.*|        # Exclude virtual environment directories
-      .direnv/.*|
-      .yarn/.*|
-      .ansible/.*|
-      node_modules/.*|
-      .npm/.*|
-      .nuxt/.*|
-      .netlify.*|
-  )$
+# exclude: |
+#   (?x)^(
+#       .*\{\{.*\}\}.*|     # Exclude any files with cookiecutter variables
+#       docs/site/.*|       # Exclude mkdocs compiled files
+#       docs/_build/.*|
+#       \.history/.*|       # Exclude history files
+#       .*cache.*/.*|       # Exclude cache directories
+#       .*venv.*/.*|        # Exclude virtual environment directories
+#       .direnv/.*|
+#       .yarn/.*|
+#       .ansible/.*|
+#       node_modules/.*|
+#       .npm/.*|
+#       .nuxt/.*|
+#       .netlify.*|
+#   )$
 ci:
   # format compatible with commitlint
   autoupdate_commit_msg: "chore: pre-commit autoupdate"
@@ -344,11 +344,6 @@ repos:
       - id: biome-check
         name: "🟨 javascript · Lint, format, and safe fixes with Biome"
         additional_dependencies: ["@biomejs/biome@1.9.4"]
-        exclude: >
-          (?x)^(
-              trivy-sbom.json|
-              my-app/public/.*|
-          )$
 
   - repo: https://github.com/Lucas-C/pre-commit-hooks-nodejs
     rev: v1.1.2
@@ -381,11 +376,6 @@ repos:
         types_or: [yaml, html, scss]
         additional_dependencies:
           - prettier@3.4.2
-        exclude: >
-          (?x)^(
-              trivy-sbom.json|
-              my-app/public/.*|
-          )$
 
   ### Data & Config Validation ###
   - repo: https://github.com/python-jsonschema/check-jsonschema
@@ -480,8 +470,6 @@ repos:
     hooks:
       - id: gitlint
         name: "🌳 git · Lint"
-        additional_dependencies:
-          - gitlint-core[trusted-deps]==0.19.1
 
   # ---------------------------------------------------------------------------- #
   #                            👑 Mega linter                                    #
