@@ -1,3 +1,4 @@
+---
 name: "CodeQL"
 
 on:
@@ -21,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ python ]
+        language: [python]
 
     steps:
       - name: Checkout

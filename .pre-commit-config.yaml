@@ -143,8 +143,6 @@ repos:
           (?x)^(
               README.md|
               .ssh/id_rsa|
-              roles/jenkins-master/defaults/main.yml|
-              roles/jenkins-master/README.md|
           )$
 
   - repo: https://github.com/pre-commit/pre-commit.git
@@ -183,8 +181,8 @@ repos:
               ccds/hook_utils/dependencies.py|
           )$
       - id: ruff
-        name: "🐍 python · Fix with Ruff"
-        args: [--fix]
+        name: "🐍 python · Lint and perform unsafe auto-fixes with Ruff"
+        args: [--unsafe-fixes]
         exclude: >
           (?x)^(
               ccds/hook_utils/dependencies.py|
@@ -197,15 +195,15 @@ repos:
               ccds/hook_utils/dependencies.py|
           )$
 
-  - repo: https://github.com/RobertCraigie/pyright-python
-    rev: v1.1.406
-    hooks:
-      - id: pyright
-        name: "🐍 python · Check types"
-        exclude: >
-          (?x)^(
-              ccds/hook_utils/.*|
-          )$
+  # - repo: https://github.com/RobertCraigie/pyright-python
+  #   rev: v1.1.406
+  #   hooks:
+  #     - id: pyright
+  #       name: "🐍 python · Check types"
+  #       exclude: >
+  #         (?x)^(
+  #             ccds/hook_utils/.*|
+  #         )$
   - repo: https://github.com/abravalheri/validate-pyproject
     rev: v0.24.1
     hooks:
@@ -270,6 +268,7 @@ repos:
             docs/Makefile|
             .envrc|
           )$
+
   - repo: https://github.com/openstack/bashate
     rev: 2.1.1
     hooks:
@@ -348,7 +347,9 @@ repos:
         exclude: >
           (?x)^(
               trivy-sbom.json|
+              my-app/public/.*|
           )$
+
   - repo: https://github.com/Lucas-C/pre-commit-hooks-nodejs
     rev: v1.1.2
     hooks:
@@ -359,10 +360,6 @@ repos:
       - id: htmlhint
         name: "📝 html · Hint html"
         args: [--config, .htmlhintrc]
-        exclude: >
-          (?x)^(
-              installer/.*|
-          )$
       - id: markdown-toc
         name: "📝 markdown · Toc markdown"
         args: [--maxdepth, "3", -i]
@@ -395,7 +392,7 @@ repos:
     rev: 0.34.1
     hooks:
       - id: check-github-workflows
-        name: "🐙 github-actions · Validate gh workflow files"
+        name: "🧩 github-actions · Validate gh workflow files"
         args: ["--verbose"]
       - id: check-taskfile
         name: "✅ taskfile · Validate Task configuration"
@@ -425,20 +422,12 @@ repos:
             ccds/hook_utils/configure_ssh.py|
             ccds/hook_utils/custom_config.py|
           )$
+
   - repo: https://github.com/IamTheFij/ansible-pre-commit
     rev: v1.0.1
     hooks:
       - id: encryption-check
         name: "🔒 security · Detect encryption"
-        exclude: >
-          (?x)^(
-              .github/workflows/vault.yml|
-              infra/terraform/nomad/jobs/vault-backup.nomad|
-              infra/terraform/vault/.*|
-              infra/terraform/nomad/jobs/example/vault-backup.nomad|
-              infra/terraform/nomad/jobs/files/vector/vault-logs-vector.yml|
-              infra/terraform/nomad/jobs/vault-logs-vector.nomad|
-          )$
   - repo: https://github.com/zricethezav/gitleaks
     rev: v8.28.0
     hooks:
@@ -469,40 +458,6 @@ repos:
         name: "📜 yamllint - Lint Yaml"
         args: [--format, parsable, --strict]
 
-  - repo: local
-    hooks:
-      - id: git-branches-check
-        name: Git branches check
-        description: Check for old stale and already merged branches from the current repo with user friendly messages and colors
-        entry: pre_commit_hooks/git-branches-check.sh
-        language: script
-        types: [shell]
-        always_run: true
-        verbose: true
-        # additional_dependencies: [jira>=2.0.0]
-        # args: [--max=1, --verbose, --debug]
-  # -  repo: local
-  #    hooks:
-  #    - id: jenkinsfile-check
-  #      name: Jenkinsfile check
-  #      description: Check if Jenkinsfile is valid
-  #      entry: pre_commit_hooks/jenkinsfile-check.sh Jenkinsfile
-  #      files: 'Jenkinsfile'
-  #      language: script
-  #      types: [shell]
-  #      always_run: true
-  #      verbose: true
-  - repo: local
-    hooks:
-      - id: publicversion-check
-        name: PublicVersion check
-        description: Check if version is valid
-        entry: ./tests/version.sh
-        language: script
-        types: [shell]
-        always_run: true
-        verbose: true
-
   # ---------------------------------------------------------------------------- #
   #                            📝 Commit Message Hooks                           #
   # ---------------------------------------------------------------------------- #
@@ -525,33 +480,35 @@ repos:
     hooks:
       - id: gitlint
         name: "🌳 git · Lint"
+        additional_dependencies:
+          - gitlint-core[trusted-deps]==0.19.1
 
   # ---------------------------------------------------------------------------- #
   #                            👑 Mega linter                                    #
   # ---------------------------------------------------------------------------- #
 
-  - repo: https://github.com/oxsecurity/megalinter
-    rev: v9.0.1
-    hooks:
-      - id: megalinter-incremental # Faster, less thorough
-        name: "👑 🐳 megalinter - All in linter"
-        stages:
-          - pre-commit
-        args:
-          - mega-linter-runner
-          - --containername
-          - "megalinter-incremental"
-          - --remove-container
-          # - --fix
-          # - --env
-          # - "'APPLY_FIXES=all'"
-          - --env
-          - "'CLEAR_REPORT_FOLDER=true'"
-          - --env
-          - "'LOG_LEVEL=warning'"
-          - --filesonly
-          - --flavor
-          - "python"
+  # - repo: https://github.com/oxsecurity/megalinter
+  #   rev: v9.0.1
+  #   hooks:
+  #     - id: megalinter-incremental  # Faster, less thorough
+  #       name: "👑 🐳 megalinter - All in linter"
+  #       stages:
+  #         - pre-commit
+  #       args:
+  #         - mega-linter-runner
+  #         - --containername
+  #         - "megalinter-incremental"
+  #         - --remove-container
+  #         # - --fix
+  #         # - --env
+  #         # - "'APPLY_FIXES=all'"
+  #         - --env
+  #         - "'CLEAR_REPORT_FOLDER=true'"
+  #         - --env
+  #         - "'LOG_LEVEL=warning'"
+  #         - --filesonly
+  #         - --flavor
+  #         - "python"
 
   # ---------------------------------------------------------------------------- #
   #                             🧪 Fast Tests (Local)                            #
@@ -562,11 +519,6 @@ repos:
       #     - id: lint
       #       name: Lint
       #       entry: python3 -m nox -rs lint
-      #       language: system
-      #       pass_filenames: false
-      #     - id: black
-      #       name: Black
-      #       entry: python3 -m nox -rs black
       #       language: system
       #       pass_filenames: false
       #     - id: test

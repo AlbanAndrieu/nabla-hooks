@@ -1,3 +1,4 @@
+---
 name: Lint using super-linter
 
 on: [pull_request]
