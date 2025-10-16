@@ -6,16 +6,7 @@
 		"useIgnoreFile": true,
 		"defaultBranch": "master"
 	},
-	"files": {
-		"ignoreUnknown": true
-	},
-	"linter": {
-		"enabled": true
-	},
-	"json": {
-		"parser": {
-			"allowComments": true,
-			"allowTrailingCommas": true
-		}
-	}
+	"files": { "ignoreUnknown": true },
+	"linter": { "enabled": true, "rules": { "recommended": false } },
+	"json": { "parser": { "allowComments": true, "allowTrailingCommas": true } }
 }
