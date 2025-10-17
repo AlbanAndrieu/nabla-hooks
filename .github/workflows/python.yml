@@ -82,6 +82,8 @@ jobs:
       - name: Test with pytest
         run: |
           source venv/bin/activate
+          python -m pip install --upgrade pip
+          python -m pip install pytest pytest-env tox tox-gh-actions poetry==2.2.1 packaging==25.0
           # install package is needed for tests/test_package.py
           python3 setup.py install
           echo "setup.py install DONE"
@@ -91,6 +93,8 @@ jobs:
       - name: Test with tox
         run: |
           source venv/bin/activate
+          python -m pip install --upgrade pip
+          python -m pip install pytest pytest-env tox tox-gh-actions poetry==2.2.1 packaging==25.0
           tox
 
       - name: Upload Test Results to Trunk.io
