@@ -19,6 +19,7 @@
 		"**/.idea/**",
 		"**/*.svg",
 		"**/target/**",
-		"templates/buildah*"
+		"templates/buildah*",
+		"ccds/hook_utils/**"
 	]
 }
