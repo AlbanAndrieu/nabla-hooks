@@ -33,14 +33,4 @@ fi
 #  echo -e "${green} The test completed successfully. ${NC}"
 #fi
 
-#python3 setup.py sdist bdist_wheel
-#RC=$?
-#if [ ${RC} -ne 0 ]; then
-#  echo ""
-#  echo -e "${red} ${head_skull} Sorry, package failed. ${NC}"
-#  exit 1
-#else
-#  echo -e "${green} The package completed successfully. ${NC}"
-#fi
-
 exit 0

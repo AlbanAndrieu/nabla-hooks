@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.11", "3.12"]
+        python-version: ["3.12", "3.13"]
     env:
       JIRA_USER: aandrieu
       JIRA_PASSWORD: XXX
@@ -85,8 +85,10 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install pytest pytest-env tox tox-gh-actions poetry==2.2.1 packaging==25.0
           # install package is needed for tests/test_package.py
-          python3 setup.py install
-          echo "setup.py install DONE"
+          poetry version
+          # python3 setup.py install
+          # echo "setup.py install DONE"
+          python -m build
           pytest --cache-clear --setup-show tests/test_package.py
           python -m pytest --cov=hooks --cov-fail-under=30 --junit-xml=junit.xml -o junit_family=xunit1
 

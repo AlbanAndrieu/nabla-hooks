@@ -1,4 +1,4 @@
 #!/usr/bin/env python
 name = "test-hooks"
 
-__version__ = "1.0.6"
+__version__ = "1.0.7"

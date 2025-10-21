@@ -14,7 +14,7 @@ OCI_REGISTRY = nabla
 AWS_REGION   = eu-west-3
 OCI_IMAGE := $(OCI_REGISTRY)/$(APP_NAME)
 OCI_TAG := $${OCI_TAG:-"latest"}
-IMAGE_NEXT_TAG := $${OCI_IMAGE_TAG:-"1.0.6"}
+IMAGE_NEXT_TAG := $${OCI_IMAGE_TAG:-"1.0.7"}
 IMAGE := $(OCI_IMAGE):$(OCI_TAG)
 
 TRIVY_VULN_TYPE = "os,library"

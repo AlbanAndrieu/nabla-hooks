@@ -1,14 +1,13 @@
-# syntax=docker/dockerfile:1.15
+# syntax=docker/dockerfile:1
 
 # dockerfile_lint - ignore
 # hadolint ignore=DL3007
 FROM pytorch/pytorch:1.13.1-cuda11.6-cudnn8-runtime AS prebuild
 # FROM pytorch/pytorch:1.13.0-cuda11.6-cudnn8-runtime AS prebuild
 # FROM pytorch/pytorch:1.7.1-cuda11.0-cudnn8-runtime AS prebuild
-# FROM python:3.10
 
 # dockerfile_lint - ignore
-LABEL name="nabla-hooks" version="1.0.6" \
+LABEL name="nabla-hooks" version="1.0.7" \
  description="Image used by our products to build python\
  this image is running on Ubuntu 22.10." \
  com.nabla.vendor="NABLA Incorporated"

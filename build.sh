@@ -9,7 +9,7 @@ source "${WORKING_DIR}/scripts/step-0-color.sh"
 # shellcheck source=/dev/null
 source "${WORKING_DIR}/scripts/step-1-os.sh"
 
-export REPO_TAG=${REPO_TAG:-"1.0.6"}
+export REPO_TAG=${REPO_TAG:-"1.0.7"}
 
 # shellcheck source=./docs/build.sh
 #echo "${WORKING_DIR}/docs/build.sh"

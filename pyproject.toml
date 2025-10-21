@@ -49,7 +49,7 @@ toml = ["tomli; python_version < '3.11'"]
 
 [tool.poetry]
 name = "nabla-hooks"
-version = "1.0.6"
+version = "1.0.7"
 description = "Custom hooks to improve code quality before pushing to git"
 authors = ["Andrieu, Alban <alban.andrieu@free.fr>"]
 
@@ -201,7 +201,7 @@ pythonPlatform = "Linux"
 # Enable the pycodestyle (`E`) and Pyflakes (`F`) rules by default.
 # Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
 # McCabe complexity (`C901`) by default.
-select = ["E", "F"]
+lint.select = ["E", "F"]
 lint.ignore = []
 
 # Allow autofix for all enabled rules (when `--fix`) is provided.

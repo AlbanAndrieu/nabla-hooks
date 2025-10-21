@@ -244,15 +244,8 @@ See [setup-cfg](http://sametmax.com/vive-setup-cfg-et-mort-a-pyproject-toml/)
 
 ### Build a source distribution (a tar archive of all the files needed to build and install the package):
 
-`python3 setup.py sdist`
-Builds wheels:
-`python3 setup.py bdist_wheel`
-Build from source:
-`python3 setup.py build`
-And install:
-`/opt/ansible/env38/bin/python3 setup.py install`
+`python -m build`
 
-`sudo python setup.py develop`
 `pip install .`
 `pip install -e ./`
 

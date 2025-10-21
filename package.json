@@ -1,9 +1,9 @@
 {
 	"name": "nabla-hooks",
 	"description": "Hooks sample",
-	"branchVersion": "^1.0.6",
+	"branchVersion": "^1.0.7",
 	"branchPattern": "1.0.*",
-	"version": "1.0.6",
+	"version": "1.0.7",
 	"author": "Alban Andrieu <alban.andrieu@free.fr> (http://albandrieu.com)",
 	"main": "scripts.js",
 	"license": "MIT",

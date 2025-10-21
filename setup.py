@@ -15,7 +15,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name="nabla-hooks",
-    version=versioneer.get_version(),
+    # version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
     packages=find_packages(),
     # package_dir={"": "hooks"},
