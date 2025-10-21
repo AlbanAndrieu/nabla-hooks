@@ -30,3 +30,5 @@ jobs:
           VALIDATE_JSCPD: false
           VALIDATE_CHECKOV: false
           VALIDATE_TRIVY: false
+          VALIDATE_JSON_PRETTIER: false
+          VALIDATE_BIOME_FORMAT: false
