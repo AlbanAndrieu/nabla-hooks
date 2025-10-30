@@ -22,10 +22,10 @@ jobs:
     name: Code Quality
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6
         with:
           python-version: "3.11"
           cache: "pip"
@@ -62,10 +62,10 @@ jobs:
         shell: bash
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6
         with:
           python-version: ${{ matrix.python-version }}
           allow-prereleases: true
@@ -75,7 +75,7 @@ jobs:
             dev-requirements.txt
 
       - name: Set up Miniconda
-        uses: conda-incubator/setup-miniconda@v3
+        uses: conda-incubator/setup-miniconda@505e6394dae86d6a5c7fbb6e3fb8938e3e863830 # v3
         with:
           auto-activate-base: true
           activate-environment: ""
@@ -83,18 +83,18 @@ jobs:
           channel-priority: strict
 
       - name: Set up Pixi
-        uses: prefix-dev/setup-pixi@v0.8.12
+        uses: prefix-dev/setup-pixi@307e5e5842748e3752d5178fbd158e0a6c1b55ff # v0.8.12
         with:
           cache: false
           run-install: false
 
       - name: Set up Poetry
-        uses: abatilo/actions-poetry@v4
+        uses: abatilo/actions-poetry@0dd19c9498c3dc8728967849d0d2eae428a8a3d8 # v4
         with:
           poetry-version: latest
 
       - name: Cache conda packages
-        uses: actions/cache@v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
         env:
           # Increase this value to reset cache explicitly
           CACHE_NUMBER: 0
