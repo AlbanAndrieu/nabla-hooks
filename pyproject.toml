@@ -166,6 +166,7 @@ versioneer = {version = ">=0.29", extras = ["toml"]}
 versioningit = ">=3.3.0"
 wheel = ">=0.45.1"
 srsly = ">=2.4.8" # Downgrading srsly (2.5.1 -> 2.4.8) with python  3.13.3
+commitizen = "^4.10.0"
 
 [tool.setuptools-pipfile]
 

@@ -5,7 +5,7 @@ branch: main
 compact: true
 # directory:
 # - test-dir
-docker-image: registry.gitlab.com/jusmundi-group/web/templates/jm-oci/jm-ubuntu
+# docker-image: registry.gitlab.com/AlbanAndrieu/nabla-hooks
 dockerfile-path: Dockerfile
 download-external-modules: true
 evaluate-variables: true
@@ -20,7 +20,7 @@ repo-id: AlbanAndrieu/nabla-hooks/
 # skip-check:
 # - CKV_DOCKER_3
 # - CKV_DOCKER_2
-skip-fixes: true
+# skip-fixes: true
 # skip-framework:
 # - dockerfile
 # - secrets
