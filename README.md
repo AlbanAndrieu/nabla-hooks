@@ -1,6 +1,6 @@
 <!-- markdown-link-check-disable-next-line -->
 
-# [![Nabla](https://bababou.albandrieu.com/nabla/index/assets/nabla/nabla-4.png)](https://github.com/AlbanAndrieu) nabla-hooks
+# [![Nabla](https://nabla.albandrieu.com/assets/nabla/nabla-4.png)](https://github.com/AlbanAndrieu) nabla-hooks
 
 Nabla custom git hooks
 
@@ -12,6 +12,8 @@ Nabla custom git hooks
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FAlbanAndrieu%2Fnabla-hooks.svg?type=shield&issueType=license)](https://app.fossa.com/projects/git%2Bgithub.com%2FAlbanAndrieu%2Fnabla-hooks?ref=badge_shield&issueType=license)
 
 This project intend to be uses by all Nabla products
+
+This project is DEPRECATED, commit validation will now be done using [commitizen](https://commitizen-tools.github.io/commitizen/customization/) or [commitlint](https://commitlint.js.org/) still using pre-commit or [opencommit](https://github.com/di-sukharev/opencommit)
 
 # Table of contents
 
