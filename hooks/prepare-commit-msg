@@ -1,7 +1,30 @@
 #!/usr/bin/env python3
+import shutil
+import subprocess
 import sys
+from pathlib import Path
 
 from get_msg import match_msg
+from termcolor import colored
+
+try:
+    from colorama import init
+    from termcolor import colored
+
+    # use Colorama to make Termcolor work on Windows too
+    init()
+except ImportError as error:
+    print("could not import colorama:")
+    print(error)
+    exit(1)
+
+try:
+    from commitizen.cz.utils import get_backup_file_path
+except ImportError as error:
+    print("could not import commitizen:")
+    print(error)
+    exit(1)
+
 
 # Collect the parameters
 commit_msg_filepath = sys.argv[1]
@@ -20,4 +43,107 @@ else:
 #     commit_hash,
 # ))
 
-match_msg(commit_msg_filepath, commit_type)
+
+def clean_all(commit_msg_filepath: str = "./.git/COMMIT_EDITMSG"):
+    # print('Registered cleanAll with {}'.format(commit_msg_filepath))
+
+    filename = os.path.expanduser(commit_msg_filepath)
+
+    if os.path.exists(filename):
+        os.remove(commit_msg_filepath)
+        print(colored("File {} removed!".format(commit_msg_filepath), "yellow"))
+
+
+atexit.register(clean_all, commit_msg_filepath)
+
+
+def podmena(commit_msg_filepath, enable=False):
+    if enable:
+        curdir = os.path.dirname(os.path.realpath(__file__))
+        with open(os.path.join(curdir, "database.txt")) as f:
+            emoji = f.readlines()
+
+        with open(commit_msg_filepath) as f:
+            text = f.read()
+
+        with open(commit_msg_filepath, "w") as f:
+            # f.write('{} :{}:'.format(text.strip(), random.choice(emoji).strip()))
+            f.write("{} :{}:".format(text.strip(), os.urandom(emoji).strip()))
+
+
+def prepare_commit_msg(commit_msg_file: str) -> int:
+    # check if the commit message needs to be generated using commitizen
+    exit_code = subprocess.run(
+        [
+            "cz",
+            "check",
+            "--commit-msg-file",
+            commit_msg_file,
+        ],
+        check=False,
+        capture_output=True,
+    ).returncode
+    if exit_code == 0:
+        return 0
+
+    backup_file = Path(get_backup_file_path())
+    if backup_file.is_file():
+        # confirm if commit message from backup file should be reused
+        answer = input("retry with previous message? [y/N]: ")
+        if answer.lower() == "y":
+            shutil.copyfile(backup_file, commit_msg_file)
+            return 0
+
+    # use commitizen to generate the commit message
+    exit_code = subprocess.run(
+        [
+            "cz",
+            "commit",
+            "--dry-run",
+            "--write-message-to-file",
+            commit_msg_file,
+        ],
+        check=False,
+        stdin=sys.stdin,
+        stdout=sys.stdout,
+    ).returncode
+    if exit_code:
+        return exit_code
+
+    try:
+        with open(commit_msg_filepath) as f:
+            required_message = match_msg(commit_msg_filepath, commit_type)
+
+            content = f.read()
+            if not content.startswith(required_message):
+                print(
+                    colored(
+                        "commit-msg: ERROR! The commit message must start with {}".format(
+                            required_message,
+                        ),
+                        "red",
+                    ),
+                )
+                sys.exit(1)
+
+        # podmena(commit_msg_filepath=commit_msg_filepath, enable=True)
+
+        os._exit(0)
+
+    except:  # noqa: ignore=E722
+        traceback.print_exc()
+        print(colored("Oops! COMMIT is failing. Switch to manual...", "red"))
+        clean_all(commit_msg_filepath)
+        # sys.exit(2)
+
+    # write message to backup file
+    shutil.copyfile(commit_msg_file, backup_file)
+    return 0
+
+
+if __name__ == "__main__":
+    # make hook interactive by attaching /dev/tty to stdin
+    with open("/dev/tty") as tty:
+        sys.stdin = tty
+        exit_code = prepare_commit_msg(sys.argv[1])
+        exit(exit_code)

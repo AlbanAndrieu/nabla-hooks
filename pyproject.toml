@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61.0", "versioneer[toml]==0.29", "packaging>=24.2"]
+requires = ["hatchling", "setuptools>=61.0", "versioneer[toml]==0.29", "packaging>=24.2"]
 build-backend = "setuptools.build_meta"
 # requires = ["hatchling", "versioningit"]
 # build-backend = "hatchling.build"
@@ -7,7 +7,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nabla-hooks"
-dynamic = ["version"]
+version = "1.0.7"
+# dynamic = ["version"]
 description = "This is nabla_custom hooks package"
 readme = "README.md"
 license = "Apache-2.0"
@@ -37,6 +38,49 @@ classifiers = [
 
 [tool.versioningit]
 default-version = "0.0.0+unknown"
+
+[tool.commitizen]
+name = "cz_customize"
+version = "1.0.7"
+version_files = [
+    "nabla/__version__.py",
+    "nabla/__init__.py",
+    "setup.py",
+]
+update_changelog_on_bump = true
+
+[tool.commitizen.customize]
+message_template = "{{change_type}}:{% if show_message %} {{message}}{% endif %}"
+example = "feature: this feature enable customize through config file"
+schema = "<type>: <body>"
+schema_pattern = "(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert):(\\s.*)"
+bump_pattern = "^(break|new|fix|hotfix)"
+bump_map = {"break" = "MAJOR", "new" = "MINOR", "fix" = "PATCH", "hotfix" = "PATCH"}
+change_type_order = ["BREAKING CHANGE", "feat", "fix", "refactor", "perf"]
+info_path = "cz_customize_info.txt"
+info = """
+This is customized info
+"""
+commit_parser = "^(?P<change_type>feat|fix):\\s(?P<message>.*)?"
+changelog_pattern = "^(feat|fix)?(!)?"
+change_type_map = {"feat" = "Feat", "fix" = "Fix"}
+
+[[tool.commitizen.customize.questions]]
+type = "list"
+name = "change_type"
+choices = [{value = "feat", name = "feat: A new feature."}, {value = "fix", name = "fix: A bug fix."}]
+# choices = ["feat", "fix"]  # short version
+message = "Select the type of change you are committing"
+
+[[tool.commitizen.customize.questions]]
+type = "input"
+name = "message"
+message = "Body."
+
+[[tool.commitizen.customize.questions]]
+type = "confirm"
+name = "show_message"
+message = "Do you want to add body message in commit?"
 
 [project.urls]
 "Homepage" = "https://github.com/AlbanAndrieu/nabla-hooks"

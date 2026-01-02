@@ -11,7 +11,7 @@ from hooks._version import get_versions
 
 name = "hooks"
 
-__version__ = "v1.0.7"
+# __version__ = "v1.0.7"
 
 signing_uuid = uuid.UUID("dd34b62f-9ed5-597e-85a2-c15d48ed6832")
 __version__ = get_versions()["version"]

@@ -4,14 +4,19 @@ import os
 import sys
 import traceback
 
-from colorama import init
 from get_msg import match_msg
-from termcolor import colored
-# import random
 
+try:
+    from colorama import init
+    from termcolor import colored
 
-# use Colorama to make Termcolor work on Windows too
-init()
+    # use Colorama to make Termcolor work on Windows too
+    init()
+except ImportError as error:
+    print("could not import colorama:")
+    print(error)
+    exit(1)
+
 
 # Collect the parameters
 commit_msg_filepath = sys.argv[1]

@@ -95,8 +95,8 @@ This pre-commit hooks requires the following to run:
 Install python 3.10 and virtualenv
 
 ```bash
-virtualenv --no-site-packages /opt/ansible/env310 -p python3.10
-source /opt/ansible/env310/bin/activate
+virtualenv --no-site-packages /opt/ansible/env312 -p python3.12
+source /opt/ansible/env312/bin/activate
 ```
 
 Install python 3.8 and pyenv
@@ -108,13 +108,13 @@ echo 'eval "$(pyenv init -)"' >> ~/.bashrc
 echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
 source ~/.bashrc
 
-pyenv install 3.10.9
+pyenv install 3.12.10
 ```
 
 and [integrate](https://stackabuse.com/managing-python-environments-with-direnv-and-pyenv/) it with direnv
 
 ```bash
-#pip3.8 install -r hooks/requirements.txt -r requirements.testing.txt
+#pip3 install -r hooks/requirements.txt -r requirements.testing.txt
 pipenv check
 python -m pipenv install --dev
 python -m pipenv install --dev --ignore-pipfile
@@ -138,7 +138,7 @@ example .pre-commit-config.yaml as following:
 
 ```yaml
 -   repo: https://github.com/AlbanAndrieu/nabla-hooks.git
-    rev: v1.0.3
+    rev: v1.0.7
     hooks:
     - id: git-branches-check
 ```
@@ -220,6 +220,15 @@ cp -r hooks/* .git/hooks/` or `rm -Rf ./.git/hooks/ && ln -s ../hooks ./.git/hoo
 
 ```
 
+[auto_prepare_commit_message](https://commitizen-tools.github.io/commitizen/tutorials/auto_prepare_commit_message/)
+
+```bash
+wget -O .git/hooks/prepare-commit-msg https://raw.githubusercontent.com/commitizen-tools/commitizen/master/hooks/prepare-commit-msg.py
+chmod +x .git/hooks/prepare-commit-msg
+wget -O .git/hooks/post-commit https://raw.githubusercontent.com/commitizen-tools/commitizen/master/hooks/post-commit.py
+chmod +x .git/hooks/post-commit
+```
+
 ### Global
 
 We have two directories that interest us:
@@ -257,6 +266,7 @@ See [api-tokens](https://test.pypi.org/manage/account/#api-tokens)
 
 ```bash
 rm -Rf dist/
+pip install setuptools
 python3 setup.py sdist bdist_wheel
 # Check package
 twine check dist/*
@@ -265,13 +275,7 @@ export TWINE_PASSWORD=pypi-
 python3 -m twine upload --repository nabla-hooks dist/* --verbose
 ```
 
-See [nabla-hooks-1.0.5](https://pypi.org/project/nabla-hooks/1.0.5/)
-
-All in one
-
-```bash
-python setup.py register sdist upload
-```
+See [nabla-hooks-1.0.7](https://pypi.org/project/nabla-hooks/1.0.7/)
 
 Uploaded [nabla-hooks](https://test.pypi.org/project/nabla-hooks/)
 
@@ -322,6 +326,8 @@ poetry env info
 poetry shell
 poetry run pytest
 poetry build
+# https://python-poetry.org/docs/repositories/
+poetry config pypi-token.pypi ${TWINE_PASSWORD}
 # poetry publish --build
 ```
 

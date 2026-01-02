@@ -47,6 +47,7 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.3.8",
+		"@commitlint/cli": "^20.3.0",
 		"@eslint/js": "^9.34.0",
 		"@secretlint/secretlint-rule-preset-recommend": "^11.2.5",
 		"eslint": "^9.37.0",
