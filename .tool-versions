@@ -3,6 +3,6 @@ poetry 2.2.1
 direnv 2.32.1
 ruby 3.4.8
 ripgrep 14.1.0
-terragrunt 0.95.1
+terragrunt 0.96.1
 nodejs 22
 nodejs 24
