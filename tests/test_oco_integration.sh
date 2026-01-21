@@ -57,7 +57,7 @@ echo ""
 echo "Testing with empty commit message..."
 echo "" > "$COMMIT_MSG_FILE"
 
-if [ ! -s "$COMMIT_MSG_FILE" ] || [ "$(cat "$COMMIT_MSG_FILE" | tr -d ' \n\r\t')" = "" ]; then
+if [ ! -s "$COMMIT_MSG_FILE" ] || [ "$(tr -d ' \n\r\t' < "$COMMIT_MSG_FILE")" = "" ]; then
     echo "✓ Test 3 PASSED: Empty file detected correctly"
 else
     echo "✗ Test 3 FAILED: File should be detected as empty"
