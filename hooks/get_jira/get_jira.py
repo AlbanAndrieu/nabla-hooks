@@ -151,7 +151,7 @@ def match_issue(branch: str, verbose=False, fail=True) -> str:
     try:
         # Matches any unique issue code in branch name
         pattern = re.compile(
-            r"(^feature|^feat|^bugfix|^fix|^docs|^style|^refactor|^perf|^test|^chore)\/([A-Z]{3,5}-[0-9]+)",
+            r"(^feature|^feat|^bugfix|^fix|^docs|^style|^refactor|^perf|^test|^chore)\/([A-Z]{2,10}-[0-9]+)",
         )
         match = re.search(pattern, branch)
         if match:

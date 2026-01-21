@@ -88,7 +88,7 @@ def validate_commit_message(
         
         # Check if this is a special commit that should be skipped
         if is_special_commit(message):
-            print(colored("Special commit detected (merge/revert), skipping JIRA check", "green"))
+            print(colored("Special commit detected (merge/revert/fixup/squash), skipping JIRA check", "green"))
             return True
         
         # Extract JIRA ticket from message
