@@ -86,7 +86,6 @@ message = "Do you want to add body message in commit?"
 [project.urls]
 "Homepage" = "https://github.com/AlbanAndrieu/nabla-hooks"
 "Documentation" = "https://github.com/AlbanAndrieu/nabla-hooks/blob/master/README.md"
-"Repository" = "https://github.com/AlbanAndrieu/nabla-hooks"
 "Bug Tracker" = "https://github.com/AlbanAndrieu/nabla-hooks/issues"
 "Changelog" = "https://github.com/AlbanAndrieu/nabla-hooks/blob/master/CHANGELOG.md"
 "Gitter" = "https://gitter.im/nabla-hooks/Lobby"
