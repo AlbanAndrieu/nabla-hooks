@@ -173,6 +173,51 @@ Run `pre-commit run --all-files`
 Run `SKIP=flake8 git commit -am 'Add key'`
 Run `git commit -am 'Add key' --no-verify`
 
+### Using with OpenCommit (oco)
+
+This project now supports [OpenCommit](https://github.com/di-sukharev/opencommit), an AI-powered tool that generates commit messages automatically.
+
+#### Setup OpenCommit
+
+1. Install OpenCommit globally:
+
+```bash
+npm install -g opencommit
+# or use it with npx
+npx opencommit
+```
+
+2. Configure your AI provider (OpenAI, Claude, or local models via Ollama):
+
+```bash
+oco config set OCO_API_KEY=<your_api_key>
+# For local models with Ollama:
+# oco config set OCO_AI_PROVIDER=ollama
+# oco config set OCO_MODEL=llama3:8b
+```
+
+3. Install as a git hook (optional, if you want AI-generated messages by default):
+
+```bash
+oco hook set
+```
+
+#### Using OpenCommit with nabla-hooks
+
+The nabla-hooks `prepare-commit-msg` hook is now compatible with OpenCommit:
+
+- **With OpenCommit hook installed**: When you run `git commit`, OpenCommit will generate a commit message, and nabla-hooks will validate it.
+- **Manual AI generation**: You can use `oco` command directly to generate and commit:
+
+```bash
+git add .
+oco
+```
+
+- **Fallback to commitizen**: If no commit message is provided, the hook will fallback to using commitizen for message generation.
+
+The hook intelligently detects existing commit messages (from oco, manual entry, or other tools) and validates them without forcing regeneration.
+
 ### Override global environment variable
 
 #### Login

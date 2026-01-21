@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
+import atexit
+import os
 import shutil
 import subprocess
 import sys
+import traceback
 from pathlib import Path
 
 from get_msg import match_msg
@@ -72,20 +75,43 @@ def podmena(commit_msg_filepath, enable=False):
 
 
 def prepare_commit_msg(commit_msg_file: str) -> int:
-    # check if the commit message needs to be generated using commitizen
-    exit_code = subprocess.run(
-        [
-            "cz",
-            "check",
-            "--commit-msg-file",
-            commit_msg_file,
-        ],
-        check=False,
-        capture_output=True,
-    ).returncode
-    if exit_code == 0:
+    # Check if commit message already has content (e.g., from oco/opencommit or manual entry)
+    try:
+        with open(commit_msg_file, "r") as f:
+            existing_content = f.read().strip()
+            # Filter out comments (lines starting with #)
+            non_comment_lines = [
+                line for line in existing_content.split("\n") if not line.startswith("#")
+            ]
+            existing_message = "\n".join(non_comment_lines).strip()
+    except FileNotFoundError:
+        existing_message = ""
+
+    # If there's already a commit message (e.g., from oco/opencommit), validate it
+    if existing_message:
+        # check if the existing commit message is valid using commitizen
+        exit_code = subprocess.run(
+            [
+                "cz",
+                "check",
+                "--commit-msg-file",
+                commit_msg_file,
+            ],
+            check=False,
+            capture_output=True,
+        ).returncode
+        if exit_code == 0:
+            return 0
+        # If not valid with commitizen, still allow it - commit-msg hook will validate
+        print(
+            colored(
+                "⚠️  Existing commit message detected (possibly from oco/opencommit). Skipping commitizen generation.",
+                "yellow",
+            ),
+        )
         return 0
 
+    # No existing message, check if we should use a backup
     backup_file = Path(get_backup_file_path())
     if backup_file.is_file():
         # confirm if commit message from backup file should be reused
@@ -109,32 +135,6 @@ def prepare_commit_msg(commit_msg_file: str) -> int:
     ).returncode
     if exit_code:
         return exit_code
-
-    try:
-        with open(commit_msg_filepath) as f:
-            required_message = match_msg(commit_msg_filepath, commit_type)
-
-            content = f.read()
-            if not content.startswith(required_message):
-                print(
-                    colored(
-                        "commit-msg: ERROR! The commit message must start with {}".format(
-                            required_message,
-                        ),
-                        "red",
-                    ),
-                )
-                sys.exit(1)
-
-        # podmena(commit_msg_filepath=commit_msg_filepath, enable=True)
-
-        os._exit(0)
-
-    except:  # noqa: ignore=E722
-        traceback.print_exc()
-        print(colored("Oops! COMMIT is failing. Switch to manual...", "red"))
-        clean_all(commit_msg_filepath)
-        # sys.exit(2)
 
     # write message to backup file
     shutil.copyfile(commit_msg_file, backup_file)
