@@ -224,7 +224,7 @@ Fixes #456
 
 This project uses GitHub Actions for continuous integration. The following workflows run automatically:
 
-- **Python package** (`python.yml`): Runs tests on Python 3.12 and 3.13
+- **Python package** (`python.yml`): Runs tests on all supported Python versions (currently 3.9–3.13)
 - **CodeQL Analysis** (`codeql.yml`): Security scanning
 - **Linting** (`linter.yml`): Code quality checks
 - **Release** (`release.yml`): Automated releases
