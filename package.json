@@ -53,6 +53,7 @@
 		"eslint": "^9.37.0",
 		"eslint-formatter-gitlab": "^7.0.0",
 		"markdown-toc": "^1.2.0",
+		"opencommit": "^3.2.7",
 		"remark-cli": "^12.0.1",
 		"remark-lint": "^10.0.1",
 		"remark-preset-lint-recommended": "^7.0.1",

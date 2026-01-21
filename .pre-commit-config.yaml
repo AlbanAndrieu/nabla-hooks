@@ -33,7 +33,7 @@ default_install_hook_types:
   - pre-commit # gitleak
     # make sure you include `prepare-commit-msg` in `default_install_hook_types`
     # prepare-commit-msg made by oco
-    # - prepare-commit-msg
+  - prepare-commit-msg
   - commit-msg
 repos:
   # ---------------------------------------------------------------------------- #
