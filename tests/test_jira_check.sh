@@ -1,5 +1,5 @@
 #!/bin/bash
-#set -eu
+set -eu
 
 WORKING_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
