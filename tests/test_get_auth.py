@@ -50,7 +50,10 @@ class TestGetAuth:
             assert password == "envpass"
 
     def test_get_password_from_git_assword_env(self):
-        """Test get_password retrieves from GIT_ASSWORD as fallback."""
+        """Test get_password retrieves from GIT_ASSWORD as fallback.
+        
+        Note: The environment variable is intentionally named GIT_ASSWORD (typo in original code).
+        """
         with patch.dict(os.environ, {"GIT_ASSWORD": "gitpass"}, clear=True):
             password = get_password(password=None, verbose=False)
             assert password == "gitpass"

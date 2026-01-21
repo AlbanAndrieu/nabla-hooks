@@ -1,9 +1,11 @@
 """Additional tests for the nabla API."""
 
+import time
 from typing import Dict
 
-from fastapi import FastAPI
+from fastapi import APIRouter, FastAPI
 from fastapi.testclient import TestClient
+from starlette.responses import JSONResponse
 
 
 def create_test_app() -> FastAPI:
@@ -23,9 +25,8 @@ def create_test_app() -> FastAPI:
 
     @test_app.get("/io_task")
     async def io_task():
-        import time
-
-        time.sleep(1)
+        # Reduced sleep time for faster tests
+        time.sleep(0.01)
         return "IO bound task finish!"
 
     @test_app.get("/cpu_task")
