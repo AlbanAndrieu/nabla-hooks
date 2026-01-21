@@ -265,12 +265,12 @@ def test_validate_commit_message_with_valid_format():
 
 ### Before Submitting
 
-- [ ] Tests pass locally
-- [ ] Code follows style guidelines
-- [ ] Documentation is updated
-- [ ] Commit messages follow conventions
-- [ ] Pre-commit hooks pass
-- [ ] No merge conflicts with main branch
+- \[ ] Tests pass locally
+- \[ ] Code follows style guidelines
+- \[ ] Documentation is updated
+- \[ ] Commit messages follow conventions
+- \[ ] Pre-commit hooks pass
+- \[ ] No merge conflicts with main branch
 
 ### Pull Request Review Process
 
