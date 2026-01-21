@@ -67,7 +67,7 @@ poetry publish
 ### First Time Setup
 ```bash
 # 1. Clone and enter repo
-git clone https://github.com/YOUR_USERNAME/nabla-hooks.git
+git clone https://github.com/AlbanAndrieu/nabla-hooks.git
 cd nabla-hooks
 
 # 2. Set Python version
