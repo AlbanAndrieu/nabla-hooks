@@ -28,7 +28,7 @@ This project follows a code of conduct to ensure a welcoming environment for all
 
 Before you begin, ensure you have the following installed:
 
-- Python 3.10 or higher (3.12+ recommended)
+- Python 3.9 or higher (3.12+ recommended for development)
 - [Poetry](https://python-poetry.org/docs/#installation) 2.0+
 - Git
 - Pre-commit (will be installed via Poetry)

@@ -17,7 +17,7 @@ All workflows are located in `.github/workflows/` and run automatically on relev
 - Pull requests
 
 **Matrix**:
-- Python versions: 3.12, 3.13
+- Python versions: 3.12, 3.13 (project supports 3.9+)
 - OS: Ubuntu Latest
 
 **Steps**:
