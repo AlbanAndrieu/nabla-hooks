@@ -4,7 +4,6 @@ import os
 import shutil
 import subprocess
 import sys
-import traceback
 from pathlib import Path
 
 from get_msg import match_msg
