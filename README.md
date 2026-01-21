@@ -429,7 +429,7 @@ This project uses GitHub Actions for continuous integration and deployment. The 
 
 1. **Python Package** (`.github/workflows/python.yml`)
    - Runs on: Push to master, Pull requests
-   - Tests on: Python 3.12 and 3.13 (project supports Python 3.9+)
+   - Tests on: Python 3.12 and 3.13 (CI currently runs on 3.12 and 3.13; the project is intended to support Python 3.9+)
    - Steps: Lint (flake8, pylint, bandit), Test (pytest, tox)
    - Badge: ![Python package](https://github.com/AlbanAndrieu/nabla-hooks/actions/workflows/python.yml/badge.svg)
 
