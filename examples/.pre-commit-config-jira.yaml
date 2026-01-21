@@ -1,0 +1,37 @@
+# Example .pre-commit-config.yaml for using the JIRA check hook
+
+# This configuration demonstrates how to use the nabla-hooks JIRA check
+# to ensure all commit messages contain a JIRA ticket reference.
+
+repos:
+  - repo: https://github.com/AlbanAndrieu/nabla-hooks.git
+    rev: v1.0.7  # Use the latest version
+    hooks:
+      # JIRA commit message validation
+      - id: jira-check
+        name: JIRA ticket check
+        stages: [commit-msg]
+        # Optional: customize the JIRA pattern
+        # args: ['--pattern', '[A-Z]{3,5}-[0-9]+']
+        
+      # Optional: Git branch validation
+      - id: git-branches-check
+        name: Git branches check
+        args: [--max=10, --verbose]
+        
+      # Optional: Jenkinsfile validation
+      # - id: jenkinsfile-check
+      #   name: Jenkinsfile check
+
+# To install these hooks in your repository:
+# 1. Make sure you have pre-commit installed: pip install pre-commit
+# 2. Add this configuration to .pre-commit-config.yaml in your repo
+# 3. Run: pre-commit install --hook-type commit-msg
+# 4. Run: pre-commit install (for pre-commit hooks)
+
+# To test the JIRA check:
+# - Valid: git commit -m "PROJ-123 Add new feature"
+# - Invalid: git commit -m "Add new feature" (will be rejected)
+
+# To skip the hook for a single commit:
+# git commit -m "Emergency fix" --no-verify
