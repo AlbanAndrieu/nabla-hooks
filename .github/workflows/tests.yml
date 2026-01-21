@@ -94,7 +94,7 @@ jobs:
           poetry-version: latest
 
       - name: Cache conda packages
-        uses: actions/cache@v4
+        uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5
         env:
           # Increase this value to reset cache explicitly
           CACHE_NUMBER: 0
