@@ -6,6 +6,7 @@ Nabla custom git hooks
 
 [![License](http://img.shields.io/:license-apache-blue.svg?style=flat-square)](http://www.apache.org/licenses/LICENSE-2.0.html)
 [![Gitter](https://badges.gitter.im/nabla-hooks/Lobby.svg)](https://gitter.im/nabla-hooks/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Python package](https://github.com/AlbanAndrieu/nabla-hooks/actions/workflows/python.yml/badge.svg)](https://github.com/AlbanAndrieu/nabla-hooks/actions/workflows/python.yml)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=nabla%3Anabla-hooks&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=nabla%3Anabla-hooks)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/AlbanAndrieu/nabla-hooks.svg)](https://github.com/AlbanAndrieu/nabla-hooks/pulls)
@@ -14,6 +15,17 @@ Nabla custom git hooks
 This project intend to be uses by all Nabla products
 
 This project is DEPRECATED, commit validation will now be done using [commitizen](https://commitizen-tools.github.io/commitizen/customization/) or [commitlint](https://commitlint.js.org/) still using pre-commit or [opencommit](https://github.com/di-sukharev/opencommit)
+
+## Contributing
+
+We welcome contributions! Please see our [Contributing Guidelines](.github/CONTRIBUTING.md) for details on:
+
+- Setting up your development environment with Poetry
+- Running tests and code quality checks
+- Submitting pull requests
+- GitHub workflows and CI/CD
+
+For issues, feature requests, or questions, please use our [GitHub issue templates](.github/ISSUE_TEMPLATE/).
 
 # Table of contents
 
@@ -54,7 +66,29 @@ This project is DEPRECATED, commit validation will now be done using [commitizen
 
 # [Initialize](#table-of-contents)
 
-Using pipenv Pipfile
+## Quick Start with Poetry (Recommended)
+
+This project uses [Poetry](https://python-poetry.org/) for dependency management.
+
+```bash
+# Install pyenv and Python (recommended)
+pyenv install 3.12.10
+pyenv local 3.12.10
+
+# Install Poetry
+curl -sSL https://install.python-poetry.org | python3 -
+
+# Install dependencies
+poetry install
+
+# Install pre-commit hooks
+poetry run pre-commit install
+
+# Run tests to verify setup
+poetry run pytest
+```
+
+## Alternative: Using pipenv (Legacy)
 
 ```bash
 direnv allow
@@ -65,7 +99,9 @@ direnv allow
 pre-commit install
 ```
 
-Using poetry pyproject.toml
+## Migration from Pipenv to Poetry
+
+If you're migrating from Pipenv:
 
 ```bash
 pip install -U poetry pipenv-poetry-migrate
@@ -320,16 +356,61 @@ pytest --cache-clear --setup-show tests/test_package.py
 
 ### Poetry
 
+This project uses [Poetry](https://python-poetry.org/) for dependency management and packaging.
+
+#### Quick Start with Poetry
+
 ```bash
+# Install Poetry (if not already installed)
+curl -sSL https://install.python-poetry.org | python3 -
+
+# Install project dependencies
 poetry install
-poetry env info
+
+# Activate the virtual environment
 poetry shell
+
+# Run tests
 poetry run pytest
+
+# Run pre-commit hooks
+poetry run pre-commit run --all-files
+```
+
+#### Poetry Commands
+
+```bash
+# Show environment information
+poetry env info
+
+# Show installed packages
+poetry show
+
+# Add a new dependency
+poetry add package-name
+
+# Add a development dependency
+poetry add --group dev package-name
+
+# Update dependencies
+poetry update
+
+# Build the package
 poetry build
+
+# Publish to PyPI (requires authentication)
 # https://python-poetry.org/docs/repositories/
 poetry config pypi-token.pypi ${TWINE_PASSWORD}
-# poetry publish --build
+poetry publish --build
+
+# Check pyproject.toml for errors
+poetry check
+
+# Lock dependencies without installing
+poetry lock
 ```
+
+For more details, see the [CONTRIBUTING.md](.github/CONTRIBUTING.md) guide.
 
 ### Pdm
 
@@ -339,6 +420,62 @@ poetry config pypi-token.pypi ${TWINE_PASSWORD}
 pdm init
 pdm run flake8
 ```
+
+## [GitHub Workflows and CI/CD](#table-of-contents)
+
+This project uses GitHub Actions for continuous integration and deployment. The following workflows are configured:
+
+### Available Workflows
+
+1. **Python Package** (`.github/workflows/python.yml`)
+   - Runs on: Push to master, Pull requests
+   - Tests on: Python 3.12 and 3.13
+   - Steps: Lint (flake8, pylint, bandit), Test (pytest, tox)
+   - Badge: ![Python package](https://github.com/AlbanAndrieu/nabla-hooks/actions/workflows/python.yml/badge.svg)
+
+2. **CodeQL Analysis** (`.github/workflows/codeql.yml`)
+   - Security scanning for code vulnerabilities
+   - Runs on: Push and Pull requests
+
+3. **Linter** (`.github/workflows/linter.yml`)
+   - Comprehensive linting across the project
+   - Uses MegaLinter for multiple file types
+
+4. **Release** (`.github/workflows/release.yml`)
+   - Automated release creation and publishing
+
+5. **Tests** (`.github/workflows/tests.yml`)
+   - Dedicated test workflow
+
+### Workflow Requirements
+
+All pull requests must pass:
+- ✅ Linting (flake8, pylint, bandit)
+- ✅ Tests (pytest with >30% coverage)
+- ✅ Code quality checks (SonarCloud)
+- ✅ Security scanning (CodeQL)
+
+### Local CI Simulation
+
+Before pushing, run the same checks locally:
+
+```bash
+# Activate poetry environment
+poetry shell
+
+# Run linters
+poetry run flake8 hooks tests
+poetry run pylint hooks
+poetry run bandit -r hooks
+
+# Run tests
+poetry run pytest --cov=hooks --cov-fail-under=30
+
+# Run pre-commit hooks
+poetry run pre-commit run --all-files
+```
+
+For more details, see [CONTRIBUTING.md](.github/CONTRIBUTING.md).
 
 ## [Update README.md](#table-of-contents)
 
