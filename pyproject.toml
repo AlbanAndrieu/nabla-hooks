@@ -13,6 +13,7 @@ description = "This is nabla_custom hooks package"
 readme = "README.md"
 license = "Apache-2.0"
 requires-python = ">=3.9, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*, !=3.6.*"
+keywords = ["git-hooks", "pre-commit", "commit-validation", "jira", "code-quality", "linting"]
 authors = [
     { name = "Alban Andrieu", email = "alban.andrieu@free.fr" },
 ]
@@ -84,6 +85,11 @@ message = "Do you want to add body message in commit?"
 
 [project.urls]
 "Homepage" = "https://github.com/AlbanAndrieu/nabla-hooks"
+"Documentation" = "https://github.com/AlbanAndrieu/nabla-hooks/blob/master/README.md"
+"Repository" = "https://github.com/AlbanAndrieu/nabla-hooks"
+"Bug Tracker" = "https://github.com/AlbanAndrieu/nabla-hooks/issues"
+"Changelog" = "https://github.com/AlbanAndrieu/nabla-hooks/blob/master/CHANGELOG.md"
+"Gitter" = "https://gitter.im/nabla-hooks/Lobby"
 
 [project.optional-dependencies]
 toml = ["tomli; python_version < '3.11'"]
