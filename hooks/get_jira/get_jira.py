@@ -138,16 +138,34 @@ def get_msg(
 
 
 def match_issue(branch: str, verbose=False, fail=True) -> str:
+    """
+    Extract JIRA issue from branch name.
+    
+    Supports branch naming patterns like:
+    - feature/PROJ-123
+    - bugfix/TEST-456
+    - feat/ABC-789
+    """
     issue = "UNKNOWN"
 
     try:
-        # Matches any unique issue code
+        # Matches any unique issue code in branch name
         pattern = re.compile(
             r"(^feature|^feat|^bugfix|^fix|^docs|^style|^refactor|^perf|^test|^chore)\/([A-Z]{3,5}-[0-9]+)",
         )
-        issue = re.search(pattern, branch).group(2)  # Extract issue code
-        if verbose:
-            print(colored("Issue number detected : {}.".format(issue), "green"))
+        match = re.search(pattern, branch)
+        if match:
+            issue = match.group(2)  # Extract issue code
+            if verbose:
+                print(colored("Issue number detected : {}.".format(issue), "green"))
+        else:
+            # Try to extract from branch name even without prefix
+            pattern = re.compile(r"([A-Z]{2,10}-[0-9]+)")
+            match = re.search(pattern, branch)
+            if match:
+                issue = match.group(1)
+                if verbose:
+                    print(colored("Issue number detected : {}.".format(issue), "green"))
 
     except Exception:
         if verbose:
@@ -161,6 +179,37 @@ def match_issue(branch: str, verbose=False, fail=True) -> str:
         if fail:
             sys.exit(2)
 
+    return issue
+
+
+def match_issue_from_message(message: str, verbose=False) -> str:
+    """
+    Extract JIRA issue from commit message.
+    
+    Looks for pattern like PROJ-123, TEST-456, etc. anywhere in the message.
+    
+    Args:
+        message: The commit message
+        verbose: If True, print debug information
+        
+    Returns:
+        The JIRA issue if found, "UNKNOWN" otherwise
+    """
+    issue = "UNKNOWN"
+    
+    try:
+        # Match JIRA pattern: 2-10 uppercase letters, dash, numbers
+        pattern = re.compile(r"([A-Z]{2,10}-[0-9]+)")
+        match = re.search(pattern, message)
+        
+        if match:
+            issue = match.group(1)
+            if verbose:
+                print(colored(f"Issue number detected in message: {issue}", "green"))
+    except Exception:
+        if verbose:
+            traceback.print_exc()
+    
     return issue
 
 

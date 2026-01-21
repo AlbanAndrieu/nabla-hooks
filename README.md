@@ -141,26 +141,22 @@ example .pre-commit-config.yaml as following:
     rev: v1.0.7
     hooks:
     - id: git-branches-check
-    - id: jira-check  # Check that commit messages contain JIRA tickets
+    - id: jira-check  # Validates commit messages contain JIRA tickets
       stages: [commit-msg]
 ```
 
-**JIRA Check Hook**: This hook validates that commit messages contain a valid JIRA ticket reference (e.g., PROJ-123). The hook will:
-- Accept commits with JIRA tickets in format: `[A-Z]{2,10}-[0-9]+` (e.g., TEST-123, PROJECT-456)
-- Skip validation for merge commits and revert commits
-- Provide helpful error messages when JIRA tickets are missing
+**JIRA Check Hook**: Validates that commit messages contain JIRA ticket references (e.g., PROJ-123, TEST-456).
+
+Features:
+- Pattern matching: `[A-Z]{2,10}-[0-9]+` (customizable via `--pattern`)
+- Auto-skips merge, revert, fixup, and squash commits
+- No JIRA API access required - simple pattern validation
+- User-friendly error messages with examples
 
 Example valid commit messages:
 - `PROJ-123 Add new feature`
 - `[TEAM-456] Fix critical bug`
 - `ABC-789: Update documentation`
-
-To customize the JIRA pattern:
-```yaml
-- id: jira-check
-  stages: [commit-msg]
-  args: ['--pattern', '[A-Z]{3,5}-[0-9]+']  # Custom pattern
-```
 
 Testing locally
 
@@ -176,6 +172,11 @@ Testing locally
         always_run: true
         verbose: true
         args: [--max=1, --verbose]
+    -   id: jira-check
+        name: JIRA ticket validation
+        entry: hooks/validate_jira.py
+        language: python
+        stages: [commit-msg]
 ```
 
 $ `pre-commit try-repo . git-branches-check --verbose`
@@ -185,7 +186,7 @@ $ `pre-commit try-repo . git-branches-check --verbose`
 Run `pre-commit install`
 `pre-commit install -f --install-hooks`
 
-For JIRA check (commit-msg hook), also run:
+For commit-msg hooks (like JIRA check), also run:
 `pre-commit install --hook-type commit-msg`
 
 3. enjoy it

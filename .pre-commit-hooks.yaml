@@ -16,6 +16,6 @@
 - id: jira-check
   name: JIRA check
   description: Check JIRA validation on commit message with user friendly messages and colors
-  entry: pre_commit_hooks/jira-check.sh
-  language: script
+  entry: hooks/validate_jira.py
+  language: python
   stages: [commit-msg]
