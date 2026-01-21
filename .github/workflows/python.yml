@@ -21,13 +21,13 @@ jobs:
       JIRA_USER: aandrieu
       JIRA_PASSWORD: XXX
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
         with:
           # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548 # v6
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -102,7 +102,7 @@ jobs:
       - name: Upload Test Results to Trunk.io
         if: ${{ !cancelled() }} # Upload the results even if the tests fail
         continue-on-error: true # don't fail this job if the upload fails
-        uses: trunk-io/analytics-uploader@v2
+        uses: trunk-io/analytics-uploader@293e9b144a101ef4b8fe3485a5afd0224fc48255 # v2
         with:
           junit-paths: "**/*.xml"
           org-slug: alban
@@ -111,13 +111,13 @@ jobs:
   sonarcloud:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
         with:
           # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0
       - name: SonarCloud Scan
         # You may pin to the exact commit or the version.
-        uses: SonarSource/sonarqube-scan-action@v6.0.0
+        uses: SonarSource/sonarqube-scan-action@fd88b7d7ccbaefd23d8f36f73b59db7a3d246602 # v6.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
