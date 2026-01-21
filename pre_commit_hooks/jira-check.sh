@@ -90,7 +90,7 @@ COMMIT_MSG_SUBJECT=$(echo "$COMMIT_MSG" | head -n 1)
 # Check if commit message contains JIRA ticket
 if echo "$COMMIT_MSG_SUBJECT" | grep -qE "$JIRA_PATTERN"; then
   JIRA_TICKET=$(echo "$COMMIT_MSG_SUBJECT" | grep -oE "$JIRA_PATTERN" | head -n 1)
-  echo -e "${green}✓ JIRA ticket found: ${bold}${JIRA_TICKET}${NC}${green}${NC}"
+  echo -e "${green}✓ JIRA ticket found: ${bold}${JIRA_TICKET}${NC}"
   exit 0
 else
   echo -e "${red}✗ Error: No JIRA ticket found in commit message${NC}"

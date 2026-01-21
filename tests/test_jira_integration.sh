@@ -1,7 +1,7 @@
 #!/bin/bash
 # Manual integration test for JIRA check hook
 
-set -e
+set -eu
 
 WORKING_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="${WORKING_DIR}/.."
@@ -27,9 +27,9 @@ echo ""
 # Test 3: Test as commit-msg hook simulation
 echo "Test 3: Simulate commit-msg hook"
 TEMP_MSG_FILE=$(mktemp)
+trap 'rm -f "$TEMP_MSG_FILE"' EXIT
 echo "TEST-456 Add feature" > "$TEMP_MSG_FILE"
 ${PROJECT_ROOT}/pre_commit_hooks/jira-check.sh "$TEMP_MSG_FILE"
-rm "$TEMP_MSG_FILE"
 echo ""
 
 # Test 4: Test custom pattern
