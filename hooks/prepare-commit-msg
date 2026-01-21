@@ -79,9 +79,11 @@ def prepare_commit_msg(commit_msg_file: str) -> int:
     try:
         with open(commit_msg_file, "r") as f:
             existing_content = f.read().strip()
-            # Filter out comments (lines starting with #)
+            # Filter out comments (lines starting with # after stripping whitespace)
             non_comment_lines = [
-                line for line in existing_content.split("\n") if not line.startswith("#")
+                line
+                for line in existing_content.split("\n")
+                if not line.lstrip().startswith("#")
             ]
             existing_message = "\n".join(non_comment_lines).strip()
     except FileNotFoundError:

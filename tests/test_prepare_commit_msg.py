@@ -104,9 +104,11 @@ def test_prepare_commit_msg_with_comments_only():
     """Test that prepare_commit_msg treats comment-only files as empty."""
     from prepare_commit_msg import prepare_commit_msg
 
-    # Create a file with only comments
+    # Create a file with only comments (including indented ones)
     with tempfile.NamedTemporaryFile(mode="w", delete=False, suffix=".txt") as f:
-        f.write("# Please enter the commit message\n# Lines starting with '#' are comments\n")
+        f.write(
+            "# Please enter the commit message\n  # Lines starting with '#' are comments\n\t# Even indented comments\n"
+        )
         temp_file = f.name
 
     try:
