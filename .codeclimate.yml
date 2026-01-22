@@ -18,7 +18,7 @@ plugins:
   markdownlint:
     enabled: false
     checks:
-      MD002:  # "First header should be a h1 header"
+      MD002: # "First header should be a h1 header"
         enabled: false
   shellcheck:
     enabled: true

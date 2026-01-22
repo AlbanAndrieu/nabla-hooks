@@ -202,9 +202,9 @@ repos:
   - repo: https://github.com/AlbanAndrieu/nabla-hooks.git
     rev: v1.0.7
     hooks:
-    - id: git-branches-check
-    - id: jira-check  # Validates commit messages contain JIRA tickets
-      stages: [commit-msg]
+      - id: git-branches-check
+      - id: jira-check  # Validates commit messages contain JIRA tickets
+        stages: [commit-msg]
 ```
 
 **JIRA Check Hook**: Validates that commit messages contain JIRA ticket references (e.g., PROJ-123, TEST-456).

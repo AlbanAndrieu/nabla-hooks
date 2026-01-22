@@ -177,7 +177,7 @@ repos:
       - id: pyupgrade
         name: "🐍 python · Py Upgrade"
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.14.10
+    rev: v0.14.13
     hooks:
       - id: ruff-format
         name: "🐍 python · Format with Ruff"
@@ -220,7 +220,7 @@ repos:
     # This helps ensure cross-compatibility with people who don't wish to use uv
   - repo: https://github.com/astral-sh/uv-pre-commit
     # uv version.
-    rev: 0.9.21
+    rev: 0.9.26
     hooks:
       - id: uv-sync
         name: "⚡️ uv · Sync dependencies with uv"
@@ -288,14 +288,14 @@ repos:
 
     ### Makefile ###
   - repo: https://github.com/mrtazz/checkmake.git
-    rev: 0.2.2
+    rev: v0.3.2
     hooks:
       - id: checkmake
         name: "🐮 Makefile · Lint Makefile"
 
     ### SQL ###
   - repo: https://github.com/sqlfluff/sqlfluff
-    rev: 3.5.0
+    rev: 4.0.0
     hooks:
       - id: sqlfluff-fix
         name: "📊 SQL · Attempts to fix rule violations."
@@ -348,7 +348,7 @@ repos:
 
     ### Javascript & Web Tools ###
   - repo: https://github.com/biomejs/pre-commit
-    rev: "v2.3.10"
+    rev: "v2.3.11"
     hooks:
       - id: biome-check
         name: "🟨 javascript · Lint, format, and safe fixes with Biome"
@@ -405,7 +405,7 @@ repos:
     # ----------------------------- 🔒 Security Tools ---------------------------- #
 
   - repo: https://github.com/PyCQA/bandit
-    rev: 1.9.2
+    rev: 1.9.3
     hooks:
       - id: bandit
         name: "🔒 security · Detect security issues"
@@ -452,7 +452,7 @@ repos:
     #           .gitlab-ci.yml|
     #         )$
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.37.1
+    rev: v1.38.0
     hooks:
       - id: yamllint
         name: "📜 yamllint - Lint Yaml"
@@ -466,23 +466,22 @@ repos:
 
     ### Commit Message Standards ###
   - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
-    rev: v9.23.0
+    rev: v9.24.0
     hooks:
       - id: commitlint
         stages: [commit-msg]
         additional_dependencies:
           - "@commitlint/config-conventional"
           - conventional-changelog-conventionalcommits
-  - repo: https://github.com/commitizen-tools/commitizen
-    rev: v4.11.0
-    hooks:
-      - id: commitizen
-        name: "🌳 git · Validate commit message"
-        stages: [commit-msg]
-        additional_dependencies: [cz-conventional-gitmoji]
-      - id: commitizen-branch
-        stages: [pre-push]
-
+  # - repo: https://github.com/commitizen-tools/commitizen
+  #   rev: v4.12.1
+  #   hooks:
+  #     - id: commitizen
+  #       name: "🌳 git · Validate commit message"
+  #       stages: [commit-msg]
+  #       additional_dependencies: [cz-conventional-gitmoji]
+  #     - id: commitizen-branch
+  #       stages: [pre-push]
   - repo: https://github.com/jorisroovers/gitlint
     rev: v0.19.1
     hooks:

@@ -65,7 +65,8 @@ mega_linter:
   allow_failure: true
 
 docker-build:
-  extends: .docker-build
+  extends:
+    .docker-build
     # - docker # no space left on device
   timeout: 2 hours 10 minutes
   variables:

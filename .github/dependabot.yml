@@ -19,7 +19,7 @@ updates:
       - dependency-name: "sphinx"
         dependency-type: "production"
     ignore:
-        # For Lodash, ignore all updates
+      # For Lodash, ignore all updates
       - dependency-name: "lodash"
       - dependency-name: "flask*"
       - dependency-name: org.apache:maven:*
@@ -30,7 +30,7 @@ updates:
     directory: "/playbooks/files/python/"
     schedule:
       interval: "monthly"
-    labels: [ ]
+    labels: []
     ignore:
       - dependency-name: "*"
 
@@ -51,7 +51,7 @@ updates:
     directory: "/directory-to-exclude"
     schedule:
       interval: "monthly"
-    labels: [ ]
+    labels: []
     ignore:
       - dependency-name: "*"
 

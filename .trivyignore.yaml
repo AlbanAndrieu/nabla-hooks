@@ -6,7 +6,7 @@ vulnerabilities:
   #   statement: Accept the risk
   - id: CVE-2023-6730
     statement: Testing ignoring CVE in Pipeline
-# Below for transformers
+  # Below for transformers
   - id: CVE-2023-7018
   - id: CVE-2024-3568
   - id: CVE-2024-24790 # TODO remove me
@@ -17,9 +17,9 @@ misconfigurations:
   - id: AVD-DS-0026
 
 licenses:
-  - id: GPL-1.0  # License name is used as ID
+  - id: GPL-1.0 # License name is used as ID
     package: perl-base
-  - id: GPL-2.0  # License name is used as ID
+  - id: GPL-2.0 # License name is used as ID
     package: adduser
   - id: GPL-2.0-with-bison-exception
   - id: GPL-2.0-with-autoconf-exception

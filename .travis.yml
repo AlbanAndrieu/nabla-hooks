@@ -22,7 +22,7 @@ cache:
 
 language: python
 
-.mixtures:  # is not used by Travis CI, but helps avoid duplication
+.mixtures: # is not used by Travis CI, but helps avoid duplication
   - &if-cron-or-manual-run-or-tagged
     if: type IN (cron, api) OR tag IS present
   - &reset-prerequisites
@@ -123,7 +123,7 @@ before_install:
 
 install:
   - pip install -U tox
-  - tox --notest  # Pre-populate virtualenv
+  - tox --notest # Pre-populate virtualenv
 
 script:
   - tox -v

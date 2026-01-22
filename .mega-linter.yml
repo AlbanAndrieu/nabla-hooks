@@ -2,11 +2,11 @@
 # yamllint disable rule:line-length
 # Configuration file for MegaLinter
 # See all available variables at https://megalinter.io/latest/config-file/ and in linters documentation
-APPLY_FIXES: all  # all, none, or list of linter keys
-DEFAULT_BRANCH: main  # Usually master or main
+APPLY_FIXES: all # all, none, or list of linter keys
+DEFAULT_BRANCH: main # Usually master or main
 # ENABLE: # If you use ENABLE variable, all other languages/formats/tooling-formats will be disabled by default
 #   - PYTHON, BASH
-ENABLE_LINTERS:  # If you use ENABLE_LINTERS variable, all other linters will be disabled by default
+ENABLE_LINTERS: # If you use ENABLE_LINTERS variable, all other linters will be disabled by default
   - REPOSITORY_SECRETLINT
   - REPOSITORY_GITLEAKS
   - REPOSITORY_TRIVY
@@ -24,7 +24,7 @@ DISABLE:
   - EDITORCONFIG
   - MARKDOWN
   # - REPOSITORY
-  - SPELL  # Uncomment to disable checks of spelling mistakes
+  - SPELL # Uncomment to disable checks of spelling mistakes
   - JAVASCRIPT
   - YAML
   - TEKTON
@@ -63,7 +63,8 @@ BASH_FILTER_REGEX_EXCLUDE: (lib)
 MARKDOWN_FILTER_REGEX_EXCLUDE: (license\.md)
 MARKDOWN_MARKDOWN_LINK_CHECK_DISABLE_ERRORS: true
 SPELL_MISSPELL_FILTER_REGEX_EXCLUDE: (\.automation/generated|docs/descriptors)
-DOCKERFILE_HADOLINT_ARGUMENTS: --ignore DL3003 --ignore DL3007 --ignore DL3013 --ignore DL3016 --ignore DL3018 --ignore DL3028 --ignore DL4001 --ignore DL4006 --ignore
+DOCKERFILE_HADOLINT_ARGUMENTS:
+  --ignore DL3003 --ignore DL3007 --ignore DL3013 --ignore DL3016 --ignore DL3018 --ignore DL3028 --ignore DL4001 --ignore DL4006 --ignore
   SC2015 --ignore SC2016 --ignore SC2039 --ignore SC2086 --ignore SC1091
 DOCKERFILE_HADOLINT_DISABLE_ERRORS: false
 DOCKERFILE_HADOLINT_DISABLE_ERRORS_IF_LESS_THAN: 2
@@ -124,7 +125,8 @@ YAML_V8R_FILE_NAMES_REGEX:
     ".checkov.yml",
   ]
 # ADDITIONAL_EXCLUDED_DIRECTORIES: (\.venv/|\.direnv/|\.mypy_cache/)
-EXCLUDED_DIRECTORIES: [".github", ".gitlab-ci", "node_modules", ".venv", ".direnv", ".mypy_cache"]
+EXCLUDED_DIRECTORIES:
+  [".github", ".gitlab-ci", "node_modules", ".venv", ".direnv", ".mypy_cache"]
 PARALLEL: true
 CLEAR_REPORT_FOLDER: true
 PRINT_ALPACA: false
@@ -142,7 +144,7 @@ PLUGINS:
   - https://raw.githubusercontent.com/kpj/jupyfmt/master/mega-linter-plugin-jupyfmt/jupyfmt.megalinter-descriptor.yml
 PRE_COMMANDS:
   - command: pip install flake8-cognitive-complexity
-    venv: flake8  # Will be run within flake8 python virtualenv. There is one virtualenv per python-based linter, with the same name
+    venv: flake8 # Will be run within flake8 python virtualenv. There is one virtualenv per python-based linter, with the same name
   - command: echo "This is Mega-Linter PRE_COMMAND on own Mega-Linter ! :)"
     cwd: root
   - command: |-
