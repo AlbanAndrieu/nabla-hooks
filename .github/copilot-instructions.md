@@ -139,8 +139,10 @@ make clean
 
 ### Python Conventions
 ```python
-# Use type hints
-def get_user(user: str | None = None, verbose: bool = False) -> str:
+# Use type hints (compatible with Python 3.9+)
+from typing import Optional
+
+def get_user(user: Optional[str] = None, verbose: bool = False) -> str:
     """Get username from parameter or environment.
     
     Args:
@@ -264,17 +266,36 @@ print(colored("✗ Error", "red"))
 ### Git Operations
 ```python
 import subprocess
+import sys
 from typing import List
 
 def run_git_command(args: List[str]) -> str:
-    """Run a git command and return output."""
-    result = subprocess.run(
-        ["git"] + args,
-        capture_output=True,
-        text=True,
-        check=True
-    )
-    return result.stdout.strip()
+    """Run a git command and return output.
+    
+    Args:
+        args: List of git command arguments
+        
+    Returns:
+        Command output as string
+        
+    Raises:
+        SystemExit: If git command fails
+    """
+    try:
+        result = subprocess.run(
+            ["git"] + args,
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        return result.stdout.strip()
+    except subprocess.CalledProcessError as e:
+        print(f"ERROR: Git command failed: git {' '.join(args)}", file=sys.stderr)
+        print(f"ERROR: {e.stderr}", file=sys.stderr)
+        sys.exit(e.returncode)
+    except FileNotFoundError:
+        print("ERROR: git command not found. Is git installed?", file=sys.stderr)
+        sys.exit(1)
 ```
 
 ## Environment Variables
