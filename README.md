@@ -202,10 +202,25 @@ repos:
   - repo: https://github.com/AlbanAndrieu/nabla-hooks.git
     rev: v1.0.7
     hooks:
-      - id: git-branches-check
+    - id: git-branches-check
+    - id: jira-check  # Validates commit messages contain JIRA tickets
+      stages: [commit-msg]
 ```
 
-For local testing:
+**JIRA Check Hook**: Validates that commit messages contain JIRA ticket references (e.g., PROJ-123, TEST-456).
+
+Features:
+- Pattern matching: `[A-Z]{2,10}-[0-9]+` (customizable via `--pattern`)
+- Auto-skips merge, revert, fixup, and squash commits
+- No JIRA API access required - simple pattern validation
+- User-friendly error messages with examples
+
+Example valid commit messages:
+- `PROJ-123 Add new feature`
+- `[TEAM-456] Fix critical bug`
+- `ABC-789: Update documentation`
+
+Testing locally
 
 ```yaml
 repos:
@@ -220,6 +235,11 @@ repos:
         always_run: true
         verbose: true
         args: [--max=1, --verbose]
+    -   id: jira-check
+        name: JIRA ticket validation
+        entry: hooks/validate_jira.py
+        language: python
+        stages: [commit-msg]
 ```
 
 Test locally:
@@ -230,11 +250,10 @@ pre-commit try-repo . git-branches-check --verbose
 
 2. Install pre-commit hooks in your repository
 
-```bash
-pre-commit install
-# Or force reinstall
-pre-commit install -f --install-hooks
-```
+For commit-msg hooks (like JIRA check), also run:
+`pre-commit install --hook-type commit-msg`
+
+3. enjoy it
 
 3. Run pre-commit on all files
 
