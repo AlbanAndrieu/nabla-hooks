@@ -13,7 +13,9 @@
 			"url": "http://www.opensource.org/licenses/MIT"
 		}
 	],
-	"pre-commit": ["precommit"],
+	"pre-commit": [
+		"precommit"
+	],
 	"engines": {
 		"node": ">=20.14.0",
 		"npm": ">=10.8.2",
@@ -30,13 +32,17 @@
 		"parserOptions": {
 			"ecmaVersion": 6
 		},
-		"plugins": ["compat"],
+		"plugins": [
+			"compat"
+		],
 		"rules": {
 			"compat/compat": "warn"
 		}
 	},
 	"stylelint": {
-		"plugins": ["stylelint-no-unsupported-browser-features"],
+		"plugins": [
+			"stylelint-no-unsupported-browser-features"
+		],
 		"rules": {
 			"plugin/no-unsupported-browser-features": true
 		},
@@ -49,7 +55,8 @@
 		"@biomejs/biome": "2.3.11",
 		"@commitlint/cli": "^20.3.1",
 		"@eslint/js": "^9.34.0",
-		"@secretlint/secretlint-rule-preset-recommend": "^11.3.0",
+		"@secretlint/secretlint-rule-preset-recommend": "^11.2.5",
+		"commitizen": "^4.2.4",
 		"eslint": "^9.37.0",
 		"eslint-formatter-gitlab": "^7.0.0",
 		"markdown-toc": "^1.2.0",
@@ -64,6 +71,8 @@
 		"lint-md": "remark ."
 	},
 	"remarkConfig": {
-		"plugins": ["remark-preset-lint-recommended"]
+		"plugins": [
+			"remark-preset-lint-recommended"
+		]
 	}
 }
