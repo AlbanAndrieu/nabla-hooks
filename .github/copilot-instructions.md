@@ -11,7 +11,7 @@
 
 ## Tech Stack
 
-- **Language**: Python 3.9+ (supports 3.9, 3.10, 3.11, 3.12)
+- **Language**: Python 3.9+ (CI tests 3.11, 3.12, 3.13; tox tests 3.9-3.12)
 - **Build System**: setuptools with versioneer
 - **Dependency Management**: Poetry, Pipenv, or pip
 - **Testing**: pytest with coverage
@@ -322,9 +322,11 @@ The project is in **maintenance mode**:
 - Document any breaking changes clearly
 
 ### Python Version Support
-- Support Python 3.9, 3.10, 3.11, and 3.12
-- Test changes against all supported versions with tox
-- Avoid using features only available in newer Python versions
+- Support Python 3.9 and above (per `requires-python = ">=3.9"`)
+- GitHub Actions CI tests Python 3.11, 3.12, and 3.13
+- Tox configuration tests Python 3.9, 3.10, 3.11, and 3.12
+- Test changes against multiple Python versions with tox when possible
+- Avoid using features only available in Python 3.10+ unless necessary; prefer syntax compatible with Python 3.9 for broader compatibility
 
 ### Pre-commit Integration
 - Hooks must be defined in `.pre-commit-hooks.yaml`
