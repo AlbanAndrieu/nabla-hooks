@@ -55,7 +55,7 @@
 		"@biomejs/biome": "2.3.11",
 		"@commitlint/cli": "^20.3.1",
 		"@eslint/js": "^9.34.0",
-		"@secretlint/secretlint-rule-preset-recommend": "^11.2.5",
+		"@secretlint/secretlint-rule-preset-recommend": "^11.3.1",
 		"commitizen": "^4.2.4",
 		"eslint": "^9.37.0",
 		"eslint-formatter-gitlab": "^7.0.0",
