@@ -65,7 +65,7 @@
 		"remark-lint": "^10.0.1",
 		"remark-preset-lint-recommended": "^7.0.1",
 		"typescript": "^5.9.3",
-		"typescript-eslint": "^8.53.1"
+		"typescript-eslint": "^8.55.0"
 	},
 	"scripts": {
 		"lint-md": "remark ."
