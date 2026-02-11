@@ -4,9 +4,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - name: Self-hosted Renovate
-        uses: renovatebot/github-action@v44.2.5
+        uses: renovatebot/github-action@8cb0d4a6ab7d8bb90460a005f7bd33b80dd07ca8 # v44.2.5
         with:
           docker-cmd-file: .github/renovate-entrypoint.sh
           docker-user: root
