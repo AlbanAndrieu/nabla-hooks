@@ -3,5 +3,5 @@ poetry 2.2.1
 direnv 2.37.1
 ruby 4.0.0
 ripgrep 14.1.0
-terragrunt 0.96.1
+terragrunt 0.99.2
 nodejs 25
