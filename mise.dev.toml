@@ -1,0 +1,11 @@
+[tools]
+node = "24"
+
+[env]
+AK = { value = "DEV1234567890", redact = true } #nosec allow:gitleaks
+SK = { value = "DEV0987654321", redact = true } #nosec allow:gitleaks
+ENDPOINT = "https://fastapi-sample.service.gra.dev.consul"
+ENABLE_BETA_FEATURES = "true"
+
+[settings]
+debug = true

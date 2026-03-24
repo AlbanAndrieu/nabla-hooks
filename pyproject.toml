@@ -117,7 +117,11 @@ priority = "explicit"
 # priority = "primary"
 
 [tool.poetry.dependencies]
-python = ">=3.10,<4.0"
+python = ">=3.12,<4.0"
+
+[tool.poetry.group.base]
+optional = false
+[tool.poetry.group.base.dependencies]
 # ansible-core = ">=2.14.14"
 ansicolors = ">=1.1.8"
 # cfgv = ">=3.3.0"
@@ -136,7 +140,7 @@ fastapi = {version = ">=0.115.3", extras = ["standard"]}
 uvicorn = {version = ">=0.20.0", extras = ["standard"]}
 asyncpg = ">=0.27.0"
 spacy = ">=3.5.4"
-packaging = ">=24.2"
+packaging = ">=23.0"
 python-gitlab = ">=6.4.0"
 python-keystoneclient = ">=5.1.0"
 python-swiftclient = ">=4.2.0"
@@ -197,7 +201,6 @@ bandit = ">=1.7.4" # TODO 1.8.3
 checkov = ">=3.2.442" # 2.3.115
 httpx = ">=0.23.3"
 molecule = ">=3.6.1"
-packaging = ">=23.0"
 pep8 = ">=1.7.1"
 pep8-naming = ">=0.13.2"
 pip-upgrader = ">=1.4.15"

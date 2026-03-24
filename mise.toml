@@ -1,0 +1,66 @@
+min_version = "2024.9.5"
+
+[tools]
+python = "{{ get_env(name='PYTHON_VERSION', default='3.12') }}"
+ruff = "latest"
+awscli = { version = "latest", symlink_bins = "true" }
+k9s = "latest"
+kubectl = "latest"
+helm = "latest"
+terraform = "latest"
+argocd = "latest"
+trivy = "latest"
+
+[settings]
+lockfile = true
+
+[env]
+_.file = "secrets-enc.yaml"
+# Utiliser le nom du projet dérivé du répertoire courant
+PROJECT_NAME = "{{ config_root | basename }}"
+
+# API keys (must be set in environment or mise.local.toml)
+STATSIG_API_KEY = { required = true }
+SENTRY_DSN = { required = true }
+
+# Database connection (must be set in environment or mise.local.toml)
+DATABASE_URL = { required = "Set DATABASE_URL to your PostgreSQL connection string (e.g., postgres://user:pass@localhost/dbname)" } #nosec allow:gitleaks
+
+# Feature flags (must be explicitly configured)
+# ENABLE_BETA_FEATURES = { required = true }
+
+AWS_REGION = { required = "Set to your AWS region (e.g., us-east-1, eu-west-1)" }
+AWS_PROFILE = "eks"
+
+[tasks]
+init = "bash ./scripts/run-install.sh"
+build = "npm run build"
+
+[tasks.install]
+description = "Install all poetry dependencies"
+alias = "i"
+run = "poetry install --with format,test,extra,open_telemetry,api,deployment,influxdb,panda,temporal,utils,webui"
+
+[tasks.run]
+description = "Lunch app"
+run = "python app.py"
+
+[tasks.test]
+description = "Run tests"
+run = "pytest tests/"
+
+[tasks.lint]
+description = "Lint code"
+run = "ruff src/"
+
+[tasks.deploy]
+description = "Deploy to Cloudflare Wrangler"
+alias = "d"
+run = "npx wrangler dev"
+
+[tasks.info]
+description = "Project infos"
+run = '''
+echo "Project : $PROJECT_NAME"
+echo "Virtuel environnment : $VIRTUAL_ENV"
+'''
