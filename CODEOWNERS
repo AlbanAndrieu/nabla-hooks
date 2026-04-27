@@ -1,0 +1,22 @@
+[Infrastructure]
+*.gemspec @2453982
+
+Dockerfile @2453982
+*.sh @2453982
+hooks/ @2453982
+
+# This line would match the file terms.md
+*.md @doc-team
+
+# This line would also match the file terms.md
+terms.md @legal-team
+
+[Documentation] @docs-team
+docs/
+README.md
+
+# All group members as Code Owners for a file
+.gitlab-ci.yml @cloud-team
+
+[Python]
+*.py @dev-team

@@ -1,0 +1,123 @@
+---
+name: Python package
+
+on:
+  # Trigger analysis when pushing in master or pull requests, and when creating
+  # a pull request.
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build:
+    if: github.actor != 'dependabot[bot]' && github.actor!= 'dependabot-preview[bot]' # ignore the pull request which comes from user dependabot.
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.12", "3.13"]
+    env:
+      JIRA_USER: aandrieu
+      JIRA_PASSWORD: XXX
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install pip dependencies
+        run: |
+          pip install virtualenv
+          virtualenv venv
+          source venv/bin/activate
+          python -m pip install --upgrade pip
+          python -m pip install flake8 pytest pytest-env tox tox-gh-actions poetry==2.2.1 packaging==25.0
+          echo "pip install basic DONE"
+          if [[ -f requirements.txt && -f requirements.testing.txt ]]; then pip install -r requirements.txt -r requirements.testing.txt; fi
+          echo "pip install DONE"
+
+      - name: Install poetry dependencies
+        run: |
+          source venv/bin/activate
+          poetry --version
+          poetry lock
+          echo "poetry lock DONE"
+          poetry install
+          echo "poetry install DONE"
+
+      # - name: Install pipenv dependencies
+      #   run: |
+      #     pip install virtualenv
+      #     virtualenv venv
+      #     source venv/bin/activate
+      #     python -m pip install --upgrade pip
+      #     python -m pip install pipenv=="2022.6.7"
+      #     python -m pipenv install --dev --ignore-pipfile
+
+      - name: Lint with flake8
+        run: |
+          source venv/bin/activate
+          # stop the build if there are Python syntax errors or undefined names
+          #flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 hooks tests  --config .flake8 --count --exit-zero --max-line-length=88 --max-complexity=12 --statistics
+          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide, but black 88
+          flake8 hooks tests --count --exit-zero --max-line-length=88 --max-complexity=12 --statistics
+
+      - name: Lint with pylint
+        run: |
+          source venv/bin/activate
+          ./scripts/run-pylint.sh
+
+      - name: Lint with bandit
+        run: |
+          source venv/bin/activate
+          ./scripts/run-bandit.sh
+
+      - name: Test with pytest
+        run: |
+          source venv/bin/activate
+          python -m pip install --upgrade pip
+          python -m pip install pytest pytest-env tox tox-gh-actions poetry==2.2.1 packaging==25.0
+          # install package is needed for tests/test_package.py
+          poetry version
+          # python3 setup.py install
+          # echo "setup.py install DONE"
+          python -m build
+          pytest --cache-clear --setup-show tests/test_package.py
+          python -m pytest --cov=hooks --cov-fail-under=30 --junit-xml=junit.xml -o junit_family=xunit1
+
+      - name: Test with tox
+        run: |
+          source venv/bin/activate
+          python -m pip install --upgrade pip
+          python -m pip install pytest pytest-env tox tox-gh-actions poetry==2.2.1 packaging==25.0
+          tox
+
+      - name: Upload Test Results to Trunk.io
+        if: ${{ !cancelled() }} # Upload the results even if the tests fail
+        continue-on-error: true # don't fail this job if the upload fails
+        uses: trunk-io/analytics-uploader@v2
+        with:
+          junit-paths: "**/*.xml"
+          org-slug: alban
+          token: $TRUNK_API_TOKEN
+
+  sonarcloud:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
+      - name: SonarCloud Scan
+        # You may pin to the exact commit or the version.
+        uses: SonarSource/sonarqube-scan-action@v7.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

@@ -1,0 +1,49 @@
+---
+vulnerabilities:
+  # - id: CVE-2022-40897
+  #   paths:
+  #     - "usr/local/lib/python3.9/site-packages/setuptools-58.1.0.dist-info/METADATA"
+  #   statement: Accept the risk
+  - id: CVE-2023-6730
+    statement: Testing ignoring CVE in Pipeline
+  # Below for transformers
+  - id: CVE-2023-7018
+  - id: CVE-2024-3568
+  - id: CVE-2024-24790 # TODO remove me
+
+misconfigurations:
+  - id: AVD-DS-0002
+    statement: The image needs root privileges
+  - id: AVD-DS-0026
+
+licenses:
+  - id: GPL-1.0 # License name is used as ID
+    package: perl-base
+  - id: GPL-2.0 # License name is used as ID
+    package: adduser
+  - id: GPL-2.0-with-bison-exception
+  - id: GPL-2.0-with-autoconf-exception
+  - id: GPL-3.0
+  - id: GPL-3.0-with-autoconf-exception
+  - id: LGPL-2.0
+  - id: LGPL-2.1
+  - id: LGPL-3.0
+  - id: Sleepycat
+  - id: WTFPL
+    package: azu/style-format
+  - id: MIT
+  - id: MIT OR Apache-2.0
+  - id: (MIT OR CC0-1.0)
+  - id: License (Apache-2.0 OR BSD-3-Clause)
+  - id: Apache-2.0
+  - id: (Apache-2.0 OR BSD-3-Clause)
+  - id: BSD-3-Clause
+  - id: (BSD-3-Clause OR GPL-2.0)
+  - id: BSD-2-Clause
+  - id: ISC
+  - id: CC0-1.0
+  - id: CC-BY-3.0
+  - id: CC-BY-4.0
+  - id: BlueOak-1.0.0
+  - id: Artistic-2.0
+  - id: Python-2.0

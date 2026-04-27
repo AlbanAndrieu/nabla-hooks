@@ -1,0 +1,42 @@
+# This is the default gitleaks configuration file.
+# Rules and allowlists are defined within this file.
+# Rules instruct gitleaks on what should be considered a secret.
+# Allowlists instruct gitleaks on what is allowed, i.e. not a secret.
+title = "gitleaks config"
+
+[extend]
+# useDefault will extend the base configuration with the default gitleaks config:
+# https://github.com/zricethezav/gitleaks/blob/master/config/gitleaks.toml
+useDefault = true
+
+[allowlist]
+description = "global allow lists"
+regexes = [
+    '''219-09-9999''',
+    '''078-05-1120''',
+    '''(9[0-9]{2}|666)-\d{2}-\d{4}''',
+    '''#nosec''',
+    '''allow:gitleaks''',
+    '''password-reset-XXX''',
+    ]
+paths = [
+    '''gitleaks.toml''',
+    '''(.*?)(jpg|gif|doc|docx|zip|xls|pdf|bin|svg|socket|vsidx|v2|suo|wsuo|.dll|pdb|exe)$''',
+    '''(go.mod|go.sum|go.work|go.work.sum)$''',
+    '''gradle.lockfile''',
+    '''megalinter-reports''',
+    '''node_modules''',
+    '''.mypy_cache''',
+    '''(.*?)gitleaks\.toml$''',
+    '''vue-client/node_modules''',
+    '''package-lock.json''',
+    '''yarn.lock''',
+    '''pnpm-lock.yaml''',
+    '''Database.refactorlog''',
+    '''vendor''',
+    '''.venv''',
+    '''.direnv''',
+    '''.tox''',
+    '''environment.yml''',
+    '''.terraform''',
+]

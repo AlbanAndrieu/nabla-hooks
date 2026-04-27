@@ -1,0 +1,28 @@
+---
+exclude_paths:
+  - ./roles/*
+  - .venv/
+  - .direnv/
+  - .github/
+  - .gitlab/
+  - megalinter-reports/*
+  - .node_cache/
+  - .gitlab-ci.yml
+# parseable: true
+quiet: false
+# rulesdir:
+#   - ./rule/directory/
+skip_list:
+  - '602'  # See https://github.com/ansible/ansible-lint/issues/457
+  - '204'
+  - '503'
+#   - skip_this_tag
+#   - and_this_one_too
+#   - skip_this_id
+# tags:
+#   - run_this_tag
+use_default_rules: true
+verbosity: 1
+
+# Offline mode disables installation of requirements.yml
+offline: true

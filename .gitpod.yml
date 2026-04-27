@@ -1,0 +1,9 @@
+---
+tasks:
+  - init: npm ci --cache .npm --prefer-offline
+
+vscode:
+  extensions:
+    - esbenp.prettier-vscode
+    # - dbaeumer.vscode-eslint
+    - GitLab.gitlab-workflow

@@ -1,0 +1,21 @@
+---
+- id: git-branches-check
+  name: Git branches check
+  description: Check for old stale and already merged branches from the current repo with user friendly messages and colors
+  entry: pre_commit_hooks/git-branches-check.sh
+  language: script
+  always_run: true
+  types: [shell]
+- id: jenkinsfile-check
+  name: Jenkinsfile check
+  description: Check if Jenkinsfile is valide
+  entry: pre_commit_hooks/jenkinsfile-check.sh Jenkinsfile
+  files: "Jenkinsfile"
+  language: script
+  types: [shell]
+- id: jira-check
+  name: JIRA check
+  description: Check JIRA validation on commit message with user friendly messages and colors
+  entry: hooks/validate_jira.py
+  language: python
+  stages: [commit-msg]

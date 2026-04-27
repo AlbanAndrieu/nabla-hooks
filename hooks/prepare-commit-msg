@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+import atexit
+import os
+import sys
+from pathlib import Path
+
+from termcolor import colored
+
+from prepare_commit_msg import prepare_commit_msg
+
+# Collect the parameters
+commit_msg_filepath = sys.argv[1]
+if len(sys.argv) > 2:
+    commit_type = sys.argv[2]
+else:
+    commit_type = ""
+if len(sys.argv) > 3:
+    commit_hash = sys.argv[3]
+else:
+    commit_hash = ""
+
+
+def clean_all(commit_msg_filepath: str = "./.git/COMMIT_EDITMSG") -> None:
+    filename = os.path.expanduser(commit_msg_filepath)
+
+    if os.path.exists(filename):
+        os.remove(commit_msg_filepath)
+        print(colored("File {} removed!".format(commit_msg_filepath), "yellow"))
+
+
+atexit.register(clean_all, commit_msg_filepath)
+
+
+def podmena(commit_msg_filepath: str, enable: bool = False) -> None:
+    if enable:
+        curdir = os.path.dirname(os.path.realpath(__file__))
+        with Path(os.path.join(curdir, "database.txt")).open() as f:
+            emoji = f.readlines()
+
+        with Path(commit_msg_filepath).open() as f:
+            text = f.read()
+
+        with Path(commit_msg_filepath).open("w") as f:
+            # f.write('{} :{}:'.format(text.strip(), random.choice(emoji).strip()))
+            f.write("{} :{}:".format(text.strip(), os.urandom(emoji).strip()))
+
+
+if __name__ == "__main__":
+    # make hook interactive by attaching /dev/tty to stdin
+    with open("/dev/tty") as tty:
+        sys.stdin = tty
+        exit_code = prepare_commit_msg(sys.argv[1])
+        raise SystemExit(exit_code)

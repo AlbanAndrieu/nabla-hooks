@@ -1,0 +1,12 @@
+---
+# https://pyup.io/docs/bot/config/
+update: insecure
+pin: false
+schedule: "every week"
+assignees:
+  - AlbanAndrieu
+search: false
+requirements:
+  - setup.cfg:
+    pin: false
+    update: insecure

@@ -1,0 +1,48 @@
+version: 2
+update-options:
+  reviewers:
+    - andrcuns
+  auto-approve: true
+  auto-merge:
+    merge-train: true
+updates:
+  - package-ecosystem: bundler
+    directory: /
+    schedule:
+      interval: daily
+      time: "10:00"
+    commit-message:
+      trailers:
+        - changelog: dependency
+      trailers-development:
+        - changelog: dev-dependency
+      trailers-security:
+        - changelog: security
+    auto-merge:
+      ignore:
+        - dependency-name: "*"
+          update-types: ["version-update:semver-major"]
+    ignore:
+      - dependency-name: dependabot-omnibus
+      - dependency-name: parser
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      trailers:
+        - changelog: dev-dependency
+  - package-ecosystem: terraform
+    directory: /deploy
+    schedule:
+      interval: weekly
+    commit-message:
+      trailers:
+        - changelog: deploy
+  - package-ecosystem: docker
+    directory: /deploy/agent
+    schedule:
+      interval: weekly
+    commit-message:
+      trailers:
+        - changelog: deploy
