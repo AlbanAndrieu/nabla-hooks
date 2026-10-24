@@ -1,7 +1,7 @@
-python 3.14.2
-poetry 2.2.1
+python 3.14.8
+uv 0.13.0
 direnv 2.37.1
 ruby 4.0.0
 ripgrep 14.1.0
 terragrunt 0.99.5
-nodejs 25
+nodejs 24.13.0

@@ -23,6 +23,8 @@ vendor
 job.nomad
 tests/
 bin/
+# needed to build the wheel (hatch shared-scripts)
+!bin/get_msg
 etc/
 
 #hooks/

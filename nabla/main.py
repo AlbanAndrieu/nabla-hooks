@@ -33,6 +33,7 @@ OTLP_GRPC_ENDPOINT = os.environ.get(
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logging.info("API is ready")
+    yield
 
 
 # logger.info("Creating API")

@@ -43,7 +43,7 @@ repos:
     hooks:
       - id: check-useless-excludes
   - repo: https://gitlab.com/vojko.pribudic.foss/pre-commit-update
-    rev: v0.9.0
+    rev: v0.10.0
     hooks:
       - id: pre-commit-update
 
@@ -151,7 +151,7 @@ repos:
           )$
 
   - repo: https://github.com/pre-commit/pre-commit.git
-    rev: v4.5.1
+    rev: v4.7.0
     hooks:
       - id: validate_manifest
         name: "🤖 manifest · Validate manifest scripts"
@@ -172,12 +172,12 @@ repos:
 
     ### Python Tools ###
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.21.2
+    rev: v3.22.0
     hooks:
       - id: pyupgrade
         name: "🐍 python · Py Upgrade"
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.14.13
+    rev: v0.17.2
     hooks:
       - id: ruff-format
         name: "🐍 python · Format with Ruff"
@@ -210,7 +210,7 @@ repos:
     #             ccds/hook_utils/.*|
     #         )$
   - repo: https://github.com/abravalheri/validate-pyproject
-    rev: v0.24.1
+    rev: v0.27
     hooks:
       - id: validate-pyproject
         name: "🐍 python · Validate pyproject.toml"
@@ -220,7 +220,7 @@ repos:
     # This helps ensure cross-compatibility with people who don't wish to use uv
   - repo: https://github.com/astral-sh/uv-pre-commit
     # uv version.
-    rev: 0.9.26
+    rev: 0.13.5
     hooks:
       - id: uv-sync
         name: "⚡️ uv · Sync dependencies with uv"
@@ -252,7 +252,7 @@ repos:
 
     ### Shell ###
   - repo: https://github.com/scop/pre-commit-shfmt
-    rev: v3.12.0-2
+    rev: v3.14.1-1
     hooks:
       # Choose one of:
       # - id: shfmt         # native (requires Go to build)
@@ -295,7 +295,7 @@ repos:
 
     ### SQL ###
   - repo: https://github.com/sqlfluff/sqlfluff
-    rev: 4.0.0
+    rev: 4.4.0
     hooks:
       - id: sqlfluff-fix
         name: "📊 SQL · Attempts to fix rule violations."
@@ -348,7 +348,7 @@ repos:
 
     ### Javascript & Web Tools ###
   - repo: https://github.com/biomejs/pre-commit
-    rev: "v2.3.11"
+    rev: "v2.6.2"
     hooks:
       - id: biome-check
         name: "🟨 javascript · Lint, format, and safe fixes with Biome"
@@ -388,7 +388,7 @@ repos:
 
     ### Data & Config Validation ###
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.36.0
+    rev: 0.38.2
     hooks:
       - id: check-github-workflows
         name: "🧩 github-actions · Validate gh workflow files"
@@ -397,7 +397,7 @@ repos:
         name: "✅ taskfile · Validate Task configuration"
 
   - repo: https://github.com/hadolint/hadolint
-    rev: v2.14.0
+    rev: v2.15.1
     hooks:
       - id: hadolint-docker
         name: "🐳 hadolint · Validate Dockerfile"
@@ -405,7 +405,7 @@ repos:
     # ----------------------------- 🔒 Security Tools ---------------------------- #
 
   - repo: https://github.com/PyCQA/bandit
-    rev: 1.9.3
+    rev: 1.9.4
     hooks:
       - id: bandit
         name: "🔒 security · Detect security issues"
@@ -428,7 +428,7 @@ repos:
       - id: encryption-check
         name: "🔒 security · Detect encryption"
   - repo: https://github.com/zricethezav/gitleaks
-    rev: v8.30.0
+    rev: v8.30.1
     hooks:
       - id: gitleaks-docker
         name: "🔒 🐳 security · Detect hardcoded secrets"
@@ -466,22 +466,22 @@ repos:
 
     ### Commit Message Standards ###
   - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
-    rev: v9.24.0
+    rev: v9.27.0
     hooks:
       - id: commitlint
         stages: [commit-msg]
         additional_dependencies:
           - "@commitlint/config-conventional"
           - conventional-changelog-conventionalcommits
-  # - repo: https://github.com/commitizen-tools/commitizen
-  #   rev: v4.12.1
-  #   hooks:
-  #     - id: commitizen
-  #       name: "🌳 git · Validate commit message"
-  #       stages: [commit-msg]
-  #       additional_dependencies: [cz-conventional-gitmoji]
-  #     - id: commitizen-branch
-  #       stages: [pre-push]
+    # - repo: https://github.com/commitizen-tools/commitizen
+    #   rev: v4.12.1
+    #   hooks:
+    #     - id: commitizen
+    #       name: "🌳 git · Validate commit message"
+    #       stages: [commit-msg]
+    #       additional_dependencies: [cz-conventional-gitmoji]
+    #     - id: commitizen-branch
+    #       stages: [pre-push]
   - repo: https://github.com/jorisroovers/gitlint
     rev: v0.19.1
     hooks:
