@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # dockerfile_lint - ignore
-FROM python:3.14-slim-bookworm AS prebuild
+FROM python:3.15-slim-bookworm AS prebuild
 
 # dockerfile_lint - ignore
 LABEL name="nabla-hooks" version="1.0.7" \
