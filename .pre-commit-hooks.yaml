@@ -19,3 +19,9 @@
   entry: hooks/validate_jira.py
   language: python
   stages: [commit-msg]
+- id: github-issue-check
+  name: GitHub issue check
+  description: Check that the commit message references a GitHub issue (#123, owner/repo#123 or GH-123)
+  entry: hooks/validate_jira.py --tracker github
+  language: python
+  stages: [commit-msg]

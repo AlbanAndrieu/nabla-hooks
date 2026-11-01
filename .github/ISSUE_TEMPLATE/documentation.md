@@ -5,7 +5,6 @@ title: '[DOCS] '
 labels: documentation
 assignees: ''
 ---
-
 ## Documentation Issue
 
 Describe the issue with the documentation.

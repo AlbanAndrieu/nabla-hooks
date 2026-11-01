@@ -19,7 +19,7 @@ class TestMyPackage(unittest.TestCase):
         self.local_test_dir = os.path.dirname(os.path.realpath(__file__))
 
     def test_always_passes(self):
-        self.assertTrue
+        self.assertTrue(True)
 
 
 if __name__ == "__main__":

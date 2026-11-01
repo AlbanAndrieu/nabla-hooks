@@ -35,4 +35,4 @@ if __name__ == "__main__":
         if exc.errno != errno.EPIPE:
             raise
     except RuntimeError as e:
-        raise SystemExit(str(e))
+        raise SystemExit(str(e)) from e

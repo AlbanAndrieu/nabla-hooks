@@ -32,17 +32,8 @@ elif [ -f /etc/debian_version ]; then
   # Older Debian/Ubuntu/etc.
   OS=Debian
   VER=$(cat /etc/debian_version)
-elif [ -f /etc/SuSe-release ]; then
-  # Older SuSE/etc.
-  # shellcheck disable=SC2288
-  ...
-elif [ -f /etc/redhat-release ]; then
-  # Older Red Hat, CentOS, Docker etc.
-  #less /etc/redhat-release
-  OS=$(uname -s) # Linux
-  VER=$(uname -r)
 else
-  # Fall back to uname, e.g. "Linux <version>", also works for BSD, etc.
+  # Fall back to uname, e.g. "Linux <version>", also works for macOS, BSD, old SuSE and Red Hat.
   OS=$(uname -s)
   VER=$(uname -r)
 fi

@@ -67,7 +67,7 @@ pre-commit run --all-files
 
 We welcome contributions! Please see our [Contributing Guidelines](.github/CONTRIBUTING.md) for details on:
 
-- Setting up your development environment with Poetry
+- Setting up your development environment with uv
 - Running tests and code quality checks
 - Submitting pull requests
 - GitHub workflows and CI/CD
@@ -82,18 +82,16 @@ For issues, feature requests, or questions, please use our [GitHub issue templat
 
 <!-- toc -->
 
-- [Features](#features)
-- [Quick Start](#quick-start)
-  * [Installation](#installation)
-  * [Usage](#usage)
 - [Initialize](#initialize)
+  * [Development Setup](#development-setup)
   * [Requirements](#requirements)
+    + [Runtime Requirements](#runtime-requirements)
   * [Install nabla-hooks as a developer](#install-nabla-hooks-as-a-developer)
-    + [Using virtualenv](#using-virtualenv)
   * [Install nabla-hooks to use it](#install-nabla-hooks-to-use-it)
     + [Using Pip](#using-pip)
     + [From Source](#from-source)
     + [Add .pre-commit-config.yaml in your git project](#add-pre-commit-configyaml-in-your-git-project)
+    + [Using with OpenCommit (oco)](#using-with-opencommit-oco)
     + [Override global environment variable](#override-global-environment-variable)
     + [Local](#local)
     + [Global](#global)
@@ -104,10 +102,20 @@ For issues, feature requests, or questions, please use our [GitHub issue templat
     + [shell usage](#shell-usage)
     + [versioneer](#versioneer)
     + [Test](#test)
-    + [Poetry](#poetry)
-    + [Pdm](#pdm)
+    + [uv](#uv)
+- [Configure PyPI token for publishing](#configure-pypi-token-for-publishing)
+- [Check pyproject.toml for errors](#check-pyprojecttoml-for-errors)
+- [Lock dependencies without installing](#lock-dependencies-without-installing)
+  * [GitHub Workflows and CI/CD](#github-workflows-and-cicd)
+    + [Available Workflows](#available-workflows)
+    + [Workflow Requirements](#workflow-requirements)
+    + [Local CI Simulation](#local-ci-simulation)
   * [Update README.md](#update-readmemd)
   * [npm-groovy-lint groovy formatting for Jenkinsfile](#npm-groovy-lint-groovy-formatting-for-jenkinsfile)
+  * [Contributing](#contributing)
+  * [License](#license)
+  * [Support](#support)
+  * [Acknowledgments](#acknowledgments)
 
 <!-- tocstop -->
 
@@ -119,23 +127,12 @@ For issues, feature requests, or questions, please use our [GitHub issue templat
 
 ## Development Setup
 
-Using pipenv with Pipfile:
+See [ONBOARDING.md](ONBOARDING.md) (mise + uv):
 
 ```bash
-direnv allow
-pyenv install 3.12.10
-pyenv local 3.12.10
-python -m pipenv install --dev --ignore-pipfile
-direnv allow
+mise install
+uv sync
 pre-commit install
-```
-
-## Migration from Pipenv to Poetry
-If you're migrating from Pipenv:
-
-```bash
-pip install -U poetry pipenv-poetry-migrate
-pipenv-poetry-migrate -f Pipfile -t pyproject.toml --no-use-group-notation
 ```
 
 ## [Requirements](#table-of-contents)
@@ -144,41 +141,20 @@ pipenv-poetry-migrate -f Pipfile -t pyproject.toml --no-use-group-notation
 
 This package requires the following to run:
 
-- Python >= 3.9
+- Python >= 3.13
 - [pre-commit](http://pre-commit.com)
 - [jira](https://pypi.org/project/jira/) (optional, for JIRA integration)
 
-See `requirements.txt` for the complete list of Python dependencies.
+See `pyproject.toml` (locked in `uv.lock`) for the complete list of Python dependencies.
 
 ## [Install nabla-hooks as a developer](#table-of-contents)
 
-### Using virtualenv
-
-Install Python 3.12 and virtualenv:
+Python comes from `mise.toml`, dependencies from `uv.lock`; `direnv` activates `.venv`:
 
 ```bash
-virtualenv --no-site-packages /opt/ansible/env312 -p python3.12
-source /opt/ansible/env312/bin/activate
-```
-
-Install Python 3.12 with pyenv:
-
-```bash
-curl -L https://pyenv.run | bash
-echo 'export PATH="~/.pyenv/bin:$PATH"' >> ~/.bashrc
-echo 'eval "$(pyenv init -)"' >> ~/.bashrc
-echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
-source ~/.bashrc
-
-pyenv install 3.12.10
-```
-
-See [pyenv with direnv integration](https://stackabuse.com/managing-python-environments-with-direnv-and-pyenv/) for more details.
-
-```bash
-pipenv check
-python -m pipenv install --dev
-python -m pipenv install --dev --ignore-pipfile
+mise install
+uv sync
+uvx pip-audit  # dependency vulnerability audit
 ```
 
 ## [Install nabla-hooks to use it](#table-of-contents)
@@ -205,7 +181,16 @@ repos:
       - id: git-branches-check
       - id: jira-check  # Validates commit messages contain JIRA tickets
         stages: [commit-msg]
+      # or, for GitHub Issues:
+      # - id: github-issue-check
 ```
+
+**GitHub Issue Check Hook**: Validates that commit messages reference a GitHub issue: `#123`, `owner/repo#123` or `GH-123`. Git comment lines are ignored. To accept both trackers, use `jira-check` with `args: [--tracker, any]`.
+
+The `get_msg` prepare-commit-msg helper also reads the issue from the branch name:
+
+- `feature/PROJ-123`: JIRA, as before.
+- `feature/123-add-login`, `fix/GH-123` or `issue-123`: GitHub. It checks the issue with `gh issue view` (run `gh auth login` first), refuses closed issues (exit 3) and prefixes the message with `GH-123 : `. It uses `GH-` rather than `#` because git drops lines starting with `#`. Disable it with `--no-github` or `NABLA_GITHUB_ISSUES=false`.
 
 **JIRA Check Hook**: Validates that commit messages contain JIRA ticket references (e.g., PROJ-123, TEST-456).
 
@@ -468,17 +453,17 @@ pytest --cache-clear --setup-show hooks/tests/pytest_test.py
 pytest --cache-clear --setup-show tests/test_package.py
 ```
 
-### Poetry
+### uv
 
 # Configure PyPI token for publishing
-poetry config pypi-token.pypi ${TWINE_PASSWORD}
-poetry publish --build
+export UV_PUBLISH_TOKEN=${TWINE_PASSWORD}
+uv build && uv publish
 
 # Check pyproject.toml for errors
-poetry check
+uv lock --check
 
 # Lock dependencies without installing
-poetry lock
+uv lock
 ```
 
 For more details, see the [CONTRIBUTING.md](.github/CONTRIBUTING.md) guide.
@@ -500,7 +485,7 @@ This project uses GitHub Actions for continuous integration and deployment. The 
 
 1. **Python Package** (`.github/workflows/python.yml`)
    - Runs on: Push to master, Pull requests
-   - Tests on: Python 3.12 and 3.13 (CI currently runs on 3.12 and 3.13; the project is intended to support Python 3.9+)
+   - Tests on: Python 3.13, 3.14 and 3.15
    - Steps: Lint (flake8, pylint, bandit), Test (pytest, tox)
    - Badge: ![Python package](https://github.com/AlbanAndrieu/nabla-hooks/actions/workflows/python.yml/badge.svg)
 
@@ -512,11 +497,8 @@ This project uses GitHub Actions for continuous integration and deployment. The 
    - Comprehensive linting across the project
    - Uses MegaLinter for multiple file types
 
-4. **Release** (`.github/workflows/release.yml`)
-   - Automated release creation and publishing
-
-5. **Tests** (`.github/workflows/tests.yml`)
-   - Dedicated test workflow
+4. **Publish** (`.github/workflows/pythonpublish.yml`)
+   - `uv build` + `uv publish` on release
 
 ### Workflow Requirements
 
@@ -531,19 +513,19 @@ All pull requests must pass:
 Before pushing, run the same checks locally:
 
 ```bash
-# Activate poetry environment
-poetry shell
+# Activate the uv environment
+source .venv/bin/activate
 
 # Run linters
-poetry run flake8 hooks tests
-poetry run pylint hooks
-poetry run bandit -r hooks
+uv run flake8 hooks tests
+uv run pylint hooks
+uv run bandit -r hooks
 
 # Run tests
-poetry run pytest --cov=hooks --cov-fail-under=30
+uv run pytest --cov=hooks --cov-fail-under=30
 
 # Run pre-commit hooks
-poetry run pre-commit run --all-files
+uv run pre-commit run --all-files
 ```
 
 For more details, see [CONTRIBUTING.md](.github/CONTRIBUTING.md).
@@ -604,4 +586,4 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 
 ## Acknowledgments
 
-This project uses several open-source tools and libraries. See [requirements.txt](requirements.txt) for the complete list.
+This project uses several open-source tools and libraries. See [pyproject.toml](pyproject.toml) for the complete list.

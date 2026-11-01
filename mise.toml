@@ -1,26 +1,10 @@
-# mise.toml — Configuration universelle pour dotfiles workstation
-# Place ce fichier dans ~/dotfiles/mise.toml ou dans ton HOME
-
+# Python stays 3.14 locally: PyYAML has no cp315 wheel yet (breaks global pipx tools); CI also tests 3.15.
+# Runtimes only: JS tools are pinned in package.json (npm ci), Python deps via uv.
 [tools]
-npm = "10.8.2"
-python = "3.12.10"
-biome = "2.3.14"
-secretlint = "latest"
-eslint = "latest"
-stylelint = "latest"
-remark = "latest"
-prettier = "latest"
-commitlint = "latest"
-commitizen = "latest"
-opencommit = "latest"
-markdown-toc = "latest"
-node = "24"
-
-# Optionnel: outils utils & productivity (à activer selon besoins)
-# git = "latest"
-# shellcheck = "latest"
-# jq = "latest"
-
-[settings]
-# config perso à ajouter si besoin
-# aliases = ["mise exec ..."]
+node = "24.22.2"
+python = "3.14.10"
+uv = "0.13.6"
+direnv = "2.38.2"
+ruby = "4.0.9"
+ripgrep = "15.2.0"
+terragrunt = "1.2.1"

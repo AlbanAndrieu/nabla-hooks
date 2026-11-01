@@ -13,7 +13,7 @@
 
 - **Language**: Python 3.9+ (CI tests 3.11, 3.12, 3.13; tox tests 3.9-3.12)
 - **Build System**: setuptools with versioneer
-- **Dependency Management**: Poetry, Pipenv, or pip
+- **Dependency Management**: uv (`pyproject.toml` + `uv.lock`)
 - **Testing**: pytest with coverage
 - **Linting**: flake8, pylint, ruff, black, mypy
 - **Pre-commit Framework**: Hooks integrate with pre-commit
@@ -49,18 +49,9 @@ nabla-hooks/
 
 ### Development Setup
 ```bash
-# Using Poetry (preferred for development)
-poetry install
-poetry shell
-
-# Using Pipenv
-pipenv install --dev
-pipenv shell
-
-# Using pip with virtual environment
-python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-pip install -e ".[dev]"
+mise install  # runtimes from mise.toml
+uv sync       # dependencies from uv.lock
+source .venv/bin/activate
 ```
 
 ### Testing
@@ -142,23 +133,26 @@ make clean
 # Use type hints (compatible with Python 3.9+)
 from typing import Optional
 
+
 def get_user(user: Optional[str] = None, verbose: bool = False) -> str:
     """Get username from parameter or environment.
-    
+
     Args:
         user: Optional username override
         verbose: Enable verbose output
-        
+
     Returns:
         The resolved username
     """
     pass
+
 
 # Use f-strings for formatting
 message = f"Processing branch: {branch_name}"
 
 # Prefer Path over os.path
 from pathlib import Path
+
 config_path = Path(__file__).parent / "config.yaml"
 ```
 
@@ -186,7 +180,7 @@ config_path = Path(__file__).parent / "config.yaml"
 
 ### Do Not Modify
 - **Version files**: `hooks/_version.py` (managed by versioneer)
-- **Lock files**: `poetry.lock`, `Pipfile.lock`, `package-lock.json`, `yarn.lock` (unless updating dependencies)
+- **Lock files**: `uv.lock`, `package-lock.json`, `yarn.lock` (unless updating dependencies)
 - **Build artifacts**: `dist/`, `build/`, `.eggs/`, `*.egg-info/`
 - **CI configuration files**: Unless explicitly asked to modify CI
 - **License file**: `LICENSE`
@@ -220,6 +214,7 @@ def test_get_user_with_provided_user():
     user = get_user(user="testuser", verbose=False)
     assert user == "testuser"
 
+
 # Use pytest fixtures
 @pytest.fixture
 def mock_git_repo(tmp_path):
@@ -229,8 +224,10 @@ def mock_git_repo(tmp_path):
     # ... setup code
     return repo_path
 
+
 # Mock external calls
 from unittest.mock import patch
+
 
 @patch("hooks.get_jira.get_auth.os.environ.get")
 def test_get_user_from_env(mock_environ_get):
@@ -246,6 +243,7 @@ def test_get_user_from_env(mock_environ_get):
 ```python
 import sys
 from typing import NoReturn
+
 
 def exit_with_error(message: str, exit_code: int = 1) -> NoReturn:
     """Print error and exit."""
@@ -269,25 +267,21 @@ import subprocess
 import sys
 from typing import List
 
+
 def run_git_command(args: List[str]) -> str:
     """Run a git command and return output.
-    
+
     Args:
         args: List of git command arguments
-        
+
     Returns:
         Command output as string
-        
+
     Raises:
         SystemExit: If git command fails
     """
     try:
-        result = subprocess.run(
-            ["git"] + args,
-            capture_output=True,
-            text=True,
-            check=True
-        )
+        result = subprocess.run(["git"] + args, capture_output=True, text=True, check=True)
         return result.stdout.strip()
     except subprocess.CalledProcessError as e:
         print(f"ERROR: Git command failed: git {' '.join(args)}", file=sys.stderr)
@@ -369,7 +363,7 @@ The project is in **maintenance mode**:
 | Format code | `black hooks/ tests/` |
 | Type check | `mypy hooks/` |
 | Test all Python versions | `tox` |
-| Install dev dependencies | `poetry install` |
+| Install dev dependencies | `uv sync` |
 | Run pre-commit checks | `pre-commit run --all-files` |
 | Build package | `python -m build` |
 | Clean artifacts | `make clean` |

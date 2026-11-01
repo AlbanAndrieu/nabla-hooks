@@ -25,7 +25,7 @@ Please describe the tests that you ran to verify your changes. Provide instructi
 
 **Test Configuration**:
 - Python version:
-- Poetry version:
+- uv version:
 - OS:
 
 ## Checklist
@@ -38,9 +38,9 @@ Please describe the tests that you ran to verify your changes. Provide instructi
 - [ ] I have added tests that prove my fix is effective or that my feature works
 - [ ] New and existing unit tests pass locally with my changes
 - [ ] Any dependent changes have been merged and published
-- [ ] I have run pre-commit hooks (`poetry run pre-commit run --all-files`)
+- [ ] I have run pre-commit hooks (`uv run pre-commit run --all-files`)
 - [ ] I have run linters (`flake8`, `pylint`, `black`)
-- [ ] I have run tests (`poetry run pytest`)
+- [ ] I have run tests (`uv run pytest`)
 
 ## Screenshots (if applicable)
 

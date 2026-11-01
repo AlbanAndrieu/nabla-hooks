@@ -1,65 +1,65 @@
 # Quick Reference Guide
 
-## Poetry Cheat Sheet
+## uv Cheat Sheet
 
 ### Installation and Setup
 ```bash
-# Install Poetry
-curl -sSL https://install.python-poetry.org | python3 -
+# Install uv
+mise install
 
 # Install project dependencies
-poetry install
+uv sync
 
 # Activate virtual environment
-poetry shell
+source .venv/bin/activate
 ```
 
 ### Dependency Management
 ```bash
 # Add a dependency
-poetry add package-name
+uv add package-name
 
 # Add a dev dependency
-poetry add --group dev package-name
+uv add --dev package-name
 
 # Remove a dependency
-poetry remove package-name
+uv remove package-name
 
 # Update dependencies
-poetry update
+uv lock --upgrade
 
 # Show installed packages
-poetry show
+uv pip list
 
 # Show dependency tree
-poetry show --tree
+uv tree
 ```
 
 ### Running Commands
 ```bash
 # Run command in virtual environment
-poetry run <command>
+uv run <command>
 
 # Run Python script
-poetry run python script.py
+uv run python script.py
 
 # Run pytest
-poetry run pytest
+uv run pytest
 
 # Run pre-commit
-poetry run pre-commit run --all-files
+uv run pre-commit run --all-files
 ```
 
 ### Build and Publish
 ```bash
 # Build package
-poetry build
+uv build
 
 # Check package
-poetry check
+uv lock --check
 
 # Publish to PyPI
-poetry publish
+uv publish
 ```
 
 ## Development Workflow
@@ -75,13 +75,13 @@ pyenv install 3.12.10
 pyenv local 3.12.10
 
 # 3. Install dependencies
-poetry install
+uv sync
 
 # 4. Install pre-commit
-poetry run pre-commit install
+uv run pre-commit install
 
 # 5. Run tests to verify
-poetry run pytest
+uv run pytest
 ```
 
 ### Daily Development
@@ -92,8 +92,8 @@ git checkout -b feature/my-feature
 # 2. Make changes
 
 # 3. Run checks
-poetry run pre-commit run --all-files
-poetry run pytest
+uv run pre-commit run --all-files
+uv run pytest
 
 # 4. Commit and push
 git add .
@@ -105,46 +105,46 @@ git push origin feature/my-feature
 
 ```bash
 # Run all tests
-poetry run pytest
+uv run pytest
 
 # Run with coverage
-poetry run pytest --cov=hooks --cov-report=html
+uv run pytest --cov=hooks --cov-report=html
 
 # Run specific test file
-poetry run pytest tests/test_package.py
+uv run pytest tests/test_package.py
 
 # Run tests verbosely
-poetry run pytest -v
+uv run pytest -v
 
 # Run with multiple Python versions
-poetry run tox
+uv run tox
 ```
 
 ## Code Quality Commands
 
 ```bash
 # Format code
-poetry run black hooks tests
+uv run black hooks tests
 
 # Lint with flake8
-poetry run flake8 hooks tests
+uv run flake8 hooks tests
 
 # Lint with pylint
-poetry run pylint hooks
+uv run pylint hooks
 
 # Type check with mypy
-poetry run mypy hooks
+uv run mypy hooks
 
 # Security scan
-poetry run bandit -r hooks
+uv run bandit -r hooks
 
 # Run all pre-commit hooks
-poetry run pre-commit run --all-files
+uv run pre-commit run --all-files
 ```
 
 ## Common Issues and Solutions
 
-### Poetry Not Found
+### uv Not Found
 ```bash
 # Add to PATH
 export PATH="$HOME/.local/bin:$PATH"
@@ -153,32 +153,32 @@ export PATH="$HOME/.local/bin:$PATH"
 ### Lock File Issues
 ```bash
 # Update lock file
-poetry lock --no-update
+uv lock
 
 # Reinstall
-poetry install
+uv sync
 ```
 
 ### Virtual Environment Issues
 ```bash
 # Show environment info
-poetry env info
+uv python find
 
 # Remove environment
-poetry env remove python
+rm -rf .venv
 
 # Recreate environment
-poetry install
+uv sync
 ```
 
 ### Pre-commit Hook Failures
 ```bash
 # Update hooks
-poetry run pre-commit autoupdate
+uv run pre-commit autoupdate
 
 # Clean and reinstall
-poetry run pre-commit clean
-poetry run pre-commit install
+uv run pre-commit clean
+uv run pre-commit install
 ```
 
 ## Git Commands
@@ -225,14 +225,14 @@ nabla-hooks/
 ├── pre_commit_hooks/    # Pre-commit hook scripts
 ├── tests/               # Test files
 ├── docs/                # Documentation
-├── pyproject.toml       # Poetry configuration
+├── pyproject.toml       # project configuration (uv)
 ├── README.md           # Project README
 └── .pre-commit-config.yaml  # Pre-commit config
 ```
 
 ## Useful Links
 
-- [Poetry Documentation](https://python-poetry.org/docs/)
+- [uv Documentation](https://docs.astral.sh/uv/)
 - [Pytest Documentation](https://docs.pytest.org/)
 - [Pre-commit Documentation](https://pre-commit.com/)
 - [Conventional Commits](https://www.conventionalcommits.org/)

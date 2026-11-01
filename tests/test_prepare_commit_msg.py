@@ -1,11 +1,11 @@
 """Tests for prepare-commit-msg hook with oco/opencommit compatibility."""
+
 import os
 import sys
 import tempfile
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
-import pytest
 
 # Add hooks to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "hooks"))
@@ -90,10 +90,7 @@ def test_prepare_commit_msg_with_empty_message():
             # Should call cz commit to generate message
             assert result == 0
             # Should call cz commit
-            cz_commit_called = any(
-                "cz" in str(call[0][0]) and "commit" in str(call[0][0])
-                for call in mock_run.call_args_list
-            )
+            cz_commit_called = any("cz" in str(call[0][0]) and "commit" in str(call[0][0]) for call in mock_run.call_args_list)
             assert cz_commit_called
     finally:
         if os.path.exists(temp_file):
@@ -107,7 +104,7 @@ def test_prepare_commit_msg_with_comments_only():
     # Create a file with only comments (including indented ones)
     with tempfile.NamedTemporaryFile(mode="w", delete=False, suffix=".txt") as f:
         f.write(
-            "# Please enter the commit message\n  # Lines starting with '#' are comments\n\t# Even indented comments\n"
+            "# Please enter the commit message\n  # Lines starting with '#' are comments\n\t# Even indented comments\n",
         )
         temp_file = f.name
 
@@ -122,10 +119,7 @@ def test_prepare_commit_msg_with_comments_only():
             # Should generate message (treat as empty)
             assert result == 0
             # Should call cz commit
-            cz_commit_called = any(
-                "cz" in str(call[0][0]) and "commit" in str(call[0][0])
-                for call in mock_run.call_args_list
-            )
+            cz_commit_called = any("cz" in str(call[0][0]) and "commit" in str(call[0][0]) for call in mock_run.call_args_list)
             assert cz_commit_called
     finally:
         if os.path.exists(temp_file):

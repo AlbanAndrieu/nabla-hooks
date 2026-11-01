@@ -19,6 +19,10 @@ This project intend to be uses by all Nabla products
 
 <!-- toc -->
 
+- [Initialize](#initialize)
+  * [Requirements](#requirements)
+  * [Diagrams](#diagrams)
+
 <!-- tocstop -->
 
 // spell-checker:enable
@@ -31,7 +35,7 @@ This project intend to be uses by all Nabla products
 direnv allow
 pyenv install 3.8.10
 pyenv local 3.8.10
-python -m pipenv install --dev --ignore-pipfile
+uv sync
 direnv allow
 pre-commit install
 ```

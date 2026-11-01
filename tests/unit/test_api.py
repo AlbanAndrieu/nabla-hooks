@@ -10,7 +10,6 @@ from fastapi.testclient import TestClient
 
 def create_test_app_for_ping() -> FastAPI:
     """Create a minimal FastAPI app for testing v1 ping endpoint."""
-    from nabla.api import ping
 
     test_app = FastAPI(title="Nabla V1 Test", version="0.0.1")
 

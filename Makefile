@@ -155,11 +155,11 @@ test-dive: ## Run Dive image tests
 	@echo "=> Testing Dive image..."
 	@echo "CI=true dive --ci --highestUserWastedPercent 0.1 --lowestEfficiency 0.9 --json docker-dive-stats.json $(IMAGE) 1>docker-dive.log 2>docker-dive-error.log"
 	CI=true docker run --rm -it \
-      -v /var/run/docker.sock:/var/run/docker.sock \
-      -v "$(pwd)":"$(pwd)" \
-      -w "$(pwd)" \
-      -v "$(pwd)/.dive.yaml":"$(pwd)/.dive.yaml" \
-      wagoodman/dive:latest --ci --json docker-dive-stats.json $(IMAGE)
+	    -v /var/run/docker.sock:/var/run/docker.sock \
+	    -v "$(CURDIR)":"$(CURDIR)" \
+	    -w "$(CURDIR)" \
+	    -v "$(CURDIR)/.dive.yaml":"$(CURDIR)/.dive.yaml" \
+	    wagoodman/dive:latest --ci --json docker-dive-stats.json $(IMAGE)
 
 ## —— Tests Dive CI 🧪🐳🚨 —————————————————————————————————————————————————————————————————
 .PHONY: test-dive-ci
@@ -173,12 +173,12 @@ test-codeclimate:
 	@echo "=> Testing Codeclimate image..."
 	@echo "codeclimate analyze"
 	docker run \
-  --interactive --tty --rm \
-  --env CODECLIMATE_CODE="$PWD" \
-  --volume "$PWD":/code \
-  --volume /var/run/docker.sock:/var/run/docker.sock \
-  --volume /tmp/cc:/tmp/cc \
-  codeclimate/codeclimate analyze
+	  --interactive --tty --rm \
+	  --env CODECLIMATE_CODE="$(CURDIR)" \
+	  --volume "$(CURDIR)":/code \
+	  --volume /var/run/docker.sock:/var/run/docker.sock \
+	  --volume /tmp/cc:/tmp/cc \
+	  codeclimate/codeclimate analyze
 
 ## —— Tests Semgrep 🧪👽 —————————————————————————————————————————————————————————————————
 .PHONY: test-semgrep

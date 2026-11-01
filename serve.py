@@ -4,8 +4,8 @@ import os
 import uvicorn
 from nabla.main import app
 
-EXPOSE_HOST = os.environ.get("EXPOSE_HOST", "0.0.0.0")
-EXPOSE_PORT = os.environ.get("EXPOSE_PORT", 8080)
+EXPOSE_HOST = os.environ.get("EXPOSE_HOST", "0.0.0.0")  # noqa: S104 # nosec B104 - container entrypoint
+EXPOSE_PORT = os.environ.get("EXPOSE_PORT", "8080")
 
 
 class EndpointFilter(logging.Filter):
@@ -26,7 +26,7 @@ if __name__ == "__main__":
     config = uvicorn.Config(
         app,
         host=EXPOSE_HOST,
-        port=EXPOSE_PORT,
+        port=int(EXPOSE_PORT),
         log_config=log_config,
         log_level="info",
     )
