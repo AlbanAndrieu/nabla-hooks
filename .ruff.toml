@@ -50,6 +50,8 @@ max-complexity = 10
 "hooks/prepare_commit_msg.py" = ["S603", "S607"]
 # Calls the trusted `gh` CLI from PATH; the issue argument is digits only.
 "hooks/get_github.py" = ["S603", "S607"]
+# Opens the fixed https API_URL only.
+"hooks/get_linear.py" = ["S310"]
 "nabla/tools/*" = ["S602", "S607"]
 
 [format]

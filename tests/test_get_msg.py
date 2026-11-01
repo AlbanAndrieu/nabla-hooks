@@ -88,6 +88,29 @@ class TestGetMsg:
     @patch("hooks.get_msg.check_output")
     @patch("builtins.open", new_callable=mock_open, read_data="Add login")
     @patch("os.path.exists")
+    @patch("hooks.get_msg.get_linear.get_msg")
+    @patch("hooks.get_msg.get_jira.get_jira.get_msg")
+    def test_match_msg_linear_branch(
+        self,
+        mock_jira_get_msg,
+        mock_linear_get_msg,
+        mock_exists,
+        mock_file,
+        mock_check_output,
+    ):
+        """With --linear, a Linear default branch (no feature/ prefix) uses Linear, never JIRA."""
+        mock_check_output.return_value = b"alban/eng-42-add-login"
+        mock_exists.return_value = True
+        mock_linear_get_msg.return_value = ("ENG-42 : Add login", "ENG-42")
+
+        result = match_msg(commit_msg_filepath="/tmp/COMMIT_EDITMSG", linear=True)
+
+        assert result == "ENG-42 : Add login"
+        mock_jira_get_msg.assert_not_called()
+
+    @patch("hooks.get_msg.check_output")
+    @patch("builtins.open", new_callable=mock_open, read_data="Add login")
+    @patch("os.path.exists")
     @patch("hooks.get_msg.get_github.get_msg")
     def test_match_msg_closed_issue_keeps_exit_code(
         self,

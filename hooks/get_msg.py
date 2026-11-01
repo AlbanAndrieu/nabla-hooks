@@ -10,6 +10,7 @@ import click
 import get_github
 import get_jira.get_auth
 import get_jira.get_jira
+import get_linear
 from colorama import init
 from termcolor import colored
 
@@ -36,6 +37,12 @@ ISSUE_BRANCH = re.compile("^feature|^feat|^bugfix|^fix")
     default=True,
     envvar="NABLA_GITHUB_ISSUES",
     help="GitHub issue check (branch feature/123-xxx), needs the gh CLI",
+)
+@click.option(
+    "--linear/--no-linear",
+    default=False,
+    envvar="NABLA_LINEAR_ISSUES",
+    help="Linear issue check (branch user/eng-123-xxx) before JIRA, needs LINEAR_API_KEY",
 )
 @click.option(
     "-u",
@@ -66,6 +73,7 @@ def cli(
     commit_type: str = "",
     jira=True,
     github=True,
+    linear=False,
     user=None,
     password=None,
     verbose=False,
@@ -104,15 +112,27 @@ def cli(
         commit_type=commit_type,
         jira=jira,
         github=github,
+        linear=linear,
         user=user,
         password=password,
         verbose=verbose,
     )
 
 
-def issue_message(current_message: str, branch: str, jira=True, github=True, user=None, password=None, verbose=False) -> str:
+def issue_message(
+    current_message: str,
+    branch: str,
+    jira=True,
+    github=True,
+    user=None,
+    password=None,
+    verbose=False,
+    linear=False,
+) -> str:
     """Message prefixed with the branch issue, "" when there is nothing to add."""
-    # A JIRA key wins; otherwise a bare number is a GitHub issue.
+    # Linear and JIRA keys look alike (ENG-123): Linear is opt-in and wins; a bare number is a GitHub issue.
+    if linear and get_linear.match_issue(branch):
+        return get_linear.get_msg(current_message=current_message, branch=branch, verbose=verbose)[0]
     if jira and get_jira.get_jira.match_issue(branch) != "UNKNOWN":
         return get_jira.get_jira.get_msg(
             current_message=current_message,
@@ -133,6 +153,7 @@ def match_msg(
     user=None,
     password=None,
     verbose=False,
+    linear=False,
 ) -> str:
     """
     Configures git hook commit message.
@@ -165,13 +186,14 @@ def match_msg(
         elif verbose:
             print(colored("Message before is : {}".format(current_message), "yellow"))
 
-        if not ISSUE_BRANCH.match(branch):
+        # Linear's default branch name is <user>/<key>-<title>, without a feature/fix prefix.
+        if not ISSUE_BRANCH.match(branch) and not (linear and get_linear.match_issue(branch)):
             return ""
 
         if "message" in commit_type:
             print(colored("Oh hey, it's an issue branch : {}.".format(branch), "green"))
 
-        required_message = issue_message(current_message, branch, jira, github, user, password, verbose) or current_message
+        required_message = issue_message(current_message, branch, jira, github, user, password, verbose, linear) or current_message
 
         if verbose:
             print(colored("Message after is : {}".format(required_message), "yellow"))

@@ -191,6 +191,7 @@ The `get_msg` prepare-commit-msg helper also reads the issue from the branch nam
 
 - `feature/PROJ-123`: JIRA, as before.
 - `feature/123-add-login`, `fix/GH-123` or `issue-123`: GitHub. It checks the issue with `gh issue view` (run `gh auth login` first), refuses closed issues (exit 3) and prefixes the message with `GH-123 : `. It uses `GH-` rather than `#` because git drops lines starting with `#`. Disable it with `--no-github` or `NABLA_GITHUB_ISSUES=false`.
+- `alban/eng-123-add-login` (Linear's default branch name) or `feature/ENG-123`: Linear, opt-in with `--linear` or `NABLA_LINEAR_ISSUES=true` because Linear and JIRA keys look alike. It checks the issue with the Linear API (`LINEAR_API_KEY`, a personal API key), refuses completed or canceled issues (exit 3) and prefixes the message with `ENG-123 : `, which Linear's GitHub integration links to the issue. To only require a Linear key in the message, `jira-check` already matches it.
 
 **JIRA Check Hook**: Validates that commit messages contain JIRA ticket references (e.g., PROJ-123, TEST-456).
 
