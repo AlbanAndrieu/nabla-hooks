@@ -1,36 +1,17 @@
 #!/bin/bash
-#set -xv
+set -euo pipefail
 
-#WORKING_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
+WORKING_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-export TOX_TARGET=${TOX_TARGET:-"py312"} # tox --notest  # Pre-populate virtualenv use TOX_TARGET
+# shellcheck source=/dev/null
+source "${WORKING_DIR}/step-0-color.sh"
 
-export TOXENV=${TOXENV:-"py312"}
-#pip install -U tox
-#pip install tox==3.14.3
+# Python version pinned in mise.toml; any env of tox.ini envlist works.
+TOX_TARGET=${TOX_TARGET:-"py314"}
 
-#tox -e py  # Run tox using the version of Python in `PATH`
-
-rm -Rf .tox/
 echo -e "${magenta} tox -e ${TOX_TARGET} ${NC}"
-tox -e "${TOX_TARGET}"
-RC=$?
-if [ ${RC} -ne 0 ]; then
-  echo ""
-  echo -e "${red} ${head_skull} Sorry, test failed. ${NC}"
-  exit ${RC}
-else
-  echo -e "${green} The build completed successfully. ${NC}"
+if ! tox -e "${TOX_TARGET}"; then
+  echo -e "${red} ${head_skull:-} Sorry, test failed. ${NC}"
+  exit 1
 fi
-
-#./test/init.sh
-#RC=$?
-#if [ ${RC} -ne 0 ]; then
-#  echo ""
-#  echo -e "${red} ${head_skull} Sorry, test failed. ${NC}"
-#  exit 1
-#else
-#  echo -e "${green} The test completed successfully. ${NC}"
-#fi
-
-exit 0
+echo -e "${green} The build completed successfully. ${NC}"

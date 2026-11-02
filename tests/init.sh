@@ -57,14 +57,14 @@ git commit -a -m "let begin test" &>"$tmpfile"
 #echo "less $tmpfile"
 popd
 
-function passed() {
+function passed {
   echo "$@"
   rm -rf "$tmpdir"
 
   return 0
 }
 
-function failed() {
+function failed {
   echo "$@"
   exit 255
 }

@@ -35,28 +35,15 @@ cd nabla-hooks
 
 2. **Set up your development environment**
 
-Using pyenv and pipenv:
-
 ```bash
-# Install Python 3.12
-pyenv install 3.12.10
-pyenv local 3.12.10
+# Install runtimes (Python, Node, uv) from mise.toml
+mise install
 
 # Install dependencies
-python -m pipenv install --dev --ignore-pipfile
+uv sync
 
 # Activate virtual environment
-pipenv shell
-```
-
-Using poetry:
-
-```bash
-# Install dependencies
-poetry install
-
-# Activate virtual environment
-poetry shell
+source .venv/bin/activate
 ```
 
 3. **Install pre-commit hooks**

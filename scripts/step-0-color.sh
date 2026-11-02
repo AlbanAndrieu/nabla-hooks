@@ -3,6 +3,10 @@
 
 NO_COLOR=${NO_COLOR:-false}
 
+# Defined even without colors, so callers running with "set -u" still work.
+export bold="" underline="" blink="" black="" red="" green="" yellow="" blue="" magenta="" cyan="" ltgray=""
+export NC="" double_arrow="" head_skull="" happy_smiley="" reverse_exclamation="" circle=""
+
 # below give the number of supported colors
 # tput colors
 
@@ -28,6 +32,5 @@ if [ "${NO_COLOR}" == "false" ]; then
     export circle='\xD2\x89'
   fi
 
+  export NC="\033[0m"
 fi
-
-export NC="\033[0m"

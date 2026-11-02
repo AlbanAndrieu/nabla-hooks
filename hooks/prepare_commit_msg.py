@@ -29,11 +29,7 @@ def prepare_commit_msg(commit_msg_file: str) -> int:
     path = Path(commit_msg_file)
     try:
         existing_content = path.read_text(encoding="utf-8").strip()
-        non_comment_lines = [
-            line
-            for line in existing_content.split("\n")
-            if not line.lstrip().startswith("#")
-        ]
+        non_comment_lines = [line for line in existing_content.split("\n") if not line.lstrip().startswith("#")]
         existing_message = "\n".join(non_comment_lines).strip()
     except FileNotFoundError:
         existing_message = ""
@@ -53,8 +49,7 @@ def prepare_commit_msg(commit_msg_file: str) -> int:
             return 0
         print(
             colored(
-                "⚠️  Existing commit message detected (possibly from oco/opencommit). "
-                "Skipping commitizen generation.",
+                "⚠️  Existing commit message detected (possibly from oco/opencommit). Skipping commitizen generation.",
                 "yellow",
             ),
         )

@@ -1,9 +1,8 @@
 """Tests for hooks/get_repo.py module."""
 
 import sys
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
-import pytest
 
 sys.path.insert(0, "hooks")
 

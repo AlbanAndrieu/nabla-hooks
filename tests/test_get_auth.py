@@ -51,7 +51,7 @@ class TestGetAuth:
 
     def test_get_password_from_git_assword_env(self):
         """Test get_password retrieves from GIT_ASSWORD as fallback.
-        
+
         Note: The environment variable is intentionally named GIT_ASSWORD (typo in original code).
         """
         with patch.dict(os.environ, {"GIT_ASSWORD": "gitpass"}, clear=True):
@@ -69,7 +69,8 @@ class TestGetAuth:
     def test_match_auth_success(self):
         """Test match_auth returns tuple of user and password."""
         with patch.dict(
-            os.environ, {"JIRA_USER": "testuser", "JIRA_PASSWORD": "testpass"}
+            os.environ,
+            {"JIRA_USER": "testuser", "JIRA_PASSWORD": "testpass"},
         ):
             basic_auth = match_auth(user=None, password=None, verbose=False)
             assert basic_auth == ("testuser", "testpass")
@@ -82,7 +83,8 @@ class TestGetAuth:
     def test_match_auth_verbose_mode(self):
         """Test match_auth in verbose mode."""
         with patch.dict(
-            os.environ, {"JIRA_USER": "verboseuser", "JIRA_PASSWORD": "verbosepass"}
+            os.environ,
+            {"JIRA_USER": "verboseuser", "JIRA_PASSWORD": "verbosepass"},
         ):
             basic_auth = match_auth(user=None, password=None, verbose=True)
             assert basic_auth == ("verboseuser", "verbosepass")

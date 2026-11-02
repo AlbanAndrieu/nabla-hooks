@@ -1,20 +1,15 @@
 #!/bin/bash
-#set -xve
+set -euo pipefail
 
 WORKING_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_DIR="${WORKING_DIR}/.."
 
 # shellcheck source=/dev/null
-source "${WORKING_DIR}/../scripts/step-0-color.sh"
+source "${WORKING_DIR}/step-0-color.sh"
 
-echo -e "${green} Run Pylint ${NC}"
-
+echo -e "${green} Run flake8 ${NC}"
 flake8 --version
 
-mkdir "${WORKING_DIR}/../output" || true
-
-# shellcheck source=/dev/null
-#source /opt/ansible/env38/bin/activate
-echo -e "${magenta} flake8 --ignore E24,W504 ${WORKING_DIR}/../hooks/ --format=pylint --output-file ${WORKING_DIR}/../output/flake8.txt ${NC}"
-flake8 --ignore E24,W504 "${WORKING_DIR}/../hooks/" --format=pylint --output-file "${WORKING_DIR}/../output/flake8.txt"
-
-exit 0
+mkdir -p "${ROOT_DIR}/output"
+# Report only, like the CI flake8 step (--exit-zero).
+flake8 --exit-zero --config "${ROOT_DIR}/.flake8" "${ROOT_DIR}/hooks" --format=pylint --output-file "${ROOT_DIR}/output/flake8.txt"

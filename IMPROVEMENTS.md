@@ -88,7 +88,7 @@ pip-upgrader --skip-package-installation
 
 **Current State**: Project uses multiple package managers (pip, pipenv, poetry, pdm)
 
-**Proposal**: 
+**Proposal**:
 - Choose one primary package manager (recommend Poetry or PDM)
 - Keep others for backward compatibility but document primary method
 - Update documentation to emphasize the primary method
@@ -134,7 +134,7 @@ pip-upgrader --skip-package-installation
 
 **Current State**: Using multiple linters (flake8, pylint, black)
 
-**Proposal**: 
+**Proposal**:
 - Migrate to Ruff as the primary linter (already configured)
 - Ruff can replace flake8, isort, and various plugins
 - Keep Black for now or use Ruff's formatter
@@ -179,7 +179,7 @@ def get_msg(commit_msg: str) -> dict[str, str]:
 
 **Priority**: Medium
 
-**Proposal**: 
+**Proposal**:
 - Add tests for all pre-commit hooks
 - Aim for >80% code coverage
 - Add integration tests
@@ -361,6 +361,7 @@ ci:
 ```python
 from functools import lru_cache
 import time
+
 
 @lru_cache(maxsize=100)
 def get_jira_ticket(ticket_id: str) -> dict:

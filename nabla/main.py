@@ -9,7 +9,7 @@ from fastapi import FastAPI
 from nabla.api import ping
 from nabla.api import v1
 
-# from nabla import logger
+logger = logging.getLogger(__name__)
 
 # from prometheus_fastapi_instrumentator import Instrumentator
 
@@ -32,12 +32,11 @@ OTLP_GRPC_ENDPOINT = os.environ.get(
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logging.info("API is ready")
+    logger.info("API is ready")
     yield
 
 
-# logger.info("Creating API")
-logging.info("Creating API")
+logger.info("Creating API")
 app = FastAPI(title="Nabla V1", description="Nabla V1", version="0.0.1", lifespan=lifespan)
 
 # origins = ["http://localhost", "http://localhost:8080", "http://localhost:5173", "*"]
@@ -85,7 +84,7 @@ async def read_root():
 @app.get("/io_task")
 async def io_task():
     time.sleep(1)
-    logging.error("io task")
+    logger.error("io task")
     return "IO bound task finish!"
 
 
@@ -93,7 +92,7 @@ async def io_task():
 async def cpu_task():
     for i in range(1000):
         i * i * i
-    logging.error("cpu task")
+    logger.error("cpu task")
     return "CPU bound task finish!"
 
 

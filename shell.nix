@@ -2,9 +2,8 @@
 
 pkgs.mkShellNoCC {
   packages = with pkgs; [
-    poetry
+    uv
     python3
-    virtualenv
     nodejs
     git
     cowsay

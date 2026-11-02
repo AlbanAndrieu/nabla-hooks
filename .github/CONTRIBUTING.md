@@ -29,9 +29,9 @@ This project follows a code of conduct to ensure a welcoming environment for all
 Before you begin, ensure you have the following installed:
 
 - Python 3.9 or higher (3.12+ recommended for development)
-- [Poetry](https://python-poetry.org/docs/#installation) 2.0+
+- [uv](https://docs.astral.sh/uv/) (installed by mise)
 - Git
-- Pre-commit (will be installed via Poetry)
+- Pre-commit (installed via uv)
 
 ### Development Setup
 
@@ -47,35 +47,35 @@ Before you begin, ensure you have the following installed:
    ```bash
    # Install pyenv if not already installed
    curl -L https://pyenv.run | bash
-   
+
    # Install Python 3.12
    pyenv install 3.12.10
    pyenv local 3.12.10
    ```
 
-3. **Install dependencies using Poetry**:
+3. **Install dependencies using uv**:
 
    ```bash
-   # Install Poetry if not already installed
-   curl -sSL https://install.python-poetry.org | python3 -
-   
+   # Install uv if not already installed
+   mise install
+
    # Install project dependencies
-   poetry install
-   
+   uv sync
+
    # Activate the virtual environment
-   poetry shell
+   source .venv/bin/activate
    ```
 
 4. **Install pre-commit hooks**:
 
    ```bash
-   poetry run pre-commit install
+   uv run pre-commit install
    ```
 
 5. **Verify installation**:
 
    ```bash
-   poetry run pytest tests/
+   uv run pytest tests/
    ```
 
 ## Development Workflow
@@ -99,7 +99,7 @@ Before you begin, ensure you have the following installed:
 3. **Run pre-commit checks** before committing:
 
    ```bash
-   poetry run pre-commit run --all-files
+   uv run pre-commit run --all-files
    ```
 
 ### Running Tests
@@ -108,16 +108,16 @@ Run the test suite to ensure your changes don't break existing functionality:
 
 ```bash
 # Run all tests with pytest
-poetry run pytest
+uv run pytest
 
 # Run tests with coverage
-poetry run pytest --cov=hooks --cov-report=html
+uv run pytest --cov=hooks --cov-report=html
 
 # Run specific test file
-poetry run pytest tests/test_package.py
+uv run pytest tests/test_package.py
 
 # Run tests with tox (multiple Python versions)
-poetry run tox
+uv run tox
 ```
 
 ### Code Quality
@@ -126,19 +126,19 @@ Maintain code quality by running the following tools:
 
 ```bash
 # Format code with Black
-poetry run black hooks tests
+uv run black hooks tests
 
 # Lint with flake8
-poetry run flake8 hooks tests --config .flake8
+uv run flake8 hooks tests --config .flake8
 
 # Lint with pylint
-poetry run pylint hooks
+uv run pylint hooks
 
 # Type checking with mypy
-poetry run mypy hooks
+uv run mypy hooks
 
 # Security scanning with bandit
-poetry run bandit -r hooks
+uv run bandit -r hooks
 
 # Run all linters
 ./scripts/run-pylint.sh
@@ -227,7 +227,7 @@ This project uses GitHub Actions for continuous integration. The following workf
 - **Python package** (`python.yml`): Runs tests on all supported Python versions (currently 3.9–3.13)
 - **CodeQL Analysis** (`codeql.yml`): Security scanning
 - **Linting** (`linter.yml`): Code quality checks
-- **Release** (`release.yml`): Automated releases
+- **Publish** (`pythonpublish.yml`): `uv build` + `uv publish` on release
 - **Dependabot**: Dependency updates
 
 All workflows must pass before a PR can be merged.
@@ -244,46 +244,46 @@ nabla-hooks/
 ├── pre_commit_hooks/    # Pre-commit hook scripts
 ├── tests/               # Test files
 ├── docs/                # Documentation
-├── pyproject.toml       # Poetry configuration and dependencies
+├── pyproject.toml       # project metadata and dependencies (uv)
 ├── README.md           # Project overview
 └── .pre-commit-config.yaml  # Pre-commit configuration
 ```
 
-## Poetry Commands Reference
+## uv Commands Reference
 
 ```bash
 # Install dependencies
-poetry install
+uv sync
 
 # Add a new dependency
-poetry add package-name
+uv add package-name
 
 # Add a development dependency
-poetry add --group dev package-name
+uv add --dev package-name
 
 # Update dependencies
-poetry update
+uv lock --upgrade
 
 # Show installed packages
-poetry show
+uv pip list
 
 # Build the package
-poetry build
+uv build
 
 # Publish to PyPI
-poetry publish
+uv publish
 
 # Run a command in the virtual environment
-poetry run command
+uv run command
 
 # Activate the virtual environment
-poetry shell
+source .venv/bin/activate
 
 # Check pyproject.toml validity
-poetry check
+uv lock --check
 
 # Lock dependencies without installing
-poetry lock
+uv lock
 ```
 
 ## Getting Help

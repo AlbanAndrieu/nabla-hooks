@@ -2,7 +2,7 @@
 
 import os
 import sys
-from unittest.mock import MagicMock, mock_open, patch
+from unittest.mock import mock_open, patch
 
 import pytest
 
@@ -18,7 +18,10 @@ class TestGetMsg:
     @patch("builtins.open", new_callable=mock_open, read_data="Test commit message")
     @patch("os.path.exists")
     def test_match_msg_non_feature_branch(
-        self, mock_exists, mock_file, mock_check_output
+        self,
+        mock_exists,
+        mock_file,
+        mock_check_output,
     ):
         """Test match_msg on a non-feature branch returns original message."""
         # Setup
@@ -41,29 +44,89 @@ class TestGetMsg:
     @patch("builtins.open", new_callable=mock_open, read_data="Test message")
     @patch("os.path.exists")
     def test_match_msg_feature_branch_no_jira(
-        self, mock_exists, mock_file, mock_check_output
+        self,
+        mock_exists,
+        mock_file,
+        mock_check_output,
     ):
-        """Test match_msg on feature branch without JIRA check.
-        
-        Note: There is a bug in the code where if jira=False on a feature/bugfix
-        branch, it tries to access msg[0] which doesn't exist, causing UnboundLocalError.
-        This test documents the current behavior.
-        """
-        # Setup
+        """Without JIRA nor a GitHub issue number, the message is kept as is."""
         mock_check_output.return_value = b"feature/TEST-123"
         mock_exists.return_value = True
 
-        # Execute - expect SystemExit due to bug in get_msg.py
+        result = match_msg(
+            commit_msg_filepath="/tmp/COMMIT_EDITMSG",
+            commit_type="message",
+            jira=False,
+            verbose=False,
+        )
+
+        assert result == "Test message"
+
+    @patch("hooks.get_msg.check_output")
+    @patch("builtins.open", new_callable=mock_open, read_data="Add login")
+    @patch("os.path.exists")
+    @patch("hooks.get_msg.get_github.get_msg")
+    @patch("hooks.get_msg.get_jira.get_jira.get_msg")
+    def test_match_msg_github_branch(
+        self,
+        mock_jira_get_msg,
+        mock_github_get_msg,
+        mock_exists,
+        mock_file,
+        mock_check_output,
+    ):
+        """A feature/<number> branch uses GitHub, never JIRA."""
+        mock_check_output.return_value = b"feature/42-add-login"
+        mock_exists.return_value = True
+        mock_github_get_msg.return_value = ("GH-42 : Add login", "42")
+
+        result = match_msg(commit_msg_filepath="/tmp/COMMIT_EDITMSG", commit_type="message")
+
+        assert result == "GH-42 : Add login"
+        mock_jira_get_msg.assert_not_called()
+
+    @patch("hooks.get_msg.check_output")
+    @patch("builtins.open", new_callable=mock_open, read_data="Add login")
+    @patch("os.path.exists")
+    @patch("hooks.get_msg.get_linear.get_msg")
+    @patch("hooks.get_msg.get_jira.get_jira.get_msg")
+    def test_match_msg_linear_branch(
+        self,
+        mock_jira_get_msg,
+        mock_linear_get_msg,
+        mock_exists,
+        mock_file,
+        mock_check_output,
+    ):
+        """With --linear, a Linear default branch (no feature/ prefix) uses Linear, never JIRA."""
+        mock_check_output.return_value = b"alban/eng-42-add-login"
+        mock_exists.return_value = True
+        mock_linear_get_msg.return_value = ("ENG-42 : Add login", "ENG-42")
+
+        result = match_msg(commit_msg_filepath="/tmp/COMMIT_EDITMSG", linear=True)
+
+        assert result == "ENG-42 : Add login"
+        mock_jira_get_msg.assert_not_called()
+
+    @patch("hooks.get_msg.check_output")
+    @patch("builtins.open", new_callable=mock_open, read_data="Add login")
+    @patch("os.path.exists")
+    @patch("hooks.get_msg.get_github.get_msg")
+    def test_match_msg_closed_issue_keeps_exit_code(
+        self,
+        mock_github_get_msg,
+        mock_exists,
+        mock_file,
+        mock_check_output,
+    ):
+        """A closed issue exits 3 through match_msg, not the generic 2."""
+        mock_check_output.return_value = b"feature/42-add-login"
+        mock_exists.return_value = True
+        mock_github_get_msg.side_effect = SystemExit(3)
+
         with pytest.raises(SystemExit) as excinfo:
-            result = match_msg(
-                commit_msg_filepath="/tmp/COMMIT_EDITMSG",
-                commit_type="message",
-                jira=False,
-                verbose=False,
-            )
-        
-        # Assert - exits with code 2 due to exception handler
-        assert excinfo.value.code == 2
+            match_msg(commit_msg_filepath="/tmp/COMMIT_EDITMSG", commit_type="message")
+        assert excinfo.value.code == 3
 
     @patch("hooks.get_msg.check_output")
     @patch("builtins.open", new_callable=mock_open, read_data="")
@@ -126,7 +189,8 @@ class TestGetMsg:
 
         # Execute
         with patch.dict(
-            os.environ, {"JIRA_USER": "testuser", "JIRA_PASSWORD": "testpass"}
+            os.environ,
+            {"JIRA_USER": "testuser", "JIRA_PASSWORD": "testpass"},
         ):
             result = match_msg(
                 commit_msg_filepath="/tmp/COMMIT_EDITMSG",
@@ -145,27 +209,18 @@ class TestGetMsg:
     @patch("builtins.open", new_callable=mock_open, read_data="Bugfix commit")
     @patch("os.path.exists")
     def test_match_msg_bugfix_branch(self, mock_exists, mock_file, mock_check_output):
-        """Test match_msg on bugfix branch without JIRA.
-        
-        Note: There is a bug in the code where if jira=False on a feature/bugfix
-        branch, it tries to access msg[0] which doesn't exist, causing UnboundLocalError.
-        This test documents the current behavior.
-        """
-        # Setup
+        """Test match_msg on bugfix branch without JIRA keeps the message."""
         mock_check_output.return_value = b"bugfix/BUG-789"
         mock_exists.return_value = True
 
-        # Execute - expect SystemExit due to bug in get_msg.py
-        with pytest.raises(SystemExit) as excinfo:
-            result = match_msg(
-                commit_msg_filepath="/tmp/COMMIT_EDITMSG",
-                commit_type="message",
-                jira=False,
-                verbose=False,
-            )
-        
-        # Assert - exits with code 2 due to exception handler
-        assert excinfo.value.code == 2
+        result = match_msg(
+            commit_msg_filepath="/tmp/COMMIT_EDITMSG",
+            commit_type="message",
+            jira=False,
+            verbose=False,
+        )
+
+        assert result == "Bugfix commit"
 
     @patch("hooks.get_msg.check_output")
     @patch("builtins.open", new_callable=mock_open, read_data="Test")

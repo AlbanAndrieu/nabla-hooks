@@ -49,12 +49,12 @@ api_request_counter = Counter(
 
 
 @router.get("/items/{item_id}")
-async def read_item(item_id: int, q: str = None):
+async def read_item(item_id: int, q: str | None = None):
     api_request_counter.labels(method="GET", endpoint="/items", http_status=200).inc()
     api_request_summary.labels(method="GET", endpoint="/items").observe(0.1)
     if item_id % 2 == 0:
         # mock io - wait for x seconds
-        seconds = random.uniform(0, 3)
+        seconds = random.uniform(0, 3)  # noqa: S311 # nosec B311 - mock latency, not crypto
         await asyncio.sleep(seconds)
     return {"item_id": item_id, "q": q}
 
@@ -73,7 +73,7 @@ async def exception():
         span = trace.get_current_span()
 
         # generate random number
-        seconds = random.uniform(0, 30)
+        seconds = random.uniform(0, 30)  # noqa: S311 # nosec B311 - mock latency, not crypto
 
         # record_exception converts the exception into a span event.
         exception = IOError("Failed at " + str(seconds))
@@ -89,8 +89,8 @@ async def exception():
 
 @router.get("/external-api")
 def external_api():
-    seconds = random.uniform(0, 3)
-    response = requests.get(f"https://httpbin.org/delay/{seconds}")
+    seconds = random.uniform(0, 3)  # noqa: S311 # nosec B311 - mock latency, not crypto
+    response = requests.get(f"https://httpbin.org/delay/{seconds}", timeout=10)
     response.close()
     return "ok"
 

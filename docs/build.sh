@@ -11,7 +11,7 @@ WORKING_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source /opt/ansible/env36/bin/activate
 
 #sphinx-quickstart
-sphinx-build -b html ${WORKING_DIR}/ ${WORKING_DIR}/_build/
+sphinx-build -b html "${WORKING_DIR}"/ "${WORKING_DIR}"/_build/
 # or make html
 RC=$?
 if [ ${RC} -ne 0 ]; then

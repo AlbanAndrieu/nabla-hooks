@@ -17,13 +17,13 @@ All workflows are located in `.github/workflows/` and run automatically on relev
 - Pull requests
 
 **Matrix**:
-- Python versions: 3.12, 3.13 (project supports 3.9+)
+- Python versions: 3.13, 3.14, 3.15
 - OS: Ubuntu Latest
 
 **Steps**:
 1. Checkout code
 2. Set up Python environment
-3. Install dependencies (Poetry)
+3. Install dependencies (uv)
 4. Lint with flake8
 5. Lint with pylint
 6. Security scan with bandit
@@ -55,33 +55,12 @@ All workflows are located in `.github/workflows/` and run automatically on relev
 
 **Linters**: Multiple linters for Python, YAML, Markdown, Shell, and more
 
-### 4. Release (`release.yml`)
+### 4. PyPI Publish (`pythonpublish.yml`)
 
-**Purpose**: Automated release and publishing
-
-**Triggers**:
-- Manual workflow dispatch
-- Tag creation
-
-**Steps**:
-1. Build package
-2. Create GitHub release
-3. Publish to PyPI
-
-### 5. PyPI Publish (`pythonpublish.yml`)
-
-**Purpose**: Publish package to PyPI
+**Purpose**: Build and publish the package to PyPI with `uv build` + `uv publish`
 
 **Triggers**:
 - Release creation
-
-### 6. Tests (`tests.yml`)
-
-**Purpose**: Additional test coverage
-
-**Triggers**:
-- Push events
-- Pull requests
 
 ## Required Checks for PRs
 
@@ -99,32 +78,32 @@ Before a PR can be merged, it must pass:
 
 ```bash
 # Install dependencies
-poetry install
+uv sync
 
 # Install pre-commit
-poetry run pre-commit install
+uv run pre-commit install
 ```
 
 ### Simulate CI Checks
 
 ```bash
 # Run flake8
-poetry run flake8 hooks tests --config .flake8
+uv run flake8 hooks tests --config .flake8
 
 # Run pylint
-poetry run pylint hooks
+uv run pylint hooks
 
 # Run bandit
-poetry run bandit -r hooks
+uv run bandit -r hooks
 
 # Run pytest with coverage
-poetry run pytest --cov=hooks --cov-fail-under=30 --junit-xml=junit.xml
+uv run pytest --cov=hooks --cov-fail-under=30 --junit-xml=junit.xml
 
 # Run tox (all Python versions)
-poetry run tox
+uv run tox
 
 # Run pre-commit hooks
-poetry run pre-commit run --all-files
+uv run pre-commit run --all-files
 ```
 
 ## Workflow Files
@@ -134,9 +113,7 @@ poetry run pre-commit run --all-files
 | Python Package | `.github/workflows/python.yml` | Active |
 | CodeQL | `.github/workflows/codeql.yml` | Active |
 | Linter | `.github/workflows/linter.yml` | Active |
-| Release | `.github/workflows/release.yml` | Active |
 | PyPI Publish | `.github/workflows/pythonpublish.yml` | Active |
-| Tests | `.github/workflows/tests.yml` | Active |
 
 ## Secrets Required
 
@@ -150,28 +127,28 @@ The following GitHub secrets are required for workflows:
 
 ### Workflow Failures
 
-1. **Linting Errors**: Run `poetry run flake8` and `poetry run pylint` locally
-2. **Test Failures**: Run `poetry run pytest -v` to see detailed output
+1. **Linting Errors**: Run `uv run flake8` and `uv run pylint` locally
+2. **Test Failures**: Run `uv run pytest -v` to see detailed output
 3. **Coverage Too Low**: Add more tests or adjust coverage threshold
 4. **Security Issues**: Review CodeQL or Bandit reports
 
 ### Common Issues
 
-**Poetry Lock Issues**:
+**uv Lock Issues**:
 ```bash
-poetry lock --no-update
-poetry install
+uv lock
+uv sync
 ```
 
 **Pre-commit Hook Failures**:
 ```bash
-poetry run pre-commit run --all-files
+uv run pre-commit run --all-files
 ```
 
 **Dependency Conflicts**:
 ```bash
-poetry update
-poetry lock
+uv lock --upgrade
+uv lock
 ```
 
 ## Contributing

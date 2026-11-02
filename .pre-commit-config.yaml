@@ -1,5 +1,8 @@
 # fail_fast: true
 minimum_pre_commit_version: 4.5.0
+default_language_version:
+  # nodeenv's "latest" resolves to a -alpha build it cannot parse; keep in sync with mise.toml
+  node: "24.22.2"
 # exclude: |
 #   (?x)^(
 #       .*\{\{.*\}\}.*|     # Exclude any files with cookiecutter variables
@@ -177,17 +180,10 @@ repos:
       - id: pyupgrade
         name: "🐍 python · Py Upgrade"
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.17.2
+    rev: v0.17.3
     hooks:
       - id: ruff-format
         name: "🐍 python · Format with Ruff"
-        exclude: >
-          (?x)^(
-              ccds/hook_utils/dependencies.py|
-          )$
-      - id: ruff
-        name: "🐍 python · Lint and perform unsafe auto-fixes with Ruff"
-        args: [--unsafe-fixes]
         exclude: >
           (?x)^(
               ccds/hook_utils/dependencies.py|
@@ -220,7 +216,7 @@ repos:
     # This helps ensure cross-compatibility with people who don't wish to use uv
   - repo: https://github.com/astral-sh/uv-pre-commit
     # uv version.
-    rev: 0.13.5
+    rev: 0.13.6
     hooks:
       - id: uv-sync
         name: "⚡️ uv · Sync dependencies with uv"
@@ -231,24 +227,6 @@ repos:
         alias: deps
         args: ["--upgrade"]
         stages: [manual]
-      - id: uv-export
-        name: "⚡️ uv · Export dependencies to requirements.txt"
-        args:
-          - "--no-dev"
-          - "--no-emit-package"
-          - ansible-core
-          - "--no-emit-package"
-          - resolvelib
-          - "--no-emit-package"
-          - ruamel-yaml-clib
-          - "--no-emit-package"
-          - tomli
-          - "--no-emit-package"
-          - typing-extensions
-          - "--no-emit-project"
-          - "--no-hashes"
-          - "-o"
-          - ".config/requirements-lock.txt"
 
     ### Shell ###
   - repo: https://github.com/scop/pre-commit-shfmt
@@ -272,6 +250,7 @@ repos:
             tests/.*|
             docs/Makefile|
             .envrc|
+            trunk|
           )$
 
   - repo: https://github.com/openstack/bashate
@@ -295,7 +274,7 @@ repos:
 
     ### SQL ###
   - repo: https://github.com/sqlfluff/sqlfluff
-    rev: 4.4.0
+    rev: 4.5.0
     hooks:
       - id: sqlfluff-fix
         name: "📊 SQL · Attempts to fix rule violations."
@@ -348,19 +327,15 @@ repos:
 
     ### Javascript & Web Tools ###
   - repo: https://github.com/biomejs/pre-commit
-    rev: "v2.6.2"
+    rev: "v2.6.4"
     hooks:
       - id: biome-check
         name: "🟨 javascript · Lint, format, and safe fixes with Biome"
-        additional_dependencies: ["@biomejs/biome@1.9.4"]
+        additional_dependencies: ["@biomejs/biome@2.6.4"]
 
   - repo: https://github.com/Lucas-C/pre-commit-hooks-nodejs
     rev: v1.1.2
     hooks:
-      - id: htmllint
-        name: "📝 html · Lint html"
-        args: [--config, .eslintrc.json]
-        files: ^src/
       - id: htmlhint
         name: "📝 html · Hint html"
         args: [--config, .htmlhintrc]
@@ -388,7 +363,7 @@ repos:
 
     ### Data & Config Validation ###
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.38.2
+    rev: 0.39.0
     hooks:
       - id: check-github-workflows
         name: "🧩 github-actions · Validate gh workflow files"

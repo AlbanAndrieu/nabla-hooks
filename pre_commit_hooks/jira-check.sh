@@ -5,7 +5,7 @@ set -o pipefail
 set -o nounset
 
 DEBUG=${DEBUG:=0}
-[[ $DEBUG -eq 1 ]] && set -o xtrace
+[[ ${DEBUG} -eq 1 ]] && set -o xtrace
 
 WORKING_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
@@ -34,30 +34,30 @@ COMMIT_MSG_FILE=""
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --commit-msg-file)
-      COMMIT_MSG_FILE="$2"
-      shift 2
-      ;;
-    --pattern)
-      JIRA_PATTERN="$2"
-      shift 2
-      ;;
-    --help|-h)
-      usage
-      ;;
-    *)
-      # If no flag specified, treat as commit message file
-      if [[ -z "$COMMIT_MSG_FILE" ]] && [[ -f "$1" ]]; then
-        COMMIT_MSG_FILE="$1"
-      fi
-      shift
-      ;;
+  --commit-msg-file)
+    COMMIT_MSG_FILE="$2"
+    shift 2
+    ;;
+  --pattern)
+    JIRA_PATTERN="$2"
+    shift 2
+    ;;
+  --help | -h)
+    usage
+    ;;
+  *)
+    # If no flag specified, treat as commit message file
+    if [[ -z "${COMMIT_MSG_FILE}" ]] && [[ -f "$1" ]]; then
+      COMMIT_MSG_FILE="$1"
+    fi
+    shift
+    ;;
   esac
 done
 
 # Read commit message from file or stdin
-if [[ -n "$COMMIT_MSG_FILE" ]] && [[ -f "$COMMIT_MSG_FILE" ]]; then
-  COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
+if [[ -n "${COMMIT_MSG_FILE}" ]] && [[ -f "${COMMIT_MSG_FILE}" ]]; then
+  COMMIT_MSG=$(cat "${COMMIT_MSG_FILE}")
 elif [[ ! -t 0 ]]; then
   # Read from stdin if available
   COMMIT_MSG=$(cat)
@@ -67,29 +67,29 @@ else
 fi
 
 # Skip empty commit messages
-if [[ -z "$COMMIT_MSG" ]]; then
+if [[ -z "${COMMIT_MSG}" ]]; then
   echo -e "${yellow}Warning: Empty commit message, skipping JIRA check${NC}"
   exit 0
 fi
 
 # Skip merge commits
-if echo "$COMMIT_MSG" | grep -q "^Merge branch"; then
+if echo "${COMMIT_MSG}" | grep -q "^Merge branch"; then
   echo -e "${green}Merge commit detected, skipping JIRA check${NC}"
   exit 0
 fi
 
 # Skip revert commits
-if echo "$COMMIT_MSG" | grep -q "^Revert"; then
+if echo "${COMMIT_MSG}" | grep -q "^Revert"; then
   echo -e "${green}Revert commit detected, skipping JIRA check${NC}"
   exit 0
 fi
 
 # Extract first line of commit message (subject line)
-COMMIT_MSG_SUBJECT=$(echo "$COMMIT_MSG" | head -n 1)
+COMMIT_MSG_SUBJECT=$(echo "${COMMIT_MSG}" | head -n 1)
 
 # Check if commit message contains JIRA ticket
-if echo "$COMMIT_MSG_SUBJECT" | grep -qE "$JIRA_PATTERN"; then
-  JIRA_TICKET=$(echo "$COMMIT_MSG_SUBJECT" | grep -oE "$JIRA_PATTERN" | head -n 1)
+if echo "${COMMIT_MSG_SUBJECT}" | grep -qE "${JIRA_PATTERN}"; then
+  JIRA_TICKET=$(echo "${COMMIT_MSG_SUBJECT}" | grep -oE "${JIRA_PATTERN}" | head -n 1)
   echo -e "${green}✓ JIRA ticket found: ${bold}${JIRA_TICKET}${NC}"
   exit 0
 else

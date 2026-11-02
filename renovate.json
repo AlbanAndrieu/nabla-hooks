@@ -3,7 +3,8 @@
 	"extends": [
 		"config:recommended",
 		"helpers:pinGitHubActionDigests",
-		":dependencyDashboard"
+		":dependencyDashboard",
+		":semanticCommits"
 	],
 	"timezone": "Europe/Paris",
 	"schedule": ["before 10am on monday", "after 3pm on friday"],
@@ -13,16 +14,16 @@
 	},
 	"packageRules": [
 		{
-			"packageNames": ["colorama"],
+			"matchPackageNames": ["colorama"],
 			"schedule": "before 5am every wednesday"
 		},
 		{
-			"packagePatterns": ["^jira.*"],
+			"matchPackageNames": ["/^jira/"],
 			"groupName": "jira",
 			"automerge": true
 		},
 		{
-			"packagePatterns": ["^cryptography.*"],
+			"matchPackageNames": ["/^cryptography/"],
 			"groupName": "cryptography",
 			"automerge": true
 		}

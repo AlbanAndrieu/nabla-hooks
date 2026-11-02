@@ -3,9 +3,8 @@
 import time
 from typing import Dict
 
-from fastapi import APIRouter, FastAPI
+from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from starlette.responses import JSONResponse
 
 
 def create_test_app() -> FastAPI:
