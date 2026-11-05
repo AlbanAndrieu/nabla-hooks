@@ -64,10 +64,13 @@ When using nabla-hooks, follow these security best practices:
 When using JIRA integration:
 
 ```bash
-# ✅ Good - Use environment variables
+# ✅ Best - API token in the OS keyring, read by the hook when needed
+uvx keyring set nabla-hooks-jira your-email@example.com
 export JIRA_USER=your-email@example.com
-export JIRA_PASSWORD=your-api-token
-export JIRA_URL=https://your-domain.atlassian.net
+export JIRA_URL=https://your-domain.atlassian.net  # https only, plain http is refused
+
+# ✅ Good - Token from a secret manager (JIRA_PAT for Server / Data Center)
+export JIRA_API_TOKEN="$(secret-tool lookup service jira-cloud)"
 
 # ❌ Bad - Don't hardcode credentials
 JIRA_USER="user@example.com"  # In script files

@@ -19,6 +19,12 @@
   entry: hooks/validate_jira.py
   language: python
   stages: [commit-msg]
+- id: issue-prefix
+  name: Issue prefix
+  description: Prefix the commit message with the JIRA, Linear or GitHub issue of the branch (feature/PROJ-123), after checking it is still open
+  entry: hooks/get_msg.py
+  language: python
+  stages: [prepare-commit-msg]
 - id: github-issue-check
   name: GitHub issue check
   description: Check that the commit message references a GitHub issue (#123, owner/repo#123 or GH-123)

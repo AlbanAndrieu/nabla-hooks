@@ -183,13 +183,16 @@ repos:
         stages: [commit-msg]
       # or, for GitHub Issues:
       # - id: github-issue-check
+      - id: issue-prefix  # Prefixes the message with the branch issue (JIRA, Linear, GitHub)
 ```
+
+Install both hook types: `pre-commit install --hook-type prepare-commit-msg --hook-type commit-msg`.
 
 **GitHub Issue Check Hook**: Validates that commit messages reference a GitHub issue: `#123`, `owner/repo#123` or `GH-123`. Git comment lines are ignored. To accept both trackers, use `jira-check` with `args: [--tracker, any]`.
 
-The `get_msg` prepare-commit-msg helper also reads the issue from the branch name:
+The `issue-prefix` hook (`get_msg` prepare-commit-msg helper) reads the issue from the branch name:
 
-- `feature/PROJ-123`: JIRA, as before.
+- `feature/PROJ-123`: JIRA. It fetches the issue (one HTTPS request, `JIRA_TIMEOUT` seconds, 10 by default, no retry), refuses closed or done issues (exit 3) and prefixes the message with `PROJ-123 : <issue type>`. If JIRA is unreachable or refuses the request, the message is left unchanged and the commit goes on. See [Authentication](#authentication).
 - `feature/123-add-login`, `fix/GH-123` or `issue-123`: GitHub. It checks the issue with `gh issue view` (run `gh auth login` first), refuses closed issues (exit 3) and prefixes the message with `GH-123 : `. It uses `GH-` rather than `#` because git drops lines starting with `#`. Disable it with `--no-github` or `NABLA_GITHUB_ISSUES=false`.
 - `alban/eng-123-add-login` (Linear's default branch name) or `feature/ENG-123`: Linear, opt-in with `--linear` or `NABLA_LINEAR_ISSUES=true` because Linear and JIRA keys look alike. It checks the issue with the Linear API (`LINEAR_API_KEY`, a personal API key), refuses completed or canceled issues (exit 3) and prefixes the message with `ENG-123 : `, which Linear's GitHub integration links to the issue. To only require a Linear key in the message, `jira-check` already matches it.
 
@@ -306,23 +309,29 @@ The hook intelligently detects existing commit messages (from oco, manual entry,
 
 See [JIRA authentication documentation](https://jira.readthedocs.io/en/master/examples.html#authentication)
 
-##### Using username/password
+Credentials are read only when JIRA must be queried (issue branch, issue not yet in the message), in this order:
+
+1. `JIRA_PAT`: personal access token (JIRA Server / Data Center), sent as a bearer token. No user needed.
+2. `JIRA_USER` (or `GIT_USERNAME`) with, for the secret, `JIRA_API_TOKEN` (JIRA Cloud API token), `JIRA_PASSWORD`, `GIT_PASSWORD`, then the OS keyring (`nabla-hooks-jira` service), then a prompt on the terminal.
+
+`JIRA_URL` must start with `https://`: the hook refuses to send credentials in clear. `JIRA_CERT_PATH` points to the CA bundle used to check the server certificate (system bundle by default).
+
+##### JIRA Cloud: email and API token in the keyring
+
+Keep the token out of shell history and dotfiles by storing it in the OS keyring (GNOME Keyring, macOS Keychain, Windows Credential Locker):
 
 ```bash
-export JIRA_USER=aandrieu
-export JIRA_PASSWORD=XXX
-export JIRA_URL=https://localhost/jira
-export JIRA_CERT_PATH=/etc/ssl/certs/NABLA-CA-1.crt
-# Or use system CA bundle
-export JIRA_CERT_PATH=/etc/ssl/certs/ca-certificates.crt
+uvx keyring set nabla-hooks-jira alban.andrieu@free.fr  # prompts for the API token
+export JIRA_USER=alban.andrieu@free.fr
+export JIRA_URL=https://your-domain.atlassian.net
 ```
 
-##### Using email/token
+##### JIRA Server / Data Center: personal access token
 
 ```bash
-export JIRA_USER=alban.andrieu@free.fr
-export JIRA_PASSWORD=XXX  # Your generated API token
+export JIRA_PAT="$(secret-tool lookup service jira)"  # or any secret manager
 export JIRA_URL=https://localhost/jira
+export JIRA_CERT_PATH=/etc/ssl/certs/NABLA-CA-1.crt
 ```
 
 ##### Jenkins authentication

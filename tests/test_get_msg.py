@@ -170,12 +170,10 @@ class TestGetMsg:
     @patch("hooks.get_msg.check_output")
     @patch("builtins.open", new_callable=mock_open, read_data="Feature update")
     @patch("os.path.exists")
-    @patch("hooks.get_msg.get_jira.get_auth.match_auth")
     @patch("hooks.get_msg.get_jira.get_jira.get_msg")
     def test_match_msg_feature_branch_with_jira(
         self,
         mock_jira_get_msg,
-        mock_match_auth,
         mock_exists,
         mock_file,
         mock_check_output,
@@ -184,7 +182,6 @@ class TestGetMsg:
         # Setup
         mock_check_output.return_value = b"feature/TEST-456"
         mock_exists.return_value = True
-        mock_match_auth.return_value = ("testuser", "testpass")
         mock_jira_get_msg.return_value = ("TEST-456: Updated feature message",)
 
         # Execute

@@ -9,17 +9,17 @@ from typing import Tuple
 import certifi
 import click
 from colorama import init
-from jira import JIRA
-from jira.exceptions import JIRAError
 from termcolor import colored
 
-from .get_auth import match_auth
+from .get_auth import jira_auth
 
 # use Colorama to make Termcolor work on Windows too
 init()
 
 JIRA_KEY = re.compile(r"[A-Z]{2,10}-[0-9]+")
 SYSTEM_CA_BUNDLE = "/etc/ssl/certs/ca-certificates.crt"
+# Fields printed or checked below: fetching only these keeps the response small.
+ISSUE_FIELDS = "status,issuetype,project,reporter"
 
 
 @click.command()
@@ -64,7 +64,8 @@ def cli(
     msg = get_msg(
         current_message=current_message,
         branch=branch,
-        basic_auth=match_auth(user, password),
+        user=user,
+        password=password,
         verbose=verbose,
     )
 
@@ -76,18 +77,20 @@ def cli(
 def get_msg(
     current_message: str,
     branch: str,
-    basic_auth: Tuple[str, str] = ("", ""),
+    user=None,
+    password=None,
     verbose=True,
 ) -> Tuple[str, str]:
     """Prefix the message with '<issue> : <issue type>', unless the issue is already in it."""
     issue = match_issue(branch=branch, verbose=verbose)
 
+    # Before any credential lookup: no password prompt when there is nothing to query.
     if issue in current_message:
         if verbose:
             print(colored("Issue number already detected in message: {}".format(issue), "yellow"))
         return "", issue
 
-    prefix = match_jira(issue=issue, basic_auth=basic_auth, verbose=verbose)
+    prefix = match_jira(issue=issue, user=user, password=password, verbose=verbose)
     # JIRA refused the request: keep the message rather than writing " : <message>".
     return ("{} : {}".format(prefix, current_message) if prefix else ""), issue
 
@@ -113,6 +116,11 @@ def get_jira_url() -> str:
     return os.environ.get("JIRA_URL") or "https://localhost/jira"
 
 
+def get_timeout() -> float:
+    """Seconds before giving up on JIRA, so an unreachable server never blocks a commit for long."""
+    return float(os.environ.get("JIRA_TIMEOUT") or 10)
+
+
 def get_certificat_path() -> str:
     """CA bundle used to check the JIRA certificate: JIRA_CERT_PATH (e.g. an internal CA), else the system one."""
     default = SYSTEM_CA_BUNDLE if os.path.exists(SYSTEM_CA_BUNDLE) else certifi.where()
@@ -121,26 +129,45 @@ def get_certificat_path() -> str:
 
 def match_jira(
     issue: str,
-    basic_auth: Tuple[str, str] = ("", ""),
+    user=None,
+    password=None,
     verbose=False,
 ) -> str:
     """Return '<issue> : <issue type>', exit 3 if the issue is closed, "" if JIRA refuses the request."""
+    # Imported here: the jira client costs ~170 ms, paid only when JIRA is queried.
+    from jira import JIRA  # noqa: PLC0415
+    from jira.exceptions import JIRAError  # noqa: PLC0415
+
+    url = get_jira_url()
+    if not url.startswith("https://"):
+        print(colored("JIRA_URL must start with https:// so credentials are not sent in clear: {}".format(url), "red"))
+        return ""
+
+    auth = jira_auth(user=user, password=password, verbose=verbose)
     try:
-        jira = JIRA({"server": get_jira_url(), "verify": get_certificat_path()}, basic_auth=basic_auth)
-        fields = jira.issue(issue).fields
+        # No server-info call and no retries: one HTTP request per commit, bounded by the timeout.
+        jira = JIRA(
+            options={"server": url, "verify": get_certificat_path()},
+            get_server_info=False,
+            max_retries=0,
+            timeout=get_timeout(),
+            **auth,
+        )
+        fields = jira.issue(issue, fields=ISSUE_FIELDS).fields
     except JIRAError as e:
         if verbose:
             traceback.print_exc()
         if e.status_code == 401:
-            print(colored("Login to JIRA failed. Check your username and password for {}".format(get_jira_url()), "red"))
+            print(colored("Login to JIRA failed. Check your credentials (JIRA_USER and JIRA_API_TOKEN, or JIRA_PAT) for {}".format(url), "red"))
         else:
             print(colored("{}".format(e.text), "red"))
         return ""
-    except Exception:
+    except Exception as error:
+        # Offline, timeout or TLS error: like Linear and GitHub, never block the commit.
         if verbose:
             traceback.print_exc()
-        print(colored("Oops!  JIRA is failing. Switch to manual... {}".format(issue), "red"))
-        sys.exit(2)
+        print(colored("Could not check JIRA issue {}, message left unchanged: {!r}".format(issue, error), "yellow"))
+        return ""
 
     status = "{}".format(fields.status).strip().lower()
 

@@ -30,6 +30,7 @@ dependencies = [
     "git-url-parse>=1.2.2",
     "gitpython>=3.1.45",
     "jira>=3.10.5",
+    "keyring>=25.6.0",
     "pyyaml>=6.0.3",
     "termcolor>=3.1.0",
 ]

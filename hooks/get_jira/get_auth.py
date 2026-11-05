@@ -41,7 +41,7 @@ init()
     help="Switch between INFO and DEBUG logging modes",
 )
 def cli(user=None, password=None, verbose=False) -> Tuple[str, str]:
-    """Simple program that match jira. From hooks directory : Try python -m get_jira.get_auth -u aandrieu -p XXXX --verbose"""
+    """Simple program that match jira. From hooks directory : Try python -m get_jira.get_auth -u aandrieu --verbose"""
 
     logger.info("Collecting authentifcation")
 
@@ -80,23 +80,37 @@ def get_user(user=None, verbose=False) -> str:
     return user
 
 
-def get_password(password=None, verbose=False) -> str:
+KEYRING_SERVICE = "nabla-hooks-jira"
+
+
+def get_keyring_password(user=None) -> str:
+    """Secret stored with `keyring set nabla-hooks-jira <user>`, "" when there is none or no keyring backend."""
+    if not user:
+        return ""
+    try:
+        import keyring  # noqa: PLC0415 - lazy: only needed when no token is in the environment
+
+        return keyring.get_password(KEYRING_SERVICE, user) or ""
+    except Exception:  # no backend (headless, CI): fall back to the prompt
+        return ""
+
+
+def get_password(password=None, verbose=False, user=None) -> str:
     try:
         if not password:
             if verbose:
                 print(
                     colored(
-                        "Password is empty, using JIRA_PASSWORD environement variable",
+                        "Password is empty, using JIRA_API_TOKEN, JIRA_PASSWORD or the {} keyring".format(KEYRING_SERVICE),
                         "yellow",
                     ),
                 )
-            password = os.environ.get("JIRA_PASSWORD")
+            password = os.environ.get("JIRA_API_TOKEN") or os.environ.get("JIRA_PASSWORD") or os.environ.get("GIT_PASSWORD") or get_keyring_password(user)
             if not password:
-                password = os.environ.get("GIT_ASSWORD")
-            if not password:
-                password = getpass.getpass()
-
-            # TODO password should be crypted
+                try:
+                    password = getpass.getpass("JIRA password or API token: ")
+                except (EOFError, OSError):  # no terminal (GUI client, CI)
+                    password = None
 
         if not password:
             print(colored("Password cannot be empty : {}.".format(password), "red"))
@@ -105,13 +119,11 @@ def get_password(password=None, verbose=False) -> str:
     except KeyError:
         print(
             colored(
-                "Please set the environment variable JIRA_PASSWORD or GIT_PASSWORD",
+                "Please set the environment variable JIRA_API_TOKEN, JIRA_PASSWORD or GIT_PASSWORD",
                 "red",
             ),
         )
         sys.exit(3)
-
-    # print(colored('Password : {}.'.format(password), 'red'))
 
     return password
 
@@ -125,19 +137,18 @@ def match_auth(user=None, password=None, verbose=False) -> Tuple[str, str]:
 
     user = get_user(user=user, verbose=verbose)
 
-    password = get_password(password=password, verbose=verbose)
+    password = get_password(password=password, verbose=verbose, user=user)
 
-    basic_auth = (user, password)
+    # Never print the tuple: it holds the password.
+    return (user, password)
 
-    if not basic_auth:
-        print(
-            colored("Authentification cannot be empty : {}.".format(basic_auth), "red"),
-        )
-        sys.exit(3)
-    else:
-        if verbose:
-            print(basic_auth)
-    return basic_auth
+
+def jira_auth(user=None, password=None, verbose=False) -> dict:
+    """JIRA() auth keyword: JIRA_PAT as a bearer token (Server/Data Center), else basic auth (Cloud: email + API token)."""
+    pat = os.environ.get("JIRA_PAT")
+    if pat:
+        return {"token_auth": pat}
+    return {"basic_auth": match_auth(user=user, password=password, verbose=verbose)}
 
 
 logger = logging.getLogger("hooks.get_jira.get_auth")

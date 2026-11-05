@@ -137,7 +137,8 @@ def issue_message(
         return get_jira.get_jira.get_msg(
             current_message=current_message,
             branch=branch,
-            basic_auth=get_jira.get_auth.match_auth(user=user, password=password, verbose=verbose),
+            user=user,
+            password=password,
             verbose=verbose,
         )[0]
     if github:

@@ -2695,6 +2695,7 @@ dependencies = [
     { name = "git-url-parse" },
     { name = "gitpython" },
     { name = "jira" },
+    { name = "keyring" },
     { name = "pyyaml" },
     { name = "termcolor" },
 ]
@@ -2786,6 +2787,7 @@ requires-dist = [
     { name = "git-url-parse", specifier = ">=1.2.2" },
     { name = "gitpython", specifier = ">=3.1.45" },
     { name = "jira", specifier = ">=3.10.5" },
+    { name = "keyring", specifier = ">=25.6.0" },
     { name = "pyyaml", specifier = ">=6.0.3" },
     { name = "termcolor", specifier = ">=3.1.0" },
 ]
