@@ -46,7 +46,7 @@ charset-normalizer==3.5.2
     # via
     #   commitizen
     #   requests
-click==8.5.0
+click==8.5.1
     # via
     #   black
     #   nabla-hooks
