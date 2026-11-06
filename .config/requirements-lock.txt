@@ -63,7 +63,7 @@ colorama==0.4.6
     #   typer
 colorlog==6.12.0
     # via nox
-commitizen==4.19.2
+commitizen==4.19.3
     # via nabla-hooks
 coverage==7.17.0
     # via pytest-cov
