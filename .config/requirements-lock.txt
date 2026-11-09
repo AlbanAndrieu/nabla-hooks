@@ -176,7 +176,7 @@ multidict==7.1.0
     # via
     #   aiohttp
     #   yarl
-mypy==2.4.0
+mypy==2.4.1
 mypy-extensions==1.1.0
     # via
     #   black
