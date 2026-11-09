@@ -183,7 +183,7 @@ mypy-extensions==1.1.0
     #   isort
     #   mypy
 nox==2026.10.20
-oauthlib==4.0.0
+oauthlib==4.0.1
     # via requests-oauthlib
 opentelemetry-api==1.45.1
     # via
