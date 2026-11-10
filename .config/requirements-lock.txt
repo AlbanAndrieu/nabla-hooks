@@ -97,7 +97,7 @@ fastar==0.12.0
     # via
     #   fastapi
     #   fastapi-cloud-cli
-filelock==4.2.4
+filelock==4.2.10
     # via
     #   python-discovery
     #   tox
