@@ -37,7 +37,7 @@
 		"defaultSeverity": "warning"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.6.4",
+		"@biomejs/biome": "2.6.7",
 		"@commitlint/cli": "^21.2.4",
 		"@secretlint/secretlint-rule-preset-recommend": "^13.1.0",
 		"commitizen": "^4.2.4",
