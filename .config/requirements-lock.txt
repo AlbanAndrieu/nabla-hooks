@@ -65,7 +65,7 @@ colorlog==6.12.0
     # via nox
 commitizen==4.19.2
     # via nabla-hooks
-coverage==7.17.0
+coverage==7.17.3
     # via pytest-cov
 cryptography==50.0.2
 decli==0.6.3
