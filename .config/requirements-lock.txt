@@ -185,7 +185,7 @@ mypy-extensions==1.1.0
 nox==2026.10.20
 oauthlib==4.0.0
     # via requests-oauthlib
-opentelemetry-api==1.45.1
+opentelemetry-api==1.45.2
     # via
     #   fastapi
     #   opentelemetry-exporter-http-transport
