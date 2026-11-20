@@ -211,44 +211,51 @@ checksum = "sha256:1dc0715916251a13c4f6a550a3da1f2c726bff869371fd573a65234c008f4
 url = "https://github.com/oneclick/rubyinstaller2/releases/download/RubyInstaller-4.0.9-1/rubyinstaller-4.0.9-1-x64.7z"
 
 [[tools.terragrunt]]
-version = "0.99.5"
+version = "1.2.1"
 backend = "aqua:gruntwork-io/terragrunt"
-specifiers = ["0.99.5"]
+specifiers = ["1.2.1"]
 
 [tools.terragrunt."platforms.linux-arm64"]
-checksum = "sha256:fed8c41b0fa8dc15ad81e941c79c5db6b5fcbd3129bd25af663308a478dfabd0"
-url = "https://github.com/gruntwork-io/terragrunt/releases/download/v0.99.5/terragrunt_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/gruntwork-io/terragrunt/releases/assets/382119379"
+checksum = "sha256:8b92d56a20b2848365e22ef94f963fbfe25fedeebcacffacbc286cfcf9966066"
+checksum_source = "mise-versions"
+url = "https://github.com/gruntwork-io/terragrunt/releases/download/v1.2.1/terragrunt_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/gruntwork-io/terragrunt/releases/assets/670002309"
 
 [tools.terragrunt."platforms.linux-arm64-musl"]
-checksum = "sha256:fed8c41b0fa8dc15ad81e941c79c5db6b5fcbd3129bd25af663308a478dfabd0"
-url = "https://github.com/gruntwork-io/terragrunt/releases/download/v0.99.5/terragrunt_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/gruntwork-io/terragrunt/releases/assets/382119379"
+checksum = "sha256:8b92d56a20b2848365e22ef94f963fbfe25fedeebcacffacbc286cfcf9966066"
+checksum_source = "mise-versions"
+url = "https://github.com/gruntwork-io/terragrunt/releases/download/v1.2.1/terragrunt_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/gruntwork-io/terragrunt/releases/assets/670002309"
 
 [tools.terragrunt."platforms.linux-x64"]
-checksum = "sha256:8050444125e87abe077d602a6da7db7317d3e8d40d6dc8cb738fa009a005efc4"
-url = "https://github.com/gruntwork-io/terragrunt/releases/download/v0.99.5/terragrunt_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/gruntwork-io/terragrunt/releases/assets/382119266"
+checksum = "sha256:08c8844cc69e4f03451ebb8f347cb57d9bd6b8db7b16e437ae5ec6f001228ef9"
+checksum_source = "mise-versions"
+url = "https://github.com/gruntwork-io/terragrunt/releases/download/v1.2.1/terragrunt_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/gruntwork-io/terragrunt/releases/assets/670001904"
 
 [tools.terragrunt."platforms.linux-x64-musl"]
-checksum = "sha256:8050444125e87abe077d602a6da7db7317d3e8d40d6dc8cb738fa009a005efc4"
-url = "https://github.com/gruntwork-io/terragrunt/releases/download/v0.99.5/terragrunt_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/gruntwork-io/terragrunt/releases/assets/382119266"
+checksum = "sha256:08c8844cc69e4f03451ebb8f347cb57d9bd6b8db7b16e437ae5ec6f001228ef9"
+checksum_source = "mise-versions"
+url = "https://github.com/gruntwork-io/terragrunt/releases/download/v1.2.1/terragrunt_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/gruntwork-io/terragrunt/releases/assets/670001904"
 
 [tools.terragrunt."platforms.macos-arm64"]
-checksum = "sha256:3f37bf521d2d3bf6f05f3c6ff09b6c12c276e84c076fe7173c0842a2101a7ecd"
-url = "https://github.com/gruntwork-io/terragrunt/releases/download/v0.99.5/terragrunt_darwin_arm64.tar.gz"
-url_api = "https://api.github.com/repos/gruntwork-io/terragrunt/releases/assets/382119023"
+checksum = "sha256:0aded323f844ce6567a15feb26393b67eff1400dc1722203fa4dd4e23b3bb182"
+checksum_source = "mise-versions"
+url = "https://github.com/gruntwork-io/terragrunt/releases/download/v1.2.1/terragrunt_darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/gruntwork-io/terragrunt/releases/assets/670001110"
 
 [tools.terragrunt."platforms.macos-x64"]
-checksum = "sha256:058e2476c7452cf7a6f426c8e84ac25aac2d56b48cea042ec668e1f0dc6d9498"
-url = "https://github.com/gruntwork-io/terragrunt/releases/download/v0.99.5/terragrunt_darwin_amd64.tar.gz"
-url_api = "https://api.github.com/repos/gruntwork-io/terragrunt/releases/assets/382118909"
+checksum = "sha256:29806d1708f5c54e54bc6adfcacfb710d4bb1f6f180efd751692e6fad5985640"
+checksum_source = "mise-versions"
+url = "https://github.com/gruntwork-io/terragrunt/releases/download/v1.2.1/terragrunt_darwin_amd64.tar.gz"
+url_api = "https://api.github.com/repos/gruntwork-io/terragrunt/releases/assets/670000649"
 
 [tools.terragrunt."platforms.windows-x64"]
-checksum = "sha256:b5c853f0fbdba8481a1e45a894e86260f24dd40930d4da7c2e2efcdbe7936d1f"
-url = "https://github.com/gruntwork-io/terragrunt/releases/download/v0.99.5/terragrunt_windows_amd64.exe.tar.gz"
-url_api = "https://api.github.com/repos/gruntwork-io/terragrunt/releases/assets/382119805"
+checksum = "sha256:4393df92d7f6a0bdfd5744f069460a4886c6371b921cd4b1be03c186195dc05c"
+checksum_source = "mise-versions"
+url = "https://github.com/gruntwork-io/terragrunt/releases/download/v1.2.1/terragrunt_windows_amd64.exe.tar.gz"
+url_api = "https://api.github.com/repos/gruntwork-io/terragrunt/releases/assets/670003102"
 
 [[tools.uv]]
 version = "0.13.6"
